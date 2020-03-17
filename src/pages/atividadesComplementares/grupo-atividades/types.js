@@ -1,0 +1,5 @@
+export default {
+    LOAD: 'LOAD',
+    ERROR: 'ERROR',
+    BUSCAR_GRUPO_ATIVIDADE: 'BUSCAR_GRUPO_ATIVIDADE',
+}

@@ -1,0 +1,14 @@
+/* ***************** */
+.login-background {
+    background:  #e10019;
+    position: absolute;
+    min-height: 937px
+}
+
+.login-body {
+    margin-top: 10%;
+}
+
+.img-logo {
+    width: 100px;
+}
