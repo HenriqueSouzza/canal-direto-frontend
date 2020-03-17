@@ -2,7 +2,7 @@
 .login-background {
     background:  #e10019;
     position: absolute;
-    min-height: 937px
+    min-height: 100%;
 }
 
 .login-body {
@@ -10,5 +10,6 @@
 }
 
 .img-logo {
-    width: 100px;
+    width: 150px;
+    background: #fff
 }
