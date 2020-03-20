@@ -16,6 +16,7 @@ function TableAction(props){
                     primaryText: 'Visualizar',
                     onClick: () => {router.push( `${router.location.pathname}/${params}/visualizar`)}
                 })
+
                 break;
     
             case 'can_create':

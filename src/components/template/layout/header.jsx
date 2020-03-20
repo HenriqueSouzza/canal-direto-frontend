@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav className="main-header navbar navbar-expand navbar-light navbar-white text-sm">
             <ul className="navbar-nav">
                 <li className="nav-item">
                     <Link to={`#`} className="nav-link" data-widget="pushmenu">

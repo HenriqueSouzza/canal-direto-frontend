@@ -22,17 +22,17 @@ class AuthOrApp extends Component{
         //Busca o token na session storage
         const token = sessionStorage.getItem('token')
 
-        // if(validateToken || token){
+        if(!validateToken || token){
             
-        //     const validateUser = name_user ? sessionStorage.setItem('user', JSON.stringify({ user: name_user })) : ''
+            const validateUser = name_user ? sessionStorage.setItem('user', JSON.stringify({ user: name_user })) : ''
             
-        //     return(<App />)
+            return(<App />)
             
-        // }else{
+        }else{
             
             return(<Auth />)
 
-        // }
+        }
 
 
     }

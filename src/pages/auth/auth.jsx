@@ -21,7 +21,6 @@ import './style.css';
 class Auth extends Component{
 
     onSubmit = values => {
-        console.log(values)
         this.props.efetuarLogin(values, this.props.history)
     }
 

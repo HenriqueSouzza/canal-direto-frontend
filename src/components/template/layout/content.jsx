@@ -1,24 +1,18 @@
 import React from 'react';
 
-import { Route, Router  } from 'react-router-dom';
-
-import { createHashHistory } from 'history';
+import { Route, Switch  } from 'react-router-dom';
 
 import Dashboard from '../../../pages/dashboard/router';
 
-import AtividadesComplementares from '../../../pages/atividadesComplementares/router';
-
-/*** ***/
-export const history = createHashHistory();
+import Inscricoes from '../../../pages/inscricoes/router';
 
 function Content(){
     return(
         <div className="content-wrapper">
-            <Router history={history}>
-                <Route exact path='/' component={AtividadesComplementares} />
-                {/* <Route exact path='/' component={Dashboard} /> */}
-                <Route path='/atividades-complementares' component={AtividadesComplementares} />
-            </Router>
+            <Switch>
+                <Route exact path='/' component={Dashboard} />
+                <Route path='/inscricoes' component={Inscricoes} />
+            </Switch>
         </div>
     )
 }
