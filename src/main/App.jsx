@@ -8,6 +8,9 @@ import Content from '../components/template/layout/content';
 import Footer from '../components/template/layout/footer';
 
 function App() {
+
+  console.log()
+  
   return(
     <BrowserRouter >
       <div className="wrapper">

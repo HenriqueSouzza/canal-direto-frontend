@@ -26,9 +26,9 @@ class Novo extends Component{
 
     constructor(props){
         super(props);
-        if(props.alunos.periodoSelect.length <= 0){
-            props.history.goBack()
-        }
+        // if(props.alunos.periodoSelect.length <= 0){
+        //     props.history.goBack()
+        // }
     }
 
     //Change do formulario

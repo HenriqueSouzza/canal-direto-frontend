@@ -37,7 +37,7 @@ class Alunos extends Component{
     }
 
     componentDidMount(){
-        this.props.buscarDadosForm({ano: ''})
+        // this.props.buscarDadosForm({ano: ''})
     }
 
     setCheckbox = dados => {
@@ -188,6 +188,12 @@ class Alunos extends Component{
                 subatividade.push({id: row.SUB_ATIVIDADE, name: row.DESCRICAO})
             })
         }
+
+
+        const date = [{
+            data: '1',
+
+        }]
 
         return(
             <section className="content">
