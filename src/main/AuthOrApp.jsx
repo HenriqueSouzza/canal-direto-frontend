@@ -6,6 +6,8 @@ import App from'./App';
 
 import Auth from'../pages/auth/auth';
 
+import Cadastro from'../pages/cadastro/cadastro';
+
 class AuthOrApp extends Component{
     
     render(){
@@ -26,7 +28,8 @@ class AuthOrApp extends Component{
             
             const validateUser = name_user ? sessionStorage.setItem('user', JSON.stringify({ user: name_user })) : ''
             
-            return(<App />)
+            // return(<App />)
+            return(<Cadastro />)
             
         }else{
             
