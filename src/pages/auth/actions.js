@@ -43,17 +43,20 @@ export const verificarLogin = (params) => {
 
 }
 
+/**
+ * Método responsável para efeutar login
+ * @param {*} params 
+ * @param {*} router 
+ */
 export const efetuarLogin = (params, router) => {
 
-    const endPoint = URL + 'atividades-complementares/atividades/salvar';
-
-    const parametro = params
+    const endPoint = URL + '/usuario/login';
 
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.post(endPoint, parametro)
+        axios.post(endPoint, params)
         .then(response => {
 
             // console.log(response)
@@ -63,8 +66,8 @@ export const efetuarLogin = (params, router) => {
         })
         .catch(error => {
 
-            // console.log(error.response)
-            toastr.error('Erro', error.response.data.message)
+            console.log(error)
+            // toastr.error('Erro', error.response.data.message)
             dispatch({type: type.LOAD, payload: false})
 
         })

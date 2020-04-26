@@ -10,83 +10,91 @@ import Input from '../../components/form/input';
 
 import Button from '../../components/form/button';
 
-import imgLogo  from '../../uploads/logo.png';
-
-import { FORM_RULES } from '../../helpers/validations';
+import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
 
 import { efetuarLogin } from './actions';
 
 import './style.css';
 
-class Auth extends Component{
+class Auth extends Component {
 
     onSubmit = values => {
         this.props.efetuarLogin(values, this.props.history)
     }
 
-    render(){
+    onCadastro = () => {
+        this.props.history.push('/cadastro')
+    }
 
-        return(
-            <div className="container-fluid login-background">
-                <div className="login-body">
-                    <div className="row justify-content-center">
-                        <div className="login-logo">
-                            <img src={imgLogo} className="brand-image img-logo img-circle elevation-3" alt={`LogoImage`}/>
-                        </div>
-                    </div>
-                    <div className="row justify-content-center">
-                        <div className="login-box">
-                            <div className="card shadow p-3 mb-5 bg-white rounded">
-                                <div className="card-body text-center">
-                                    <p>
-                                        <small>Informe seu login e senha para acessar</small>
-                                    </p>
-                                    <Form
-                                        onSubmit={this.onSubmit}
-                                        render={({handleSubmit}) => (
-                                            <form onSubmit={handleSubmit}>
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <Field 
-                                                            component={Input} 
-                                                            type={`text`}
-                                                            name={`login`} 
-                                                            label={`Login:`}
-                                                            icon={`fa fa-user`}
-                                                            validate={FORM_RULES.required}
-                                                            />
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <Field 
-                                                            component={Input} 
-                                                            type={`password`}
-                                                            name={`password`} 
-                                                            label={`Senha:`}
-                                                            icon={`fa fa-key`}
-                                                            validate={FORM_RULES.required}
-                                                            />
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        {/* <label>&nbsp;</label> */}
-                                                        <Field
-                                                            component={Button}
-                                                            type={`submit`} 
-                                                            color={`btn-info`}
-                                                            icon={`fa fa-sign-in`} 
-                                                            description={`Entrar`}
-                                                            />
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        )}  
-                                    />
-                                </div>
-                            </div>
-                        </div>
+    render() {
+
+        return (
+            <div className="col-md-7 bg-white">
+                <div className="row login-body justify-content-center">
+                    <div className="col-md-8 align-self-center">
+                        <h1>
+                            <p className="text-center">
+                                Acessar
+                            </p> 
+                        </h1>
+                        <p className="text-center">
+                            <small>Informe seu login e senha para acessar</small>
+                        </p>
+                        <Form
+                            onSubmit={this.onSubmit}
+                            render={({handleSubmit}) => (
+                                <form onSubmit={handleSubmit}>
+                                    <div className="row justify-content-center">
+                                        <div className="col-md-8">
+                                            <Field 
+                                                component={Input} 
+                                                type={`text`}
+                                                name={`cpf`} 
+                                                label={`CPF:`}
+                                                icon={`fa fa-user`}
+                                                placeholder={`00000000000`}
+                                                validate={composeValidators(FORM_RULES.required, FORM_RULES.max(11), FORM_RULES.number, validateCpf)}
+                                                />
+                                        </div>
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        <div className="col-md-8">
+                                            <Field 
+                                                component={Input} 
+                                                type={`password`}
+                                                name={`senha`} 
+                                                label={`Senha:`}
+                                                icon={`fa fa-key`}
+                                                placeholder={`********`}
+                                                validate={FORM_RULES.max(8)}
+                                                />
+                                        </div>
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        <div className="col-md-8">
+                                            {/* <label>&nbsp;</label> */}
+                                            <Field
+                                                component={Button}
+                                                type={`submit`} 
+                                                color={`btn-success`}
+                                                icon={`fa fa-sign-in`} 
+                                                description={`Entrar`}
+                                                />
+                                        </div>
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        <div className="col-md-8">
+                                            {/* <label>&nbsp;</label> */}
+                                            <button type={`button`} 
+                                                    className="btn btn-info col-md-12" 
+                                                    onClick={() => this.onCadastro()}>
+                                                Quero me cadastrar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            )}  
+                        />
                     </div>
                 </div>
             </div>
@@ -105,4 +113,4 @@ const mapStateToProps = state => ({ auth: state.auth })
 const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps )(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

@@ -1,15 +1,11 @@
 /* ***************** */
-.login-background {
+/* .login-background {
     background:  #e10019;
     position: absolute;
     min-height: 100%;
-}
+} */
 
 .login-body {
-    margin-top: 10%;
-}
-
-.img-logo {
-    width: 150px;
-    background: #fff
+    width: auto;
+    height: 100vh;
 }
