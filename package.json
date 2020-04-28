@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": ".",
   "private": true,
+  "proxy": "http://inscricoes.unidos.br",
   "dependencies": {
     "@material-ui/core": "^4.8.2",
     "@testing-library/jest-dom": "^4.2.4",

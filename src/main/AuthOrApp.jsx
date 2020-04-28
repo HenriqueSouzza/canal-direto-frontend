@@ -10,7 +10,7 @@ class AuthOrApp extends Component{
     
     render(){
 
-        let token = ''
+        let token = sessionStorage.getItem('token');
 
         if(token){
             

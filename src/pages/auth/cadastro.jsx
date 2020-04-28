@@ -16,7 +16,7 @@ import Select from '../../components/form/select';
 
 import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
 
-import { efetuarLogin } from './actions';
+import { efetuarLogin, criarPessoa } from './actions';
 
 import './style.css';
 
@@ -25,11 +25,8 @@ import { toastr } from 'react-redux-toastr';
 class Cadastro extends Component {
 
     onSubmit = values => {
-        console.log(values)
-        // this.props.efetuarLogin(values, this.props.history)
-        // this.props.efetuarLogin(values)
         if(values.senha == values.confirmarSenha){
-
+            this.props.criarPessoa(values, this.props.history)
         }else{
             toastr.error('Erro', 'Senhas não conferem')
         }
@@ -41,9 +38,17 @@ class Cadastro extends Component {
 
     render() {
 
+        const { auth } = this.props.auth
+
+        console.log(auth)
+
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
             {id: 'f', name: 'Feminino'}
+        ]
+
+        let dataCongregacao = [
+            {id: '1', name: '602'},
         ]
 
         return (
@@ -67,7 +72,7 @@ class Cadastro extends Component {
                                             <Field 
                                                 component={Input} 
                                                 type={`text`}
-                                                name={`nome`} 
+                                                name={`nome_compl`} 
                                                 label={`Nome:`}
                                                 icon={`fa fa-user`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
@@ -113,7 +118,8 @@ class Cadastro extends Component {
                                                 name={`cpf`} 
                                                 label={`CPF:`}
                                                 icon={`fa fa-user`}
-                                                placeholder={`00000000000`}
+                                                maxLength={11}
+                                                placeholder={`12345678978`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.number, FORM_RULES.max(11), validateCpf)}
                                                 />
                                         </div>
@@ -126,7 +132,8 @@ class Cadastro extends Component {
                                                 name={`telefone`} 
                                                 label={`Telefone:`}
                                                 icon={`fa fa-phone`}
-                                                placeholder={`00000000000`}
+                                                maxLength={11}
+                                                placeholder={`12345678912`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.max(11))}
                                                 />
                                         </div>
@@ -134,7 +141,7 @@ class Cadastro extends Component {
                                             <Field 
                                                 component={Select} 
                                                 name={`congregacao`} 
-                                                data={dataSexo}
+                                                data={dataCongregacao}
                                                 label={`Congregacao:`}
                                                 icon={`fa fa-user`}
                                                 validate={FORM_RULES.required}
@@ -173,6 +180,7 @@ class Cadastro extends Component {
                                                 type={`submit`} 
                                                 color={`btn-success`}
                                                 icon={`fa fa-sign-in`} 
+                                                // disabled={}
                                                 description={`Confirmar`}
                                                 />
                                         </div>
@@ -202,7 +210,7 @@ const mapStateToProps = state => ({ auth: state.auth })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin, criarPessoa }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cadastro);
