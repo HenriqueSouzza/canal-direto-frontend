@@ -38,10 +38,6 @@ class Cadastro extends Component {
 
     render() {
 
-        const { auth } = this.props.auth
-
-        console.log(auth)
-
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
             {id: 'f', name: 'Feminino'}
@@ -180,7 +176,6 @@ class Cadastro extends Component {
                                                 type={`submit`} 
                                                 color={`btn-success`}
                                                 icon={`fa fa-sign-in`} 
-                                                // disabled={}
                                                 description={`Confirmar`}
                                                 />
                                         </div>
