@@ -66,7 +66,7 @@ class Auth extends Component {
                                                 label={`Senha:`}
                                                 icon={`fa fa-key`}
                                                 placeholder={`********`}
-                                                validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8)}
+                                                validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
                                                 />
                                         </div>
                                     </div>
