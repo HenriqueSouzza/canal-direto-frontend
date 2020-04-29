@@ -68,8 +68,11 @@ export const efetuarLogin = (params, router) => {
         })
         .catch(error => {
 
-            console.log(error.response)
-            toastr.error('Erro', 'Usuário sem acesso ao sistema')
+            if(error.response.data.error == 401){
+                toastr.error('Erro', 'Usuário ou senha incorreto')
+            }else{
+                toastr.error('Erro', 'Não foi possível fazer login, tente novamente mais tarde !')
+            }
             dispatch({type: type.LOAD, payload: false})
 
         })
@@ -100,7 +103,7 @@ export const criarPessoa = (params, router) => {
         })
         .catch(error => {
 
-            console.log(error.response)
+            console.log(error.response.data.error)
             toastr.error('Erro', 'Houve um erro, tente novamente, se persistir o erro, entre em contato com o e-mail email@email.com')
             dispatch({type: type.LOAD, payload: false})
 

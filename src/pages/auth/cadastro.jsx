@@ -151,6 +151,7 @@ class Cadastro extends Component {
                                                 type={`password`}
                                                 name={`senha`} 
                                                 label={`Senha:`}
+                                                maxLength={8}
                                                 icon={`fa fa-key`}
                                                 placeholder={`Senha`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
@@ -162,6 +163,7 @@ class Cadastro extends Component {
                                                 type={`password`}
                                                 name={`confirmarSenha`} 
                                                 label={`Confirmar Senha:`}
+                                                maxLength={8}
                                                 icon={`fa fa-key`}
                                                 placeholder={`Confirmar senha`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
