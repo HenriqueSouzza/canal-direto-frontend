@@ -5,6 +5,7 @@ import MenuLink from '../../menu/menuLink';
 import MenuTreeView from '../../menu/menuTreeView';
 
 function Menu(){
+
     return(
         <nav className="mt-2">
             <ul className="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
@@ -12,6 +13,7 @@ function Menu(){
                 <MenuTreeView description={`Inscrições`} path={`#`} icon={`fas fa-tasks`} >
                     <MenuLink description={`Inscritos`} path={`/inscricoes/alunos`} icon={`fa fa-users`} active={``} />
                 </MenuTreeView>
+                <MenuLink description={`Sair`} path={`/sair`} icon={`fa fa-sign-out-alt`} active={``} />
             </ul>
         </nav>
     )

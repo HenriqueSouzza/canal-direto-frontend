@@ -6,12 +6,15 @@ import Dashboard from '../../../pages/dashboard/router';
 
 import Inscricoes from '../../../pages/inscricoes/router';
 
+import Sair from '../../../pages/sair/router';
+
 function Content(){
     return(
         <div className="content-wrapper">
             <Switch>
                 <Route exact path='/' component={Dashboard} />
                 <Route path='/inscricoes' component={Inscricoes} />
+                <Route path='/sair' component={Sair} />
             </Switch>
         </div>
     )
