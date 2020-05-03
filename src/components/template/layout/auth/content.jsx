@@ -11,6 +11,7 @@ function Content(){
         <Switch>
             <Route exact path='/' component={Auth} />
             <Route path='/cadastro' component={Auth} />
+            <Route path='/esqueci-senha' component={Auth} />
         </Switch>
     )
 }

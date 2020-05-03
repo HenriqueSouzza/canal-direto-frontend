@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
-
 import { Form, Field } from 'react-final-form';
 
 import Input from '../../components/form/input';
@@ -71,6 +69,7 @@ class Cadastro extends Component {
                                                 name={`nome_compl`} 
                                                 label={`Nome:`}
                                                 icon={`fa fa-user`}
+                                                placeholder={`Nome completo`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                 />
                                         </div>
@@ -83,6 +82,7 @@ class Cadastro extends Component {
                                                 name={`email`} 
                                                 label={`Email:`}
                                                 icon={`fa fa-envelope`}
+                                                placeholder={`email@email.com`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.email)}
                                                 />
                                         </div>

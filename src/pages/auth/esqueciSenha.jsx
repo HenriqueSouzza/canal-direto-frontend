@@ -18,7 +18,7 @@ import './style.css';
 
 import { Link } from 'react-router-dom';
 
-class Auth extends Component {
+class EsqueciSenha extends Component {
 
     onSubmit = values => {
         this.props.efetuarLogin(values, this.props.history)
@@ -34,13 +34,13 @@ class Auth extends Component {
             <div className="col-md-7 bg-white">
                 <div className="row login-body justify-content-center">
                     <div className="col-md-8 align-self-center">
-                        <h1>
+                        <h2>
                             <p className="text-center">
-                                Acessar
+                                Esqueci minha senha
                             </p> 
-                        </h1>
+                        </h2>
                         <p className="text-center">
-                            <small>Informe seu login e senha para acessar</small>
+                            <small>Por favor ! Confirme os dados abaixo, e informe seu e-mail para que seja enviado uma nova senha</small>
                         </p>
                         <Form
                             onSubmit={this.onSubmit}
@@ -63,11 +63,23 @@ class Auth extends Component {
                                         <div className="col-md-8">
                                             <Field 
                                                 component={Input} 
-                                                type={`password`}
-                                                name={`senha`} 
-                                                label={`Senha:`}
-                                                icon={`fa fa-key`}
-                                                placeholder={`********`}
+                                                type={`date`}
+                                                name={`data_nascimento`} 
+                                                label={`Data de nascimento:`}
+                                                icon={`fa fa-calendar`}
+                                                validate={composeValidators(FORM_RULES.required)}
+                                                />
+                                        </div>
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        <div className="col-md-8">
+                                            <Field 
+                                                component={Input} 
+                                                type={`email`}
+                                                name={`email`} 
+                                                label={`E-mail:`}
+                                                icon={`fa fa-envelope`}
+                                                placeholder={`email@email.com`}
                                                 validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
                                                 />
                                         </div>
@@ -80,26 +92,16 @@ class Auth extends Component {
                                                 type={`submit`} 
                                                 color={`btn-success`}
                                                 icon={`fa fa-sign-in`} 
-                                                description={`Entrar`}
+                                                description={`Enviar`}
                                                 />
                                         </div>
                                     </div>
                                     <div className="row justify-content-center">
                                         <div className="col-md-8 text-center">
                                             {/* <label>&nbsp;</label> */}
-                                            <Link to={`/esqueci-senha`}> 
-                                                Esqueci minha senha
+                                            <Link to={`/`}> 
+                                                Fazer login
                                             </Link>
-                                        </div>
-                                    </div>
-                                    <div className="row mt-3 justify-content-center">
-                                        <div className="col-md-8">
-                                            {/* <label>&nbsp;</label> */}
-                                            <button type={`button`} 
-                                                    className="btn btn-info col-md-12" 
-                                                    onClick={() => this.onCadastro()}>
-                                                Quero me cadastrar
-                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -123,4 +125,4 @@ const mapStateToProps = state => ({ auth: state.auth })
 const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(EsqueciSenha);

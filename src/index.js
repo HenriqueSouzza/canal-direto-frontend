@@ -44,7 +44,6 @@ const devTools = window.__REDUX_DEVTOOLS_EXTENSION__&& window.__REDUX_DEVTOOLS_E
  */
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools);
 
-
 ReactDOM.render(<Provider store={store}> <AuthOrApp /> <Toastr/> </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
