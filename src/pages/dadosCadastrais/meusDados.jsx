@@ -16,14 +16,27 @@ import Input from '../../components/form/input';
 
 import Select from '../../components/form/select';
 
+import { USER } from '../../config/const';
+
+import { buscarDados } from './actions';
+
 
 class MeusDados extends Component{
 
+    componentDidUpdate(){
+        this.props.buscarDados(USER)
+    }
+    
     onSubmit = values => {
 
     }
-
+    
+    
     render(){
+        
+        let { loading } = this.props.dadosCadastrais
+
+        console.log(loading)
 
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
@@ -153,12 +166,12 @@ class MeusDados extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ auth: state.auth })
+const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDados }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(MeusDados);

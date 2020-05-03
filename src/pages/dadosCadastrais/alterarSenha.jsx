@@ -14,8 +14,15 @@ import Button from '../../components/form/button';
 
 import Input from '../../components/form/input';
 
+import { buscarDados } from './actions';
+
+// import { USER } from '../../config/const';
 
 class AlterarSenha extends Component{
+
+    componentDidMount = () => {
+        // this.props.buscarDados()
+    }
 
     onSubmit = values => {
 
@@ -94,7 +101,7 @@ const mapStateToProps = state => ({ auth: state.auth })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDados }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(AlterarSenha);

@@ -7,16 +7,19 @@ import { reducer as toastrReducer } from 'react-redux-toastr'; //redux do compon
 //Auth
 import AuthReducer from './pages/auth/reducer';
 
+//
+import DadosCadastraisReducer from './pages/dadosCadastrais/reducer';
+
 //Atividades complementares
-import AtvAlunosReducer from './pages/inscricoes/alunos/reducer';
+// import AtvAlunosReducer from './pages/inscricoes/alunos/reducer';
 
 const rootReducer = combineReducers({
-    dashboard: () => ({ test: 1500 }),
     toastr: toastrReducer,
-    /*** Auth ***/
     auth: AuthReducer,
+    dashboard: () => ({ test: 1500 }),
+    dadosCadastrais: DadosCadastraisReducer,
     /*** Atividades complementares ***/
-    atvAlunos: AtvAlunosReducer,
+    // atvAlunos: AtvAlunosReducer,
 })
 
 export default rootReducer; 
