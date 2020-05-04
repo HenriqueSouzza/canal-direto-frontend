@@ -12,7 +12,7 @@ import Button from '../../components/form/button';
 
 import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
 
-import { efetuarLogin } from './actions';
+import { resetSenha } from './actions';
 
 import './style.css';
 
@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 class EsqueciSenha extends Component {
 
     onSubmit = values => {
-        this.props.efetuarLogin(values, this.props.history)
+        this.props.resetSenha(values, this.props.history)
     }
 
     onCadastro = () => {
@@ -80,7 +80,7 @@ class EsqueciSenha extends Component {
                                                 label={`E-mail:`}
                                                 icon={`fa fa-envelope`}
                                                 placeholder={`email@email.com`}
-                                                validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
+                                                validate={composeValidators(FORM_RULES.required, FORM_RULES.email)}
                                                 />
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@ const mapStateToProps = state => ({ auth: state.auth })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ resetSenha }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(EsqueciSenha);

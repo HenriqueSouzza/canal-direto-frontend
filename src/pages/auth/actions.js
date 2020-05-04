@@ -35,7 +35,7 @@ export const efetuarLogin = (params, router) => {
             if(error.response.data.error == 401){
                 toastr.error('Erro', 'Usuário ou senha incorreto')
             }else{
-                toastr.error('Erro', 'Não foi possível fazer login, tente novamente mais tarde !')
+                toastr.error('Erro', 'Ops ! você não tem cadastrado no sistema.')
             }
             dispatch({type: type.LOAD, payload: false})
 
@@ -72,6 +72,42 @@ export const criarPessoa = (params, router) => {
             console.log(error.response.data.error)
             toastr.error('Erro', 'Houve um erro, tente novamente, se persistir o erro, entre em contato com o e-mail email@email.com')
             dispatch({type: type.ERROR, payload: false})
+
+        })
+    }
+}
+
+/**
+ * Método responsável para efeutar login
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const resetSenha = (params, router) => {
+
+    const endPoint = '/api/pessoa/resetar-senha';
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+        
+        axios.put(endPoint, params)
+        .then(response => {
+
+            toastr.success('Sucesso', 'Alterado com sucesso, verifique seu e-mail com sua nova senha !')
+
+            dispatch({type: type.LOAD, payload: false})
+            
+            router.push('/')
+            
+        })
+        .catch(error => {
+
+            if(error.response.data.error == 401){
+                toastr.error('Erro', 'Você não está cadastrado no sistema ou os dados passados estão incorretos')
+            }else{
+                toastr.error('Erro', 'Ops ! houve um erro técnico tente novamente, caso persista o erro entre em contato com a equipe UNIDOS.')
+            }
+            dispatch({type: type.LOAD, payload: false})
 
         })
     }

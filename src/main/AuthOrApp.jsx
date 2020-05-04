@@ -14,21 +14,21 @@ class AuthOrApp extends Component{
     
     render(){
 
-        // let auth = this.props.auth.loading;
-        let auth = false
-        let dadosCadastrais = this.props.dadosCadastrais.loading;
+        let auth = this.props.auth.loading;
+        // let auth = false
+        // let dadosCadastrais = this.props.dadosCadastrais.loading;
 
         let token = sessionStorage.getItem('token');
 
-        // if(auth || dadosCadastrais){
-        //     return (
-        //         <div className="text-center d-flex justify-content-center" style={{height: '100vh', background: 'rgba(0,0,0,0.1)'}}>
-        //             <div className="align-self-center">
-        //                 <Spinner />
-        //             </div>
-        //         </div>
-        //     )
-        // }
+        if(auth){
+            return (
+                <div className="text-center d-flex justify-content-center" style={{height: '100vh', background: 'rgba(0,0,0,0.1)'}}>
+                    <div className="align-self-center">
+                        <Spinner />
+                    </div>
+                </div>
+            )
+        }
 
         if(token){
             
