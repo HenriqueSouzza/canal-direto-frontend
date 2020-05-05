@@ -1,14 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 
-function Sair(props){
+import { connect } from 'react-redux';
 
-    useEffect(() => {
+import { bindActionCreators } from 'redux';
+
+
+class Sair extends Component{
+
+    componentDidMount(){
         sessionStorage.removeItem('token');
-        props.history.push('/');
-        window.location.reload();
-    });
+        this.props.history.push('/');
+        this.props.history.go();
+    }
 
-    return true
+    render(){
+        return true 
+    }
+
 }
 
-export default Sair;
+/**
+ * @param {*} dispatch 
+ */
+const mapDispatchToProps = dispatch => bindActionCreators({ }, dispatch);
+
+
+export default connect(null, mapDispatchToProps )(Sair);

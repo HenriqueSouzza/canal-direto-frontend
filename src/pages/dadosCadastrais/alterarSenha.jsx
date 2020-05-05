@@ -32,7 +32,7 @@ class AlterarSenha extends Component{
 
         return(
             <section className="content">
-                <MenuHeader title={`Meus Dados`} history={this.props.location.pathname} />
+                <MenuHeader title={`Alterar Senha`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card">
                         <div className="card-body">

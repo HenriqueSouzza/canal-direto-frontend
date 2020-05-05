@@ -23,7 +23,7 @@ import { buscarDados } from './actions';
 
 class MeusDados extends Component{
 
-    componentDidUpdate(){
+    componentDidMount(){
         this.props.buscarDados(USER)
     }
     
@@ -35,8 +35,6 @@ class MeusDados extends Component{
     render(){
         
         let { loading } = this.props.dadosCadastrais
-
-        console.log(loading)
 
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
