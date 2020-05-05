@@ -90,7 +90,7 @@ export const resetSenha = (params, router) => {
 
         dispatch({type: type.LOAD, payload: true})
         
-        axios.put(endPoint, params)
+        axios.post(endPoint, params)
         .then(response => {
 
             toastr.success('Sucesso', 'Alterado com sucesso, verifique seu e-mail com sua nova senha !')
@@ -105,7 +105,7 @@ export const resetSenha = (params, router) => {
             if(error.response.data.error == 401){
                 toastr.error('Erro', 'Você não está cadastrado no sistema ou os dados passados estão incorretos')
             }else{
-                toastr.error('Erro', 'Ops ! houve um erro técnico tente novamente, caso persista o erro entre em contato com a equipe UNIDOS.')
+                toastr.error('Erro', 'Ops ! Houve um erro ao tentar alterar sua senha, verique seus dados, caso persista o erro, entre em contato com a equipe UNIDOS.')
             }
             dispatch({type: type.LOAD, payload: false})
 
