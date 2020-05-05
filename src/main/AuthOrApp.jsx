@@ -14,18 +14,29 @@ class AuthOrApp extends Component{
     
     render(){
 
+        console.log(this.props)
+
         let token = sessionStorage.getItem('token');
         
         
         if(token){
             
-            return(<App />)
+            let dadosCadastrais = this.props.dadosCadastrais.loading;
+           
+            return(
+                <div>
+                    <LoadingBody status={ dadosCadastrais }/>
+                    <App />
+                </div>
+            )
             
         }else{
+
+            let auth = this.props.auth.loading;
             
             return(
                 <div>
-                    <LoadingBody />
+                    <LoadingBody status={ auth }/>
                     <AuthOrCadastro />
                 </div>
             )

@@ -6,13 +6,17 @@ import './style.css';
 
 function LoadingBody(props){
 
-    return (
-        <div className="text-center d-flex justify-content-center loadingBody">
-            <div className="align-self-center">
-                <Spinner />
+    if(props.status){
+        return (
+            <div className="text-center d-flex justify-content-center loadingBody">
+                <div className="align-self-center">
+                    <Spinner />
+                </div>
             </div>
-        </div>
-    )
+        )
+    }else{
+        return ''
+    }
     
 }
 
