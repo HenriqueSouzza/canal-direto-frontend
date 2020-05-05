@@ -36,11 +36,11 @@ class Auth extends Component {
             <div className="col-md-7 bg-white">
                 <div className="row login-body justify-content-center">
                     <div className="col-md-8 align-self-center">
-                        <div className="logoMobile">
-                            <div className="text-center mb-5">
-                                <img src={imgLogo} className="brand-image img-logo img-circle elevation-3" alt={`LogoImage`} />
+                        {/* <div className="logoMobile">
+                            <div className="text-center mb-4">
+                                <img src={imgLogo} style={{width: '50px'}} className="brand-image img-logo img-circle elevation-3" alt={`LogoImage`} />
                             </div>
-                        </div>
+                        </div> */}
                         <h1>
                             <p className="text-center">
                                 Acessar

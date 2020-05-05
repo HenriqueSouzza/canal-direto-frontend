@@ -1,6 +1,7 @@
 .loadingBody {
     position: absolute;
-    height: auto;
+    height: 100%;
+    -webkit-overflow-scrolling: auto;
     top: 0;
     bottom: 0;
     background: rgba(0,0,0,0.5);

@@ -25,7 +25,7 @@ class AuthOrApp extends Component{
             
             return(
                 <div>
-                    {/* <LoadingBody /> */}
+                    <LoadingBody />
                     <AuthOrCadastro />
                 </div>
             )
