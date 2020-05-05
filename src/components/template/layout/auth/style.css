@@ -3,3 +3,11 @@
     width: 150px;
     background: #fff
 }
+
+@media (max-width: 770px) {
+
+    .sidebarAuth{
+        display: none;
+    }
+
+}

@@ -1,6 +1,8 @@
 .loadingBody {
     position: absolute;
-    height: 100vh;
+    height: auto;
+    top: 0;
+    bottom: 0;
     background: rgba(0,0,0,0.5);
     width: 100%;
     z-index: 999;

@@ -7,7 +7,7 @@ import './style.css';
 function Sidebar() {
 
     return (
-        <div className="col-md-5 align-self-center">
+        <div className="col-md-5 align-self-center sidebarAuth">
             <div className="login-logo">
                 <img src={imgLogo} className="brand-image img-logo img-circle elevation-3" alt={`LogoImage`} />
             </div>

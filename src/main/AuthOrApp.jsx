@@ -15,7 +15,8 @@ class AuthOrApp extends Component{
     render(){
 
         let token = sessionStorage.getItem('token');
-
+        
+        
         if(token){
             
             return(<App />)
@@ -24,7 +25,7 @@ class AuthOrApp extends Component{
             
             return(
                 <div>
-                    <LoadingBody />
+                    {/* <LoadingBody /> */}
                     <AuthOrCadastro />
                 </div>
             )

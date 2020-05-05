@@ -9,3 +9,18 @@
     width: auto;
     height: 100vh;
 }
+
+.logoMobile{
+    display: none;
+}
+
+@media (max-width: 770px) {
+    
+    .logoMobile{
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: red;
+    }
+
+}

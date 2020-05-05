@@ -20,6 +20,8 @@ import './style.css';
 
 import { toastr } from 'react-redux-toastr';
 
+import imgLogo  from '../../components/template/images/logo.png';
+
 class Cadastro extends Component {
 
     onSubmit = values => {
@@ -49,6 +51,11 @@ class Cadastro extends Component {
             <div className="col-md-7 bg-white">
                 <div className="row login-body justify-content-center">
                     <div className="col-md-8 pt-5">
+                        <div className="logoMobile">
+                            <div className="text-center mb-5">
+                                <img src={imgLogo} className="brand-image img-logo img-circle elevation-3" alt={`LogoImage`} />
+                            </div>
+                        </div>
                         <h1>
                             <p className="text-center">
                                 Criar uma conta
