@@ -9,6 +9,6 @@ export const BASE_API = (
         'http://inscricoes.unidos.br/api'
 );
 
-export const USER = (sessionStorage.getItem('user'))
+export const USER = (JSON.parse(sessionStorage.getItem('user')))
 
 export const TOKEN = (sessionStorage.getItem('token'))

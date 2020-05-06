@@ -27,7 +27,7 @@ class AlterarSenha extends Component{
     onSubmit = values => {
         if(values.senha == values.confirmarSenha){
             delete values.confirmarSenha;
-            this.props.alterarSenha(values, USER, this.props.history)
+            this.props.alterarSenha(values, USER.pessoa, this.props.history)
         }else{
             toastr.error('Erro', 'Senhas não conferem')
         }

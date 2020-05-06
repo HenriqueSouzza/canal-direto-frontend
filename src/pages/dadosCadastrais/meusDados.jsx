@@ -26,12 +26,12 @@ import { buscarDadosUsuario, alterarDadosUsuario } from './actions';
 class MeusDados extends Component{
 
     componentDidMount(){
-        this.props.buscarDadosUsuario(USER)
+        this.props.buscarDadosUsuario(USER.pessoa)
     }
     
     onSubmit = values => {
         delete values.cpf
-        this.props.alterarDadosUsuario(values, USER, this.props.history)
+        this.props.alterarDadosUsuario(values, USER.pessoa, this.props.history)
     }
     
     
