@@ -41,6 +41,42 @@ export const buscarDadosUsuario = (params) => {
 
 }
 
+
+/**
+ * Método responsável para alterar senha
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const alterarDadosUsuario = (params, user, router) => {
+
+    const endPoint = '/api/pessoa/' + user;
+
+    const headers = { Authorization: TOKEN }
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+        
+        axios.put(endPoint, params, { headers : headers })
+        .then(response => {
+            
+            toastr.success('Sucesso', 'Seus dados foram alterados com sucesso !')
+
+            dispatch(buscarDadosUsuario(user))
+            
+            
+        })
+        .catch(error => {
+
+            console.log(error.response.data.error)
+            toastr.error('Erro', 'Houve um erro ao tentar alterar seus dados, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+}
+
+
 /**
  * Método responsável para alterar senha
  * @param {*} params 
@@ -59,7 +95,7 @@ export const alterarSenha = (params, user, router) => {
         axios.put(endPoint, params, { headers : headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Cadastrado com sucesso, verifique seu e-mail !')
+            toastr.success('Sucesso', 'Sua senha foi alterada com sucesso !')
 
             dispatch({type: type.LOAD, payload: false})
             

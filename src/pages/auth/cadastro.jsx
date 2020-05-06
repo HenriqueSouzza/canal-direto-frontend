@@ -12,6 +12,8 @@ import Button from '../../components/form/button';
 
 import Select from '../../components/form/select';
 
+import LoadingBody from '../../components/loading/loadingBody';
+
 import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
 
 import { efetuarLogin, criarPessoa } from './actions';
@@ -38,6 +40,8 @@ class Cadastro extends Component {
 
     render() {
 
+        let { loading } = this.props.auth
+
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
             {id: 'f', name: 'Feminino'}
@@ -49,6 +53,7 @@ class Cadastro extends Component {
 
         return (
             <div className="col-md-7 bg-white">
+                <LoadingBody status={loading} />
                 <div className="row login-body justify-content-center">
                     <div className="col-md-8 pt-5">
                         {/* <div className="logoMobile">

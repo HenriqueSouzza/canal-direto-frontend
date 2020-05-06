@@ -16,24 +16,29 @@ import Input from '../../components/form/input';
 
 import Select from '../../components/form/select';
 
+import LoadingBody from '../../components/loading/loadingBody';
+
 import { USER } from '../../config/const';
 
-import { buscarDadosUsuario } from './actions';
+import { buscarDadosUsuario, alterarDadosUsuario } from './actions';
 
 
 class MeusDados extends Component{
 
     componentDidMount(){
-        this.props.buscarDadosUsuario(11)
+        this.props.buscarDadosUsuario(USER)
     }
     
     onSubmit = values => {
-
+        delete values.cpf
+        this.props.alterarDadosUsuario(values, USER, this.props.history)
     }
     
     
     render(){
 
+        let { loading, dadosUsuario } = this.props.dadosCadastrais
+        
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
             {id: 'f', name: 'Feminino'}
@@ -43,14 +48,26 @@ class MeusDados extends Component{
             {id: '1', name: '602'},
         ]
 
+        const initialValues = {
+            nome_compl: dadosUsuario ? dadosUsuario.nome_compl : '',
+            email: dadosUsuario ? dadosUsuario.email : '',
+            cpf: dadosUsuario ? dadosUsuario.cpf : '',
+            data_nascimento: dadosUsuario ? dadosUsuario.data_nascimento : '',
+            sexo: dadosUsuario ? dadosUsuario.sexo : '',
+            telefone: dadosUsuario ? dadosUsuario.telefone : '',
+            congregacao: dadosUsuario ? dadosUsuario.congregacao : '',
+        }
+
         return(
             <section className="content">
+                <LoadingBody status={loading} />
                 <MenuHeader title={`Meus Dados`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card">
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
+                                initialValues={initialValues}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
                                         <div className="row">
@@ -162,13 +179,12 @@ class MeusDados extends Component{
 /**
  * @param {*} state 
  */
-// const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais })
+const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, alterarDadosUsuario }, dispatch);
 
 
-// export default connect(mapStateToProps, mapDispatchToProps )(MeusDados);
-export default connect(null, mapDispatchToProps )(MeusDados);
+export default connect(mapStateToProps, mapDispatchToProps )(MeusDados);

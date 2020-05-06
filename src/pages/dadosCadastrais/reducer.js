@@ -2,7 +2,8 @@ import type from './types';
 
 //Estado inicial da componente
 const INITIAL_STATE = {
-    list: [],
+    dadosUsuario: [],
+    congregacao: [],
     loading: false
 }
 
@@ -15,7 +16,7 @@ export default (state = INITIAL_STATE, action) => {
 
         //Caso para Guar
         case type.BUSCAR_DADOS_USUARIO:
-            return { ...state, list: action.payload.data || INITIAL_STATE.list, loading: false }        
+            return { ...state, dadosUsuario: action.payload.data || INITIAL_STATE.list, loading: false }        
 
         default:
             return state;   

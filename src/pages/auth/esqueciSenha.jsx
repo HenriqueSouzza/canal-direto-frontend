@@ -10,6 +10,8 @@ import Input from '../../components/form/input';
 
 import Button from '../../components/form/button';
 
+import LoadingBody from '../../components/loading/loadingBody';
+
 import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
 
 import { resetSenha } from './actions';
@@ -32,8 +34,11 @@ class EsqueciSenha extends Component {
 
     render() {
 
+        let { loading } = this.props.auth
+
         return (
             <div className="col-md-7 bg-white">
+                <LoadingBody status={loading} />
                 <div className="row login-body justify-content-center">
                     <div className="col-md-8 align-self-center">
                         {/* <div className="logoMobile">

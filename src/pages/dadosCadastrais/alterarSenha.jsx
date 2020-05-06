@@ -14,6 +14,8 @@ import Button from '../../components/form/button';
 
 import Input from '../../components/form/input';
 
+import LoadingBody from '../../components/loading/loadingBody';
+
 import { alterarSenha } from './actions';
 
 import { toastr } from 'react-redux-toastr';
@@ -32,6 +34,12 @@ class AlterarSenha extends Component{
     }
 
     render(){
+
+        let { loading } = this.props.dadosCadastrais
+        
+        if(loading){
+            return <LoadingBody />
+        }
 
         return(
             <section className="content">
@@ -53,7 +61,7 @@ class AlterarSenha extends Component{
                                                     maxLength={8}
                                                     icon={`fa fa-key`}
                                                     placeholder={`Digite sua nova senha`}
-                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
+                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.min(8))}
                                                     />
                                             </div>
                                         </div>
@@ -67,7 +75,7 @@ class AlterarSenha extends Component{
                                                     maxLength={8}
                                                     icon={`fa fa-key`}
                                                     placeholder={`Confirmar senha`}
-                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
+                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.min(8))}
                                                     />
                                             </div>
                                         </div>
@@ -99,7 +107,7 @@ class AlterarSenha extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ auth: state.auth })
+const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais })
 
 /**
  * @param {*} dispatch 
