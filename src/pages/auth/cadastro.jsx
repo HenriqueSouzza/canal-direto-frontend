@@ -16,7 +16,7 @@ import LoadingBody from '../../components/loading/loadingBody';
 
 import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
 
-import { efetuarLogin, criarPessoa } from './actions';
+import { efetuarLogin, criarPessoa, buscarCongregacoes } from './actions';
 
 import './style.css';
 
@@ -25,6 +25,10 @@ import { toastr } from 'react-redux-toastr';
 import imgLogo  from '../../components/template/images/logo.png';
 
 class Cadastro extends Component {
+
+    componentDidMount(){
+        this.props.buscarCongregacoes();
+    }
 
     onSubmit = values => {
         if(values.senha == values.confirmarSenha){
@@ -40,16 +44,21 @@ class Cadastro extends Component {
 
     render() {
 
-        let { loading } = this.props.auth
+        let { loading, congregacao } = this.props.auth
 
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
             {id: 'f', name: 'Feminino'}
         ]
+        
+        let dataCongregacao = []
 
-        let dataCongregacao = [
-            {id: '1', name: '602'},
-        ]
+        if(congregacao){
+
+            congregacao.map(row => {
+                dataCongregacao.push({id: row.congregacao, name: row.nome_congregacao})
+            })
+        }
 
         return (
             <div className="col-md-7 bg-white">
@@ -219,7 +228,7 @@ const mapStateToProps = state => ({ auth: state.auth })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin, criarPessoa }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogin, criarPessoa, buscarCongregacoes }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cadastro);

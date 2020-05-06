@@ -20,13 +20,14 @@ import LoadingBody from '../../components/loading/loadingBody';
 
 import { USER } from '../../config/const';
 
-import { buscarDadosUsuario, alterarDadosUsuario } from './actions';
+import { buscarDadosUsuario, alterarDadosUsuario, buscarCongregacoes } from './actions';
 
 
 class MeusDados extends Component{
 
     componentDidMount(){
         this.props.buscarDadosUsuario(USER.pessoa)
+        this.props.buscarCongregacoes()
     }
     
     onSubmit = values => {
@@ -37,16 +38,21 @@ class MeusDados extends Component{
     
     render(){
 
-        let { loading, dadosUsuario } = this.props.dadosCadastrais
+        let { loading, dadosUsuario, congregacao } = this.props.dadosCadastrais
         
         let dataSexo = [
             {id: 'm', name: 'Masculino'},
             {id: 'f', name: 'Feminino'}
         ]
 
-        let dataCongregacao = [
-            {id: '1', name: '602'},
-        ]
+        let dataCongregacao = []
+
+        if(congregacao){
+
+            congregacao.map(row => {
+                dataCongregacao.push({id: row.congregacao, name: row.nome_congregacao})
+            })
+        }
 
         const initialValues = {
             nome_compl: dadosUsuario ? dadosUsuario.nome_compl : '',
@@ -103,7 +109,7 @@ class MeusDados extends Component{
                                                     readOnly={true}
                                                     maxLength={11}
                                                     placeholder={`12345678978`}
-                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.number, FORM_RULES.max(11), validateCpf)}
+                                                    // validate={composeValidators(FORM_RULES.required, FORM_RULES.number, FORM_RULES.max(11), validateCpf)}
                                                     />
                                             </div>
                                         </div>
@@ -184,7 +190,7 @@ const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, alterarDadosUsuario }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, alterarDadosUsuario, buscarCongregacoes }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(MeusDados);

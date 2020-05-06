@@ -18,6 +18,10 @@ export default (state = INITIAL_STATE, action) => {
         case type.BUSCAR_DADOS_USUARIO:
             return { ...state, dadosUsuario: action.payload.data || INITIAL_STATE.list, loading: false }        
 
+        //Caso para guardar dados da congregacao
+        case type.BUSCAR_CONGREGACAO:
+            return { ...state, congregacao: action.payload.data || INITIAL_STATE.list, loading: false }        
+
         default:
             return state;   
 

@@ -109,3 +109,31 @@ export const resetSenha = (params, router) => {
         })
     }
 }
+
+export const buscarCongregacoes = () => {
+
+    const endPoint = '/api/congregacao';
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+        
+        axios.get(endPoint)
+        .then(response => {
+
+            dispatch({type: type.GUARDAR_CONGREGACAO, payload: response})
+            
+        })
+        .catch(error => {
+
+            if(error.response.data.error == 401){
+                toastr.error('Erro', 'Acesso negado')
+            }else{
+                toastr.error('Erro', 'Ops ! Houve um erro para buscar as congregações diponíveis, tente novamente, caso persista o erro, entre em contato com a equipe UNIDOS.')
+            }
+            
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+}
