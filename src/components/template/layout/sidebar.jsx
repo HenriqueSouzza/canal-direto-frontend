@@ -6,12 +6,12 @@ import Menu from './menu';
 import imgPerfil  from '../images/perfil.png';
 
 import imgLogo  from '../images/logo.png';
+
+import { USER } from '../../../config/const';
  
 function Sidebar() {
 
-    const user_temp = sessionStorage.getItem('user')
-
-    const user = user_temp ? JSON.parse(user_temp) : null
+    console.log(USER)
 
     return (
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -25,7 +25,7 @@ function Sidebar() {
                         <img src={imgPerfil} className="img-circle elevation-2" alt={`UserImage`} />
                     </div>
                     <div className="info">
-                        <Link to={`#`} className="d-block">{ user && user.user ? user.user : 'Sem nome' }</Link>
+                        <Link to={`#`} className="d-block">{ USER && USER.nome_compl ? USER.nome_compl.split(' ').slice(0, 2).join(' ') : 'Sem nome' }</Link>
                     </div>
                 </div>
                 <Menu />
