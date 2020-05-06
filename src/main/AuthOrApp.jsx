@@ -14,29 +14,22 @@ class AuthOrApp extends Component{
     
     render(){
 
-        console.log(this.props)
-
         let token = sessionStorage.getItem('token');
-        
         
         if(token){
             
-            let dadosCadastrais = this.props.dadosCadastrais.loading;
-           
             return(
                 <div>
-                    <LoadingBody status={ dadosCadastrais }/>
+                    {/* <LoadingBody status={ dadosCadastrais }/> */}
                     <App />
                 </div>
             )
             
         }else{
 
-            let auth = this.props.auth.loading;
-            
             return(
                 <div>
-                    <LoadingBody status={ auth }/>
+                    {/* <LoadingBody status={ auth }/> */}
                     <AuthOrCadastro />
                 </div>
             )
@@ -47,9 +40,4 @@ class AuthOrApp extends Component{
 
 }
 
-/**
- * @param {*} state 
- */
-const mapStateToProps = state => ({ auth: state.auth, dadosCadastrais: state.dadosCadastrais})
-
-export default connect(mapStateToProps, null)(AuthOrApp);
+export default AuthOrApp;

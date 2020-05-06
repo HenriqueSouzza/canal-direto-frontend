@@ -8,17 +8,13 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-
+        
         //Caso para apresentar o load na tela quando for true
-        case type.LOAD_DADOS:
-            return { ...state, loading: action.payload }
-
-        //Caso retornar algum erro
-        case type.ERROR_DADOS:
-            return { ...state, list: action.payload.data || INITIAL_STATE.list, loading: false }
+        case type.LOAD:
+            return {...state, loading: action.payload}
 
         //Caso para Guar
-        case type.BUSCAR_DADOS:
+        case type.BUSCAR_DADOS_USUARIO:
             return { ...state, list: action.payload.data || INITIAL_STATE.list, loading: false }        
 
         default:

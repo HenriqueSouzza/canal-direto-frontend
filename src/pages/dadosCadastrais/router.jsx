@@ -9,7 +9,7 @@ import AlterarSenha from './alterarSenha';
 function Router(){
     return(
         <Switch>
-            <Route exact path='/dados-cadastrais' component={ props => <MeusDados {...props} />} />
+            {/* <Route exact path='/dados-cadastrais' component={ props => <MeusDados {...props} />} /> */}
             <Route exact path='/dados-cadastrais/meus-dados' component={ props => <MeusDados {...props} />} />
             <Route exact path='/dados-cadastrais/alterar-senha' component={ props => <AlterarSenha {...props} />} />
         </Switch>

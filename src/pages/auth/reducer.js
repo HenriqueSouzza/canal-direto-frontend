@@ -19,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
 
         //Caso para Guar
         case type.GUARDAR_TOKEN:
+            sessionStorage.setItem('token', action.payload.data.token)
+            sessionStorage.setItem('user', action.payload.data.pessoa)
             return { ...state, list: action.payload.data || INITIAL_STATE.list, loading: false }        
 
         default:

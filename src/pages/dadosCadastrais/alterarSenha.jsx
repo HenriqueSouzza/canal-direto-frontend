@@ -14,18 +14,21 @@ import Button from '../../components/form/button';
 
 import Input from '../../components/form/input';
 
-import { buscarDados } from './actions';
+import { alterarSenha } from './actions';
 
-// import { USER } from '../../config/const';
+import { toastr } from 'react-redux-toastr';
+
+import { USER } from '../../config/const';
 
 class AlterarSenha extends Component{
 
-    componentDidMount = () => {
-        // this.props.buscarDados()
-    }
-
     onSubmit = values => {
-
+        if(values.senha == values.confirmarSenha){
+            delete values.confirmarSenha;
+            this.props.alterarSenha(values, USER, this.props.history)
+        }else{
+            toastr.error('Erro', 'Senhas não conferem')
+        }
     }
 
     render(){
@@ -101,7 +104,7 @@ const mapStateToProps = state => ({ auth: state.auth })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDados }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ alterarSenha }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(AlterarSenha);

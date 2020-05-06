@@ -22,9 +22,6 @@ export const efetuarLogin = (params, router) => {
             
             toastr.success('Sucesso', 'Seja bem-vindo !')
             
-            sessionStorage.setItem('token', response.data.token)
-            sessionStorage.setItem('user', response.data.pessoa)
-            
             dispatch({type: type.GUARDAR_TOKEN, payload: response})
 
             router.go()

@@ -7,7 +7,7 @@ import { reducer as toastrReducer } from 'react-redux-toastr'; //redux do compon
 //Auth
 import AuthReducer from './pages/auth/reducer';
 
-//
+//Dados Cadastrais
 import DadosCadastraisReducer from './pages/dadosCadastrais/reducer';
 
 //Atividades complementares

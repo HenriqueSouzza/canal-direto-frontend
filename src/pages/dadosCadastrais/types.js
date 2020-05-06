@@ -1,5 +1,4 @@
 export default {
     LOAD: 'LOAD',
-    ERROR: 'ERROR',
-    BUSCAR_DADOS: 'BUSCAR_DADOS',
+    BUSCAR_DADOS_USUARIO: 'BUSCAR_DADOS_USUARIO',
 }
