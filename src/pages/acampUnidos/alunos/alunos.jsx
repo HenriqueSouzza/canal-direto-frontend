@@ -46,6 +46,7 @@ class Alunos extends Component{
 
     //Função para replicar data de finalização da atividade para todos os alunos selecionados
     onSubmitReplicar = async (values) => {
+        
         const dados = []
 
         this.state.checkbox.map(row => {

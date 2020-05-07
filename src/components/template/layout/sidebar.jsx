@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 import Menu from './menu';
@@ -10,9 +11,6 @@ import imgLogo  from '../images/logo.png';
 import { USER } from '../../../config/const';
  
 function Sidebar() {
-
-    console.log(USER)
-
     return (
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
             <Link to={`#`} className="brand-link text-sm">

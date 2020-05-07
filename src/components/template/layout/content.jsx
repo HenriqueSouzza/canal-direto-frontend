@@ -6,7 +6,7 @@ import Dashboard from '../../../pages/dashboard/router';
 
 import DadosCadastrais from '../../../pages/dadosCadastrais/router';
 
-import Inscricoes from '../../../pages/inscricoes/router';
+import AcampUnidos from '../../../pages/acampUnidos/router';
 
 import Sair from '../../../pages/sair/router';
 
@@ -16,7 +16,7 @@ function Content(){
             <Switch>
                 <Route exact path='/' component={Dashboard} />
                 <Route path='/dados-cadastrais' component={DadosCadastrais} />
-                <Route path='/inscricoes' component={Inscricoes} />
+                <Route path='/acamp-unidos' component={AcampUnidos} />
                 <Route path='/sair' component={Sair} />
             </Switch>
         </div>
