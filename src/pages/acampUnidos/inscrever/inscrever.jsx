@@ -18,7 +18,7 @@ class Acamp extends Component{
         super(props)
 
         this.state = {
-            passoAtual: '1'
+            passoAtual: '2'
         }
 
     }
@@ -50,7 +50,6 @@ class Acamp extends Component{
     }
 
     render(){
-        console.log(this.state)
         return (
                 <section className="content">
                     <MenuHeader title={`Inscrição`} history={this.props.location.pathname} />

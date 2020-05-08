@@ -32,7 +32,7 @@ class MeusDados extends Component{
     
     onSubmit = values => {
         delete values.cpf
-        this.props.alterarDadosUsuario(values, USER.pessoa, this.props.history)
+        this.props.alterarDadosUsuario(values, USER.pessoa)
     }
     
     
@@ -48,7 +48,6 @@ class MeusDados extends Component{
         let dataCongregacao = []
 
         if(congregacao){
-
             congregacao.map(row => {
                 dataCongregacao.push({id: row.congregacao, name: row.nome_congregacao})
             })

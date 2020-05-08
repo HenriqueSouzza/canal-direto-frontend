@@ -60,7 +60,7 @@ export const alterarDadosUsuario = (params, user, router) => {
         axios.put(endPoint, params, { headers : headers })
         .then(response => {
             
-            toastr.success('Sucesso', 'Seus dados foram alterados com sucesso !')
+            toastr.success('Sucesso', 'Dados atualizados com sucesso !')
 
             dispatch(buscarDadosUsuario(user))
             
