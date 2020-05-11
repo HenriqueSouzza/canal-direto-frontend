@@ -12,6 +12,12 @@ import PassoDois from './passoDois';
 
 import PassoTres from './passoTres';
 
+import { USER } from '../../../config/const';
+
+import { buscarDadosUsuario, buscarCongregacoes } from '../../dadosCadastrais/actions';
+
+import { buscarDadosEvento } from './actions';
+
 class Inscrever extends Component{
 
     constructor(props){
@@ -20,7 +26,6 @@ class Inscrever extends Component{
         this.state = {
             passoAtual: '2'
         }
-
     }
 
     /**
@@ -62,9 +67,6 @@ class Inscrever extends Component{
                                     </div><i className="fa fa-arrow-right"></i>
                                     <div className={"d-inline p-2 mr-2 ml-2 " + (this.state.passoAtual == '2' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
                                         Pagamento
-                                    </div><i className="fa fa-arrow-right"></i>
-                                    <div className={"d-inline p-2 mr-2 ml-2 " + (this.state.passoAtual == '3' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
-                                        Conclusão
                                     </div>
                                 </div>
                                 <div className="card-body text-center">
@@ -87,8 +89,8 @@ class Inscrever extends Component{
 /**
  * @param {*} dispatch 
  */
-// const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, buscarCongregacoes }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, buscarCongregacoes, buscarDadosEvento }, dispatch);
 
 
-export default connect(null, null )(Inscrever);
+export default connect(null, mapDispatchToProps )(Inscrever);
 
