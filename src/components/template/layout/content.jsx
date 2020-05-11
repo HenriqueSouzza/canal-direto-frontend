@@ -10,6 +10,8 @@ import AcampUnidos from '../../../pages/acampUnidos/router';
 
 import Sair from '../../../pages/sair/router';
 
+import PaginaNaoEncontrada from '../../../pages/errosPagina/paginaNaoEncontrada';
+
 function Content(){
     return(
         <div className="content-wrapper">
@@ -18,6 +20,7 @@ function Content(){
                 <Route path='/dados-cadastrais' component={DadosCadastrais} />
                 <Route path='/acamp-unidos' component={AcampUnidos} />
                 <Route path='/sair' component={Sair} />
+                <Route path="*" component={PaginaNaoEncontrada}/>
             </Switch>
         </div>
     )

@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 //Component de inscricao
-import Inscrever  from './inscrever/inscrever';  
+import Inscrever  from './inscrever/inscrever'; 
 
 function Router(props){
 

@@ -4,7 +4,10 @@ import { Route, Switch  } from 'react-router-dom';
 
 import Auth from '../../../../pages/auth/router';
 
+import PaginaNaoEncontrada from '../../../../pages/auth/paginaNaoEncontrada';
+
 import './style.css';
+
 
 function Content(){
     return(
@@ -12,6 +15,7 @@ function Content(){
             <Route exact path='/' component={Auth} />
             <Route path='/cadastro' component={Auth} />
             <Route path='/esqueci-senha' component={Auth} />
+            <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>
     )
 }
