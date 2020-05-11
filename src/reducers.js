@@ -10,16 +10,15 @@ import AuthReducer from './pages/auth/reducer';
 //Dados Cadastrais
 import DadosCadastraisReducer from './pages/dadosCadastrais/reducer';
 
-//Atividades complementares
-// import AtvAlunosReducer from './pages/inscricoes/alunos/reducer';
+//Dados Cadastrais
+import AcampUnidosReducer from './pages/acampUnidos/inscrever/reducer';
 
 const rootReducer = combineReducers({
     toastr: toastrReducer,
     auth: AuthReducer,
     dashboard: () => ({ test: 1500 }),
     dadosCadastrais: DadosCadastraisReducer,
-    /*** Atividades complementares ***/
-    // atvAlunos: AtvAlunosReducer,
+    acampUnidos: AcampUnidosReducer,
 })
 
 export default rootReducer; 

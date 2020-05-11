@@ -9,11 +9,11 @@ import { TOKEN } from '../../../config/const';
 /**
  * método para buscar os dados do usuario
  */
-export const buscarDadosUsuario = (params) => {
+export const buscarDadosEvento = (params) => {
 
-    const endPoint = '/api/pessoa/' + params;
+    const endPoint = '/api/evento/' + params;
 
-    const headers = { Authorization: TOKEN}
+    const headers = { Authorization: TOKEN }
 
     return dispatch => {
 
@@ -22,7 +22,7 @@ export const buscarDadosUsuario = (params) => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
             
-            dispatch({ type: type.BUSCAR_DADOS_USUARIO, payload: response })
+            dispatch({ type: type.BUSCAR_DADOS_EVENTO, payload: response })
             
         })
         .catch(error => {

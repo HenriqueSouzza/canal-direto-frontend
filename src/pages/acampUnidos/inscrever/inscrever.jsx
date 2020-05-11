@@ -12,7 +12,7 @@ import PassoDois from './passoDois';
 
 import PassoTres from './passoTres';
 
-class Acamp extends Component{
+class Inscrever extends Component{
 
     constructor(props){
         super(props)
@@ -58,13 +58,13 @@ class Acamp extends Component{
                             <div className="card">
                                 <div className="card-header text-center">
                                     <div className={"d-inline p-2 mr-2 " + (this.state.passoAtual == '1' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
-                                        Passo 1
+                                        Dados cadastrais
                                     </div><i className="fa fa-arrow-right"></i>
                                     <div className={"d-inline p-2 mr-2 ml-2 " + (this.state.passoAtual == '2' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
-                                        Passo 2
+                                        Pagamento
                                     </div><i className="fa fa-arrow-right"></i>
                                     <div className={"d-inline p-2 mr-2 ml-2 " + (this.state.passoAtual == '3' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
-                                        Passo 3
+                                        Conclusão
                                     </div>
                                 </div>
                                 <div className="card-body text-center">
@@ -87,8 +87,8 @@ class Acamp extends Component{
 /**
  * @param {*} dispatch 
  */
-// const mapDispatchToProps = dispatch => bindActionCreators({ removerAluno, buscarDadosForm, buscarAluno, alterarAluno, salvarAlunoLyceum }, dispatch);
+// const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, buscarCongregacoes }, dispatch);
 
 
-export default connect(null, null )(Acamp);
+export default connect(null, null )(Inscrever);
 
