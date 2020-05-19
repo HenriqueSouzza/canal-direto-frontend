@@ -40,3 +40,32 @@ export const buscarDadosEvento = (params) => {
     }
 
 }
+
+/**
+ * método para buscar dados do cep
+ */
+export const buscarCep = (params) => {
+
+    const endPoint = 'https://viacep.com.br/ws/'+ params + '/json'
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint)
+        .then(response => {
+            
+            dispatch({ type: type.BUSCAR_DADOS_CEP, payload: response })
+            
+        })
+        .catch(error => {
+
+            dispatch({type: type.LOAD, payload: false})
+
+            console.log(error.response)
+
+        })
+    }
+
+}
+
