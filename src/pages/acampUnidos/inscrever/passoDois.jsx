@@ -4,21 +4,11 @@ import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 
-import { Form, Field } from 'react-final-form';
-
-import Input from '../../../components/form/input';
-
-import Button from '../../../components/form/button';
-
-import { FORM_RULES, composeValidators } from '../../../helpers/validations';
-
 import LoadingBody from '../../../components/loading/loadingBody';
 
-import { buscarDadosEvento, buscarCep } from './actions';
+import { salvarInscricao } from './actions';
 
-import Select from '../../../components/form/select';
-
-import { DirectPayment, payment } from 'pagseguro-react';
+import { DirectPayment } from 'pagseguro-react';
 
 
 class PassoDois extends Component{
@@ -61,14 +51,14 @@ class PassoDois extends Component{
             },
 
             billing: {
-                street: '', //'Av Campeche',
-                number: '', //1111,
-                complement: '', //'Casa',
-                district: '', //'Campeche',
-                city: '', //'Florianópolis',
-                state: '', //'SC',
-                country: '', //'BRA',
-                postalCode: '', //'88063789'
+                street: 'Av Campeche',
+                number: 1111,
+                complement: 'Casa',
+                district: 'Campeche',
+                city: 'Florianópolis',
+                state: 'SC',
+                country: 'BRA',
+                postalCode: '88063789'
             },
 
             items: [
@@ -76,7 +66,7 @@ class PassoDois extends Component{
                     id: dadosInscricao.evento.evento,
                     description: dadosInscricao.evento.nome_evento,
                     quantity: 1,
-                    // amount: 2,
+                    amount:  dadosInscricao.evento.valor,
                 },  
             ],
 
@@ -84,12 +74,12 @@ class PassoDois extends Component{
                 maxInstallmentNoInterest: 3 // parcelas com desconto
             },
             // extraAmount: 10.00,
-            reference: 'Inscricao para acamp unidos'
+            reference: 'Inscriçao para acamp unidos'
         }
     }
 
     onSubmit = values => {
-        console.log(values)
+        this.props.salvarInscricao(values)
     }
 
     onError = values => {
@@ -98,13 +88,7 @@ class PassoDois extends Component{
 
     render(){
 
-        let { loading, dadosInscricao } = this.props.acampUnidos
-
-        // let initialValues = {
-        //     cpf: dadosUsuario ? dadosUsuario.cpf : '',
-        // }
-
-        console.log(dadosInscricao)
+        let { loading } = this.props.acampUnidos
 
         return(
             <div className="content-fluid">
@@ -126,10 +110,12 @@ class PassoDois extends Component{
                         onError={this.onError.bind(this)}
                         onSubmit={(e) => this.onSubmit(e)}
                     />
-                    <div className="col-md-6 text-center">
+                </div>
+                <div className="row mt-3">
+                    <div className="col-md-12 text-center">
                         <button 
-                            className="btn btn-danger col-md-6" 
-                            onClick={() => this.props.onClickPasso({passoAtual: '1'})}>Voltar</button>
+                            className="btn btn-danger col-md-4" 
+                            onClick={() => this.props.onClickPasso({passoAtual: '1'})}>Voltar passo</button>
                     </div>
                 </div>
             </div>
@@ -145,7 +131,7 @@ const mapStateToProps = state => ({ acampUnidos: state.acampUnidos })
 /**
  * @param {*} dispatch 
  */
-// const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosEvento, buscarCep }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInscricao }, dispatch);
 
 
-export default connect(mapStateToProps, null )(PassoDois);
+export default connect(mapStateToProps, mapDispatchToProps )(PassoDois);

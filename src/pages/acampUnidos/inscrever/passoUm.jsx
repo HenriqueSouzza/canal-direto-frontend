@@ -42,40 +42,40 @@ class PassoUm extends Component{
                 <div className="content-fluid">
                     <div className="card">
                         <div className="card-body">
-                            <div className="row">
-                                <div className="col-md-3">
+                            <div className="row justify-content-center">
+                                <div className="col-md-4">
                                     <h5> Nome completo: </h5>
                                     <p className="text-info">
                                         <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.nome_compl : ''}</strong>
                                     </p>
                                 </div>
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <h5> Email: </h5>
                                     <p className="text-info">
                                         <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.email : ''}</strong>
                                     </p>
                                 </div>
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <h5> CPF: </h5>
                                     <p className="text-info">
                                         <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.cpf : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
-                                <div className="col-md-3">
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-md-4">
                                     <h5> Data de Nascimento: </h5>
                                     <p className="text-info">
                                         <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.data_nascimento : ''}</strong>
                                     </p>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-3">
-                                    <h5> Data: </h5>
+                                <div className="col-md-4">
+                                    <h5> Sexo: </h5>
                                     <p className="text-info">
                                         <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.sexo == 'm' ? 'masculino' : 'feminino' : ''}</strong>
                                     </p>
                                 </div>
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <h5> Telefone: </h5>
                                     <p className="text-info">
                                         <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.telefone : ''}</strong>

@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN } from '../../../config/const';
+import { TOKEN, USER } from '../../../config/const';
 
 /**
  * método para buscar os dados do usuario
@@ -30,6 +30,39 @@ export const buscarDadosInscricao = (params) => {
             dispatch({type: type.LOAD, payload: false})
 
             toastr.error('Erro', error.response.data.messages.error)
+
+        })
+    }
+
+}
+
+export const salvarInscricao = params => {
+
+    const endPoint = '/api/inscricao'
+
+    const headers = { Authorization: TOKEN }
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.post(endPoint, params, { headers: headers })
+        .then(response => {
+            
+            console.log(response)
+            params = {
+                'env': 'production',
+                'idPessoa': USER.pessoa,
+                'idEvento': params.items[0]['id']
+            }
+            
+            dispatch(buscarDadosInscricao(params))
+            
+        })
+        .catch(error => {
+
+            dispatch({type: type.LOAD, payload: false})
+            console.log(error.response)
 
         })
     }
