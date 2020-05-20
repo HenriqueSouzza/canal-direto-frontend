@@ -15,6 +15,7 @@ import PassoTres from './passoTres';
 import { USER } from '../../../config/const';
 
 import { buscarDadosInscricao } from './actions';
+import LoadingBody from '../../../components/loading/loadingBody';
 
 class Inscrever extends Component{
 
@@ -63,13 +64,14 @@ class Inscrever extends Component{
     render(){
 
         //caso o usuario já tenha inscrição, pular para o passo 3
-        let { dadosInscricao } = this.props.acampUnidos
+        let { loading, dadosInscricao } = this.props.acampUnidos
         
         let passo = dadosInscricao.inscricao && dadosInscricao.inscricao.length > 0 ? this.state.passoAtual = '3' : '1'
         
         return (
             <section className="content">
                 <MenuHeader title={`Inscrição`} history={this.props.location.pathname} />
+                <LoadingBody status={loading} />
                 <div className="row justify-content-center">
                     <div className="col-md-12">
                         <div className="card">
