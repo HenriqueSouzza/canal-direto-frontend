@@ -23,7 +23,7 @@ class Inscrever extends Component{
     constructor(props){
         super(props)
         this.state = {
-            passoAtual: '0'
+            passoAtual: '1'
         }
     }
 
@@ -67,7 +67,7 @@ class Inscrever extends Component{
         //caso o usuario já tenha inscrição, pular para o passo 3
         let { loading, dadosInscricao } = this.props.acampUnidos
         
-        let passo = dadosInscricao.inscricao && dadosInscricao.inscricao.length > 0 ? this.state.passoAtual = '3' : '1'
+        let passo = dadosInscricao.inscricao && dadosInscricao.inscricao.length > 0 ? this.state.passoAtual = '3' : this.state.passoAtual
         
         return (
             <section className="content">

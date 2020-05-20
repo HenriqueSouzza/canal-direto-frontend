@@ -9,6 +9,7 @@ class Sair extends Component{
 
     componentDidMount(){
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
         this.props.history.push('/');
         this.props.history.go();
     }
