@@ -15,6 +15,7 @@ import PassoTres from './passoTres';
 import { USER } from '../../../config/const';
 
 import { buscarDadosInscricao } from './actions';
+
 import LoadingBody from '../../../components/loading/loadingBody';
 
 class Inscrever extends Component{
@@ -22,7 +23,7 @@ class Inscrever extends Component{
     constructor(props){
         super(props)
         this.state = {
-            passoAtual: '1'
+            passoAtual: '0'
         }
     }
 

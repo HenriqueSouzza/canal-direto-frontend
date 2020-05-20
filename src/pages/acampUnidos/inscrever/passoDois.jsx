@@ -92,7 +92,7 @@ class PassoDois extends Component{
 
         return(
             <div className="content-fluid">
-                <LoadingBody status={loading} />
+                {/* <LoadingBody status={loading} /> */}
                 <div className="text-left w-90">
                     <div className="bg-secondary rounded text-center">
                         <h4>Forma de pagamento</h4>

@@ -26,16 +26,9 @@ class PassoUm extends Component{
 
         let { loading, dadosInscricao } = this.props.acampUnidos
 
-        console.log(dadosInscricao);
-        // let dadosCongregacao = ''
-        
-        // if(congregacao.length > 0){
-        //     dadosCongregacao = congregacao.find(row => (row.congregacao == dadosUsuario.congregacao))
-        // }
-
         return(
             <div className="text-left">
-                <LoadingBody status={loading} />
+                {/* <LoadingBody status={loading} /> */}
                 <div className="bg-secondary rounded text-center">
                     <h4>Dados Pessoais</h4>
                 </div>

@@ -21,7 +21,7 @@ class PassoTres extends Component{
         return(
             <div className="text-left">
                 <div className="text-left">
-                    <LoadingBody status={loading} />
+                    {/* <LoadingBody status={loading} /> */}
                     <div className="bg-secondary rounded text-center">
                         <h4>Comprovante de inscrição</h4>
                     </div>
