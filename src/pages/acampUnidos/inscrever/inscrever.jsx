@@ -74,13 +74,13 @@ class Inscrever extends Component{
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header text-center">
-                                <div className={"d-inline p-2 mr-2 " + (this.state.passoAtual == '1' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
+                                <div className={"d-inline p-2 mr-2 " + (passo == '1' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
                                     Dados cadastrais
                                 </div><i className="fa fa-arrow-right"></i>
-                                <div className={"d-inline p-2 mr-2 ml-2 " + (this.state.passoAtual == '2' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
+                                <div className={"d-inline p-2 mr-2 ml-2 " + (passo == '2' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
                                     Pagamento
                                 </div><i className="fa fa-arrow-right"></i>
-                                <div className={"d-inline p-2 ml-2 " + (this.state.passoAtual == '3' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
+                                <div className={"d-inline p-2 ml-2 " + (passo == '3' ? 'bg-primary' : 'bg-dark') + " rounded-circle text-white"}>
                                     Comprovante
                                 </div>
                             </div>

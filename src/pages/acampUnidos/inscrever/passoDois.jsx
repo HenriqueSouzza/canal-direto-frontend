@@ -104,8 +104,8 @@ class PassoDois extends Component{
                         reference={this.state.reference}
                         creditCard={this.state.creditCard}                                         
                         sender={this.state.sender}                                                
-                        shipping={this.state.shipping}    
-                        billing={this.state.billing}                                               
+                        // shipping={this.state.shipping}    
+                        // billing={this.state.billing}                                               
                         items={this.state.items}                                                   	    
                         onError={this.onError.bind(this)}
                         onSubmit={(e) => this.onSubmit(e)}

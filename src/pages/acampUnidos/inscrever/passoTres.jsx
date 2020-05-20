@@ -10,6 +10,10 @@ import LoadingBody from '../../../components/loading/loadingBody';
 
 class PassoTres extends Component{
 
+    onGerarBoleto = value => {
+        window.open(value)
+    }
+    
     render(){
 
         let { loading, dadosInscricao } = this.props.acampUnidos
@@ -104,7 +108,7 @@ class PassoTres extends Component{
                                                 Link do boleto:
                                             </h5>
                                             <p className="text-info">
-                                                <strong>{dadosInscricao.inscricao[0].link_boleto}</strong>
+                                                <button className={`btn btn-primary`} onClick={() => this.onGerarBoleto(dadosInscricao.inscricao[0].link_boleto)}>Gerar Boleto</button>
                                             </p>
                                         </div>
                                     </div>
@@ -115,19 +119,22 @@ class PassoTres extends Component{
                                             Orientações
                                         </h5>
                                         <p className='text-danger'>
-                                            * Caso efetou o pagamento, aguarde o prazo de até 48 horas para que sua inscrição seja efetivada
+                                            * Caso efetou o pagamento, aguarde o prazo de até 48 horas para que sua inscrição seja efetivada.
                                         </p>
                                         <p className='text-danger'>
-                                            * Não é possível alterar o forma de pagamento de inscrição após ter escolhido na etapa anterior
+                                            * Não é possível alterar o forma de pagamento de inscrição após ter escolhido na etapa anterior.
+                                        </p>
+                                        <p className='text-danger'>
+                                            * Caso desista, não precisa pagar o boleto que sua inscrição não será efetivada.
+                                        </p>
+                                        <p className='text-danger'>
+                                            <strong>* Atenção ! Não estornamos valores pagos.</strong>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="row justify-content-center">
-                    <button className="btn btn-success col-md-4" onClick={`#`}>Imprimir</button>
                 </div>
             </div>
         )
