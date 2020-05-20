@@ -14,9 +14,7 @@ import PassoTres from './passoTres';
 
 import { USER } from '../../../config/const';
 
-import { buscarDadosUsuario, buscarCongregacoes } from '../../dadosCadastrais/actions';
-
-import { buscarDadosEvento } from './actions';
+import { buscarDadosInscricao } from './actions';
 
 class Inscrever extends Component{
 
@@ -24,8 +22,17 @@ class Inscrever extends Component{
         super(props)
 
         this.state = {
-            passoAtual: '2'
+            passoAtual: '1'
         }
+    }
+
+    componentDidMount(){
+        let dados = {
+            'env': 'production',
+            'idPessoa': USER.pessoa,
+            'idEvento': '1'
+        }
+        this.props.buscarDadosInscricao(dados)
     }
 
     /**
@@ -89,7 +96,7 @@ class Inscrever extends Component{
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosUsuario, buscarCongregacoes, buscarDadosEvento }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosInscricao }, dispatch);
 
 
 export default connect(null, mapDispatchToProps )(Inscrever);

@@ -9,9 +9,9 @@ import { TOKEN } from '../../../config/const';
 /**
  * método para buscar os dados do usuario
  */
-export const buscarDadosEvento = (params) => {
+export const buscarDadosInscricao = (params) => {
 
-    const endPoint = '/api/evento/' + params;
+    const endPoint = '/api/inscricao/dados-inscricao';
 
     const headers = { Authorization: TOKEN }
 
@@ -19,22 +19,17 @@ export const buscarDadosEvento = (params) => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.get(endPoint, { headers: headers })
+        axios.post(endPoint, params, { headers: headers })
         .then(response => {
             
-            dispatch({ type: type.BUSCAR_DADOS_EVENTO, payload: response })
+            dispatch({ type: type.BUSCAR_DADOS_INSCRICAO, payload: response })
             
         })
         .catch(error => {
 
             dispatch({type: type.LOAD, payload: false})
 
-            // console.log(error.response)
-            if(error.response.data.error == 401){
-                toastr.error('Erro', 'Desculpe, você não tem permissão para acessar')
-            }else{
-                toastr.error('Erro', 'Houve um erro, tente novamente, caso persista entrar em contato com nossa equipe UNIDOS !')
-            }
+            toastr.error('Erro', error.response.data.messages.error)
 
         })
     }

@@ -18,30 +18,20 @@ import Button from '../../../components/form/button';
 
 import { USER } from '../../../config/const';
 
-import { alterarDadosUsuario, buscarDadosUsuario, buscarCongregacoes } from '../../dadosCadastrais/actions';
-
-import { buscarDadosEvento } from './actions';
 import LoadingBody from '../../../components/loading/loadingBody';
 
 class PassoUm extends Component{
 
-    componentDidMount(){
-        this.props.buscarDadosEvento(1);
-        this.props.buscarDadosUsuario(USER.pessoa)
-        this.props.buscarCongregacoes()
-    }
-
     render(){
 
-        let { loading, dadosUsuario, congregacao } = this.props.dadosCadastrais
+        let { loading, dadosInscricao } = this.props.acampUnidos
 
-        let { dadosEvento } = this.props.acampUnidos
-
-        let dadosCongregacao = ''
+        console.log(dadosInscricao);
+        // let dadosCongregacao = ''
         
-        if(congregacao.length > 0){
-            dadosCongregacao = congregacao.find(row => (row.congregacao == dadosUsuario.congregacao))
-        }
+        // if(congregacao.length > 0){
+        //     dadosCongregacao = congregacao.find(row => (row.congregacao == dadosUsuario.congregacao))
+        // }
 
         return(
             <div className="text-left">
@@ -56,25 +46,25 @@ class PassoUm extends Component{
                                 <div className="col-md-3">
                                     <h5> Nome completo: </h5>
                                     <p className="text-info">
-                                        <strong>{dadosUsuario ? dadosUsuario.nome_compl : ''}</strong>
+                                        <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.nome_compl : ''}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-3">
                                     <h5> Email: </h5>
                                     <p className="text-info">
-                                        <strong>{dadosUsuario ? dadosUsuario.email : ''}</strong>
+                                        <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.email : ''}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-3">
                                     <h5> CPF: </h5>
                                     <p className="text-info">
-                                        <strong>{dadosUsuario ? dadosUsuario.cpf : 'Não divulgado'}</strong>
+                                        <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.cpf : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-3">
                                     <h5> Data de Nascimento: </h5>
                                     <p className="text-info">
-                                        <strong>{dadosUsuario ? dadosUsuario.data_nascimento : ''}</strong>
+                                        <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.data_nascimento : ''}</strong>
                                     </p>
                                 </div>
                             </div>
@@ -82,21 +72,21 @@ class PassoUm extends Component{
                                 <div className="col-md-3">
                                     <h5> Data: </h5>
                                     <p className="text-info">
-                                        <strong>{dadosUsuario ? dadosUsuario.sexo == 'm' ? 'masculino' : 'feminino' : ''}</strong>
+                                        <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.sexo == 'm' ? 'masculino' : 'feminino' : ''}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-3">
                                     <h5> Telefone: </h5>
                                     <p className="text-info">
-                                        <strong>{dadosUsuario ? dadosUsuario.telefone : ''}</strong>
+                                        <strong>{dadosInscricao.pessoa ? dadosInscricao.pessoa.telefone : ''}</strong>
                                     </p>
                                 </div>
-                                <div className="col-md-3">
+                                {/* <div className="col-md-3">
                                     <h5> Congregacao: </h5>
                                     <p className="text-info">
                                         <strong>{dadosCongregacao ? dadosCongregacao.nome_congregacao : ''}</strong>
                                     </p>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="row">
                                 <div className="col-md-12">
@@ -118,7 +108,7 @@ class PassoUm extends Component{
                                         Evento:
                                     </h5>
                                     <p className="text-info">
-                                        <strong>{dadosEvento && dadosEvento.nome_evento != null ? dadosEvento.nome_evento : 'Não divulgado'}</strong>
+                                        <strong>{dadosInscricao && dadosInscricao.evento && dadosInscricao.evento.nome_evento != null ? dadosInscricao.evento.nome_evento : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-3">
@@ -126,7 +116,7 @@ class PassoUm extends Component{
                                         Local:
                                     </h5>
                                     <p className="text-info">
-                                        <strong>{dadosEvento && dadosEvento.local != null ? dadosEvento.local : 'Não divulgado'}</strong>
+                                        <strong>{dadosInscricao && dadosInscricao.evento && dadosInscricao.evento.local != null ? dadosInscricao.evento.local : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-3">
@@ -134,7 +124,7 @@ class PassoUm extends Component{
                                         Cidade:
                                     </h5>
                                     <p className="text-info">
-                                        <strong>{dadosEvento && dadosEvento.cidade != null ? dadosEvento.cidade + '-' + dadosEvento.estado : 'Não divulgado'}</strong>
+                                        <strong>{dadosInscricao && dadosInscricao.evento && dadosInscricao.evento.cidade != null ? dadosInscricao.evento.cidade + '-' + dadosInscricao.evento.estado : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-2">
@@ -142,7 +132,7 @@ class PassoUm extends Component{
                                         Valor:
                                     </h5>
                                     <p className="text-info">
-                                        <strong>{dadosEvento && dadosEvento.valor != null ? 'R$ '+ dadosEvento.valor : 'Não divulgado'}</strong>
+                                        <strong>{dadosInscricao && dadosInscricao.evento && dadosInscricao.evento.valor != null ? 'R$ '+ dadosInscricao.evento.valor : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
                                 <div className="col-md-2">
@@ -150,7 +140,7 @@ class PassoUm extends Component{
                                         Data:
                                     </h5>
                                     <p className="text-info">
-                                        <strong>{dadosEvento && dadosEvento.data != null ? dadosEvento.data : 'Não divulgado'}</strong>
+                                        <strong>{dadosInscricao && dadosInscricao.evento && dadosInscricao.evento.data != null ? dadosInscricao.evento.data : 'Não divulgado'}</strong>
                                     </p>
                                 </div>
                             </div>
@@ -168,12 +158,12 @@ class PassoUm extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais, acampUnidos: state.acampUnidos })
+const mapStateToProps = state => ({ acampUnidos: state.acampUnidos })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ alterarDadosUsuario, buscarDadosUsuario, buscarDadosEvento, buscarCongregacoes }, dispatch);
+// const mapDispatchToProps = dispatch => bindActionCreators({ alterarDadosUsuario, buscarDadosUsuario, buscarDadosEvento, buscarCongregacoes }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps )(PassoUm);
+export default connect(mapStateToProps, null )(PassoUm);

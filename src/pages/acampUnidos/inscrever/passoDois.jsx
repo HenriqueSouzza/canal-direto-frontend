@@ -25,22 +25,25 @@ class PassoDois extends Component{
 
     constructor(props){
         super(props)
+
+        let { dadosInscricao } = props.acampUnidos
+
         this.state = {
 
-            session: 'f6e76f5b46604c06807724055784d907',
+            session: dadosInscricao.sessionId,
 
             env: 'production',
 
             sender: {
-                name: 'Willy Chagas',
-                email: 'chagaswc89@gmail.com',
+                name: dadosInscricao.pessoa.nome_compl,
+                email: dadosInscricao.pessoa.email,
                 phone: {
-                    areaCode: '48',
-                    number: '991510980',
+                    areaCode: dadosInscricao.pessoa.telefone.substr(0, 2),
+                    number: dadosInscricao.pessoa.telefone.substr(2,9),
                 },
                 document: {
                     type: 'CPF',
-                    value: '71783955082'
+                    value: dadosInscricao.pessoa.cpf
                 },
             },
 
@@ -58,51 +61,32 @@ class PassoDois extends Component{
             },
 
             billing: {
-                street: 'Av Campeche',
-                number: 1111,
-                complement: 'Casa',
-                district: 'Campeche',
-                city: 'Florianópolis',
-                state: 'SC',
-                country: 'BRA',
-                postalCode: '88063789'
+                street: '', //'Av Campeche',
+                number: '', //1111,
+                complement: '', //'Casa',
+                district: '', //'Campeche',
+                city: '', //'Florianópolis',
+                state: '', //'SC',
+                country: '', //'BRA',
+                postalCode: '', //'88063789'
             },
 
             items: [
                 {
-                    id: 1,
-                    description: 'Produto 1',
-                    quantity: 2,
-                    amount: 2,
-                },  
-                {
-                    id: 2,
-                    description: 'Produto 2',
+                    id: dadosInscricao.evento.evento,
+                    description: dadosInscricao.evento.nome_evento,
                     quantity: 1,
-                    amount: 60.00,
+                    // amount: 2,
                 },  
-                {
-                    id: 3,
-                    description: 'Produto 3',
-                    quantity: 2,
-                    amount: 20.00,
-                }
-
             ],
 
             creditCard: {
-                maxInstallmentNoInterest: 5 // parcelas com desconto
+                maxInstallmentNoInterest: 3 // parcelas com desconto
             },
-            extraAmount: 10.00,
-            reference: 'Teste Pagseguro React'
+            // extraAmount: 10.00,
+            reference: 'Inscricao para acamp unidos'
         }
     }
-
-    // componentDidMount(){
-        // if(this.props.dadosCadastrais.dadosUsuario.length <= 0){
-            // this.props.onClickPasso({passoAtual: '1'})
-        // }
-    // }
 
     onSubmit = values => {
         console.log(values)
@@ -114,11 +98,13 @@ class PassoDois extends Component{
 
     render(){
 
-        let { loading, dadosUsuario } = this.props.dadosCadastrais
+        let { loading, dadosInscricao } = this.props.acampUnidos
 
-        let initialValues = {
-            cpf: dadosUsuario ? dadosUsuario.cpf : '',
-        }
+        // let initialValues = {
+        //     cpf: dadosUsuario ? dadosUsuario.cpf : '',
+        // }
+
+        console.log(dadosInscricao)
 
         return(
             <div className="content-fluid">
@@ -154,12 +140,12 @@ class PassoDois extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ dadosCadastrais: state.dadosCadastrais, acampUnidos: state.acampUnidos })
+const mapStateToProps = state => ({ acampUnidos: state.acampUnidos })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosEvento, buscarCep }, dispatch);
+// const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosEvento, buscarCep }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps )(PassoDois);
+export default connect(mapStateToProps, null )(PassoDois);
