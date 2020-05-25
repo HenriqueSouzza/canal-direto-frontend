@@ -13,7 +13,7 @@ class PassoTres extends Component{
     onGerarBoleto = value => {
         window.open(value)
     }
-    
+
     render(){
 
         let { loading, dadosInscricao } = this.props.acampUnidos
@@ -101,14 +101,16 @@ class PassoTres extends Component{
                                         </p>
                                     </div>
                                 </div>
-                                { dadosInscricao.inscricao[0].status == 'PI' && dadosInscricao.inscricao[0].forma_pagamento == 'BOLETO'  ?
+                                { dadosInscricao.inscricao[0].status == 'PI' && (dadosInscricao.inscricao[0].forma_pagamento == 'BOLETO' || dadosInscricao.inscricao[0].forma_pagamento == 'ONLINE_DEBIT')  ?
                                     <div className="row justify-content-center">
                                         <div className="col-md-12">
                                             <h5>
-                                                Link do boleto:
+                                                {dadosInscricao.inscricao[0].forma_pagamento == 'BOLETO' ? `Link do boleto` : `Débito em conta`}
                                             </h5>
                                             <p className="text-info">
-                                                <button className={`btn btn-primary`} onClick={() => this.onGerarBoleto(dadosInscricao.inscricao[0].link_boleto)}>Gerar Boleto</button>
+                                                <button className={`btn btn-primary`} onClick={() => this.onGerarBoleto(dadosInscricao.inscricao[0].link_boleto)}>
+                                                    {dadosInscricao.inscricao[0].forma_pagamento == 'BOLETO' ? `Gerar Boleto` : `Pagar`}
+                                                </button>
                                             </p>
                                         </div>
                                     </div>
