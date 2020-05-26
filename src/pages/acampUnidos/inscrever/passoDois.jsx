@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 
-import LoadingBody from '../../../components/loading/loadingBody';
-
 import { salvarInscricao } from './actions';
 
 import { DirectPayment } from 'pagseguro-react';
@@ -37,17 +35,19 @@ class PassoDois extends Component{
                 },
             },
 
+            //Dados de entrega, caso exista frete
             shipping: {
-                type: 3,
-                cost: 10.00,
-                street: 'Av Campeche',
-                number: 1111,
-                complement: 'Casa',
-                district: 'Campeche',
-                city: 'Florianópolis',
-                state: 'SC',
-                country: 'BRA',
-                postalCode: '88063789'
+                // type: 3,
+                // cost: 10.00,
+                addressRequired: false,
+                // street: 'Av Campeche',
+                // number: 1111,
+                // complement: 'Casa',
+                // district: 'Campeche',
+                // city: 'Florianópolis',
+                // state: 'SC',
+                // country: 'BRA',
+                // postalCode: '88063789'
             },
 
             billing: {
@@ -88,11 +88,8 @@ class PassoDois extends Component{
 
     render(){
 
-        let { loading } = this.props.acampUnidos
-
         return(
             <div className="content-fluid">
-                {/* <LoadingBody status={loading} /> */}
                 <div className="text-left w-90">
                     <div className="bg-secondary rounded text-center">
                         <h4>Forma de pagamento</h4>

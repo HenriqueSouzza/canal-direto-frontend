@@ -49,7 +49,6 @@ export const salvarInscricao = params => {
         axios.post(endPoint, params, { headers: headers })
         .then(response => {
             
-            console.log(response)
             params = {
                 'env': 'production',
                 'idPessoa': USER.pessoa,
