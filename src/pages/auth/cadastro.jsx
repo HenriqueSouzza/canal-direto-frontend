@@ -196,6 +196,7 @@ class Cadastro extends Component {
                                             {/* <label>&nbsp;</label> */}
                                             <Field
                                                 component={Button}
+                                                name={'sendCadastro'}
                                                 type={`submit`} 
                                                 color={`btn-success`}
                                                 icon={`fa fa-sign-in`} 

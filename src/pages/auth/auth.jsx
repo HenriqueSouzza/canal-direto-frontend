@@ -89,6 +89,7 @@ class Auth extends Component {
                                                 {/* <label>&nbsp;</label> */}
                                                 <Field
                                                     component={Button}
+                                                    name={`sendAuth`}
                                                     type={`submit`} 
                                                     color={`btn-success`}
                                                     icon={`fa fa-sign-in`} 

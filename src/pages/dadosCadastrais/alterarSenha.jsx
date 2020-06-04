@@ -84,6 +84,7 @@ class AlterarSenha extends Component{
                                                 {/* <label>&nbsp;</label> */}
                                                 <Field
                                                     component={Button}
+                                                    name={`sendSenha`}
                                                     type={`submit`} 
                                                     color={`btn-success`}
                                                     icon={`fa fa-sign-in`} 

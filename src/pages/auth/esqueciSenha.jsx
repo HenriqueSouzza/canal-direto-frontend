@@ -101,6 +101,7 @@ class EsqueciSenha extends Component {
                                             {/* <label>&nbsp;</label> */}
                                             <Field
                                                 component={Button}
+                                                name={`sendEsqueci`}
                                                 type={`submit`} 
                                                 color={`btn-success`}
                                                 icon={`fa fa-sign-in`} 

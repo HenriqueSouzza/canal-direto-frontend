@@ -162,6 +162,7 @@ class MeusDados extends Component{
                                                 {/* <label>&nbsp;</label> */}
                                                 <Field
                                                     component={Button}
+                                                    name={`sendDados`}
                                                     type={`submit`} 
                                                     color={`btn-success`}
                                                     icon={`fa fa-sign-in`} 
