@@ -25,11 +25,6 @@ import { buscarDadosUsuario, alterarDadosUsuario, buscarCongregacoes } from './a
 
 class MeusDados extends Component{
 
-    componentDidMount(){
-        this.props.buscarDadosUsuario(USER.pessoa)
-        this.props.buscarCongregacoes()
-    }
-    
     onSubmit = values => {
         delete values.cpf
         this.props.alterarDadosUsuario(values, USER.pessoa)

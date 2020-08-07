@@ -14,9 +14,6 @@ function Menu(){
                     <MenuLink description={`Meus dados`} path={`/dados-cadastrais/meus-dados`} icon={`fa fa-user-edit`} active={``} />
                     <MenuLink description={`Alterar Senha`} path={`/dados-cadastrais/alterar-senha`} icon={`fa fa-key`} active={``} />
                 </MenuTreeView>
-                <MenuTreeView description={`AcampUnidos`} path={`#`} icon={`fas fa-tasks`} >
-                    <MenuLink description={`Inscrever`} path={`/acamp-unidos/inscrever`} icon={`fa fa-users`} active={``} />
-                </MenuTreeView>
                 <MenuLink description={`Sair`} path={`/sair`} icon={`fa fa-sign-out-alt`} active={``} />
             </ul>
         </nav>

@@ -17,12 +17,6 @@ function Sidebar() {
                         Bem-vindo !
                     </p>
                 </h1>
-                <h5>
-                    <p className="text-white">
-                        Nossa plataforma UNIDOS está cheio de novidades.<br></br>
-                        Para realizar sua inscrição nos eventos do UNIDOS é só logar em nosso sistema.<br></br>
-                    </p>
-                </h5>
             </div>
         </div>
     )
