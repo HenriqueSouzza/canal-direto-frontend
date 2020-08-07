@@ -13,7 +13,7 @@ class AuthOrApp extends Component{
 
         let token = sessionStorage.getItem('token');
         
-        if(token){
+        if(!token){
             
             return(
                 <div>
