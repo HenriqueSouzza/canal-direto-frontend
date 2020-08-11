@@ -13,12 +13,16 @@ import DadosCadastraisReducer from './pages/dadosCadastrais/reducer';
 //Setor
 import SetorReducer from './pages/setor/reducer';
 
+//Setor
+import TicketsReducer from './pages/tickets/reducer';
+
 const rootReducer = combineReducers({
     toastr: toastrReducer,
     dashboard: () => ({ test: 1500 }),
     auth: AuthReducer,
     dadosCadastrais: DadosCadastraisReducer,
     setor: SetorReducer,
+    tickets: TicketsReducer,
 })
 
 export default rootReducer; 

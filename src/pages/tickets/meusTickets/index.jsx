@@ -72,4 +72,16 @@ class Index extends Component{
 
 }
 
-export default Index;
+
+/**
+ * @param {*} state 
+ */
+const mapStateToProps = state => ({ tickets: state.tickets })
+
+/**
+ * @param {*} dispatch 
+ */
+const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+
+
+export default connect(mapStateToProps, mapDispatchToProps )(Index);
