@@ -22,7 +22,7 @@ import './style.css';
 
 import { toastr } from 'react-redux-toastr';
 
-import imgLogo  from '../../components/template/images/logo.png';
+import imgLogo  from '../../template/images/logo.png';
 
 class Cadastro extends Component {
 

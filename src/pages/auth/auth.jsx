@@ -20,7 +20,7 @@ import './style.css';
 
 import { Link } from 'react-router-dom';
 
-import imgLogo  from '../../components/template/images/logo.png';
+import imgLogo  from '../../template/images/logo.png';
 
 class Auth extends Component {
 

@@ -8,7 +8,7 @@ import imgPerfil  from '../images/perfil.png';
 
 import imgLogo  from '../images/logo.png';
 
-import { USER } from '../../../config/const';
+import { USER } from '../../config/const';
  
 function Sidebar() {
     return (

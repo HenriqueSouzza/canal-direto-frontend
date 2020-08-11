@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import Sidebar from '../components/template/layout/auth/sidebar';
+import Sidebar from '../template/auth/sidebar';
 
-import Content from '../components/template/layout/auth/content';
+import Content from '../template/auth/content';
 
 import './style.css';
 
