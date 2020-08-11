@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import '../components/template/dependencies';
+import '../template/dependencies';
 
 import App from'./App';
 

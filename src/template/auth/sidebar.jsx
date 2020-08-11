@@ -1,6 +1,6 @@
 import React from 'react';
 
-import imgLogo  from '../../images/logo.png';
+import imgLogo  from '../images/logo.png';
 
 import './style.css';
  

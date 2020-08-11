@@ -2,10 +2,10 @@ import React from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import Header from '../components/template/layout/header';
-import Sidebar from '../components/template/layout/sidebar';
-import Content from '../components/template/layout/content';
-import Footer from '../components/template/layout/footer';
+import Header from '../template/logged/header';
+import Sidebar from '../template/logged/sidebar';
+import Content from '../template/logged/content';
+import Footer from '../template/logged/footer';
 
 function App() {
 

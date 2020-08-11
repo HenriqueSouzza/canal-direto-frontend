@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Route, Switch  } from 'react-router-dom';
 
-import Auth from '../../../../pages/auth/router';
+import Auth from '../../pages/auth/router';
 
-import PaginaNaoEncontrada from '../../../../pages/auth/paginaNaoEncontrada';
+import PaginaNaoEncontrada from '../../pages/auth/paginaNaoEncontrada';
 
 import './style.css';
 
