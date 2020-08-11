@@ -6,6 +6,8 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
+import { ACTION_RULES } from '../../../helpers/authorization';
+
 
 class Index extends Component{
 
@@ -56,8 +58,8 @@ class Index extends Component{
                                 columns={columns} 
                                 data={dataTicket} 
                                 router={this.props.history}
-                                btnAdd={false} 
-                                actions={false}
+                                btnAdd={true} 
+                                actions={[ACTION_RULES.can_detail]}
                                 loading={loading} 
                             />
                         </div>
