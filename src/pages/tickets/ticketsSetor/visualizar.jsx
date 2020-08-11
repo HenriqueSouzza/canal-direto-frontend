@@ -14,9 +14,13 @@ class Visualizar extends Component{
     render(){
 
         return (
-            <>
-                Visualizar
-            </>
+            <section className="content">
+                <MenuHeader title={`Tickets do meu setor`} history={this.props.location.pathname} />
+                <div className="content-fluid">
+                    <div className="card card-danger">
+                    </div>
+                </div>
+            </section>  
         )
 
     }
