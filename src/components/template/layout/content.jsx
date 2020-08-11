@@ -12,6 +12,8 @@ import PaginaNaoEncontrada from '../../../pages/errosPagina/paginaNaoEncontrada'
  
 import Setor from '../../../pages/setor/router';
 
+import Categoria from '../../../pages/categoria/router';
+
 function Content(){
     return(
         <div className="content-wrapper">
@@ -19,6 +21,7 @@ function Content(){
                 <Route exact path='/' component={Dashboard} />
                 <Route path='/dados-cadastrais' component={DadosCadastrais} />
                 <Route path='/setor' component={Setor} />
+                <Route path='/categoria' component={Categoria} />
                 <Route path='/sair' component={Sair} />
                 <Route path="*" component={PaginaNaoEncontrada}/>
             </Switch>

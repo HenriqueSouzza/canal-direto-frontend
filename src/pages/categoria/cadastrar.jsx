@@ -18,6 +18,8 @@ import Checkbox from '../../components/form/checkbox';
 
 import Button from '../../components/form/button';
 
+import Select from '../../components/form/select';
+
 import { FORM_RULES, composeValidators } from '../../helpers/validations';
 
 class Cadastrar extends Component{
@@ -39,11 +41,27 @@ class Cadastrar extends Component{
 
         const initialValues = {}
 
+        var url = "http://sistemas-academicos-api.desenv.br/api/canal-direto/setor";
+        let data = [];
+
+        // Requisições do tipo GET
+        axios.get(url)
+        .then(function(response){
+
+            let dados = response.data.response.content
+
+            dados.map(row => {
+                data.push({id: row.id, name:row.descricao})
+            });
+
+            console.log(response.status); 
+        }); 
+
         return(
                 <>
                     <section className="content">
                         <LoadingBody status={false} />
-                        <MenuHeader title={`Cadastrar Setor`} history={this.props.location.pathname} />
+                        <MenuHeader title={`Cadastrar Categoria`} history={this.props.location.pathname} />
                             <div className="content-fluid">
                                 <div className="card">
                                     <div className="card-body">
@@ -52,6 +70,17 @@ class Cadastrar extends Component{
                                         initialValues={initialValues}
                                         render={({handleSubmit}) => (
                                             <form onSubmit={handleSubmit}>
+                                                <div className="row">
+                                                    <div className="col-md-10">
+                                                        <Field 
+                                                            component={Select} 
+                                                            name={`setor`} 
+                                                            data={data}
+                                                            label={`Setor:`}
+                                                            validate={FORM_RULES.required}
+                                                            />
+                                                    </div>                                                    
+                                                </div>                                            
                                                 <div className="row">
                                                     <div className="col-md-10">
                                                         <Field 
