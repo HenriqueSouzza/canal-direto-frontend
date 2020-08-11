@@ -1,12 +1,12 @@
 
 export const BASE_API = (
     process.env.NODE_ENV === 'production' ? 
-        'http://inscricoes.unidos.br/api'
+        'http://sistemas-academicos-api.desenv.br/'
     :
     process.env.NODE_ENV === 'homologation' ?
-        'http://inscricoes.unidos.br/api'
+        'http://sistemas-academicos-api.desenv.br/'
     :
-        'http://inscricoes.unidos.br/api'
+        'http://sistemas-academicos-api.desenv.br/'
 );
 
 export const USER = (JSON.parse(sessionStorage.getItem('user')))

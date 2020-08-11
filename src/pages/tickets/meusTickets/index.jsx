@@ -12,16 +12,32 @@ import DataTable from '../../../components/table/dataTable';
 
 import { ACTION_RULES } from '../../../helpers/authorization';
 
+import { buscarMeusTickets } from '../actions'
+ 
 
 class Index extends Component{
 
+    componentDidMount(){
+        let userLogged = 'henrique.souza'
+        this.props.buscarMeusTickets(userLogged)
+    }
+
     render(){
 
-        let loading = false
-
-        let dataTicket = [
-            {ticket: '1', assunto: 'testando ticket', criado: '03-10-2020 13:00', status: 'Aguardando resposta'},
-        ]
+        const {loading, meusTickets } = this.props.tickets
+        
+        const dataTicket = []
+        
+        if(meusTickets.response){
+            meusTickets.response.content.map(row => {
+                dataTicket.push({
+                    ticket: row.id,
+                    assunto: row.assunto,
+                    criado: row.created_at,
+                    status: row.status,
+                })
+            })
+        }
 
         const columns = [
             {
@@ -45,16 +61,16 @@ class Index extends Component{
                 sortable: true,
             }
         ];
+        
 
         return(
             <section className="content">
-                <LoadingBody status={loading} />
                 <MenuHeader title={`Meus tickets`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
-                        {/* <div className="card-header">
-                            <h3 className="card-title">asdas</h3>
-                        </div> */}
+                        {/* <div className="card-header"> */}
+                            {/* <h3 className="card-title">Meus tickets</h3> */}
+                        {/* </div> */}
                         <div className="card-body">
                             <DataTable
                                 description={false}
@@ -85,7 +101,7 @@ const mapStateToProps = state => ({ tickets: state.tickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);
