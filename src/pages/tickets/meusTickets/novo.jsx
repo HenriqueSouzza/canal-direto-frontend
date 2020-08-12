@@ -22,6 +22,8 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import textArea from '../../../components/form/textArea';
 
+import { buscarSetor, buscarCategoria, salvarNovoTicket } from '../actions';
+
 
 class Novo extends Component{
 
@@ -29,21 +31,68 @@ class Novo extends Component{
         super(props)
     }
 
+    componentDidMount(){
+        if(this.props.tickets.dadosSetor.length <= 0){
+            this.props.buscarSetor()
+        }
+    }
+
     onSubmit = values => {
-        console.log(values)
+        values.status = 'aberto'
+        values.papel_usuario = 1
+        
+        this.props.salvarNovoTicket(values, this.props.history)
+    }
+
+    onChange = event => {
+        if(event.target.name == 'setor' && event.target.value){
+            this.props.buscarCategoria(event.target.value)
+        }
+    }
+
+    onVoltar = () => {
+        this.props.history.goBack();
     }
 
     render(){
 
-        const { loading } = this.props.tickets
+        const { loading, dadosSetor, dadosCategoria } = this.props.tickets
 
-        let dataSetor = [
-            {id: '1', name: 'text'}
-        ]
+        let dataSetor = []
 
-        let dataCategoria = [
-            {id: '1', name: 'text'}
-        ]
+        if(dadosSetor.response){
+            if(Array.isArray(dadosSetor.response.content)){
+                dadosSetor.response.content.map(row => {
+                    dataSetor.push({
+                        id: row.id,
+                        name: row.descricao,
+                    })
+                })
+            }else{
+                dataSetor.push({
+                    id: dadosSetor.response.content.id,
+                    name: dadosSetor.response.content.descricao,
+                })
+            }
+        }
+        
+        let dataCategoria = []
+
+        if(dadosCategoria.response){
+            if(Array.isArray(dadosCategoria.response.content)){
+                dadosCategoria.response.content.map(row => {
+                    dataCategoria.push({
+                        id: row.id,
+                        name: row.descricao,
+                    })
+                })
+            }else{
+                dataCategoria.push({
+                    id: dadosCategoria.response.content.id,
+                    name: dadosCategoria.response.content.descricao,
+                })
+            }
+        }
 
         return (
             <section className="content">
@@ -55,7 +104,7 @@ class Novo extends Component{
                             <Form
                                 onSubmit={this.onSubmit}
                                 render={({handleSubmit}) => (
-                                    <form onSubmit={handleSubmit} encType="multipart/form-data">
+                                    <form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)} encType="multipart/form-data">
                                         <div className="row justify-content-center">
                                             <div className="col-md-7">
                                                 <Field 
@@ -91,7 +140,7 @@ class Novo extends Component{
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
                                                     />
                                             </div>
-                                            <div className="col-md-5">
+                                            {/* <div className="col-md-5">
                                                 <div className="row justify-content-center">
                                                     <div className="col-md-10 mt-5 text-center">
                                                         <label>Anexar arquivo</label>
@@ -103,7 +152,7 @@ class Novo extends Component{
                                                             />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="row justify-content-center">
                                             <div className="col-md-3">
@@ -116,6 +165,15 @@ class Novo extends Component{
                                                     icon={`fa fa-save`} 
                                                     description={`Salvar`}
                                                     />
+                                            </div>
+                                            <div className="col-md-3">
+                                                {/* <label>&nbsp;</label> */}
+                                                <button 
+                                                    type={`button`}
+                                                    className={`btn btn-dark col-md-12`}
+                                                    onClick={this.onVoltar}>
+                                                        <i className="fa fa-arrow-left"></i> Voltar
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -138,7 +196,7 @@ const mapStateToProps = state => ({ tickets: state.tickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarSetor, buscarCategoria, salvarNovoTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);

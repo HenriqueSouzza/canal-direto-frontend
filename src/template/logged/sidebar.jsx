@@ -8,7 +8,7 @@ import imgPerfil  from '../images/perfil.png';
 
 import imgLogo  from '../images/logo.png';
 
-import { USER } from '../../config/const';
+import { USER_LOGGED } from '../../config/const';
  
 function Sidebar() {
     return (
@@ -23,7 +23,7 @@ function Sidebar() {
                         <img src={imgPerfil} className="img-circle elevation-2" alt={`UserImage`} />
                     </div>
                     <div className="info">
-                        <Link to={`#`} className="d-block">{ USER && USER.nome_compl ? USER.nome_compl.split(' ').slice(0, 2).join(' ') : 'Sem nome' }</Link>
+                        <Link to={`#`} className="d-block">{ USER_LOGGED ? USER_LOGGED : 'Sem nome' }</Link>
                     </div>
                 </div>
                 <Menu />
