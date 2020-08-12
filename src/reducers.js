@@ -13,7 +13,10 @@ import DadosCadastraisReducer from './pages/dadosCadastrais/reducer';
 //Setor
 import SetorReducer from './pages/setor/reducer';
 
-//Setor
+//Categoria
+import CategoriaReducer from './pages/categoria/reducer';
+
+//Ticket
 import TicketsReducer from './pages/tickets/reducer';
 
 const rootReducer = combineReducers({
@@ -22,6 +25,7 @@ const rootReducer = combineReducers({
     auth: AuthReducer,
     dadosCadastrais: DadosCadastraisReducer,
     setor: SetorReducer,
+    categoria: CategoriaReducer,
     tickets: TicketsReducer,
 })
 

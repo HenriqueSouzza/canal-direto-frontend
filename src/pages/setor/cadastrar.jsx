@@ -20,19 +20,25 @@ import Button from '../../components/form/button';
 
 import { FORM_RULES, composeValidators } from '../../helpers/validations';
 
+import  { cadastrarSetor } from './actions'
+
 class Cadastrar extends Component{
+
+    componentDidMount(){
+
+        this.props.cadastrarSetor()
+
+    }
 
     onSubmit = values => {
         //console.log(values.ativo);
 
-        var ativo = (values.ativo ? "S" : "N");
-        var url = "http://sistemas-academicos-api.desenv.br/api/canal-direto/setor";
+        values.ativo = (values.ativo ? "S" : "N");
+        values.usuario = 'marcos.barroso';
+        
+        //console.log(values);
 
-        // Requisições POST, note há um parâmetro extra indicando os parâmetros da requisição
-        axios.post(url, { descricao: values.descricao, ativo: ativo, usuario: 'marcos.barroso'})
-        .then(function(response){
-            console.log('salvo com sucesso')
-        });  
+        this.props.cadastrarSetor(values, this.props.history)
     }
 
     render(){
@@ -107,7 +113,7 @@ const mapStateToProps = state => ({ setor: state.setor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ cadastrarSetor }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Cadastrar);

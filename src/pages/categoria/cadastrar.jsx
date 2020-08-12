@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import axios from 'axios';
-
 import MenuHeader from '../../components/menu/menuHeader';
 
 import LoadingBody from '../../components/loading/loadingBody';
@@ -22,40 +20,45 @@ import Select from '../../components/form/select';
 
 import { FORM_RULES, composeValidators } from '../../helpers/validations';
 
+import  { buscarDadosSetor, cadastrarCategoria } from './actions'
+
 class Cadastrar extends Component{
 
+    componentDidMount(){
+
+        this.props.buscarDadosSetor()
+
+    }
+
     onSubmit = values => {
-        //console.log(values.ativo);
 
-        var ativo = (values.ativo ? "S" : "N");
-        var url = "http://sistemas-academicos-api.desenv.br/api/canal-direto/setor";
+        values.ativo = (values.ativo ? "S" : "N");
+        values.usuario = 'marcos.barroso';
+        
+        //console.log(values);
 
-        // Requisições POST, note há um parâmetro extra indicando os parâmetros da requisição
-        axios.post(url, { descricao: values.descricao, ativo: ativo, usuario: 'marcos.barroso'})
-        .then(function(response){
-            console.log('salvo com sucesso')
-        });  
+        this.props.cadastrarCategoria(values, this.props.history)
+
     }
 
     render(){
 
         const initialValues = {}
 
-        var url = "http://sistemas-academicos-api.desenv.br/api/canal-direto/setor";
+        const {dadosSetor} = this.props.categoria
+
         let data = [];
-
-        // Requisições do tipo GET
-        axios.get(url)
-        .then(function(response){
-
-            let dados = response.data.response.content
+        
+        if (dadosSetor.response){
+            
+            //console.log(dadosSetor.response.content);
+            let dados = dadosSetor.response.content
 
             dados.map(row => {
                 data.push({id: row.id, name:row.descricao})
             });
+        } 
 
-            console.log(response.status); 
-        }); 
 
         return(
                 <>
@@ -71,18 +74,16 @@ class Cadastrar extends Component{
                                         render={({handleSubmit}) => (
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row">
-                                                    <div className="col-md-10">
+                                                    <div className="col-md-5">
                                                         <Field 
                                                             component={Select} 
-                                                            name={`setor`} 
+                                                            name={`id_setor`} 
                                                             data={data}
                                                             label={`Setor:`}
                                                             validate={FORM_RULES.required}
                                                             />
                                                     </div>                                                    
-                                                </div>                                            
-                                                <div className="row">
-                                                    <div className="col-md-10">
+                                                    <div className="col-md-5">
                                                         <Field 
                                                             component={Input} 
                                                             type={`text`}
@@ -131,12 +132,12 @@ class Cadastrar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ setor: state.setor })
+const mapStateToProps = state => ({ categoria: state.categoria })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosSetor,cadastrarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Cadastrar);
