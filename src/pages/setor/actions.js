@@ -45,40 +45,72 @@ export const cadastrarSetor = (params, router) => {
 }
 
 
-// /**
-//  * Método responsável para alterar senha
-//  * @param {*} params 
-//  * @param {*} router 
-//  */
-// export const alterarSenha = (params, user, router) => {
+/**
+ * método para buscar os dados do usuario
+ */
+export const buscarDadosSetor = (params=null) => {
 
-//     const endPoint = '/api/pessoa/' + user;
+    const endPoint = BASE_API +'api/canal-direto/setor';
 
-//     const headers = { Authorization: TOKEN }
+    //const headers = { Authorization: TOKEN}
+    const headers = {}
 
-//     return dispatch => {
+    return dispatch => {
 
-//         dispatch({type: type.LOAD, payload: true})
+        dispatch({type: type.LOAD, payload: true})
 
-//         axios.put(endPoint, params, { headers : headers })
-//         .then(response => {
-
-//             toastr.success('Sucesso', 'Sua senha foi alterada com sucesso !')
-
-//             dispatch({type: type.LOAD, payload: false})
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
             
-//             router.push('/dados-cadastrais/meus-dados')
+            dispatch({ type: type.BUSCAR_DADOS_SETOR, payload: response })
             
-//         })
-//         .catch(error => {
+        })
+        .catch(error => {
 
-//             console.log(error.response.data.error)
-//             toastr.error('Erro', 'Houve um erro ao tentar alterar sua senha, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
-//             dispatch({type: type.ERROR, payload: false})
+            dispatch({type: type.LOAD, payload: false})
 
-//         })
-//     }
-// }
+            console.log(error.response)
+
+
+        })
+    }
+
+}
+
+/**
+ * Método responsável para alterar senha
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const alterarSetor = (params, id) => {
+
+    const endPoint = BASE_API +'api/canal-direto/setor/'+id;
+
+    const headers = { Authorization: TOKEN }
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers : headers })
+        .then(response => {
+
+            toastr.success('Sucesso', 'Sua senha foi alterada com sucesso !')
+
+            dispatch({type: type.LOAD, payload: false})
+            
+           //router.goBack()
+            
+        })
+        .catch(error => {
+
+            console.log(error.response.data.error)
+            toastr.error('Erro', 'Houve um erro ao tentar alterar sua senha, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
+            dispatch({type: type.ERROR, payload: false})
+
+        })
+    }
+}
 
 // /**
 //  * 
