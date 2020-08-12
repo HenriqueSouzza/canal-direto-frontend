@@ -4,14 +4,21 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN, BASE_API } from '../../config/const';
+import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
+
+
+
+/*****************************************************************************/
+/***************************** MEUS TICKETS **********************************/
+/*****************************************************************************/
+
 
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarMeusTickets = (params) => {
+export const buscarMeusTickets = () => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED + '&order=created_at,desc';
 
     const headers = { Authorization: ''}
 
@@ -37,11 +44,110 @@ export const buscarMeusTickets = (params) => {
 
 
 /**
+ * Buscar o setor do usuário que está logado
+ */
+export const buscarSetor = () => {
+
+    const endPoint = BASE_API + 'api/canal-direto/setor';
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_MEU_SETOR, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+
+/**
+ * Buscar usuário da categoria que está logado
+ */
+export const buscarCategoria = (idSetor) => {
+
+    const endPoint = BASE_API + 'api/canal-direto/categoria?where[id_setor]=' + idSetor;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_MINHAS_CATEGORIAS, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+/**
+ * Método de para salvar um novo ticket
+ */
+export const salvarNovoTicket = (params, router) => {
+
+    params.usuario = USER_LOGGED
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket';
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.post(endPoint, params, { headers: headers })
+        .then(response => {
+
+            router.goBack()
+            toastr.success('Sucesso', 'Ticket salvo com sucesso')
+            dispatch(buscarMeusTickets(USER_LOGGED))
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            toastr.error('Erro', 'Não foi possível salvar seu tícket')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+
+/*****************************************************************************/
+/************************* TICKETS DO MEU SETOR ******************************/
+/*****************************************************************************/
+
+
+/**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
 export const buscarTicketsSetor = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[setor]=' + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + params;
 
     const headers = { Authorization: ''}
 

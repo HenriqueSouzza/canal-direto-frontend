@@ -18,7 +18,7 @@ import Select from '../../components/form/select';
 
 import LoadingBody from '../../components/loading/loadingBody';
 
-import { USER } from '../../config/const';
+import { USER_LOGGED } from '../../config/const';
 
 import { buscarDadosUsuario, alterarDadosUsuario, buscarCongregacoes } from './actions';
 
@@ -27,7 +27,7 @@ class MeusDados extends Component{
 
     onSubmit = values => {
         delete values.cpf
-        this.props.alterarDadosUsuario(values, USER.pessoa)
+        this.props.alterarDadosUsuario(values, USER_LOGGED)
     }
     
     

@@ -17,7 +17,7 @@ import { buscarTicketsSetor } from '../actions';
 class Index extends Component{
 
     componentDidMount(){
-        let setor = 'Departamento pessoal'
+        let setor = 1
         this.props.buscarTicketsSetor(setor)
     }
 

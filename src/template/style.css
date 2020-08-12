@@ -41,3 +41,11 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+.dropzone .dz-preview.dz-image-preview{
+	background-color: #E1E1E1 !important;
+}
+
+.dz-progress{
+	display: none !important;
+}

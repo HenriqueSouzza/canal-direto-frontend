@@ -20,14 +20,14 @@ import { alterarSenha } from './actions';
 
 import { toastr } from 'react-redux-toastr';
 
-import { USER } from '../../config/const';
+import { USER_LOGGED } from '../../config/const';
 
 class AlterarSenha extends Component{
 
     onSubmit = values => {
         if(values.senha == values.confirmarSenha){
             delete values.confirmarSenha;
-            this.props.alterarSenha(values, USER.pessoa, this.props.history)
+            this.props.alterarSenha(values,USER_LOGGED, this.props.history)
         }else{
             toastr.error('Erro', 'Senhas não conferem')
         }

@@ -23,7 +23,6 @@ import textArea from '../../../components/form/textArea';
 
 class Visualizar extends Component{
 
-
     constructor(props){
         super(props)
         this.state = {
