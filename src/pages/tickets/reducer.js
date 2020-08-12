@@ -3,6 +3,7 @@ import type from './types';
 //Estado inicial da componente
 const INITIAL_STATE = {
     meusTickets: [],
+    ticketsSetor: [],
     loading: false
 }
 
@@ -13,9 +14,13 @@ export default (state = INITIAL_STATE, action) => {
         case type.LOAD:
             return {...state, loading: action.payload}
 
-        //Caso para Guar
+        //Caso para guardar os tickets do menu 'meutickets'
         case type.BUSCAR_MEUS_TICKETS:
-            return { ...state, dadosUsuario: action.payload.data || INITIAL_STATE.list, loading: false }        
+            return { ...state, meusTickets: action.payload.data || INITIAL_STATE.meusTickets, loading: false }        
+
+        //Caso para guardar os tickets do menu 'tickets do setor'
+        case type.BUSCAR_TICKETS_SETOR:
+            return { ...state, ticketsSetor: action.payload.data || INITIAL_STATE.ticketsSetor, loading: false }        
 
         default:
             return state;   

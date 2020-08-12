@@ -12,16 +12,32 @@ import DataTable from '../../../components/table/dataTable';
 
 import { ACTION_RULES } from '../../../helpers/authorization';
 
+import { buscarTicketsSetor } from '../actions';
 
 class Index extends Component{
 
+    componentDidMount(){
+        let setor = 'Departamento pessoal'
+        this.props.buscarTicketsSetor(setor)
+    }
+
     render(){
 
-        let loading = false
+        const { loading, ticketsSetor } = this.props.tickets
 
-        let dataTicket = [
-            {ticket: '1', assunto: 'testando ticket', criado: '03-10-2020 13:00', status: 'Aguardando resposta'},
-        ]
+        const dataTicket = []
+        
+        if(ticketsSetor.response){
+            ticketsSetor.response.content.map(row => {
+                dataTicket.push({
+                    ticket: row.id,
+                    assunto: row.assunto,
+                    criado: row.created_at,
+                    setor: row.setor,
+                    status: row.status,
+                })
+            })
+        }
 
         const columns = [
             {
@@ -40,6 +56,11 @@ class Index extends Component{
                 sortable: true,
             },
             {
+                name: 'Setor',
+                selector: 'setor',
+                sortable: true,
+            },
+            {
                 name: 'Status',
                 selector: 'status',
                 sortable: true,
@@ -48,7 +69,6 @@ class Index extends Component{
 
         return(
             <section className="content">
-                <LoadingBody status={loading} />
                 <MenuHeader title={`Tickets do meu setor`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
@@ -84,7 +104,7 @@ const mapStateToProps = state => ({ tickets: state.tickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);
