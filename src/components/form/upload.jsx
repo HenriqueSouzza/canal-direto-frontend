@@ -1,33 +1,61 @@
 import React from 'react';
 
+import DropzoneComponent from 'react-dropzone-component';
+
 function Upload(props){
 
-    const { label, type, placeholder, icon, disabled, input } = props
+    const { endpoint } = props
 
-    const {touched ,error} = props.meta
+    const componentConfig = {
+        dropzoneSelector: '',
+        iconFiletypes: ['.jpg', '.png', '.gif'], //extensões permitidas
+        showFiletypeIcon: true,
+        postUrl: endpoint,
+    };
 
-    const fileInput = React.createRef()
+    var djsConfig = { 
+        autoProcessQueue: endpoint != 'no-url' ? true : false, //quando inserir a imagem, ele apresenta a barra de loading
+        acceptedFiles: "image/jpeg,image/png,image/gif", //Força a abertura de arquivo com essas extensões
+        addRemoveLinks: true, // habilita a opção de deletar
+    }
 
-    const handleChange = () => {
-        input.onChange(fileInput.current.files[0])
+    let dropzone = []
+     
+    const addArchive = (file) => {
+        console.log(file)
+        dropzone = file
+        // props.input.onChange(file)
+    }
+
+    const removeArchive = (file) => {
+        console.log(file)
+        if (dropzone) {
+            dropzone.removeFile()
+        }
+    }
+
+
+    const error = (file) => {
+        console.log(file)
+        if (dropzone) {
+            dropzone.removeFile()
+        }
+    }
+
+    const eventHandlers = { 
+        addedfile: (file) => addArchive(file),
+        removedfile: (file) => removeArchive(file),
+        error: (file) => error(file)
     }
 
     return(
-        <div className={`form-group`}>
-            <label>{label}</label>
-            <div className="input-group">
-                <input type={type} {...props.input} ref={fileInput} value={fileInput.current ? fileInput.current.files : '' } onChange={handleChange} disabled={disabled} className={`form-control ${touched && error && "is-invalid"}`} placeholder={placeholder} />
-                <div className="input-group-append">
-                    <div className="input-group-text">
-                        <i className={icon}></i>
-                    </div>
-                </div>
-                <div className={`${touched && error && "invalid-feedback"}`}>
-                    {touched && error && <span className="help-block">{error}</span>}
-                </div>
-            </div>
-        </div>
-    )
+            <DropzoneComponent
+                {...props}
+                config={componentConfig}
+                eventHandlers={eventHandlers}
+                djsConfig={djsConfig}
+            />
+    )   
 }
 
 export default Upload;

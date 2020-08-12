@@ -12,6 +12,8 @@ import Button from '../../../components/form/button';
 
 import Input from '../../../components/form/input';
 
+import Upload from '../../../components/form/upload';
+
 import Select from '../../../components/form/select';
 
 import LoadingBody from '../../../components/loading/loadingBody';
@@ -35,9 +37,13 @@ class Novo extends Component{
 
         const { loading } = this.props.tickets
 
-        let dataSetor = []
+        let dataSetor = [
+            {id: '1', name: 'text'}
+        ]
 
-        let dataCategoria = []
+        let dataCategoria = [
+            {id: '1', name: 'text'}
+        ]
 
         return (
             <section className="content">
@@ -49,9 +55,9 @@ class Novo extends Component{
                             <Form
                                 onSubmit={this.onSubmit}
                                 render={({handleSubmit}) => (
-                                    <form onSubmit={handleSubmit}>
+                                    <form onSubmit={handleSubmit} encType="multipart/form-data">
                                         <div className="row justify-content-center">
-                                            <div className="col-md-6">
+                                            <div className="col-md-7">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
@@ -61,10 +67,6 @@ class Novo extends Component{
                                                     placeholder={`Digite o assunto do ticket`}
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                     />
-                                            </div>
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-6">
                                                 <Field 
                                                     component={Select} 
                                                     name={`setor`} 
@@ -72,10 +74,6 @@ class Novo extends Component{
                                                     label={`Setor:`}
                                                     validate={FORM_RULES.required}
                                                     />
-                                            </div>
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-6">
                                                 <Field 
                                                     component={Select} 
                                                     name={`categoria`} 
@@ -83,10 +81,6 @@ class Novo extends Component{
                                                     label={`Categoria:`}
                                                     validate={FORM_RULES.required}
                                                     />
-                                            </div>
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-6">
                                                 <Field 
                                                     component={textArea} 
                                                     type={`text`}
@@ -96,6 +90,19 @@ class Novo extends Component{
                                                     placeholder={`Escreva aqui...`}
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
                                                     />
+                                            </div>
+                                            <div className="col-md-5">
+                                                <div className="row justify-content-center">
+                                                    <div className="col-md-10 mt-5 text-center">
+                                                        <label>Anexar arquivo</label>
+                                                        <Field 
+                                                            component={Upload} 
+                                                            endpoint={'no-url'} //
+                                                            name={`arquivo`} 
+                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
+                                                            />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="row justify-content-center">
