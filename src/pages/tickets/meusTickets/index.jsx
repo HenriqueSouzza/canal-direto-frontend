@@ -24,7 +24,7 @@ class Index extends Component{
 
     render(){
 
-        const {loading, meusTickets } = this.props.tickets
+        const { loading, meusTickets } = this.props.tickets
         
         const dataTicket = []
         
@@ -62,7 +62,6 @@ class Index extends Component{
             }
         ];
         
-
         return(
             <section className="content">
                 <MenuHeader title={`Meus tickets`} history={this.props.location.pathname} />
