@@ -20,6 +20,8 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import textArea from '../../../components/form/textArea';
 
+import { salvarInteracao } from '../actions';
+
 
 class Visualizar extends Component{
 
@@ -266,17 +268,17 @@ class Visualizar extends Component{
                             <br/>
                             <div className="row justify-content-center text-center">
                                 <div className="col-md-3">
-                                    <button type="button" className="btn btn-success" onClick={() => this.onClickRespEnc(1)}>
+                                    <button type="button" className="btn btn-success col-md-10" onClick={() => this.onClickRespEnc(1)}>
                                         <i className="fa fa-reply"></i> Responder
                                     </button>
                                 </div>
                                 <div className="col-md-3">
-                                    <button type="button" className="btn btn-primary" onClick={() => this.onClickRespEnc(0)}>
+                                    <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onClickRespEnc(0)}>
                                         <i className="fa fa-share"></i> Encaminhar
                                     </button>
                                 </div>
                                 <div className="col-md-3">
-                                    <button type="button" className="btn btn-dark" onClick={() => this.onVoltar()}>
+                                    <button type="button" className="btn btn-dark col-md-10" onClick={() => this.onVoltar()}>
                                         <i className="fa fa-arrow-left"></i> Voltar
                                     </button>
                                 </div>
@@ -333,7 +335,7 @@ const mapStateToProps = state => ({ tickets: state.tickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);
