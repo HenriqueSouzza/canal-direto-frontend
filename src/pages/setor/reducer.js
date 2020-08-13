@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
 
         //Caso para Guar
         case type.BUSCAR_DADOS_SETOR:
-            return { ...state, dadosUsuario: action.payload.data || INITIAL_STATE.list, loading: false }        
+            return { ...state, dadosSetor: action.payload.data || INITIAL_STATE.dadosSetor, loading: false }        
 
         default:
             return state;   
