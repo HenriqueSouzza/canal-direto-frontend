@@ -16,8 +16,9 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import textArea from '../../../components/form/textArea';
 
-import { salvarInteracao, buscarInteracoesTicket } from  '../actions';
-import { data } from 'jquery';
+import { salvarInteracao, buscarInteracoesTicket, fecharTicket } from  '../actions';
+
+import moment from 'moment';
 
 
 class Visualizar extends Component{
@@ -57,7 +58,11 @@ class Visualizar extends Component{
      * Ação para fechar ticket
      */
     onFecharTicket = () => {
-        console.log('teste')
+        const values = {}
+
+        values.status = 'fechado'
+        values.dt_fechamento = moment().format()
+        this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }
 
     /**
@@ -150,6 +155,7 @@ class Visualizar extends Component{
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
+                        dataTicket.status = element.status
                     }
                  })
             }else{
@@ -160,6 +166,7 @@ class Visualizar extends Component{
                     dataTicket.setor = meusTickets.response.content.setor
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
+                    dataTicket.status = meusTickets.response.content.status
                 }
             }
         }
@@ -167,7 +174,6 @@ class Visualizar extends Component{
         const dataInteracao = []
 
         if(interacoesTickets.response){
-            console.log(interacoesTickets.response)
             if(Array.isArray(interacoesTickets.response.content)){
                 interacoesTickets.response.content.find(element => {
                     if(element.id_ticket == this.props.match.params.id){
@@ -195,6 +201,8 @@ class Visualizar extends Component{
             }
         }
 
+
+        console.log(dataTicket)
 
         return (
             <section className="content">
@@ -235,16 +243,20 @@ class Visualizar extends Component{
                             </div>
                             <br/>
                             <div className="row justify-content-center text-center">
-                                <div className="col-md-3">
-                                    <button type="button" className="btn btn-success col-md-10" onClick={() => this.setState({onResponder: 1})}>
-                                        <i className="fa fa-reply"></i> Responder
-                                    </button>
-                                </div>
-                                <div className="col-md-3">
-                                    <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onFecharTicket(dataTicket.id)}>
-                                        <i className="fa fa-check"></i> Fechar Ticket
-                                    </button>
-                                </div>
+                                { dataTicket.status != 'fechado' ?
+                                    <>
+                                    <div className="col-md-3">
+                                        <button type="button" className="btn btn-success col-md-10" onClick={() => this.setState({onResponder: 1})}>
+                                            <i className="fa fa-reply"></i> Responder
+                                        </button>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onFecharTicket(dataTicket.id)}>
+                                            <i className="fa fa-check"></i> Fechar Ticket
+                                        </button>
+                                    </div>
+                                    </>
+                                : ''}
                                 <div className="col-md-3">
                                     <button type="button" className="btn btn-dark col-md-10" onClick={() => this.onVoltar()}>
                                         <i className="fa fa-arrow-left"></i> Voltar
@@ -260,10 +272,13 @@ class Visualizar extends Component{
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <div className="row">
-                                            <div className="col-md-6">
-                                                <h5 className="card-title">Interações</h5>
+                                            <div className="col-md-4">
+                                                <small className="badge badge-light">Data da interação: <strong>{row.dt_criacao.replace(/(\d*)-(\d*)-(\d*).*/, '$3-$2-$1')}</strong></small>
                                             </div>
-                                            <div className="col-md-6 text-right">
+                                            <div className="col-md-4 text-center">
+                                                <small className="badge badge-light">Autor interação:{row.usuario_interacao}</small>
+                                            </div>
+                                            <div className="col-md-4 text-right">
                                                 <small className="badge badge-light">{row.acao}</small>
                                             </div>
                                         </div>
@@ -271,18 +286,14 @@ class Visualizar extends Component{
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <label>Autor:</label>
-                                                <div className=""><strong>{row.usuario_interacao}</strong></div>
-                                            </div>
-                                            <div className="col-md-6 text-right">
-                                                <label>Data da interação:</label>
-                                                <div className="">{row.dt_criacao}</div>
+                                                <label>Mensagem:</label>
+                                                <div className="">{row.mensagem}</div>
                                             </div>
                                         </div>
                                         <br/>
                                         <div className="row">
                                             <div className="col-md-12">
-                                                <label>Anotação:</label>
+                                                <label>Anexos:</label>
                                                 <div className="">{row.mensagem}</div>
                                             </div>
                                         </div>
@@ -308,7 +319,7 @@ const mapStateToProps = state => ({ tickets: state.tickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket, fecharTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

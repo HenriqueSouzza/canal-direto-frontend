@@ -197,6 +197,37 @@ export const salvarInteracao = (params) => {
 
 }
 
+export const fecharTicket = (params, idTicket, router) => {
+
+    params.usuario_fechamento = USER_LOGGED
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers: headers })
+        .then(response => {
+
+            router.goBack()
+            toastr.success('Sucesso', 'Ticket fechado com sucesso')
+            dispatch(buscarMeusTickets(USER_LOGGED))
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
 
 /*****************************************************************************/
 /************************* TICKETS DO MEU SETOR ******************************/
