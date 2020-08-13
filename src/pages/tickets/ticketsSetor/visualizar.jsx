@@ -25,24 +25,40 @@ class Visualizar extends Component{
 
     constructor(props){
         super(props)
+
+        if(this.props.tickets.ticketsSetor.length <= 0){
+            this.props.history.goBack()
+        }
+
         this.state = {
             onResponder: 0,
             onEncaminhar: 0
         }
     }
 
+    /**
+     * 
+     * @param {*} values 
+     */
     onSubmit = values => {
         if(this.state.onResponder){
-            console.log('responder')
+            console.log(values)
         }else{
-            console.log('encaminhar')
+            console.log(values)
         }
     }
 
+    /**
+     * 
+     */
     onVoltar = () => {
         this.props.history.goBack()
     }
 
+    /**
+     * 
+     * @param {*} values 
+     */
     onClickRespEnc = values => {
         if(values){
             this.setState({onResponder: 1, onEncaminhar: 0})
@@ -54,7 +70,10 @@ class Visualizar extends Component{
     onResponder = () => {
  
         return(
-            <div className="card">
+            <div className="card card-danger">
+                <div className="card-header">
+                    <h5 className="card-title">Resposta</h5>
+                </div>
                 <div className="card-body">
                     <Form
                         onSubmit={this.onSubmit}
@@ -82,8 +101,13 @@ class Visualizar extends Component{
                                             type={`submit`} 
                                             color={`btn-success`}
                                             icon={`fa fa-save`} 
-                                            description={`Responder`}
+                                            description={`Salvar`}
                                             />
+                                    </div>
+                                    <div className="col-md-3">
+                                        <button type="button" className="btn btn-danger col-md-12" onClick={() => this.setState({onResponder: 0})}>
+                                            <i className="fa fa-window-close"></i> Fechar
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -101,7 +125,10 @@ class Visualizar extends Component{
         let dataCategoria = [{id: '1', name: 'teste'}]
 
         return(
-            <div className="card">
+            <div className="card card-danger">
+                <div className="card-header">
+                    <h5 className="card-title">Encaminhar</h5>
+                </div>
                 <div className="card-body">
                     <Form
                         onSubmit={this.onSubmit}
@@ -154,6 +181,11 @@ class Visualizar extends Component{
                                             description={`Encaminhar`}
                                             />
                                     </div>
+                                    <div className="col-md-3">
+                                        <button type="button" className="btn btn-danger col-md-12" onClick={() => this.setState({onEncaminhar: 0})}>
+                                            <i className="fa fa-window-close"></i> Fechar
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         )}/>
@@ -163,9 +195,36 @@ class Visualizar extends Component{
 
     }
 
+
     render(){
 
-        const { loading } = this.props.tickets
+        const { loading, ticketsSetor } = this.props.tickets
+
+        const dataTicket = {}
+
+        if(ticketsSetor.response){
+            if(Array.isArray(ticketsSetor.response.content)){
+                ticketsSetor.response.content.find(element => {
+                    if(element.id == this.props.match.params.id){
+                        dataTicket.id = element.id
+                        dataTicket.assunto = element.assunto
+                        dataTicket.usuario_abertura = element.usuario_abertura
+                        dataTicket.setor = element.setor
+                        dataTicket.categoria = element.categoria
+                        dataTicket.mensagem = element.mensagem
+                    }
+                 })
+            }else{
+                if(ticketsSetor.response.content.id  == this.props.match.params.id ){
+                    dataTicket.id = ticketsSetor.response.content.id
+                    dataTicket.assunto = ticketsSetor.response.content.assunto
+                    dataTicket.usuario_abertura = ticketsSetor.response.content.usuario_abertura
+                    dataTicket.setor = ticketsSetor.response.content.setor
+                    dataTicket.categoria = ticketsSetor.response.content.categoria
+                    dataTicket.mensagem = ticketsSetor.response.content.mensagem
+                }
+            }
+        }
 
         return (
             <section className="content">
@@ -180,28 +239,28 @@ class Visualizar extends Component{
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Autor:</label>
-                                    <div className="">123123123 - adasdasdasd</div>
+                                    <div className="">{dataTicket.usuario_abertura}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Assunto:</label>
-                                    <div className="">123123123 - adasdasdasd</div>
+                                    <div className="">{dataTicket.assunto}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Setor/Categoria:</label>
-                                    <div className="">123123123 - adasdasdasd</div>
+                                    <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Mensagem:</label>
-                                    <div className="">asdadadsadasdadsdslkasjdflkçsadjfçlsdkjf</div>
+                                    <div className="">{dataTicket.mensagem}</div>
                                 </div>
                             </div>
                             <br/>

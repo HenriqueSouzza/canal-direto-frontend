@@ -25,9 +25,13 @@ class Visualizar extends Component{
 
     constructor(props){
         super(props)
+
+        if(this.props.tickets.meusTickets.length <= 0){
+            this.props.history.goBack()
+        }
+
         this.state = {
             onResponder: 0,
-            onEncaminhar: 0
         }
     }
 
@@ -43,24 +47,49 @@ class Visualizar extends Component{
         this.props.history.goBack()
     }
 
-    onClickRespEnc = values => {
-        if(values){
-            this.setState({onResponder: 1, onEncaminhar: 0})
-        }else{
-            this.setState({onResponder: 0, onEncaminhar: 1})
-        }
+    /**
+     * Ação para fechar ticket
+     */
+    onFecharTicket = () => {
+        console.log('teste')
     }
 
+    /**
+     * 
+     * @param {*} values 
+     */
+    onClickRespEnc = values => {
+        this.setState({onResponder: 1})
+    }
+
+    /**
+     * 
+     */
     onResponder = () => {
  
         return(
-            <div className="card">
+            <div className="card card-danger">
+                <div className="card-header">
+                    <h5 className="card-title">Resposta</h5>
+                </div>
                 <div className="card-body">
                     <Form
                         onSubmit={this.onSubmit}
                         render={({handleSubmit}) => (
                             <form onSubmit={handleSubmit}>
                                 <div className="row justify-content-center">
+                                    <div className="col-md-10">
+                                        <Field 
+                                            component={textArea} 
+                                            type={`text`}
+                                            name={`mensagem`} 
+                                            label={`Mensagem:`}
+                                            rows={3}
+                                            placeholder={`Escreva aqui...`}
+                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
+                                            />
+                                    </div>
+                                    <br/>
                                     <div className="col-md-10">
                                         <Field 
                                             component={textArea} 
@@ -82,77 +111,13 @@ class Visualizar extends Component{
                                             type={`submit`} 
                                             color={`btn-success`}
                                             icon={`fa fa-save`} 
-                                            description={`Responder`}
+                                            description={`Salvar`}
                                             />
                                     </div>
-                                </div>
-                            </form>
-                        )}/>
-                </div>
-            </div>
-        )
-
-    }
-
-    onEncaminhar = () => {
-
-        let dataSetor = [{id: '1', name: 'teste'}]
-
-        let dataCategoria = [{id: '1', name: 'teste'}]
-
-        return(
-            <div className="card">
-                <div className="card-body">
-                    <Form
-                        onSubmit={this.onSubmit}
-                        render={({handleSubmit}) => (
-                            <form onSubmit={handleSubmit}>
-                                <div className="row justify-content-center">
-                                    <div className="col-md-10">
-                                        <Field 
-                                            component={Select} 
-                                            name={`setor`} 
-                                            data={dataSetor}
-                                            label={`Setor:`}
-                                            validate={FORM_RULES.required}
-                                            />
-                                    </div>
-                                </div>
-                                <div className="row justify-content-center">
-                                    <div className="col-md-10">
-                                        <Field 
-                                            component={Select} 
-                                            name={`categoria`} 
-                                            data={dataCategoria}
-                                            label={`Categoria:`}
-                                            validate={FORM_RULES.required}
-                                            />
-                                    </div>
-                                </div>
-                                <div className="row justify-content-center">
-                                    <div className="col-md-10">
-                                        <Field 
-                                            component={textArea} 
-                                            type={`text`}
-                                            name={`mensagem`} 
-                                            label={`Mensagem:`}
-                                            rows={3}
-                                            placeholder={`Escreva algo aqui antes de enviar...`}
-                                            validate={composeValidators(FORM_RULES.min(2),  FORM_RULES.max(300))}
-                                            />
-                                    </div>
-                                </div>
-                                <div className="row justify-content-center">
                                     <div className="col-md-3">
-                                        {/* <label>&nbsp;</label> */}
-                                        <Field
-                                            component={Button}
-                                            name={`sendDados`}
-                                            type={`submit`} 
-                                            color={`btn-success`}
-                                            icon={`fa fa-save`} 
-                                            description={`Encaminhar`}
-                                            />
+                                        <button type="button" className="btn btn-danger col-md-12" onClick={() => this.setState({onResponder: 0})}>
+                                            <i className="fa fa-window-close"></i> Fechar
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -165,7 +130,33 @@ class Visualizar extends Component{
 
     render(){
 
-        const { loading } = this.props.tickets
+        const { loading, meusTickets } = this.props.tickets
+
+        const dataTicket = {}
+
+        if(meusTickets.response){
+            if(Array.isArray(meusTickets.response.content)){
+                meusTickets.response.content.find(element => {
+                    if(element.id == this.props.match.params.id){
+                        dataTicket.id = element.id
+                        dataTicket.assunto = element.assunto
+                        dataTicket.usuario_abertura = element.usuario_abertura
+                        dataTicket.setor = element.setor
+                        dataTicket.categoria = element.categoria
+                        dataTicket.mensagem = element.mensagem
+                    }
+                 })
+            }else{
+                if(meusTickets.response.content.id  == this.props.match.params.id ){
+                    dataTicket.id = meusTickets.response.content.id
+                    dataTicket.assunto = meusTickets.response.content.assunto
+                    dataTicket.usuario_abertura = meusTickets.response.content.usuario_abertura
+                    dataTicket.setor = meusTickets.response.content.setor
+                    dataTicket.categoria = meusTickets.response.content.categoria
+                    dataTicket.mensagem = meusTickets.response.content.mensagem
+                }
+            }
+        }
 
         return (
             <section className="content">
@@ -180,44 +171,44 @@ class Visualizar extends Component{
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Autor:</label>
-                                    <div className="">123123123 - adasdasdasd</div>
+                                    <div className="">{dataTicket.usuario_abertura}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Assunto:</label>
-                                    <div className="">123123123 - adasdasdasd</div>
+                                    <div className="">{dataTicket.assunto}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Setor/Categoria:</label>
-                                    <div className="">123123123 - adasdasdasd</div>
+                                    <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-md-12">
                                     <label>Mensagem:</label>
-                                    <div className="">asdadadsadasdadsdslkasjdflkçsadjfçlsdkjf</div>
+                                    <div className="">{dataTicket.mensagem}</div>
                                 </div>
                             </div>
                             <br/>
                             <div className="row justify-content-center text-center">
                                 <div className="col-md-3">
-                                    <button type="button" className="btn btn-success" onClick={() => this.onClickRespEnc(1)}>
+                                    <button type="button" className="btn btn-success col-md-10" onClick={() => this.setState({onResponder: 1})}>
                                         <i className="fa fa-reply"></i> Responder
                                     </button>
                                 </div>
                                 <div className="col-md-3">
-                                    <button type="button" className="btn btn-primary" onClick={() => this.onClickRespEnc(0)}>
-                                        <i className="fa fa-share"></i> Encaminhar
+                                    <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onFecharTicket(dataTicket.id)}>
+                                        <i className="fa fa-check"></i> Fechar Ticket
                                     </button>
                                 </div>
                                 <div className="col-md-3">
-                                    <button type="button" className="btn btn-dark" onClick={() => this.onVoltar()}>
+                                    <button type="button" className="btn btn-dark col-md-10" onClick={() => this.onVoltar()}>
                                         <i className="fa fa-arrow-left"></i> Voltar
                                     </button>
                                 </div>
@@ -225,7 +216,6 @@ class Visualizar extends Component{
                         </div>
                     </div>
                     {   this.state.onResponder ? this.onResponder() : ''  }
-                    {   this.state.onEncaminhar ? this.onEncaminhar() : '' }
                     <div className="card card-danger">
                         <div className="card-header">
                             <div className="row">
