@@ -43,7 +43,7 @@ class Editar extends Component{
 
     onSubmit = values => {
        
-        values.ativo = (values.ativo ? "S" : "N");
+        values.ativo = (values.ativos ? "S" : "N");
         values.usuario = 'marcos.barroso';
         
         //console.log(values);
@@ -56,12 +56,12 @@ class Editar extends Component{
         const initialValues = {}
 
         const {loading,dadosSetor} = this.props.setor
-
+        
         if(dadosSetor.response){
             dadosSetor.response.content.find(element => {
                 if(element.id == this.props.match.params.id){
                     initialValues.descricao = element.descricao
-                    initialValues.ativo = (element.ativo == "S" ? true : false)
+                    initialValues.ativos = (element.ativo == "S" ? true : false)
                 }
              })
         }
@@ -121,7 +121,7 @@ class Editar extends Component{
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit}) => (
+                                        render={({handleSubmit,submitSucceeded,pristine}) => (
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-10">
@@ -139,7 +139,7 @@ class Editar extends Component{
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
-                                                            name={`ativo`} 
+                                                            name={`ativos`} 
                                                             label={`Ativo`}
                                                             />
                                                     </div>                                                                                                      
@@ -154,6 +154,7 @@ class Editar extends Component{
                                                             color={`btn-success`}
                                                             icon={`fa fa-sign-in`} 
                                                             description={`Editar`}
+                                                            disabled={pristine}
                                                             />
                                                     </div>
                                                     <div className="col-md-3">
@@ -192,7 +193,7 @@ class Editar extends Component{
                                             router={this.props.history}
                                             // btnAdd={true} 
                                             // actions={[ACTION_RULES.can_edit]}
-                                            loading={this.props.categoria.loading} 
+                                            // loading={this.props.categoria.loading} 
                                         />
                                     </div>
                                 </div>

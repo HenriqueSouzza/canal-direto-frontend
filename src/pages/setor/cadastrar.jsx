@@ -27,7 +27,7 @@ class Cadastrar extends Component{
     onSubmit = values => {
         //console.log(values.ativo);
 
-        values.ativo = (values.ativo ? "S" : "N");
+        values.ativo = (values.ativos ? "S" : "N");
         values.usuario = 'marcos.barroso';
         
         //console.log(values);
@@ -50,7 +50,7 @@ class Cadastrar extends Component{
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit}) => (
+                                        render={({handleSubmit,submitSucceeded,pristine}) => (
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-10">
@@ -68,7 +68,7 @@ class Cadastrar extends Component{
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
-                                                            name={`ativo`} 
+                                                            name={`ativos`} 
                                                             label={`Ativo`}
                                                             />
                                                     </div>                                                                                                      
@@ -83,6 +83,7 @@ class Cadastrar extends Component{
                                                             color={`btn-success`}
                                                             icon={`fa fa-sign-in`} 
                                                             description={`Cadastrar`}
+                                                            disabled={pristine}
                                                             />
                                                     </div>
                                                 </div>                                                  

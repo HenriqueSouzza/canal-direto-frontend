@@ -33,7 +33,7 @@ export const buscarDadosSetor = (params=null) => {
 
             dispatch({type: type.LOAD, payload: false})
 
-            console.log(error.response)
+            //console.log(error.response)
 
 
         })
@@ -64,12 +64,12 @@ export const cadastrarCategoria = (params, router) => {
 
             //dispatch(buscarDadosUsuario(user))
             dispatch({type: type.LOAD, payload: false})
-            
+            router.goBack()
             
         })
         .catch(error => {
 
-            console.log(error.response)
+            //console.log(error.response)
             // toastr.error('Erro', 'Houve um erro ao tentar alterar seus dados, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
              dispatch({type: type.LOAD, payload: false})
 
@@ -104,7 +104,7 @@ export const alterarCategoria = (params, idCategoria) => {
         })
         .catch(error => {
 
-            console.log(error.response)
+            //console.log(error.response)
             // toastr.error('Erro', 'Houve um erro ao tentar alterar seus dados, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
              dispatch({type: type.LOAD, payload: false})
 
@@ -137,7 +137,7 @@ export const buscarDadosCategoria = (idSetor= null ) => {
 
             dispatch({type: type.LOAD, payload: false})
 
-            console.log(error.response)
+            //console.log(error.response)
 
 
         })
@@ -169,7 +169,7 @@ export const buscarDadosCategoriaId = (idCategoria= null ) => {
 
             dispatch({type: type.LOAD, payload: false})
 
-            console.log(error.response)
+            //console.log(error.response)
 
 
         })

@@ -24,11 +24,13 @@ import  { buscarDadosSetor, cadastrarCategoria } from './actions'
 
 class Cadastrar extends Component{
 
-    componentDidMount(){
+    constructor(props) {
+        super(props)
 
-        this.props.buscarDadosSetor()
-
-    }
+        if (props.setor.dadosSetor.length <= 0){
+            props.history.goBack()
+        } 
+    } 
 
     onSubmit = values => {
 
@@ -76,7 +78,7 @@ class Cadastrar extends Component{
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit}) => (<form onSubmit={handleSubmit}>
+                                        render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <Field 
@@ -119,8 +121,17 @@ class Cadastrar extends Component{
                                                             color={`btn-success`}
                                                             icon={`fa fa-sign-in`} 
                                                             description={`Cadastrar`}
+                                                            disabled={pristine}
                                                             />
                                                     </div>
+                                                    <div className="col-md-3">
+                                                        <button 
+                                                            type="button" 
+                                                            className="btn btn-dark"
+                                                            onClick = {() => this.props.history.goBack()}
+                                                            > Voltar 
+                                                        </button>
+                                                    </div>                                                      
                                                 </div>                                                  
                                             </form>
                                         )}
@@ -137,7 +148,7 @@ class Cadastrar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ categoria: state.categoria })
+const mapStateToProps = state => ({ categoria: state.categoria, setor: state.setor })
 
 /**
  * @param {*} dispatch 

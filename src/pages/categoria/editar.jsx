@@ -24,15 +24,18 @@ import  { buscarDadosSetor, buscarDadosCategoriaId, alterarCategoria } from './a
 
 class Editar extends Component{
 
-    componentDidMount(){
+    constructor(props) {
+        super(props)
 
-        this.props.buscarDadosCategoriaId(this.props.match.params.id)
+        if (props.setor.dadosSetor.length <= 0 || props.categoria.dadosCategoria.length <= 0){
+            props.history.goBack()
+        } 
 
-    }
+    } 
 
     onSubmit = values => {
 
-        values.ativo = (values.ativo ? "S" : "N");
+        values.ativo = (values.ativos ? "S" : "N");
         values.usuario = 'marcos.barroso';
         
         //console.log(values);
@@ -70,13 +73,13 @@ class Editar extends Component{
                     if(element.id == this.props.match.params.id){
                         initialValues.id_setor = element.setor
                         initialValues.descricao = element.descricao
-                        initialValues.ativo = (element.ativo == 'S' ? true : false)
+                        initialValues.ativos = (element.ativo == 'S' ? true : false)
                     }
                  })
              }else{
                 initialValues.id_setor = dadosCategoria.response.content.setor
                 initialValues.descricao = dadosCategoria.response.content.descricao
-                initialValues.ativo = (dadosCategoria.response.content.ativo == "S" ? true : false)
+                initialValues.ativos = (dadosCategoria.response.content.ativo == "S" ? true : false)
              }
 
         }
@@ -93,7 +96,7 @@ class Editar extends Component{
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit}) => (
+                                        render={({handleSubmit,submitSucceeded,pristine}) => (
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-5">
@@ -120,7 +123,7 @@ class Editar extends Component{
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
-                                                            name={`ativo`} 
+                                                            name={`ativos`} 
                                                             label={`Ativo`}
                                                             // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
@@ -135,9 +138,18 @@ class Editar extends Component{
                                                             type={`submit`} 
                                                             color={`btn-success`}
                                                             icon={`fa fa-sign-in`} 
-                                                            description={`Cadastrar`}
+                                                            description={`Atualizar`}
+                                                            disabled={pristine}
                                                             />
                                                     </div>
+                                                    <div className="col-md-3">
+                                                        <button 
+                                                            type="button" 
+                                                            className="btn btn-dark"
+                                                            onClick = {() => this.props.history.goBack()}
+                                                            > Voltar 
+                                                        </button>
+                                                    </div>                                                     
                                                 </div>                                                  
                                             </form>
                                         )}
@@ -154,7 +166,7 @@ class Editar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ categoria: state.categoria })
+const mapStateToProps = state => ({ categoria: state.categoria, setor: state.setor })
 
 /**
  * @param {*} dispatch 
