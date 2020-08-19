@@ -12,28 +12,28 @@ import DataTable from '../../../components/table/dataTable';
 
 import { ACTION_RULES } from '../../../helpers/authorization';
 
-import { buscarTicketsSetor } from '../actions';
+import { buscarMeusTickets } from '../actions'
+ 
 
 class Index extends Component{
 
     componentDidMount(){
-        let setor = 1
-        this.props.buscarTicketsSetor(setor)
+        let userLogged = 'henrique.souza'
+        this.props.buscarMeusTickets(userLogged)
     }
 
     render(){
 
-        const { loading, ticketsSetor } = this.props.tickets
-
+        const { loading, meusTickets } = this.props.tickets
+        
         const dataTicket = []
         
-        if(ticketsSetor.response){
-            ticketsSetor.response.content.map(row => {
+        if(meusTickets.response){
+            meusTickets.response.content.map(row => {
                 dataTicket.push({
                     ticket: row.id,
                     assunto: row.assunto,
                     criado: row.created_at,
-                    setor: row.setor,
                     status: row.status,
                 })
             })
@@ -56,25 +56,20 @@ class Index extends Component{
                 sortable: true,
             },
             {
-                name: 'Setor',
-                selector: 'setor',
-                sortable: true,
-            },
-            {
                 name: 'Status',
                 selector: 'status',
                 sortable: true,
             }
         ];
-
+        
         return(
             <section className="content">
-                <MenuHeader title={`Tickets do meu setor`} history={this.props.location.pathname} />
+                <MenuHeader title={`Meus tickets`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
-                        {/* <div className="card-header">
-                            <h3 className="card-title">asdas</h3>
-                        </div> */}
+                        {/* <div className="card-header"> */}
+                            {/* <h3 className="card-title">Meus tickets</h3> */}
+                        {/* </div> */}
                         <div className="card-body">
                             <DataTable
                                 description={false}
@@ -82,8 +77,8 @@ class Index extends Component{
                                 columns={columns} 
                                 data={dataTicket} 
                                 router={this.props.history}
-                                btnAdd={false} 
-                                actions={[ACTION_RULES.can_detail]}   
+                                btnAdd={true} 
+                                actions={[ACTION_RULES.can_detail]}
                                 loading={loading} 
                             />
                         </div>
@@ -91,10 +86,11 @@ class Index extends Component{
                 </div>
             </section>
         )
-        
+
     }
 
 }
+
 
 /**
  * @param {*} state 
@@ -104,7 +100,7 @@ const mapStateToProps = state => ({ tickets: state.tickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

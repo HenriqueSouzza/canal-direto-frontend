@@ -14,9 +14,14 @@ function Menu(){
                     <MenuLink description={`Meus dados`} path={`/dados-cadastrais/meus-dados`} icon={`fa fa-user-edit`} active={``} />
                     <MenuLink description={`Alterar Senha`} path={`/dados-cadastrais/alterar-senha`} icon={`fa fa-key`} active={``} />
                 </MenuTreeView>
-                <MenuTreeView description={`Tickets`} path={`#`} icon={`fa fa-clone`} >
-                    <MenuLink description={`Meus tickets`} path={`/tickets/meus-tickets`} icon={`fa fa-tag`} active={``} />
-                    <MenuLink description={`Tickets meu setor`} path={`/tickets/tickets-setor`} icon={`fa fa-list`} active={``} />
+                <MenuTreeView description={`Meus ticket`} path={`#`} icon={`fa fa-address-card`} >
+                    <MenuLink description={`Fechados`} path={`/tickets/meus-tickets`} icon={`fa fa-lock`} active={``} />
+                    <MenuLink description={`Abertos`} path={`/tickets/meus-tickets`} icon={`fa fa-unlock`} active={``} />
+                </MenuTreeView>
+                <MenuTreeView description={`Ticket meu DEPTO`} path={`#`} icon={`fa fa-clone`} >
+                    <MenuLink description={`Fechados`} path={`/tickets/meus-tickets`} icon={`fa fa-lock`} active={``} />
+                    <MenuLink description={`Abertos`} path={`/tickets/meus-tickets`} icon={`fa fa-unlock`} active={``} />
+                    <MenuLink description={`Meus tickets`} path={`/tickets/meus-tickets`} icon={`fa fa-address-card`} active={``} />
                 </MenuTreeView>
                 <MenuLink description={`Setor`} path={`/setor`} icon={`fa fa-users`} active={``} />
                 <MenuLink description={`Sair`} path={`/sair`} icon={`fa fa-sign-out-alt`} active={``} />
