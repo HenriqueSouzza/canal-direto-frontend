@@ -77,6 +77,7 @@ export const buscarDadosSetor = (params=null) => {
 
 }
 
+
 /**
  * Método responsável para alterar senha
  * @param {*} params 
@@ -95,11 +96,11 @@ export const alterarSetor = (params, id) => {
         axios.put(endPoint, params, { headers : headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Sua senha foi alterada com sucesso !')
+            toastr.success('Sucesso', 'Cadastro alterado com sucesso !')
 
             dispatch({type: type.LOAD, payload: false})
             
-           //router.goBack()
+           //this.router.goBack()
             
         })
         .catch(error => {

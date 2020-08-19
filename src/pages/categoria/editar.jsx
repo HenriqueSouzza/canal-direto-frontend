@@ -20,13 +20,13 @@ import Select from '../../components/form/select';
 
 import { FORM_RULES, composeValidators } from '../../helpers/validations';
 
-import  { buscarDadosSetor, cadastrarCategoria } from './actions'
+import  { buscarDadosSetor, buscarDadosCategoriaId, alterarCategoria } from './actions'
 
-class Cadastrar extends Component{
+class Editar extends Component{
 
     componentDidMount(){
 
-        this.props.buscarDadosSetor()
+        this.props.buscarDadosCategoriaId(this.props.match.params.id)
 
     }
 
@@ -37,20 +37,13 @@ class Cadastrar extends Component{
         
         //console.log(values);
 
-        this.props.cadastrarCategoria(values, this.props.history)
-
-    }
-
-    onChange = (name, value) => {
+        this.props.alterarCategoria(values, this.props.match.params.id)
 
     }
 
     render(){
 
-        const initialValues = {
-            setor: this.props.match.params.id
-
-        }
+        const initialValues = {}
 
         const {dadosSetor} = this.props.categoria
 
@@ -62,33 +55,53 @@ class Cadastrar extends Component{
             let dados = dadosSetor.response.content
 
             dados.map(row => {
-                if(row.id == this.props.match.params.id){
-                    data.push({id: row.id, name:row.descricao})
-                }
+                data.push({id: row.id, name:row.descricao})
             });
         } 
 
+        const {dadosCategoria} = this.props.categoria
+
+        //console.log(dadosCategoria);
+
+        if(dadosCategoria.response){
+            //console.log(dadosCategoria.response);
+             if(Array.isArray(dadosCategoria.response.content)){
+                dadosCategoria.response.content.find(element => {
+                    if(element.id == this.props.match.params.id){
+                        initialValues.id_setor = element.setor
+                        initialValues.descricao = element.descricao
+                        initialValues.ativo = (element.ativo == 'S' ? true : false)
+                    }
+                 })
+             }else{
+                initialValues.id_setor = dadosCategoria.response.content.setor
+                initialValues.descricao = dadosCategoria.response.content.descricao
+                initialValues.ativo = (dadosCategoria.response.content.ativo == "S" ? true : false)
+             }
+
+        }
+        
 
         return(
                 <>
                     <section className="content">
                         <LoadingBody status={false} />
-                        <MenuHeader title={`Cadastrar Categoria`} history={this.props.location.pathname} />
+                        <MenuHeader title={`Editar Categoria`} history={this.props.location.pathname} />
                             <div className="content-fluid">
                                 <div className="card">
                                     <div className="card-body">
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit}) => (<form onSubmit={handleSubmit}>
+                                        render={({handleSubmit}) => (
+                                            <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <Field 
                                                             component={Select} 
-                                                            name={`setor`} 
+                                                            name={`id_setor`} 
                                                             data={data}
                                                             label={`Setor:`}
-                                                            // disabled={true}
                                                             validate={FORM_RULES.required}
                                                             />
                                                     </div>                                                    
@@ -109,7 +122,7 @@ class Cadastrar extends Component{
                                                             type={`checkbox`}
                                                             name={`ativo`} 
                                                             label={`Ativo`}
-                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
                                                     </div>                                                                                                      
                                                 </div>
@@ -146,7 +159,7 @@ const mapStateToProps = state => ({ categoria: state.categoria })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosSetor,cadastrarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosSetor,buscarDadosCategoriaId, alterarCategoria }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps )(Cadastrar);
+export default connect(mapStateToProps, mapDispatchToProps )(Editar);
