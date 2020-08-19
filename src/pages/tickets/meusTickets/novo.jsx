@@ -141,7 +141,7 @@ class Novo extends Component{
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
                                                     />
                                             </div>
-                                            <div className="col-md-5">
+                                            {/* <div className="col-md-5">
                                                 <div className="row justify-content-center">
                                                     <div className="col-md-10 mt-5 text-center">
                                                         <label>Anexar arquivo</label>
@@ -153,7 +153,7 @@ class Novo extends Component{
                                                             />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="row justify-content-center">
                                             <div className="col-md-3">

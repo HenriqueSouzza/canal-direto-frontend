@@ -13,8 +13,6 @@ function ChatCard(props){
         addComment(value)
     }
 
-    console.log(dataComment)
-
     return(
         <div className="card card-danger direct-chat direct-chat-danger">
             <div className="card-header">
@@ -53,7 +51,9 @@ function ChatCard(props){
                             }
                         })
                     : 
-                        'Sem dados para serem apresentados'
+                        <div className="text-center">
+                            Sem {titleChat}
+                        </div>
                     }
                 </div>
             </div>

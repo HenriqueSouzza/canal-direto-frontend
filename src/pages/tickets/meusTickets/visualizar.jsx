@@ -181,18 +181,12 @@ class Visualizar extends Component{
                         </div>
                     </div>
                     <div className="col-md-12">
-                        {/* {!loading ? this.onResponder() : ''} */}
-                        {
-                            dataInteracao.length > 0 ?
-                                <ChatCard
-                                    dataComment={dataInteracao}
-                                    titleChat={`Interações`}
-                                    addComment={this.onSubmit}
-                                    enableComment={dataTicket.status != 'fechado'}
-                                />
-                            : 
-                                ''
-                        }
+                        <ChatCard
+                            dataComment={dataInteracao}
+                            titleChat={`Interações`}
+                            addComment={this.onSubmit}
+                            enableComment={dataTicket.status != 'fechado'}
+                        />
                     </div>
                 </div>
             </section>
