@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     meusTickets: [],
     dadosSetor: [],
     dadosCategoria: [],
+    interacoesTickets: [],
     ticketsSetor: [],
     loading: false
 }
@@ -26,7 +27,11 @@ export default (state = INITIAL_STATE, action) => {
 
         //
         case type.BUSCAR_MINHAS_CATEGORIAS:
-            return { ...state, dadosCategoria: action.payload.data || INITIAL_STATE.dadosCategoria, loading: false }        
+            return { ...state, dadosCategoria: action.payload.data || INITIAL_STATE.dadosCategoria, loading: false }
+            
+        //
+        case type.BUSCAR_INTERACOES_TICKETS:
+            return { ...state, interacoesTickets: action.payload.data || INITIAL_STATE.interacoesTickets, loading: false }
 
         //Caso para guardar os tickets do menu 'tickets do setor'
         case type.BUSCAR_TICKETS_SETOR:

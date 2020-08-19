@@ -103,6 +103,37 @@ export const buscarCategoria = (idSetor) => {
 }
 
 /**
+ * 
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const buscarInteracoesTicket = (idTicket = '') => {
+    
+    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket + '&order=id,desc';
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_INTERACOES_TICKETS, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+/**
  * Método de para salvar um novo ticket
  */
 export const salvarNovoTicket = (params, router) => {
@@ -129,6 +160,67 @@ export const salvarNovoTicket = (params, router) => {
 
             console.log(error.response)
             toastr.error('Erro', 'Não foi possível salvar seu tícket')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+export const salvarInteracao = (params) => {
+
+    params.usuario_interacao = USER_LOGGED
+
+    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.post(endPoint, params, { headers: headers })
+        .then(response => {
+
+            toastr.success('Sucesso', 'Adicionado interação com sucesso')
+            dispatch(buscarInteracoesTicket(params.id_ticket))
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            toastr.error('Erro', 'Não foi possível inserir sua interação')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+export const fecharTicket = (params, idTicket, router) => {
+
+    params.usuario_fechamento = USER_LOGGED
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers: headers })
+        .then(response => {
+
+            router.goBack()
+            toastr.success('Sucesso', 'Ticket fechado com sucesso')
+            dispatch(buscarMeusTickets(USER_LOGGED))
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
             dispatch({type: type.LOAD, payload: false})
 
         })
