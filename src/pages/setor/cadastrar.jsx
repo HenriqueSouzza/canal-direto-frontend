@@ -24,12 +24,6 @@ import  { cadastrarSetor } from './actions'
 
 class Cadastrar extends Component{
 
-    componentDidMount(){
-
-        this.props.cadastrarSetor()
-
-    }
-
     onSubmit = values => {
         //console.log(values.ativo);
 
@@ -76,7 +70,6 @@ class Cadastrar extends Component{
                                                             type={`checkbox`}
                                                             name={`ativo`} 
                                                             label={`Ativo`}
-                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
                                                     </div>                                                                                                      
                                                 </div>
