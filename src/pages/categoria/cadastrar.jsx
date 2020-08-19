@@ -41,10 +41,6 @@ class Cadastrar extends Component{
 
     }
 
-    onChange = (name, value) => {
-
-    }
-
     render(){
 
         const initialValues = {
@@ -109,7 +105,7 @@ class Cadastrar extends Component{
                                                             type={`checkbox`}
                                                             name={`ativo`} 
                                                             label={`Ativo`}
-                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
                                                     </div>                                                                                                      
                                                 </div>
