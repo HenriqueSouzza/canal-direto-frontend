@@ -27,10 +27,13 @@ class Index extends Component{
         
         const dataSetor = []
 
+        console.log(dadosSetor)
+
+        
         if(dadosSetor.response){
             if(Array.isArray(dadosSetor.response.content)){
                 dadosSetor.response.content.map(row => {
-
+                    console.log(row)
                     dataSetor.push({
                         setor: row.id,
                         descricao: row.descricao,
@@ -70,10 +73,13 @@ class Index extends Component{
 
         return(
             <section className="content">
-                <MenuHeader title={`Setores Cadastrados`} history={this.props.location.pathname} />
+                <MenuHeader title={`Categorias Cadastradas`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
-                         <div className="card-body">
+                        {/* <div className="card-header"> */}
+                            {/* <h3 className="card-title">Meus tickets</h3> */}
+                        {/* </div> */}
+                        <div className="card-body">
                             <DataTable
                                 description={false}
                                 checkbox={false} 

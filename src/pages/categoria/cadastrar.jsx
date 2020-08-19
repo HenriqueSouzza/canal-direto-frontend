@@ -24,11 +24,13 @@ import  { buscarDadosSetor, cadastrarCategoria } from './actions'
 
 class Cadastrar extends Component{
 
-    componentDidMount(){
+    constructor(props) {
+        super(props)
 
-        this.props.buscarDadosSetor()
-
-    }
+        if (props.setor.dadosSetor.length <= 0){
+            props.history.goBack()
+        } 
+    } 
 
     onSubmit = values => {
 
@@ -43,7 +45,10 @@ class Cadastrar extends Component{
 
     render(){
 
-        const initialValues = {}
+        const initialValues = {
+            setor: this.props.match.params.id
+
+        }
 
         const {dadosSetor} = this.props.categoria
 
@@ -55,7 +60,9 @@ class Cadastrar extends Component{
             let dados = dadosSetor.response.content
 
             dados.map(row => {
-                data.push({id: row.id, name:row.descricao})
+                if(row.id == this.props.match.params.id){
+                    data.push({id: row.id, name:row.descricao})
+                }
             });
         } 
 
@@ -71,15 +78,15 @@ class Cadastrar extends Component{
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit}) => (
-                                            <form onSubmit={handleSubmit}>
+                                        render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <Field 
                                                             component={Select} 
-                                                            name={`id_setor`} 
+                                                            name={`setor`} 
                                                             data={data}
                                                             label={`Setor:`}
+                                                            // disabled={true}
                                                             validate={FORM_RULES.required}
                                                             />
                                                     </div>                                                    
@@ -100,7 +107,7 @@ class Cadastrar extends Component{
                                                             type={`checkbox`}
                                                             name={`ativo`} 
                                                             label={`Ativo`}
-                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
                                                     </div>                                                                                                      
                                                 </div>
@@ -114,8 +121,17 @@ class Cadastrar extends Component{
                                                             color={`btn-success`}
                                                             icon={`fa fa-sign-in`} 
                                                             description={`Cadastrar`}
+                                                            disabled={pristine}
                                                             />
                                                     </div>
+                                                    <div className="col-md-3">
+                                                        <button 
+                                                            type="button" 
+                                                            className="btn btn-dark"
+                                                            onClick = {() => this.props.history.goBack()}
+                                                            > Voltar 
+                                                        </button>
+                                                    </div>                                                      
                                                 </div>                                                  
                                             </form>
                                         )}
@@ -132,7 +148,7 @@ class Cadastrar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ categoria: state.categoria })
+const mapStateToProps = state => ({ categoria: state.categoria, setor: state.setor })
 
 /**
  * @param {*} dispatch 

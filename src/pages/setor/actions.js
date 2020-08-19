@@ -28,15 +28,16 @@ export const cadastrarSetor = (params, router) => {
         .then(response => {
             
             toastr.success('Sucesso', 'Dados Cadastrados com sucesso !')
+            let rota = '/setor/'+response.data.response.content.setor+'/editar'
 
-            //dispatch(buscarDadosUsuario(user))
-            dispatch({type: type.LOAD, payload: false})
-            
+            dispatch(buscarDadosSetor())
+
+            router.push(rota)
             
         })
         .catch(error => {
 
-            console.log(error.response)
+            //console.log(error.response)
             // toastr.error('Erro', 'Houve um erro ao tentar alterar seus dados, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
              dispatch({type: type.LOAD, payload: false})
 
@@ -61,7 +62,7 @@ export const buscarDadosSetor = (params=null) => {
 
         axios.get(endPoint, { headers: headers })
         .then(response => {
-            
+
             dispatch({ type: type.BUSCAR_DADOS_SETOR, payload: response })
             
         })
@@ -69,13 +70,14 @@ export const buscarDadosSetor = (params=null) => {
 
             dispatch({type: type.LOAD, payload: false})
 
-            console.log(error.response)
+            //console.log(error.response)
 
 
         })
     }
 
 }
+
 
 /**
  * Método responsável para alterar senha
@@ -95,16 +97,16 @@ export const alterarSetor = (params, id) => {
         axios.put(endPoint, params, { headers : headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Sua senha foi alterada com sucesso !')
+            toastr.success('Sucesso', 'Cadastro alterado com sucesso !')
 
-            dispatch({type: type.LOAD, payload: false})
+            dispatch(buscarDadosSetor())
             
-           //router.goBack()
+           //this.router.goBack()
             
         })
         .catch(error => {
 
-            console.log(error.response.data.error)
+            //console.log(error.response.data.error)
             toastr.error('Erro', 'Houve um erro ao tentar alterar sua senha, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
             dispatch({type: type.ERROR, payload: false})
 
