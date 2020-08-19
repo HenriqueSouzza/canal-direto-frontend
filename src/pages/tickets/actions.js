@@ -109,7 +109,7 @@ export const buscarCategoria = (idSetor) => {
  */
 export const buscarInteracoesTicket = (idTicket = '') => {
     
-    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket + '&order=id,desc';
+    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
 
     const headers = { Authorization: ''}
 
