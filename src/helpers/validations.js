@@ -14,6 +14,7 @@
     email: value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Email inválido' : undefined,
     tooOld: value => value => value && value > 65 ? 'You might be too old for this' : undefined,
     alphaNumeric: value => value && /[^a-zA-Z0-9 ]/i.test(value) ? 'Somente caracteres alfanuméricos' : undefined,
+    qtdArchiveMin: min => value => value && value.length < min ? `Esse campo deve possuir no mínimo ${min} arquivo (s)` : undefined,
 }
 
 //

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import DropzoneComponent from 'react-dropzone-component';
 
@@ -6,55 +6,81 @@ function Upload(props){
 
     const { endpoint } = props
 
+    const {touched, error} = props.meta
+
     const componentConfig = {
         dropzoneSelector: '',
-        iconFiletypes: ['.jpg', '.png', '.gif'], //extensões permitidas
+        iconFiletypes: ['.jpg', '.png', '.gif', '.pdf', '.doc'], //extensões permitidas
         showFiletypeIcon: true,
         postUrl: endpoint,
     };
 
-    var djsConfig = { 
+    const djsConfig = { 
         autoProcessQueue: endpoint != 'no-url' ? true : false, //quando inserir a imagem, ele apresenta a barra de loading
-        acceptedFiles: "image/jpeg,image/png,image/gif", //Força a abertura de arquivo com essas extensões
+        acceptedFiles: "image/jpeg, image/png, image/gif, application/pdf, application/msword", //Força a abertura de arquivo com essas extensões
         addRemoveLinks: true, // habilita a opção de deletar
     }
 
-    let dropzone = []
-     
-    const addArchive = (file) => {
-        console.log(file)
-        dropzone = file
-        // props.input.onChange(file)
+    const [dropzone, setDropzone] = useState([]);
+
+    /**
+     * Adiciona o arquivo na fila
+     * @param {*} file 
+     */
+    const onAddedFile = file => {
+        dropzone.push(file)
+        setDropzone(dropzone)
     }
 
-    const removeArchive = (file) => {
-        console.log(file)
-        if (dropzone) {
-            dropzone.removeFile()
-        }
+    /**
+     * Remove o arquivo da fila
+     * @param {*} file 
+     */
+    const removeArchive = file => {
+        dropzone.splice(dropzone.indexOf(file), 1)
+    }
+    
+    /**
+     * Caso houver algum tipo de erro no arquivo, ele entra nessa função e remove o arquivo
+     * @param {*} file 
+     * @param {*} message 
+     */
+    const errorArchive = (file, message) => {
+        dropzone.splice(dropzone.indexOf(file), 1)
     }
 
-
-    const error = (file) => {
-        console.log(file)
-        if (dropzone) {
-            dropzone.removeFile()
-        }
+    /**
+     * É função é responsavel por retornar o estado inicial do dropzone
+     * @param {*} dataDropzone 
+     */
+    const initCallBack = (dataDropzone) => {
+        props.input.onChange(dataDropzone.files)
     }
-
+    
     const eventHandlers = { 
-        addedfile: (file) => addArchive(file),
-        removedfile: (file) => removeArchive(file),
-        error: (file) => error(file)
+        init: (dataDropzone) => initCallBack(dataDropzone),
+        addedfile: file => onAddedFile(file),
+        removedfile: file => removeArchive(file),
+        error: (file, message) => errorArchive(file, message),
     }
+
+    props.input.onChange(dropzone)
+
+    console.log(touched, error, dropzone, props.input)
 
     return(
+        <>
             <DropzoneComponent
                 {...props}
+                {...props.input}
                 config={componentConfig}
                 eventHandlers={eventHandlers}
                 djsConfig={djsConfig}
             />
+            <div className={`${touched && error && "text-danger"}`}>
+                {touched && error && <strong>{error}</strong>}
+            </div>
+        </>
     )   
 }
 
