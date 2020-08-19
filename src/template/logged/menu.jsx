@@ -19,7 +19,6 @@ function Menu(){
                     <MenuLink description={`Tickets meu setor`} path={`/tickets/tickets-setor`} icon={`fa fa-list`} active={``} />
                 </MenuTreeView>
                 <MenuLink description={`Setor`} path={`/setor`} icon={`fa fa-sign-out-alt`} active={``} />
-                <MenuLink description={`Categoria`} path={`/categoria`} icon={`fa fa-sign-out-alt`} active={``} />
                 <MenuLink description={`Sair`} path={`/sair`} icon={`fa fa-sign-out-alt`} active={``} />
             </ul>
         </nav>
