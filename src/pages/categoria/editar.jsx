@@ -35,8 +35,11 @@ class Editar extends Component{
 
     onSubmit = values => {
 
-        values.ativo = (values.ativos ? "S" : "N");
-        values.usuario = 'marcos.barroso';
+        values.ativo                = (values.ativo_in             ? "S" : "N");
+        values.permite_abertura     = (values.permite_abertura_in  ? "S" : "N");       
+        values.permite_interacao    = (values.permite_interacao_in ? "S" : "N"); 
+        values.permite_n_tickets    = (values.permite_n_tickets_in ? "S" : "N");       
+        values.usuario              = 'marcos.barroso';
         
         //console.log(values);
 
@@ -73,13 +76,19 @@ class Editar extends Component{
                     if(element.id == this.props.match.params.id){
                         initialValues.id_setor = element.setor
                         initialValues.descricao = element.descricao
-                        initialValues.ativos = (element.ativo == 'S' ? true : false)
+                        initialValues.ativo_in = (element.ativo == 'S' ? true : false)
+                        initialValues.permite_abertura_in = (element.permite_abertura == 'S' ? true : false)
+                        initialValues.permite_interacao_in = (element.permite_interacao == 'S' ? true : false)
+                        initialValues.permite_n_tickets_in = (element.permite_n_tickets == 'S' ? true : false)
                     }
                  })
              }else{
                 initialValues.id_setor = dadosCategoria.response.content.setor
                 initialValues.descricao = dadosCategoria.response.content.descricao
-                initialValues.ativos = (dadosCategoria.response.content.ativo == "S" ? true : false)
+                initialValues.ativo_in = (dadosCategoria.response.content.ativo == "S" ? true : false)
+                initialValues.permite_abertura_in = (dadosCategoria.response.content.permite_abertura == 'S' ? true : false)
+                initialValues.permite_interacao_in = (dadosCategoria.response.content.permite_interacao == 'S' ? true : false)
+                initialValues.permite_n_tickets_in = (dadosCategoria.response.content.permite_n_tickets == 'S' ? true : false)
              }
 
         }
@@ -99,7 +108,7 @@ class Editar extends Component{
                                         render={({handleSubmit,submitSucceeded,pristine}) => (
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row">
-                                                    <div className="col-md-5">
+                                                    <div className="col-md-6">
                                                         <Field 
                                                             component={Select} 
                                                             name={`id_setor`} 
@@ -108,7 +117,7 @@ class Editar extends Component{
                                                             validate={FORM_RULES.required}
                                                             />
                                                     </div>                                                    
-                                                    <div className="col-md-5">
+                                                    <div className="col-md-6">
                                                         <Field 
                                                             component={Input} 
                                                             type={`text`}
@@ -119,16 +128,45 @@ class Editar extends Component{
                                                             validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
                                                     </div>
-                                                    <div className="col-md-2">
+                                                </div>
+                                                <div className="row">
+                                                <div className="col-md-6">
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
-                                                            name={`ativos`} 
+                                                            name={`ativo_in`} 
                                                             label={`Ativo`}
                                                             // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                        />
+                                                    </div>                                                   
+                                                    <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`permite_abertura_in`} 
+                                                                label={`Permite Abertura`}
+                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
-                                                    </div>                                                                                                      
-                                                </div>
+                                                    </div>  
+                                                    <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`permite_interacao_in`} 
+                                                                label={`Permite Interação`}
+                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            />
+                                                    </div> 
+                                                    <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`permite_n_tickets_in`} 
+                                                                label={`Permite Abrir com Chamado Aberto`}
+                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            />
+                                                    </div>                                                                                                                                                             
+                                                </div>                                                
                                                 <div className="row justify-content-center">
                                                     <div className="col-md-3">
                                                         {/* <label>&nbsp;</label> */}

@@ -34,7 +34,10 @@ class Cadastrar extends Component{
 
     onSubmit = values => {
 
-        values.ativo = (values.ativo ? "S" : "N");
+        values.ativo = (values.ativo_in ? "S" : "N");
+        values.permite_abertura = (values.permite_abertura_in ? "S" : "N");
+        values.permite_interacao = (values.permite_interacao_in ? "S" : "N");
+        values.permite_n_tickets = (values.permite_n_tickets_in ? "S" : "N");
         values.usuario = 'marcos.barroso';
         
         //console.log(values);
@@ -80,7 +83,7 @@ class Cadastrar extends Component{
                                         initialValues={initialValues}
                                         render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit}>
                                                 <div className="row">
-                                                    <div className="col-md-5">
+                                                    <div className="col-md-6">
                                                         <Field 
                                                             component={Select} 
                                                             name={`setor`} 
@@ -88,9 +91,9 @@ class Cadastrar extends Component{
                                                             label={`Setor:`}
                                                             // disabled={true}
                                                             validate={FORM_RULES.required}
-                                                            />
+                                                        />
                                                     </div>                                                    
-                                                    <div className="col-md-5">
+                                                    <div className="col-md-6">
                                                         <Field 
                                                             component={Input} 
                                                             type={`text`}
@@ -99,17 +102,46 @@ class Cadastrar extends Component{
                                                             icon={`fa fa-id-badge`}
                                                             placeholder={`Descrição`}
                                                             validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                            />
+                                                        />
                                                     </div>
-                                                    <div className="col-md-2">
+                                                </div>
+                                                <div className="row">
+                                                <div className="col-md-6">
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
-                                                            name={`ativo`} 
+                                                            name={`ativo_in`} 
                                                             label={`Ativo`}
                                                             // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                        />
+                                                    </div>                                                   
+                                                    <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`permite_abertura_in`} 
+                                                                label={`Permite Abertura`}
+                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                             />
-                                                    </div>                                                                                                      
+                                                    </div>  
+                                                    <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`permite_interacao_in`} 
+                                                                label={`Permite Interação`}
+                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            />
+                                                    </div> 
+                                                    <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`permite_n_tickets_in`} 
+                                                                label={`Permite Abrir com Chamado Aberto`}
+                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            />
+                                                    </div>                                                                                                                                                             
                                                 </div>
                                                 <div className="row justify-content-center">
                                                     <div className="col-md-3">
@@ -122,7 +154,7 @@ class Cadastrar extends Component{
                                                             icon={`fa fa-sign-in`} 
                                                             description={`Cadastrar`}
                                                             disabled={pristine}
-                                                            />
+                                                        />
                                                     </div>
                                                     <div className="col-md-3">
                                                         <button 
