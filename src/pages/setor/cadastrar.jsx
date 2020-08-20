@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import axios from 'axios';
-
 import MenuHeader from '../../components/menu/menuHeader';
 
 import LoadingBody from '../../components/loading/loadingBody';

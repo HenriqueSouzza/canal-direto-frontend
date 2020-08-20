@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN, BASE_API } from '../../config/const';
+import { TOKEN, BASE_API } from '../../../config/const';
 import { param } from 'jquery';
 
 

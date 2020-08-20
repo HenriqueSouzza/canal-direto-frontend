@@ -20,7 +20,7 @@ import { FORM_RULES, composeValidators } from '../../helpers/validations';
 
 import  { alterarSetor } from './actions'
 
-import  { buscarDadosCategoria } from '../categoria/actions'
+import  { buscarDadosCategoria } from '../setor/categoria/actions'
 
 import DataTable from '../../components/table/dataTable';
 

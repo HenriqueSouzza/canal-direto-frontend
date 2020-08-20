@@ -14,7 +14,7 @@ import DadosCadastraisReducer from './pages/dadosCadastrais/reducer';
 import SetorReducer from './pages/setor/reducer';
 
 //Categoria
-import CategoriaReducer from './pages/categoria/reducer';
+import CategoriaReducer from './pages/setor/categoria/reducer';
 
 //Ticket
 import TicketsReducer from './pages/tickets/reducer';

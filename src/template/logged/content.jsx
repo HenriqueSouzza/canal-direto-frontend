@@ -14,7 +14,7 @@ import Setor from '../../pages/setor/router';
 
 import Tickets from '../../pages/tickets/router'
 
-import Categoria from '../../pages/categoria/router';
+import Categoria from '../../pages/setor/categoria/router';
 
 function Content(){
     return(

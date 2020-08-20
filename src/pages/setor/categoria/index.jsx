@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import MenuHeader from '../../components/menu/menuHeader';
+import MenuHeader from '../../../components/menu/menuHeader';
 
-import DataTable from '../../components/table/dataTable';
+import DataTable from '../../../components/table/dataTable';
 
-import { ACTION_RULES } from '../../helpers/authorization';
+import { ACTION_RULES } from '../../../helpers/authorization';
 
 import  { buscarDadosSetor } from './actions'
 
