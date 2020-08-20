@@ -8,9 +8,7 @@ import MeusTicketsNovo from './meusTickets/novo';
 
 import MeusTicketsVisualizar from './meusTickets/visualizar';
 
-import TicketsSetor from './ticketsSetor/index';
 
-import TicketsSetorVisualizar from './ticketsSetor/visualizar';
 
 function Router(){
     
@@ -19,9 +17,6 @@ function Router(){
             <Route exact path='/tickets/meus-tickets' component={ props => <MeusTickets {...props} />} />
             <Route exact path='/tickets/meus-tickets/novo' component={ props => <MeusTicketsNovo {...props} />} />
             <Route exact path='/tickets/meus-tickets/:id/visualizar' component={ props => <MeusTicketsVisualizar {...props} />} />
-            
-            <Route exact path='/tickets/tickets-setor' component={ props => <TicketsSetor {...props} />} />
-            <Route exact path='/tickets/tickets-setor/:id/visualizar' component={ props => <TicketsSetorVisualizar {...props} />} />
         </Switch>
     )
     
