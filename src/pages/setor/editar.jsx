@@ -136,6 +136,7 @@ class Editar extends Component{
                                                             />
                                                     </div>
                                                     <div className="col-md-2">
+                                                        <div>&nbsp;</div>
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
@@ -160,11 +161,11 @@ class Editar extends Component{
                                                     <div className="col-md-3">
                                                         <button 
                                                             type="button" 
-                                                            className="btn btn-dark"
+                                                            className="btn btn-dark col-md-12"
                                                             onClick = {() => this.props.history.goBack()}
                                                             > Voltar 
                                                         </button>
-                                                    </div>                                                    
+                                                    </div>                                                   
                                                 </div>                                                  
                                             </form>
                                         )}

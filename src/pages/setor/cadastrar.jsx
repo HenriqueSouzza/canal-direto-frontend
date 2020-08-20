@@ -63,6 +63,7 @@ class Cadastrar extends Component{
                                                             />
                                                     </div>
                                                     <div className="col-md-2">
+                                                         <div>&nbsp;</div>
                                                         <Field 
                                                             component={Checkbox} 
                                                             type={`checkbox`}
@@ -84,6 +85,14 @@ class Cadastrar extends Component{
                                                             disabled={pristine}
                                                             />
                                                     </div>
+                                                    <div className="col-md-3">
+                                                        <button 
+                                                            type="button" 
+                                                            className="btn btn-dark col-md-12"
+                                                            onClick = {() => this.props.history.goBack()}
+                                                            > Voltar 
+                                                        </button>
+                                                    </div>                                                    
                                                 </div>                                                  
                                             </form>
                                         )}

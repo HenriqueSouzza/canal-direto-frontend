@@ -183,7 +183,7 @@ class Editar extends Component{
                                                     <div className="col-md-3">
                                                         <button 
                                                             type="button" 
-                                                            className="btn btn-dark"
+                                                            className="btn btn-dark col-md-12"
                                                             onClick = {() => this.props.history.goBack()}
                                                             > Voltar 
                                                         </button>
