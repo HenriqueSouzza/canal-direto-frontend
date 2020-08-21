@@ -9,6 +9,9 @@ export const BASE_API = (
         'http://sistemas-academicos-api.desenv.br/'
 );
 
-export const USER_LOGGED = 'henrique.souza'
+export const USER_LOGGED = {
+    usuario: 'henrique.souza',
+    papelUsuario: 'funcionario'
+}
 
 export const TOKEN = (sessionStorage.getItem('token'))

@@ -4,27 +4,28 @@ import { Route, Switch  } from 'react-router-dom';
 
 import Dashboard from '../../pages/dashboard/router';
 
-import DadosCadastrais from '../../pages/dadosCadastrais/router';
+import PaginaNaoEncontrada from '../../pages/errosPagina/paginaNaoEncontrada';
+ 
+import Tickets from '../../pages/tickets/router';
+
+import TicketsSetor from '../../pages/ticketsSetor/router';
+
+import Setor from '../../pages/setor/router';
+
+import Categoria from '../../pages/setor/categoria/router';
 
 import Sair from '../../pages/sair/router';
 
-import PaginaNaoEncontrada from '../../pages/errosPagina/paginaNaoEncontrada';
- 
-import Setor from '../../pages/setor/router';
-
-import Tickets from '../../pages/tickets/router'
-
-import Categoria from '../../pages/setor/categoria/router';
 
 function Content(){
     return(
         <div className="content-wrapper">
             <Switch>
                 <Route exact path='/' component={Dashboard} />
-                <Route path='/dados-cadastrais' component={DadosCadastrais} />
+                <Route path='/tickets' component={Tickets} />
+                <Route path='/tickets-setor' component={TicketsSetor} />
                 <Route path='/setor' component={Setor} />
                 <Route path='/categoria' component={Categoria} />
-                <Route path='/tickets' component={Tickets} />
                 <Route path='/sair' component={Sair} />
                 <Route path="*" component={PaginaNaoEncontrada}/>
             </Switch>

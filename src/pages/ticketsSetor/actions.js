@@ -7,18 +7,12 @@ import type from  './types';
 import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
 
 
-
-/*****************************************************************************/
-/***************************** MEUS TICKETS **********************************/
-/*****************************************************************************/
-
-
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
 export const buscarMeusTickets = () => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + '&order=created_at,desc';
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + '&status=abertos&order=created_at,desc';
 
     const headers = { Authorization: ''}
 
@@ -29,7 +23,7 @@ export const buscarMeusTickets = () => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
 
-            dispatch({ type: type.BUSCAR_MEUS_TICKETS, payload: response })
+            dispatch({ type: type.BUSCAR_MEUS_TICKETS_SETOR, payload: response })
             
         })
         .catch(error => {
@@ -40,6 +34,35 @@ export const buscarMeusTickets = () => {
         })
     }
 
+}
+
+
+/**
+ * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
+ */
+export const buscarTicketsSetor = (params) => {
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + params;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_TICKETS_SETOR, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
 }
 
 
@@ -138,7 +161,7 @@ export const buscarInteracoesTicket = (idTicket = '') => {
  */
 export const salvarNovoTicket = (params, router) => {
 
-    params.usuario = USER_LOGGED.usuario
+    params.usuario = USER_LOGGED
 
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 
@@ -153,7 +176,7 @@ export const salvarNovoTicket = (params, router) => {
 
             router.goBack()
             toastr.success('Sucesso', 'Ticket salvo com sucesso')
-            dispatch(buscarMeusTickets(USER_LOGGED.usuario))
+            dispatch(buscarMeusTickets(USER_LOGGED))
             
         })
         .catch(error => {
@@ -169,7 +192,7 @@ export const salvarNovoTicket = (params, router) => {
 
 export const salvarInteracao = (params) => {
 
-    params.usuario_interacao = USER_LOGGED.usuario
+    params.usuario_interacao = USER_LOGGED
 
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
 
@@ -229,39 +252,7 @@ export const fecharTicket = (params, idTicket, router) => {
 }
 
 
-/*****************************************************************************/
-/************************* TICKETS DO MEU SETOR ******************************/
-/*****************************************************************************/
 
-
-/**
- * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
- */
-export const buscarTicketsSetor = (params) => {
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + params;
-
-    const headers = { Authorization: ''}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
-
-            dispatch({ type: type.BUSCAR_TICKETS_SETOR, payload: response })
-            
-        })
-        .catch(error => {
-
-            console.log(error)
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
-}
 
 
 // /**

@@ -1,16 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Form, Field } from 'react-final-form';
 
-import { FORM_RULES, composeValidators } from '../../helpers/validations';
+import { FORM_RULES, validateArchive, composeValidators } from '../../helpers/validations';
+
+import Input from './input';
+
+import Upload from './upload';
 
 
 function ChatCard(props){
 
-    const {dataComment, titleChat, enableComment, addComment} = props
+    const {dataComment, titleChat, enableComment, addComment, enableAnexo} = props
     
+    const [archivesSeleted, setArchivesSeleted] = useState({
+                                                                file: [],
+                                                                errorMessage: undefined
+                                                            })
+
     const onSubmit = value => {
-        addComment(value)
+        value.arquivo = archivesSeleted.file
+        if(!archivesSeleted.errorMessage){
+            addComment(value)
+        }
+    }
+
+    const onChangeFile = (file) => {
+
+        const error = validateArchive(file)
+
+        const files = []
+
+        for(var i = 0; i < file.length; i++){
+            files.push(file[i])
+        }
+
+        setArchivesSeleted({
+            file: files,
+            errorMessage: error
+        })
+
+    }
+
+    /**
+     * Remover um arquivo do chat
+     * @param {*} value 
+     */
+    const removeArchive = value => {
+        const index = archivesSeleted.file.indexOf(value)
+
+        archivesSeleted.file.splice(index, 1)
+
+        setArchivesSeleted({file: archivesSeleted.file})
+
     }
 
     return(
@@ -62,35 +104,53 @@ function ChatCard(props){
                     <div className="card-footer">
                         <Form
                             onSubmit={onSubmit}
-                            render={({handleSubmit}) => (
+                            render={({handleSubmit, submitting, pristine}) => (
                                 <form onSubmit={handleSubmit}>
+                                    {
+                                        archivesSeleted.file.length > 0 ?
+                                            archivesSeleted.file.map((value,index) => {
+                                                return (
+                                                    <span key={index} className="text-primary pointer" style={{cursor: 'pointer'}} onClick={() => removeArchive(value)}>
+                                                        {value.name} <i className="fa fa-times"></i>
+                                                        &nbsp;
+                                                    </span> 
+                                                )
+                                            })
+                                        : 
+                                            ""   
+                                    }
                                     <div className="input-group">
                                         <Field 
-                                            name="message" 
+                                            component={Input}
+                                            name="mensagem" 
                                             validate={composeValidators(FORM_RULES.required)}>
-                                            {props => (
-                                                <input
-                                                    {...props.input}
-                                                    type={`text`}
-                                                    name={`message`}
-                                                    placeholder={`Digite aqui...`}
-                                                    className={`form-control ${props.meta.touched && props.meta.error && "is-invalid"}`}
-                                                />
-                                            )}
                                         </Field>
                                         <span className="input-group-append m-0">
-                                            <label htmlFor="file-upload" className="btn btn-default">
-                                                <i className="fa fa-paperclip"></i>
-                                            </label>
-                                            <input id="file-upload" name="arquivo" style={{display: 'none'}} type="file"/>
+                                            {
+                                                enableAnexo ? 
+
+                                                    <Upload 
+                                                        name={`arquivo`}
+                                                        type={`file`}
+                                                        onChange={onChangeFile}
+                                                        multiple
+                                                    />
+
+                                                : 
+                                                    ""
+                                            }
                                         </span>
                                         <span className="input-group-append mb-2">
                                             <button
                                                 type={`submit`}
-                                                className={`btn btn-primary`}>
+                                                className={`btn btn-primary`}
+                                                disabled={submitting || pristine}>
                                                 <i className={`fa fa-paper-plane`}></i> Enviar 
                                             </button>
                                         </span>
+                                    </div>
+                                    <div className="text-danger">
+                                        <span>{archivesSeleted.errorMessage}</span>
                                     </div>
                                 </form>
                         )}/>
