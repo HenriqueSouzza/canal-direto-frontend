@@ -73,7 +73,6 @@ class Index extends Component{
                                 router={this.props.history}
                                 actions={[ACTION_RULES.can_detail]}
                                 loading={loading} 
-                                btnAdd={true}
                             />
                         </div>
                     </div>
