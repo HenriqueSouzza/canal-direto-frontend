@@ -11,7 +11,10 @@ export const BASE_API = (
 
 export const USER_LOGGED = {
     usuario: 'henrique.souza',
-    papelUsuario: 'funcionario'
+    papelUsuario: {
+                    id: '1',
+                    papel: 'funcionario'
+                }
 }
 
 export const TOKEN = (sessionStorage.getItem('token'))

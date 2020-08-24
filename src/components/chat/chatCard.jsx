@@ -7,22 +7,32 @@ import { FORM_RULES, validateArchive, composeValidators } from '../../helpers/va
 import Input from './input';
 
 import Upload from './upload';
+import { useEffect } from 'react';
 
 
 function ChatCard(props){
 
     const {dataComment, titleChat, enableComment, addComment, enableAnexo} = props
-    
+
     const [archivesSeleted, setArchivesSeleted] = useState({
                                                                 file: [],
                                                                 errorMessage: undefined
                                                             })
 
-    const onSubmit = value => {
+    const onSubmit = (value, form) => {
         value.arquivo = archivesSeleted.file
         if(!archivesSeleted.errorMessage){
             addComment(value)
         }
+
+        setTimeout(
+            () => (
+                    form.reset({mensagem: ''}),
+                    form.resetFieldState('mensagem'),
+                    setArchivesSeleted({file: []})
+                ), 
+            500
+        );
     }
 
     const onChangeFile = (file) => {

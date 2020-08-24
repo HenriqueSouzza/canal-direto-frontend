@@ -161,7 +161,7 @@ export const buscarInteracoesTicket = (idTicket = '') => {
  */
 export const salvarNovoTicket = (params, router) => {
 
-    params.usuario = USER_LOGGED
+    params.usuario = USER_LOGGED.usuario
 
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 
@@ -192,17 +192,25 @@ export const salvarNovoTicket = (params, router) => {
 
 export const salvarInteracao = (params) => {
 
-    params.usuario_interacao = USER_LOGGED
-
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
 
     const headers = { Authorization: ''}
+
+    //classe utilizada para enviar arquivos
+    const formData = new FormData();
+    
+    formData.append('arquivo', params.arquivo)
+    formData.append('usuario_interacao', USER_LOGGED.usuario)
+    formData.append('acao', params.acao)
+    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('id_ticket', params.id_ticket)
+    formData.append('mensagem', params.mensagem)
 
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.post(endPoint, params, { headers: headers })
+        axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
             toastr.success('Sucesso', 'Adicionado interação com sucesso')
