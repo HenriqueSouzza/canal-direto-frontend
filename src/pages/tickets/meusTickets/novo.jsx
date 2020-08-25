@@ -46,9 +46,9 @@ class Novo extends Component{
     onSubmit = values => {
         values.arquivos = this.state.arquivo.file
         // values.papel_usuario = 1
+        values.status = 'aberto'
         
-        console.log(values)
-        // this.props.salvarNovoTicket(values, this.props.history)
+        this.props.salvarNovoTicket(values, this.props.history)
     }
 
     onChange = event => {

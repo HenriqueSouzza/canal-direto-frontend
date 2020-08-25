@@ -139,6 +139,7 @@ export const buscarInteracoesTicket = (idTicket = '') => {
 export const salvarNovoTicket = (params, router) => {
 
     params.usuario = USER_LOGGED.usuario
+    params.papel_usuario = USER_LOGGED.papelUsuario.id
 
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 

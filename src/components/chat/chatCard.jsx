@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { Form, Field } from 'react-final-form';
 
 import { FORM_RULES, validateArchive, composeValidators } from '../../helpers/validations';
@@ -7,7 +9,7 @@ import { FORM_RULES, validateArchive, composeValidators } from '../../helpers/va
 import Input from './input';
 
 import Upload from './upload';
-import { useEffect } from 'react';
+
 
 
 function ChatCard(props){
@@ -84,6 +86,19 @@ function ChatCard(props){
                                         {/* <img className="direct-chat-img" src="" alt="atendente"/> */}
                                         <div className="direct-chat-text">
                                             {row.mensagem}
+                                            {
+                                                row.arquivo.length > 0 ?
+                                                    row.arquivo.map((val,key) => (
+                                                        <strong key={key + index}>
+                                                            <br/>
+                                                            <Link to={{pathname: val}} target="_blank" download>
+                                                                <i className="fa fa-download"></i> Anexo {key + 1}
+                                                            </Link>
+                                                        </strong>
+                                                    ))
+                                                : 
+                                                    ''
+                                            }
                                         </div>
                                     </div>
                                 )

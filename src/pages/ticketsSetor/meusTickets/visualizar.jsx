@@ -100,6 +100,7 @@ class Visualizar extends Component{
                             solicitante: element.usuario_interacao == dataTicket.usuario_abertura ? 1 : 0,
                             usuario_interacao: element.usuario_interacao,
                             mensagem: element.mensagem,
+                            arquivo: element.arquivo,
                             dt_criacao: element.dt_criacao,
                         })
                     }
@@ -109,6 +110,7 @@ class Visualizar extends Component{
                     dataInteracao.push({
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
                         mensagem: interacoesTickets.response.content.mensagem,
+                        arquivo: interacoesTickets.response.content.arquivo,
                         dt_criacao: interacoesTickets.response.content.dt_criacao
                     })
                 }
