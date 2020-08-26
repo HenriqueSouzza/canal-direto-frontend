@@ -40,9 +40,11 @@ export const buscarMeusTickets = () => {
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarTicketsSetor = (params) => {
+export const buscarTicketsSetor = () => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + params;
+    const setorUser = 1
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + setorUser;
 
     const headers = { Authorization: ''}
 

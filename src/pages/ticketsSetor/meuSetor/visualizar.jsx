@@ -29,12 +29,11 @@ class Visualizar extends Component{
         this.props.buscarInteracoesTicket(this.props.match.params.id)
     }
 
-    onSubmit = (values) => {
+    onSubmit = values => {
 
         values.acao = 'responder'
         values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
-        values.mensagem = values.message
 
         this.props.salvarInteracao(values)
         
@@ -57,7 +56,7 @@ class Visualizar extends Component{
 
     render(){
 
-        const { loading, meusTickets, interacoesTickets } = this.props.tickets
+        const { loading, meusTickets, interacoesTickets } = this.props.ticketsSetor
 
         const dataTicket = {}
 
@@ -99,6 +98,7 @@ class Visualizar extends Component{
                             solicitante: element.usuario_interacao == dataTicket.usuario_abertura ? 1 : 0,
                             usuario_interacao: element.usuario_interacao,
                             mensagem: element.mensagem,
+                            arquivo: element.arquivo,
                             dt_criacao: element.dt_criacao,
                         })
                     }
@@ -108,6 +108,7 @@ class Visualizar extends Component{
                     dataInteracao.push({
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
                         mensagem: interacoesTickets.response.content.mensagem,
+                        arquivo: interacoesTickets.response.content.arquivo,
                         dt_criacao: interacoesTickets.response.content.dt_criacao
                     })
                 }
@@ -178,6 +179,7 @@ class Visualizar extends Component{
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
                             enableComment={dataTicket.status != 'fechado'}
+                            enableAnexo={true}
                         />
                     </div>
                 </div>

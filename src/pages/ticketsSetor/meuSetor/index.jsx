@@ -10,13 +10,13 @@ import DataTable from '../../../components/table/dataTable';
 
 import { ACTION_RULES } from '../../../helpers/authorization';
 
-import { buscarMeusTickets } from '../actions'
+import { buscarTicketsSetor } from '../actions'
  
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets()
+        this.props.buscarTicketsSetor()
     }
 
     render(){
@@ -96,7 +96,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);
