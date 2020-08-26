@@ -6,47 +6,47 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import { FORM_RULES, composeValidators } from '../../../helpers/validations';
+import  Select  from '../../../components/form/select';
 
-import Button from '../../../components/form/button';
+import { FORM_RULES } from '../../../helpers/validations';
 
 import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
-import textArea from '../../../components/form/textArea';
-
 import ChatCard from '../../../components/chat/chatCard';
 
-import { salvarInteracao, buscarInteracoesTicket, fecharTicket,buscarSetor, buscarCategoria} from  '../actions';
+import InformacoesAluno from '../components/InformacoesAluno';
+
+import InformacoesFuncionario from '../components/InformacoesFuncionario';
+
+import InformacoesDocente from '../components/InformacoesDocente';
+
+import { salvarInteracao, buscarInteracoesTicket, fecharTicket, buscarSetor, buscarCategoria } from  '../actions';
 
 import moment from 'moment';
 
-import  Select  from '../../../components/form/select'
 
 class Visualizar extends Component{
 
     constructor(props){
         super(props)
 
-        if(this.props.tickets.meusTickets.length <= 0){
+        if(this.props.ticketsSetor.meuSetor.length <= 0){
             this.props.history.goBack()
         }
-
     }
 
     componentDidMount(){
         this.props.buscarInteracoesTicket(this.props.match.params.id)
         this.props.buscarSetor()
-        
     }
 
-    onSubmit = (values) => {
+    onSubmit = values => {
 
         values.acao = 'responder'
         values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
-        values.mensagem = values.message
 
         this.props.salvarInteracao(values)
         
@@ -71,27 +71,29 @@ class Visualizar extends Component{
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }
 
-    onChange = event => {
-
+    //
+    onChangeForm = event => {
         
         if(event.target.name == 'setor' && event.target.value){
             this.props.buscarCategoria(event.target.value)
         }
+        
     }
 
     render(){
 
-        const {  meusTickets, interacoesTickets } = this.props.tickets
+        const { loading, meuSetor, dadosSetor, dadosCategoria, interacoesTickets } = this.props.ticketsSetor
 
         const dataTicket = {}
 
-        if(meusTickets.response){
-            if(Array.isArray(meusTickets.response.content)){
-                meusTickets.response.content.find(element => {
+        if(meuSetor.response){
+            if(Array.isArray(meuSetor.response.content)){
+                meuSetor.response.content.find(element => {
                     if(element.id == this.props.match.params.id){
                         dataTicket.id = element.id
                         dataTicket.assunto = element.assunto
                         dataTicket.usuario_abertura = element.usuario_abertura
+                        dataTicket.papel_usuario = element.papel_usuario
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
@@ -100,15 +102,16 @@ class Visualizar extends Component{
                     }
                  })
             }else{
-                if(meusTickets.response.content.id  == this.props.match.params.id ){
-                    dataTicket.id = meusTickets.response.content.id
-                    dataTicket.assunto = meusTickets.response.content.assunto
-                    dataTicket.usuario_abertura = meusTickets.response.content.usuario_abertura
-                    dataTicket.setor = meusTickets.response.content.setor
-                    dataTicket.categoria = meusTickets.response.content.categoria
-                    dataTicket.mensagem = meusTickets.response.content.mensagem
-                    dataTicket.status = meusTickets.response.content.status
-                    dataTicket.created_at = meusTickets.response.content.created_at
+                if(meuSetor.response.content.id  == this.props.match.params.id ){
+                    dataTicket.id = meuSetor.response.content.id
+                    dataTicket.assunto = meuSetor.response.content.assunto
+                    dataTicket.usuario_abertura = meuSetor.response.content.usuario_abertura
+                    dataTicket.papel_usuario = meuSetor.response.content.papel_usuario
+                    dataTicket.setor = meuSetor.response.content.setor
+                    dataTicket.categoria = meuSetor.response.content.categoria
+                    dataTicket.mensagem = meuSetor.response.content.mensagem
+                    dataTicket.status = meuSetor.response.content.status
+                    dataTicket.created_at = meuSetor.response.content.created_at
                 }
             }
         }
@@ -123,6 +126,7 @@ class Visualizar extends Component{
                             solicitante: element.usuario_interacao == dataTicket.usuario_abertura ? 1 : 0,
                             usuario_interacao: element.usuario_interacao,
                             mensagem: element.mensagem,
+                            arquivo: element.arquivo,
                             dt_criacao: element.dt_criacao,
                         })
                     }
@@ -132,15 +136,14 @@ class Visualizar extends Component{
                     dataInteracao.push({
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
                         mensagem: interacoesTickets.response.content.mensagem,
+                        arquivo: interacoesTickets.response.content.arquivo,
                         dt_criacao: interacoesTickets.response.content.dt_criacao
                     })
                 }
             }
         }
 
-        const { loading, dadosSetor, dadosCategoria } = this.props.tickets
-
-        let dataSetor = []
+        const dataSetor = []
 
         if(dadosSetor.response){
             if(Array.isArray(dadosSetor.response.content)){
@@ -158,7 +161,7 @@ class Visualizar extends Component{
             }
         }       
 
-        let dataCategoria = []
+        const dataCategoria = []
  
         if(dadosCategoria.response){
             if(Array.isArray(dadosCategoria.response.content)){
@@ -178,8 +181,8 @@ class Visualizar extends Component{
                     })
                 }
             }
-        }     
-        
+        }
+
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -187,53 +190,26 @@ class Visualizar extends Component{
                 <div className="row">
                     <div className="col-md-12">
                         <div className="content-fluid">
-                            <div className="card card-danger">
-                                <div className="card-header">
-                                    <h5 className="card-title">Informações</h5>
-                                </div>
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Autor:</label>
-                                            <div className="">{dataTicket.usuario_abertura}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Assunto:</label>
-                                            <div className="">{dataTicket.assunto}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Setor/Categoria:</label>
-                                            <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row justify-content-center text-center">
-                                        <div className="col-md-3">
-                                            <button type="button" className="btn btn-dark col-md-10" onClick={() => this.onVoltar()}>
-                                                <i className="fa fa-arrow-left"></i> Voltar
-                                            </button>
-                                        </div>
-                                        { dataTicket.status != 'fechado' ?
-                                            <>
-                                            <div className="col-md-3">
-                                                <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onFecharTicket(dataTicket.id)}>
-                                                    <i className="fa fa-check"></i> Fechar Ticket
-                                                </button>
-                                            </div>
-                                            </>
-                                        : ''}
-                                    </div>
-                                </div>
-                            </div>
+                            {
+                                dataTicket.papel_usuario == 1 ? 
+                                    <InformacoesFuncionario 
+                                        data={dataTicket}
+                                    />
+                                : dataTicket.papel_usuario == 2 ? 
+                                    <InformacoesAluno 
+                                        data={dataTicket}
+                                    />
+                                : dataTicket.papel_usuario == 3 ? 
+                                    <InformacoesDocente 
+                                        data={dataTicket}
+                                    />
+                                : ''
+                            }
                         </div>
+                    </div>
 
-                        { dataTicket.status != 'fechado' ?
+                    { dataTicket.status != 'fechado' ?
+                        <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
                                     <div className="card-header">
@@ -242,12 +218,11 @@ class Visualizar extends Component{
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-md-12">
-                                                <label>Setor/Categoria:</label>
-                                                <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
                                                 <div className="col-md-12">
                                                     <Form
                                                         onSubmit={this.onSubmitEncaminhar}
-                                                        render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)}>
+                                                        render={({handleSubmit, submitSucceeded, pristine}) => (
+                                                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
                                                                 <div className="row">
                                                                     <div className="col-md-6">
                                                                         <Field 
@@ -255,7 +230,7 @@ class Visualizar extends Component{
                                                                             name={`setor`} 
                                                                             data={dataSetor}
                                                                             label={`Setor:`}
-                                                                            validate={''}
+                                                                            validate={FORM_RULES.required}
                                                                         />
 
                                                                     </div> 
@@ -288,19 +263,19 @@ class Visualizar extends Component{
                                     </div>
                                 </div>
                             </div>
-                        : 
-                            ''
-                        }
-                    </div>
+                        </div>    
+                    : 
+                        ''
+                    }
 
-                    
                     <div className="col-md-12">
-                        {/* <ChatCard
+                        <ChatCard
                             dataComment={dataInteracao}
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
                             enableComment={dataTicket.status != 'fechado'}
-                        /> */}
+                            enableAnexo={true}
+                        />
                     </div>
                 </div>
             </section>
@@ -313,7 +288,7 @@ class Visualizar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ tickets: state.tickets })
+const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 
 /**
  * @param {*} dispatch 

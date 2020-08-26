@@ -6,23 +6,25 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import { FORM_RULES, composeValidators } from '../../../helpers/validations';
+import { FORM_RULES, composeValidators, validateArchive } from '../../helpers/validations';
 
-import Button from '../../../components/form/button';
+import Button from '../../components/form/button';
 
-import Input from '../../../components/form/input';
+import Input from '../../components/form/input';
 
-import Upload from '../../../components/form/upload';
+import Select from '../../components/form/select';
 
-import Select from '../../../components/form/select';
+import UploadAnexo from '../../components/form/uploadAnexo';
 
-import LoadingBody from '../../../components/loading/loadingBody';
+import LoadingBody from '../../components/loading/loadingBody';
 
-import MenuHeader from '../../../components/menu/menuHeader';
+import MenuHeader from '../../components/menu/menuHeader';
 
-import textArea from '../../../components/form/textArea';
+import textArea from '../../components/form/textArea';
 
-import { buscarSetor, buscarCategoria, salvarNovoTicket } from '../actions';
+import { buscarSetor, buscarCategoria, salvarNovoTicket } from './actions';
+
+
 
 
 class Novo extends Component{
@@ -32,13 +34,14 @@ class Novo extends Component{
         this.state = {
             arquivo: {
                 file: [],
-                errorMessage: ''
+                errorMessage: []
             }
         }
     }
 
+    //função que ao criar o component ele busca os setor que o usuario logado tem acesso
     componentDidMount(){
-        if(this.props.tickets.dadosSetor.length <= 0){
+        if(this.props.meusTickets.dadosSetor.length <= 0){
             this.props.buscarSetor()
         }
     }
@@ -56,29 +59,37 @@ class Novo extends Component{
         }
     }
 
-    onVoltar = () => {
-        this.props.history.goBack();
-    }
+    //adiciona o arquivo selecionado
+    onChangeFile = (file) => {
 
-    onChangeArchive = (file, action) => {
+        const error = validateArchive(file)
 
-        if(action){
-            
-            this.state.arquivo.file.push(file)
-            
-        }else{
-
-            const index =  this.state.arquivo.file.indexOf(file)
-
-            console.log(this.state.arquivo.file.splice(index, 1))
-            
+        for(var i = 0; i < file.length; i++){
+            this.state.arquivo.file.push(file[i])
+            this.state.arquivo.errorMessage.push(error)
         }
 
+        this.setState({
+            file: this.state.arquivo.file,
+            errorMessage: this.state.arquivo.errorMessage
+        })
+
+    }
+
+    //Remove o arquivo selecionado
+    onRemoveFile = (index) => {
+        this.state.arquivo.file.splice(index, 1)
+        this.state.arquivo.errorMessage.splice(index, 1)
+
+        this.setState({ 
+            file: this.state.arquivo.file, 
+            errorMessage: this.state.arquivo.errorMessage
+        })
     }
 
     render(){
 
-        const { loading, dadosSetor, dadosCategoria } = this.props.tickets
+        const { loading, dadosSetor, dadosCategoria } = this.props.meusTickets
 
         let dataSetor = []
 
@@ -119,16 +130,16 @@ class Novo extends Component{
         return (
             <section className="content">
                 <LoadingBody status={loading} />
-                <MenuHeader title={`Abrir um novo ticket`} history={this.props.location.pathname} />
+                <MenuHeader title={`Abrir um Novo Ticket`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card">
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
                                 render={({handleSubmit}) => (
-                                    <form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)} encType="multipart/form-data">
+                                    <form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)}>
                                         <div className="row justify-content-center">
-                                            <div className="col-md-7">
+                                            <div className="col-md-8">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
@@ -161,26 +172,39 @@ class Novo extends Component{
                                                     placeholder={`Escreva aqui...`}
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
                                                     />
-                                            </div>
-                                            <div className="col-md-5">
-                                                <div className="row justify-content-center">
-                                                    <div className="col-md-10 mt-5 text-center">
-                                                        <label>Anexar arquivo</label>
-                                                        <Upload 
-                                                            endpoint={`no-url`}
-                                                            name={`arquivo`}
-                                                            onChangeArchive={this.onChangeArchive}
-                                                            />
-                                                        {/* <Field 
-                                                            component={Upload} 
-                                                            endpoint={'no-url'} //
-                                                            name={`arquivo`} 
-                                                            validate={composeValidators(FORM_RULES.qtdArchiveMin(1))}
-                                                            /> */}
-                                                    </div>
-                                                </div>
+                                                    {
+                                                        this.state.arquivo.file.length > 0 ?
+                                                            this.state.arquivo.file.map((value,index) => 
+                                                                (
+                                                                    <span key={index} className="text-primary pointer" style={{cursor: 'pointer'}} onClick={() => this.onRemoveFile(index)}>
+                                                                        {value.name} <i className="fa fa-times"></i>
+                                                                        &nbsp;
+                                                                    </span> 
+                                                                )
+                                                            )
+                                                        : 
+                                                            ""   
+                                                    }
+                                                    <br/>
+                                                <UploadAnexo 
+                                                    name={`arquivo`}
+                                                    type={`file`}
+                                                    label={`Clique para anexar arquivo`}
+                                                    className={`btn-info`}
+                                                    onChange={this.onChangeFile}
+                                                    multiple
+                                                    />
+                                                    {
+                                                        this.state.arquivo.errorMessage.length > 0 ?
+                                                            <div className="text-danger">
+                                                                {this.state.arquivo.errorMessage.find(row => row ? row : false)}
+                                                            </div>
+                                                        :   
+                                                            ''
+                                                    }
                                             </div>
                                         </div>
+                                        <br/>
                                         <div className="row justify-content-center">
                                             <div className="col-md-3">
                                                 {/* <label>&nbsp;</label> */}
@@ -190,17 +214,9 @@ class Novo extends Component{
                                                     type={`submit`} 
                                                     color={`btn-success`}
                                                     icon={`fa fa-save`} 
+                                                    disabled={this.state.arquivo.errorMessage.find(row => row ? true : false)}
                                                     description={`Salvar`}
                                                     />
-                                            </div>
-                                            <div className="col-md-3">
-                                                {/* <label>&nbsp;</label> */}
-                                                <button 
-                                                    type={`button`}
-                                                    className={`btn btn-dark col-md-12`}
-                                                    onClick={this.onVoltar}>
-                                                        <i className="fa fa-arrow-left"></i> Voltar
-                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -218,7 +234,7 @@ class Novo extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ tickets: state.tickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets })
 
 /**
  * @param {*} dispatch 

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import LoadingBody from '../../../components/loading/loadingBody';
-
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
@@ -24,7 +22,7 @@ class Index extends Component{
 
     render(){
 
-        const { loading, meusTickets } = this.props.tickets
+        const { loading, meusTickets } = this.props.meusTickets
         
         const dataTicket = []
         
@@ -64,7 +62,7 @@ class Index extends Component{
         
         return(
             <section className="content">
-                <MenuHeader title={`Meus tickets`} history={this.props.location.pathname} />
+                <MenuHeader title={`Meus Tickets Fechados`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
                         {/* <div className="card-header"> */}
@@ -77,7 +75,6 @@ class Index extends Component{
                                 columns={columns} 
                                 data={dataTicket} 
                                 router={this.props.history}
-                                btnAdd={true} 
                                 actions={[ACTION_RULES.can_detail]}
                                 loading={loading} 
                             />
@@ -95,7 +92,7 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ tickets: state.tickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets })
 
 /**
  * @param {*} dispatch 

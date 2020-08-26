@@ -4,29 +4,32 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
+import LoadingBody from '../../../components/loading/loadingBody';
+
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
 import { ACTION_RULES } from '../../../helpers/authorization';
 
-import { buscarTicketsSetor } from '../actions'
+import { buscarMeusTickets } from '../actions'
  
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarTicketsSetor()
+        let userLogged = 'henrique.souza'
+        this.props.buscarMeusTickets(userLogged)
     }
 
     render(){
 
-        const { loading, ticketsSetor } = this.props.ticketsSetor
-
+        const { loading, meusTickets } = this.props.meusTickets
+        
         const dataTicket = []
         
-        if(ticketsSetor.response){
-            ticketsSetor.response.content.map(row => {
+        if(meusTickets.response){
+            meusTickets.response.content.map(row => {
                 dataTicket.push({
                     ticket: row.id,
                     assunto: row.assunto,
@@ -61,12 +64,12 @@ class Index extends Component{
         
         return(
             <section className="content">
-                <MenuHeader title={`Tickets do Meu Setor`} history={this.props.location.pathname} />
+                <MenuHeader title={`Meus Tickets Abertos`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
-                        {/* <div className="card-header">
-                            <h3 className="card-title">Meus tickets</h3>
-                        </div> */}
+                        {/* <div className="card-header"> */}
+                            {/* <h3 className="card-title">Meus tickets</h3> */}
+                        {/* </div> */}
                         <div className="card-body">
                             <DataTable
                                 description={false}
@@ -91,12 +94,12 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

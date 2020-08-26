@@ -18,21 +18,20 @@ function ChatCard(props){
 
     const [archivesSeleted, setArchivesSeleted] = useState({
                                                                 file: [],
-                                                                errorMessage: undefined
+                                                                errorMessage: []
                                                             })
 
     const onSubmit = (value, form) => {
 
         value.arquivo = archivesSeleted.file
-        if(!archivesSeleted.errorMessage){
-            addComment(value)
-        }
+        
+        addComment(value)
 
         setTimeout(
             () => (
                     form.reset({mensagem: ''}),
                     form.resetFieldState('mensagem'),
-                    setArchivesSeleted({file: []})
+                    setArchivesSeleted({file: [], errorMessage: []})
                 ), 
             1500
         );
@@ -44,11 +43,12 @@ function ChatCard(props){
 
         for(var i = 0; i < file.length; i++){
             archivesSeleted.file.push(file[i])
+            archivesSeleted.errorMessage.push(error)
         }
 
         setArchivesSeleted({
             file: archivesSeleted.file,
-            errorMessage: error
+            errorMessage: archivesSeleted.errorMessage
         })
 
     }
@@ -57,12 +57,15 @@ function ChatCard(props){
      * Remover um arquivo do chat
      * @param {*} value 
      */
-    const removeArchive = value => {
-        const index = archivesSeleted.file.indexOf(value)
+    const removeArchive = index => {
 
         archivesSeleted.file.splice(index, 1)
+        archivesSeleted.errorMessage.splice(index, 1)
 
-        setArchivesSeleted({file: archivesSeleted.file})
+        setArchivesSeleted({
+            file: archivesSeleted.file,
+            errorMessage: archivesSeleted.errorMessage
+        })
 
     }
 
@@ -126,16 +129,15 @@ function ChatCard(props){
             {
                 enableComment  ?
                     <div className="card-footer">
-                        {console.log(archivesSeleted.file)}
                         <Form
                             onSubmit={onSubmit}
                             render={({handleSubmit, submitting, pristine}) => (
                                 <form onSubmit={handleSubmit}>
                                     {
                                         archivesSeleted.file.length > 0 ?
-                                            archivesSeleted.file.map((value,index) => {
+                                            archivesSeleted.file.map((value, index) => {
                                                 return (
-                                                    <span key={index} className="text-primary pointer" style={{cursor: 'pointer'}} onClick={() => removeArchive(value)}>
+                                                    <span key={index} className="text-primary pointer" style={{cursor: 'pointer'}} onClick={() => removeArchive(index)}>
                                                         {value.name} <i className="fa fa-times"></i>
                                                         &nbsp;
                                                     </span> 
@@ -169,14 +171,19 @@ function ChatCard(props){
                                             <button
                                                 type={`submit`}
                                                 className={`btn btn-primary`}
-                                                disabled={submitting || pristine}>
+                                                disabled={submitting || pristine || archivesSeleted.errorMessage.find(row => row ? true : false)}>
                                                 <i className={`fa fa-paper-plane`}></i> Enviar 
                                             </button>
                                         </span>
                                     </div>
-                                    <div className="text-danger">
-                                        <span>{archivesSeleted.errorMessage}</span>
-                                    </div>
+                                    {
+                                       archivesSeleted.errorMessage.length > 0 ?
+                                            <div className="text-danger">
+                                                {archivesSeleted.errorMessage.find(row => row ? row : false)}
+                                            </div>
+                                        :   
+                                            ''
+                                    }
                                 </form>
                         )}/>
                     </div>

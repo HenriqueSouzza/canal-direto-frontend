@@ -4,13 +4,19 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
+import { Form, Field } from 'react-final-form';
+
+import  Select  from '../../../components/form/select';
+
+import { FORM_RULES, composeValidators } from '../../../helpers/validations';
+
 import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
 
-import { salvarInteracao, buscarInteracoesTicket, fecharTicket } from  '../actions';
+import { salvarInteracao, buscarInteracoesTicket, fecharTicket, buscarSetor, buscarCategoria } from  '../actions';
 
 import moment from 'moment';
 
@@ -27,6 +33,7 @@ class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarInteracoesTicket(this.props.match.params.id)
+        this.props.buscarSetor()
     }
 
     onSubmit = values => {
@@ -39,13 +46,16 @@ class Visualizar extends Component{
         
     }
 
+    onSubmitEncaminhar = (values) => {
+        console.log(values)
+    }
+
     onVoltar = () => {
         this.props.history.goBack()
     }
 
-    /**
-     * Ação para fechar ticket
-     */
+    
+    // Ação para fechar ticket
     onFecharTicket = () => {
         const values = {}
 
@@ -54,9 +64,18 @@ class Visualizar extends Component{
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }
 
+    //
+    onChangeForm = event => {
+        
+        if(event.target.name == 'setor' && event.target.value){
+            this.props.buscarCategoria(event.target.value)
+        }
+        
+    }
+
     render(){
 
-        const { loading, meusTickets, interacoesTickets } = this.props.ticketsSetor
+        const { loading, meusTickets, dadosSetor, dadosCategoria, interacoesTickets } = this.props.ticketsSetor
 
         const dataTicket = {}
 
@@ -114,6 +133,46 @@ class Visualizar extends Component{
                 }
             }
         }
+
+        const dataSetor = []
+
+        if(dadosSetor.response){
+            if(Array.isArray(dadosSetor.response.content)){
+                dadosSetor.response.content.map(row => {
+                    dataSetor.push({
+                        id: row.id,
+                        name: row.descricao,
+                    })
+                })
+            }else{
+                dataSetor.push({
+                    id: dadosSetor.response.content.id,
+                    name: dadosSetor.response.content.descricao,
+                })
+            }
+        }       
+
+        const dataCategoria = []
+ 
+        if(dadosCategoria.response){
+            if(Array.isArray(dadosCategoria.response.content)){
+                dadosCategoria.response.content.map(row => {
+                    if(row.descricao != dataTicket.categoria){
+                        dataCategoria.push({
+                            id: row.id,
+                            name: row.descricao,
+                        })
+                    }
+                })
+            }else{
+                if(dadosCategoria.response.content.descricao != dataTicket.categoria){
+                    dataCategoria.push({
+                        id: dadosCategoria.response.content.id,
+                        name: dadosCategoria.response.content.descricao,
+                    })
+                }
+            }
+        } 
 
         return (
             <section className="content">
@@ -173,6 +232,67 @@ class Visualizar extends Component{
                             </div>
                         </div>
                     </div>
+                    
+                    { dataTicket.status != 'fechado' ?
+                        <div className="col-md-12">
+                            <div className="content-fluid">
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h5 className="card-title">Encaminhar</h5>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div className="col-md-12">
+                                                    <Form
+                                                        onSubmit={this.onSubmitEncaminhar}
+                                                        render={({handleSubmit, submitSucceeded, pristine}) => (
+                                                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
+                                                                <div className="row">
+                                                                    <div className="col-md-6">
+                                                                        <Field 
+                                                                            component={Select} 
+                                                                            name={`setor`} 
+                                                                            data={dataSetor}
+                                                                            label={`Setor:`}
+                                                                            validate={''}
+                                                                        />
+
+                                                                    </div> 
+                                                                    <div className="col-md-6"> 
+                                                                        <Field 
+                                                                            component={Select} 
+                                                                            name={`categoria`} 
+                                                                            data={dataCategoria}
+                                                                            label={`Categoria:`}
+                                                                            validate={FORM_RULES.required}
+                                                                            /> 
+                                                                    </div>                                                          
+                                                                </div> 
+                                                                <div className="row justify-content-center">
+                                                                    <div className="col-md-4">
+                                                                        <button 
+                                                                            type="button" 
+                                                                            className="btn btn-success col-md-10" 
+                                                                            disabled={submitSucceeded || pristine}
+                                                                            onClick={() => this.setState({onResponder: 1})}>
+                                                                            <i className="fa fa-share"></i> Encaminhar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>                                                 
+                                                            </form>
+                                                    )}/>                                                                          
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    : 
+                        ''
+                    }
+                    
                     <div className="col-md-12">
                         <ChatCard
                             dataComment={dataInteracao}
@@ -198,7 +318,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket, fecharTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket, fecharTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

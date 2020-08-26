@@ -10,9 +10,7 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
 
-import { salvarInteracao, buscarInteracoesTicket, fecharTicket } from  '../actions';
-
-import moment from 'moment';
+import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
 
 
 class Visualizar extends Component{
@@ -20,43 +18,33 @@ class Visualizar extends Component{
     constructor(props){
         super(props)
 
-        if(this.props.ticketsSetor.meusTickets.length <= 0){
+        if(this.props.meusTickets.meusTickets.length <= 0){
             this.props.history.goBack()
         }
+
     }
 
     componentDidMount(){
         this.props.buscarInteracoesTicket(this.props.match.params.id)
     }
 
-    onSubmit = values => {
+    onSubmit = (values) => {
 
         values.acao = 'responder'
         values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
 
         this.props.salvarInteracao(values)
-        
+
     }
 
     onVoltar = () => {
         this.props.history.goBack()
     }
 
-    /**
-     * Ação para fechar ticket
-     */
-    onFecharTicket = () => {
-        const values = {}
-
-        values.status = 'fechado'
-        values.dt_fechamento = moment().format()
-        this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
-    }
-
     render(){
 
-        const { loading, meusTickets, interacoesTickets } = this.props.ticketsSetor
+        const { loading, meusTickets, interacoesTickets } = this.props.meusTickets
 
         const dataTicket = {}
 
@@ -114,7 +102,7 @@ class Visualizar extends Component{
                 }
             }
         }
-
+        
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -154,25 +142,12 @@ class Visualizar extends Component{
                                                 <i className="fa fa-arrow-left"></i> Voltar
                                             </button>
                                         </div>
-                                        { dataTicket.status != 'fechado' ?
-                                            <>
-                                            <div className="col-md-3">
-                                                <button type="button" className="btn btn-success col-md-10" onClick={() => this.setState({onResponder: 1})}>
-                                                    <i className="fa fa-share"></i> Encaminhar
-                                                </button>
-                                            </div>
-                                            <div className="col-md-3">
-                                                <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onFecharTicket(dataTicket.id)}>
-                                                    <i className="fa fa-check"></i> Fechar Ticket
-                                                </button>
-                                            </div>
-                                            </>
-                                        : ''}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div className="col-md-12">
                         <ChatCard
                             dataComment={dataInteracao}
@@ -182,6 +157,7 @@ class Visualizar extends Component{
                             enableAnexo={true}
                         />
                     </div>
+
                 </div>
             </section>
         )
@@ -193,12 +169,12 @@ class Visualizar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket, fecharTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);
