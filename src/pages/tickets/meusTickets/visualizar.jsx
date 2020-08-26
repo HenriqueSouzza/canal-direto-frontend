@@ -52,6 +52,10 @@ class Visualizar extends Component{
         
     }
 
+    onSubmitEncaminhar = (values) => {
+        console.log(values)
+    }
+
     onVoltar = () => {
         this.props.history.goBack()
     }
@@ -76,8 +80,6 @@ class Visualizar extends Component{
     }
 
     render(){
-
-        const initialValues = {}
 
         const {  meusTickets, interacoesTickets } = this.props.tickets
 
@@ -161,19 +163,23 @@ class Visualizar extends Component{
         if(dadosCategoria.response){
             if(Array.isArray(dadosCategoria.response.content)){
                 dadosCategoria.response.content.map(row => {
-                    dataCategoria.push({
-                        id: row.id,
-                        name: row.descricao,
-                    })
+                    if(row.descricao != dataTicket.categoria){
+                        dataCategoria.push({
+                            id: row.id,
+                            name: row.descricao,
+                        })
+                    }
                 })
             }else{
-                dataCategoria.push({
-                    id: dadosCategoria.response.content.id,
-                    name: dadosCategoria.response.content.descricao,
-                })
+                if(dadosCategoria.response.content.descricao != dataTicket.categoria){
+                    dataCategoria.push({
+                        id: dadosCategoria.response.content.id,
+                        name: dadosCategoria.response.content.descricao,
+                    })
+                }
             }
-        }        
-
+        }     
+        
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -227,76 +233,74 @@ class Visualizar extends Component{
                             </div>
                         </div>
 
+                        { dataTicket.status != 'fechado' ?
+                            <div className="content-fluid">
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h5 className="card-title">Encaminhar</h5>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <label>Setor/Categoria:</label>
+                                                <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
+                                                <div className="col-md-12">
+                                                    <Form
+                                                        onSubmit={this.onSubmitEncaminhar}
+                                                        render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)}>
+                                                                <div className="row">
+                                                                    <div className="col-md-6">
+                                                                        <Field 
+                                                                            component={Select} 
+                                                                            name={`setor`} 
+                                                                            data={dataSetor}
+                                                                            label={`Setor:`}
+                                                                            validate={''}
+                                                                        />
 
-                        <div className="content-fluid">
-                            <div className="card card-danger">
-                                <div className="card-header">
-                                    <h5 className="card-title">Encaminhar</h5>
-                                </div>
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Setor/Categoria:</label>
-                                            <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
-                                            <div className="col-md-6">
-                                                <Form
-                                                    onSubmit={this.onSubmit}
-                                                    initialValues={initialValues}
-                                                    render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)}>
-                                                            <div className="row">
-                                                                <div className="col-md-6">
-                                                                    <Field 
-                                                                        component={Select} 
-                                                                        name={`setor`} 
-                                                                        data={dataSetor}
-                                                                        label={`Setor:`}
-                                                                        // disabled={true}
-                                                                        validate={''}
-                                                                    />
-
+                                                                    </div> 
+                                                                    <div className="col-md-6"> 
+                                                                        <Field 
+                                                                            component={Select} 
+                                                                            name={`categoria`} 
+                                                                            data={dataCategoria}
+                                                                            label={`Categoria:`}
+                                                                            validate={FORM_RULES.required}
+                                                                            /> 
+                                                                    </div>                                                          
                                                                 </div> 
-                                                                <div className="col-md-6"> 
-                                                                    <Field 
-                                                                        component={Select} 
-                                                                        name={`categoria`} 
-                                                                        data={dataCategoria}
-                                                                        label={`Categoria:`}
-                                                                        validate={FORM_RULES.required}
-                                                                        /> 
-                                                                </div>                                                          
-                                                            </div>                                                  
-                                                        </form>
-                                                    )}
-                                                />                                                                          
+                                                                <div className="row justify-content-center">
+                                                                    <div className="col-md-4">
+                                                                        <button 
+                                                                            type="button" 
+                                                                            className="btn btn-success col-md-10" 
+                                                                            disabled={submitSucceeded || pristine}
+                                                                            onClick={() => this.setState({onResponder: 1})}>
+                                                                            <i className="fa fa-share"></i> Encaminhar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>                                                 
+                                                            </form>
+                                                    )}/>                                                                          
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row justify-content-center text-center">
-                                        { dataTicket.status != 'fechado' ?
-                                            <>
-                                            <div className="col-md-3">
-                                                <button type="button" className="btn btn-success col-md-10" onClick={() => this.setState({onResponder: 1})}>
-                                                    <i className="fa fa-share"></i> Encaminhar
-                                                </button>
-                                            </div>
-                                            </>
-                                        : ''}
-                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-
+                        : 
+                            ''
+                        }
                     </div>
 
                     
                     <div className="col-md-12">
-                        <ChatCard
+                        {/* <ChatCard
                             dataComment={dataInteracao}
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
                             enableComment={dataTicket.status != 'fechado'}
-                        />
+                        /> */}
                     </div>
                 </div>
             </section>
