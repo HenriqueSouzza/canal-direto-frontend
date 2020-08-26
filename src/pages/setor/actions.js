@@ -88,7 +88,7 @@ export const buscarDadosSetor = (params=null) => {
  */
 export const alterarSetor = (params, id) => {
 
-    const endPoint = BASE_API +'api/canal-direto/setor/'+id;
+    const endPoint = BASE_API +'api/canal-direto/setor/' + id;
 
     const headers = { Authorization: TOKEN }
 
