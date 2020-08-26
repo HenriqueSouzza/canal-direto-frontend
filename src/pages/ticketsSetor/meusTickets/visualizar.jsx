@@ -35,8 +35,6 @@ class Visualizar extends Component{
         values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
 
-        // console.log(values)
-
         this.props.salvarInteracao(values)
         
     }

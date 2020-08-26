@@ -138,18 +138,36 @@ export const buscarInteracoesTicket = (idTicket = '') => {
  */
 export const salvarNovoTicket = (params, router) => {
 
-    params.usuario = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 
-    const headers = { Authorization: ''}
+    const headers = { 
+        Authorization: '',
+        'Content-Type': `multipart/form-data`
+    }
+
+    //classe utilizada para enviar arquivos
+    const formData = new FormData();
+
+    if(params.arquivos.length > 0){
+        params.arquivos.map( (row) => {
+            formData.append('arquivo[]', row)
+        })
+    }
+
+    formData.append('usuario', USER_LOGGED.usuario)
+    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('assunto', params.assunto)
+    formData.append('setor', params.setor)
+    formData.append('categoria', params.categoria)
+    formData.append('mensagem', params.mensagem)
+    formData.append('status', params.status)
+
 
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.post(endPoint, params, { headers: headers })
+        axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
             router.goBack()

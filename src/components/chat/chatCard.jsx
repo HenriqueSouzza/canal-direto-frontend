@@ -22,6 +22,7 @@ function ChatCard(props){
                                                             })
 
     const onSubmit = (value, form) => {
+
         value.arquivo = archivesSeleted.file
         if(!archivesSeleted.errorMessage){
             addComment(value)
@@ -33,7 +34,7 @@ function ChatCard(props){
                     form.resetFieldState('mensagem'),
                     setArchivesSeleted({file: []})
                 ), 
-            500
+            1500
         );
     }
 
@@ -41,14 +42,12 @@ function ChatCard(props){
 
         const error = validateArchive(file)
 
-        const files = []
-
         for(var i = 0; i < file.length; i++){
-            files.push(file[i])
+            archivesSeleted.file.push(file[i])
         }
 
         setArchivesSeleted({
-            file: files,
+            file: archivesSeleted.file,
             errorMessage: error
         })
 
@@ -86,15 +85,15 @@ function ChatCard(props){
                                         {/* <img className="direct-chat-img" src="" alt="atendente"/> */}
                                         <div className="direct-chat-text">
                                             {row.mensagem}
+                                            <br/>
                                             {
                                                 row.arquivo.length > 0 ?
                                                     row.arquivo.map((val,key) => (
-                                                        <strong key={key + index}>
-                                                            <br/>
+                                                        <span className={`ml-3`} key={key + index}>
                                                             <Link to={{pathname: val}} target="_blank" download>
                                                                 <i className="fa fa-download"></i> Anexo {key + 1}
                                                             </Link>
-                                                        </strong>
+                                                        </span>
                                                     ))
                                                 : 
                                                     ''
@@ -125,8 +124,9 @@ function ChatCard(props){
                 </div>
             </div>
             {
-                enableComment ?
+                enableComment  ?
                     <div className="card-footer">
+                        {console.log(archivesSeleted.file)}
                         <Form
                             onSubmit={onSubmit}
                             render={({handleSubmit, submitting, pristine}) => (

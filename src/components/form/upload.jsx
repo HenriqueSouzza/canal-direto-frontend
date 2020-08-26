@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import DropzoneComponent from 'react-dropzone-component';
 
@@ -33,7 +33,6 @@ function Upload(props){
      */
     const removeArchive = file => {
         onChangeArchive(file, 0)
-        console.log(file)
     }
     
     /**
@@ -45,16 +44,7 @@ function Upload(props){
         onChangeArchive(file, 1)
     }
 
-    /**
-     * É função é responsavel por retornar o estado inicial do dropzone
-     * @param {*} dataDropzone 
-     */
-    const initCallBack = (dataDropzone) => {
-        console.log(dataDropzone.files)
-    }
-    
     const eventHandlers = { 
-        init: (dataDropzone) => initCallBack(dataDropzone),
         addedfile: file => onAddedFile(file),
         removedfile: file => removeArchive(file),
         error: (file, message) => errorArchive(file, message),
@@ -68,9 +58,6 @@ function Upload(props){
                 eventHandlers={eventHandlers}
                 djsConfig={djsConfig}
             />
-            {/* <div className={`${touched && error && "text-danger"}`}>
-                {touched && error && <strong>{error}</strong>}
-            </div> */}
         </>
     )   
 }

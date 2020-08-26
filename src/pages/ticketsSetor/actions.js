@@ -194,12 +194,20 @@ export const salvarInteracao = (params) => {
 
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
 
-    const headers = { Authorization: ''}
+    const headers = { 
+        Authorization: '',
+        'Content-Type': `multipart/form-data`
+    }
 
     //classe utilizada para enviar arquivos
     const formData = new FormData();
+
+    if(params.arquivo.length > 0){
+        params.arquivo.map( (row) => {
+            formData.append('arquivo[]', row)
+        })
+    }
     
-    formData.append('arquivo', params.arquivo)
     formData.append('usuario_interacao', USER_LOGGED.usuario)
     formData.append('acao', params.acao)
     formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
