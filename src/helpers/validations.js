@@ -44,5 +44,32 @@ export const validateCpf = value => {
     return result
 
 }
+
+
+export const validateArchive = file => {
+
+  let result = undefined
+
+  const size = 10000000;//10mb
+
+  //extensões permitidas
+  const acceptedFiles = ['image/jpeg', 'image/png', 'application/pdf', 'application/msword']
+
+  // console.log(e.target.files[0], e.target.files[0].name, e.target.files[0].size, e.target.files[0].type)
+  for(var i = 0; i < file.length; i++){
+
+    if(file[i].size > size){
+      return result = 'Favor enviar arquivos até ' + size / 1000000 + ' mb';
+    }
+
+    if(acceptedFiles.indexOf(file[i].type) < 0){
+      return result = 'Favor enviar arquivos com as extensões JPEG, PNG, PDF, DOC, DOCX'
+    }
+
+  }
+
+  return result;
+
+}
                                         
                                       

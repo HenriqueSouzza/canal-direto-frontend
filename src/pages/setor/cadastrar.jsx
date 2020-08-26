@@ -26,7 +26,7 @@ class Cadastrar extends Component{
         //console.log(values.ativo);
 
         values.ativo = (values.ativos ? "S" : "N");
-        values.usuario = 'marcos.barroso';
+        // values.usuario = 'marcos.barroso';
         
         //console.log(values);
 

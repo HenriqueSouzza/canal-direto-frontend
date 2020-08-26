@@ -7,18 +7,12 @@ import type from  './types';
 import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
 
 
-
-/*****************************************************************************/
-/***************************** MEUS TICKETS **********************************/
-/*****************************************************************************/
-
-
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
 export const buscarMeusTickets = () => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + '&order=created_at,desc';
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + '&status=abertos&order=created_at,desc';
 
     const headers = { Authorization: ''}
 
@@ -29,7 +23,7 @@ export const buscarMeusTickets = () => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
 
-            dispatch({ type: type.BUSCAR_MEUS_TICKETS, payload: response })
+            dispatch({ type: type.BUSCAR_MEUS_TICKETS_SETOR, payload: response })
             
         })
         .catch(error => {
@@ -40,6 +34,37 @@ export const buscarMeusTickets = () => {
         })
     }
 
+}
+
+
+/**
+ * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
+ */
+export const buscarTicketsSetor = () => {
+
+    const setorUser = 1
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + setorUser;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_TICKETS_SETOR, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
 }
 
 
@@ -138,41 +163,22 @@ export const buscarInteracoesTicket = (idTicket = '') => {
  */
 export const salvarNovoTicket = (params, router) => {
 
+    params.usuario = USER_LOGGED.usuario
+
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 
-    const headers = { 
-        Authorization: '',
-        'Content-Type': `multipart/form-data`
-    }
-
-    //classe utilizada para enviar arquivos
-    const formData = new FormData();
-
-    if(params.arquivos.length > 0){
-        params.arquivos.map( (row) => {
-            formData.append('arquivo[]', row)
-        })
-    }
-
-    formData.append('usuario', USER_LOGGED.usuario)
-    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
-    formData.append('assunto', params.assunto)
-    formData.append('setor', params.setor)
-    formData.append('categoria', params.categoria)
-    formData.append('mensagem', params.mensagem)
-    formData.append('status', params.status)
-
+    const headers = { Authorization: ''}
 
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.post(endPoint, formData, { headers: headers })
+        axios.post(endPoint, params, { headers: headers })
         .then(response => {
 
             router.goBack()
             toastr.success('Sucesso', 'Ticket salvo com sucesso')
-            dispatch(buscarMeusTickets(USER_LOGGED.usuario))
+            dispatch(buscarMeusTickets(USER_LOGGED))
             
         })
         .catch(error => {
@@ -188,17 +194,33 @@ export const salvarNovoTicket = (params, router) => {
 
 export const salvarInteracao = (params) => {
 
-    params.usuario_interacao = USER_LOGGED.usuario
-
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
 
-    const headers = { Authorization: ''}
+    const headers = { 
+        Authorization: '',
+        'Content-Type': `multipart/form-data`
+    }
+
+    //classe utilizada para enviar arquivos
+    const formData = new FormData();
+
+    if(params.arquivo.length > 0){
+        params.arquivo.map( (row) => {
+            formData.append('arquivo[]', row)
+        })
+    }
+    
+    formData.append('usuario_interacao', USER_LOGGED.usuario)
+    formData.append('acao', params.acao)
+    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('id_ticket', params.id_ticket)
+    formData.append('mensagem', params.mensagem)
 
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.post(endPoint, params, { headers: headers })
+        axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
             toastr.success('Sucesso', 'Adicionado interação com sucesso')
@@ -248,39 +270,7 @@ export const fecharTicket = (params, idTicket, router) => {
 }
 
 
-/*****************************************************************************/
-/************************* TICKETS DO MEU SETOR ******************************/
-/*****************************************************************************/
 
-
-/**
- * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
- */
-export const buscarTicketsSetor = (params) => {
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[id_setor]=' + params;
-
-    const headers = { Authorization: ''}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
-
-            dispatch({ type: type.BUSCAR_TICKETS_SETOR, payload: response })
-            
-        })
-        .catch(error => {
-
-            console.log(error)
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
-}
 
 
 // /**

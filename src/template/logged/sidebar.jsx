@@ -23,7 +23,7 @@ function Sidebar() {
                         <img src={imgPerfil} className="img-circle elevation-2" alt={`UserImage`} />
                     </div>
                     <div className="info">
-                        <Link to={`#`} className="d-block">{ USER_LOGGED ? USER_LOGGED : 'Sem nome' }</Link>
+                        <Link to={`#`} className="d-block">{ USER_LOGGED.usuario ? USER_LOGGED.usuario : 'Sem nome' }</Link>
                     </div>
                 </div>
                 <Menu />

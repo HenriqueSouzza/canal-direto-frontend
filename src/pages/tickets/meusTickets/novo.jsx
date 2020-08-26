@@ -29,6 +29,12 @@ class Novo extends Component{
 
     constructor(props){
         super(props)
+        this.state = {
+            arquivo: {
+                file: [],
+                errorMessage: ''
+            }
+        }
     }
 
     componentDidMount(){
@@ -38,10 +44,9 @@ class Novo extends Component{
     }
 
     onSubmit = values => {
+        values.arquivos = this.state.arquivo.file
         values.status = 'aberto'
-        values.papel_usuario = 1
         
-        // console.log(values)
         this.props.salvarNovoTicket(values, this.props.history)
     }
 
@@ -53,6 +58,22 @@ class Novo extends Component{
 
     onVoltar = () => {
         this.props.history.goBack();
+    }
+
+    onChangeArchive = (file, action) => {
+
+        if(action){
+            
+            this.state.arquivo.file.push(file)
+            
+        }else{
+
+            const index =  this.state.arquivo.file.indexOf(file)
+
+            console.log(this.state.arquivo.file.splice(index, 1))
+            
+        }
+
     }
 
     render(){
@@ -141,19 +162,24 @@ class Novo extends Component{
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(10),  FORM_RULES.max(300))}
                                                     />
                                             </div>
-                                            {/* <div className="col-md-5">
+                                            <div className="col-md-5">
                                                 <div className="row justify-content-center">
                                                     <div className="col-md-10 mt-5 text-center">
                                                         <label>Anexar arquivo</label>
-                                                        <Field 
+                                                        <Upload 
+                                                            endpoint={`no-url`}
+                                                            name={`arquivo`}
+                                                            onChangeArchive={this.onChangeArchive}
+                                                            />
+                                                        {/* <Field 
                                                             component={Upload} 
                                                             endpoint={'no-url'} //
                                                             name={`arquivo`} 
                                                             validate={composeValidators(FORM_RULES.qtdArchiveMin(1))}
-                                                            />
+                                                            /> */}
                                                     </div>
                                                 </div>
-                                            </div> */}
+                                            </div>
                                         </div>
                                         <div className="row justify-content-center">
                                             <div className="col-md-3">

@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN, BASE_API } from '../../config/const';
+import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
 
 
 
@@ -15,6 +15,8 @@ import { TOKEN, BASE_API } from '../../config/const';
  * @param {*} router 
  */
 export const cadastrarSetor = (params, router) => {
+
+    params.usuario = USER_LOGGED.usuario
 
     const endPoint = BASE_API + 'api/canal-direto/setor';
 
