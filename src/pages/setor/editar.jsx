@@ -56,7 +56,8 @@ class Editar extends Component{
         const initialValues = {}
 
         const {loading,dadosSetor} = this.props.setor
-        
+
+      
         if(dadosSetor.response){
             dadosSetor.response.content.find(element => {
                 if(element.id == this.props.match.params.id){
