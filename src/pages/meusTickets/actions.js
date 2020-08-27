@@ -201,7 +201,7 @@ export const salvarInteracao = (params) => {
         axios.post(endPoint, params, { headers: headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Adicionado interação com sucesso')
+            toastr.success('Sucesso', 'Interação adicionada com sucesso')
             dispatch(buscarInteracoesTicket(params.id_ticket))
             
         })

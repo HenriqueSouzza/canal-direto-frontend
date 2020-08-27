@@ -10,7 +10,7 @@ import DataTable from '../../../components/table/dataTable';
 
 import { ACTION_RULES } from '../../../helpers/authorization';
 
-import { buscarTicketsSetor } from '../actions'
+import { buscarTicketsSetor } from './actions'
  
 
 class Index extends Component{

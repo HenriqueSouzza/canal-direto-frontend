@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -10,6 +10,10 @@ import Input from './input';
 
 import Upload from './upload';
 
+import imgLogo  from '../../template/images/logo.png';
+
+import imgUser  from '../../template/images/perfil.png';
+
 
 
 function ChatCard(props){
@@ -20,6 +24,16 @@ function ChatCard(props){
                                                                 file: [],
                                                                 errorMessage: []
                                                             })
+
+    //Deixar o scroll(barra) no fim da página  
+    const messagesEndRef = useRef(null);
+    
+    //Deixar o scroll(barra) no fim da página e pegar os dados mais atualizados  
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [dataComment]);
 
     const onSubmit = (value, form) => {
 
@@ -80,20 +94,21 @@ function ChatCard(props){
                         dataComment.map((row, index) => {
                             if(row.solicitante){
                                 return(
-                                    <div key={index} className="direct-chat-msg">
+                                    <div key={index} className="direct-chat-msg right">
                                         <div className="direct-chat-infos clearfix">
-                                            <span className="direct-chat-name float-left">{row.usuario_interacao}</span>
-                                            <span className="direct-chat-timestamp float-right">{row.dt_criacao}</span>
+                                            <span className="direct-chat-name float-right">{row.usuario_interacao}</span>
+                                            <span className="direct-chat-timestamp float-left">{row.dt_criacao}</span>
                                         </div>
-                                        {/* <img className="direct-chat-img" src="" alt="atendente"/> */}
+                                        <img className="direct-chat-img" src={imgUser} alt="iesb"/>
                                         <div className="direct-chat-text">
                                             {row.mensagem}
+                                            <br/>
                                             <br/>
                                             {
                                                 row.arquivo.length > 0 ?
                                                     row.arquivo.map((val,key) => (
-                                                        <span className={`ml-3`} key={key + index}>
-                                                            <Link to={{pathname: val}} target="_blank" download>
+                                                        <span className={`mr-3 mt-2`} key={key + index}>
+                                                            <Link to={{pathname: val}} target="_blank" className={`btn btn-default`} download>
                                                                 <i className="fa fa-download"></i> Anexo {key + 1}
                                                             </Link>
                                                         </span>
@@ -106,14 +121,28 @@ function ChatCard(props){
                                 )
                             }else{
                                 return(
-                                    <div key={index} className="direct-chat-msg right">
+                                    <div key={index} className="direct-chat-msg">
                                         <div className="direct-chat-infos clearfix">
-                                            <span className="direct-chat-name float-right">{row.usuario_interacao}</span>
-                                            <span className="direct-chat-timestamp float-left">{row.dt_criacao}</span>
+                                            <span className="direct-chat-name float-left">{row.usuario_interacao}</span>
+                                            <span className="direct-chat-timestamp float-right">{row.dt_criacao}</span>
                                         </div>
-                                        {/* <img className="direct-chat-img" src="" alt="autor do usuario"/> */}
+                                        <img className="direct-chat-img" src={imgLogo} alt="Atendente"/>
                                         <div className="direct-chat-text">
                                             {row.mensagem}
+                                            <br/>
+                                            <br/>
+                                            {
+                                                row.arquivo.length > 0 ?
+                                                    row.arquivo.map((val,key) => (
+                                                        <span className={`mr-3 mt-2`} key={key + index}>
+                                                            <Link to={{pathname: val}} target="_blank" className={`btn btn-default`} download>
+                                                                <i className="fa fa-download"></i> Anexo {key + 1}
+                                                            </Link>
+                                                        </span>
+                                                    ))
+                                                : 
+                                                    ''
+                                            }
                                         </div>
                                     </div>
                                 )
@@ -124,6 +153,7 @@ function ChatCard(props){
                             Sem {titleChat}
                         </div>
                     }
+                    <div ref={messagesEndRef} />
                 </div>
             </div>
             {

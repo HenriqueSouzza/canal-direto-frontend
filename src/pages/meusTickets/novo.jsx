@@ -41,9 +41,7 @@ class Novo extends Component{
 
     //função que ao criar o component ele busca os setor que o usuario logado tem acesso
     componentDidMount(){
-        if(this.props.meusTickets.dadosSetor.length <= 0){
-            this.props.buscarSetor()
-        }
+        this.props.buscarSetor()
     }
 
     onSubmit = values => {

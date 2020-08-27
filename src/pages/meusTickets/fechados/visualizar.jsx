@@ -12,6 +12,8 @@ import ChatCard from '../../../components/chat/chatCard';
 
 import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
 
+import { USER_LOGGED } from '../../../config/const';
+
 
 class Visualizar extends Component{
 
@@ -83,9 +85,9 @@ class Visualizar extends Component{
                 interacoesTickets.response.content.find(element => {
                     if(element.id_ticket == this.props.match.params.id){
                         dataInteracao.push({
-                            solicitante: element.usuario_interacao == dataTicket.usuario_abertura ? 1 : 0,
+                            solicitante: USER_LOGGED.usuario  == element.usuario_interacao ? 1 : 0,
                             usuario_interacao: element.usuario_interacao,
-                            mensagem: element.mensagem,
+                            mensagem: element.encaminhar ? 'Em análise' : element.mensagem,
                             arquivo: element.arquivo,
                             dt_criacao: element.dt_criacao,
                         })
@@ -94,15 +96,16 @@ class Visualizar extends Component{
             }else{
                 if(interacoesTickets.response.content.id_ticket  == this.props.match.params.id ){
                     dataInteracao.push({
+                        solicitante: USER_LOGGED.usuario == interacoesTickets.response.content.usuario_interacao ? 1 : 0,
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
-                        mensagem: interacoesTickets.response.content.mensagem,
+                        mensagem: interacoesTickets.response.content.encaminhar ? 'Em análise' : interacoesTickets.response.content.mensagem,
                         arquivo: interacoesTickets.response.content.arquivo,
                         dt_criacao: interacoesTickets.response.content.dt_criacao
                     })
                 }
             }
         }
-        
+
         return (
             <section className="content">
                 <LoadingBody status={loading} />

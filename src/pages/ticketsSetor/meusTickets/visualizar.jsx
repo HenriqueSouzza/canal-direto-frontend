@@ -8,7 +8,9 @@ import { Form, Field } from 'react-final-form';
 
 import  Select  from '../../../components/form/select';
 
-import { FORM_RULES, composeValidators } from '../../../helpers/validations';
+import  Button  from '../../../components/form/button';
+
+import { FORM_RULES } from '../../../helpers/validations';
 
 import LoadingBody from '../../../components/loading/loadingBody';
 
@@ -16,9 +18,11 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
 
-import { salvarInteracao, buscarInteracoesTicket, fecharTicket, buscarSetor, buscarCategoria } from  '../actions';
+import { salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
 
 import moment from 'moment';
+
+import { USER_LOGGED } from '../../../config/const';
 
 
 class Visualizar extends Component{
@@ -47,7 +51,11 @@ class Visualizar extends Component{
     }
 
     onSubmitEncaminhar = (values) => {
-        console.log(values)
+
+        values.mensagem = 'Seu ticket foi encaminhado'
+        values.encaminhar = 1
+        this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
+
     }
 
     onVoltar = () => {
@@ -114,7 +122,7 @@ class Visualizar extends Component{
                 interacoesTickets.response.content.find(element => {
                     if(element.id_ticket == this.props.match.params.id){
                         dataInteracao.push({
-                            solicitante: element.usuario_interacao == dataTicket.usuario_abertura ? 1 : 0,
+                            solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0,
                             usuario_interacao: element.usuario_interacao,
                             mensagem: element.mensagem,
                             arquivo: element.arquivo,
@@ -125,6 +133,7 @@ class Visualizar extends Component{
             }else{
                 if(interacoesTickets.response.content.id_ticket  == this.props.match.params.id ){
                     dataInteracao.push({
+                        solicitante: USER_LOGGED.usuario == interacoesTickets.response.content.usuario_interacao ? 1 : 0,
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
                         mensagem: interacoesTickets.response.content.mensagem,
                         arquivo: interacoesTickets.response.content.arquivo,
@@ -271,13 +280,14 @@ class Visualizar extends Component{
                                                                 </div> 
                                                                 <div className="row justify-content-center">
                                                                     <div className="col-md-4">
-                                                                        <button 
-                                                                            type="button" 
-                                                                            className="btn btn-success col-md-10" 
+                                                                        <Button
+                                                                            type={`submit`}
+                                                                            className={`col-md-10`}
+                                                                            color={`btn-success col-md-10`}
                                                                             disabled={submitSucceeded || pristine}
-                                                                            onClick={() => this.setState({onResponder: 1})}>
-                                                                            <i className="fa fa-share"></i> Encaminhar
-                                                                        </button>
+                                                                            icon={`fa fa-share`}
+                                                                            description={`Encaminhar`}
+                                                                            />
                                                                     </div>
                                                                 </div>                                                 
                                                             </form>
@@ -318,7 +328,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket, fecharTicket, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);
