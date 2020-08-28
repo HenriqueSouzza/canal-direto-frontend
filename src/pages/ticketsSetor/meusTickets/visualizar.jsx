@@ -18,6 +18,12 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
 
+import InformacoesAluno from '../components/InformacoesAluno';
+
+import InformacoesFuncionario from '../components/InformacoesFuncionario';
+
+import InformacoesDocente from '../components/InformacoesDocente';
+
 import { salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
 
 import moment from 'moment';
@@ -94,6 +100,7 @@ class Visualizar extends Component{
                         dataTicket.id = element.id
                         dataTicket.assunto = element.assunto
                         dataTicket.usuario_abertura = element.usuario_abertura
+                        dataTicket.papel_usuario = element.papel_usuario
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
@@ -106,6 +113,7 @@ class Visualizar extends Component{
                     dataTicket.id = meusTickets.response.content.id
                     dataTicket.assunto = meusTickets.response.content.assunto
                     dataTicket.usuario_abertura = meusTickets.response.content.usuario_abertura
+                    dataTicket.papel_usuario = meusTickets.response.content.papel_usuario
                     dataTicket.setor = meusTickets.response.content.setor
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
@@ -190,55 +198,23 @@ class Visualizar extends Component{
                 <div className="row">
                     <div className="col-md-12">
                         <div className="content-fluid">
-                            <div className="card card-danger">
-                                <div className="card-header">
-                                    <h5 className="card-title">Informações</h5>
-                                </div>
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Autor:</label>
-                                            <div className="">{dataTicket.usuario_abertura}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Assunto:</label>
-                                            <div className="">{dataTicket.assunto}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Setor/Categoria:</label>
-                                            <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row justify-content-center text-center">
-                                        <div className="col-md-3">
-                                            <button type="button" className="btn btn-dark col-md-10" onClick={() => this.onVoltar()}>
-                                                <i className="fa fa-arrow-left"></i> Voltar
-                                            </button>
-                                        </div>
-                                        { dataTicket.status != 'fechado' ?
-                                            <>
-                                            <div className="col-md-3">
-                                                <button type="button" className="btn btn-success col-md-10" onClick={() => this.setState({onResponder: 1})}>
-                                                    <i className="fa fa-share"></i> Encaminhar
-                                                </button>
-                                            </div>
-                                            <div className="col-md-3">
-                                                <button type="button" className="btn btn-primary col-md-10" onClick={() => this.onFecharTicket(dataTicket.id)}>
-                                                    <i className="fa fa-check"></i> Fechar Ticket
-                                                </button>
-                                            </div>
-                                            </>
-                                        : ''}
-                                    </div>
-                                </div>
-                            </div>
+                            {
+                                dataTicket.papel_usuario == 1 ? 
+                                    <InformacoesFuncionario 
+                                        data={dataTicket}
+                                        onFechar={this.onFecharTicket}
+                                        onVoltar={this.onVoltar}
+                                    />
+                                : dataTicket.papel_usuario == 2 ? 
+                                    <InformacoesAluno 
+                                        data={dataTicket}
+                                    />
+                                : dataTicket.papel_usuario == 3 ? 
+                                    <InformacoesDocente 
+                                        data={dataTicket}
+                                    />
+                                : ''
+                            }
                         </div>
                     </div>
                     

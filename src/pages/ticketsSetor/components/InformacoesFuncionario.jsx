@@ -1,17 +1,18 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 
 function InformacoesFuncionario(props){
 
     const { data } = props
 
-
     const onClickVoltar = () => {
-
+        props.onVoltar()
     }; 
 
     const onClickFechar = () => {
-
+        props.onFechar()
     }; 
  
     return(
@@ -23,10 +24,6 @@ function InformacoesFuncionario(props){
                 <div className="row">
                     <div className="col-md-4">
                         <label>Solicitante:</label>
-                        <div className="">{data.usuario_abertura ? data.usuario_abertura : '-'}</div>
-                    </div>
-                    <div className="col-md-4">
-                        <label>Tipo Solicitante:</label>
                         <div className="">{data.usuario_abertura ? data.usuario_abertura : '-'}</div>
                     </div>
                 </div>
@@ -41,11 +38,24 @@ function InformacoesFuncionario(props){
                     </div>
                     <div className="col-md-12">
                         <label>Mensagem:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <div className="">{data.mensagem}</div>
                     </div>
                     <div className="col-md-12">
                         <label>Anexos:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <div className="">
+                            {
+                                data.length > 0 && data.arquivo.length > 0 ?
+                                    data.arquivo.map((row, index) => (
+                                        <span className={`mr-3 mt-2`} key={index}>
+                                            <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>
+                                                <i className="fa fa-paperclip"></i> Anexo {index + 1}
+                                            </Link>
+                                        </span>
+                                    ))
+                                :
+                                    'Nenhum anexo'
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

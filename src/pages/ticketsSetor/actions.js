@@ -223,6 +223,8 @@ export const salvarInteracao = (params) => {
 export const fecharTicket = (params, idTicket, router) => {
 
     params.usuario_fechamento = USER_LOGGED.usuario
+    params.usuario_interacao = USER_LOGGED.usuario
+    params.papel_usuario = USER_LOGGED.papelUsuario.id
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 

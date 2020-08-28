@@ -37,7 +37,7 @@ class Index extends Component{
                     criado: moment(row.created_at).calendar(),
                     atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
                     // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
-                    link: '/tickets-setor/para-meu-setor/' + row.id + '/visualizar'
+                    link: '/tickets-setor/meus-tickets/' + row.id + '/visualizar'
                 })
             })
         }
