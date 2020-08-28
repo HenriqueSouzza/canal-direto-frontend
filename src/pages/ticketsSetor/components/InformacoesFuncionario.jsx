@@ -44,7 +44,7 @@ function InformacoesFuncionario(props){
                         <label>Anexos:</label>
                         <div className="">
                             {
-                                data.length > 0 && data.arquivo.length > 0 ?
+                                data.arquivo && data.arquivo.length > 0 ?
                                     data.arquivo.map((row, index) => (
                                         <span className={`mr-3 mt-2`} key={index}>
                                             <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>

@@ -104,7 +104,7 @@ class Visualizar extends Component{
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
-                        dataTicket.status = element.status
+                        dataTicket.arquivo = element.arquivo
                         dataTicket.created_at = element.created_at
                     }
                  })
@@ -117,7 +117,7 @@ class Visualizar extends Component{
                     dataTicket.setor = meusTickets.response.content.setor
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
-                    dataTicket.status = meusTickets.response.content.status
+                    dataTicket.arquivo = meusTickets.response.content.arquivo
                     dataTicket.created_at = meusTickets.response.content.created_at
                 }
             }

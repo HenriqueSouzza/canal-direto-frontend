@@ -132,7 +132,7 @@ class Visualizar extends Component{
                                         <label>Anexo:</label>
                                         <div className="">
                                             {
-                                                dataTicket.length > 0 && dataTicket.arquivo.length > 0 ?
+                                                dataTicket.arquivo && dataTicket.arquivo.length > 0 ?
                                                     dataTicket.arquivo.map((row, index) => (
                                                         <span className={`mr-3 mt-2`} key={index}>
                                                             <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>
