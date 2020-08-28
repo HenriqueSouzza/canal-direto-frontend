@@ -16,9 +16,9 @@ import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarMeusTickets = () => {
+export const buscarMeusTickets = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + '&order=created_at,desc';
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + params + '&order=created_at,desc';
 
     const headers = { Authorization: ''}
 
@@ -160,7 +160,7 @@ export const salvarNovoTicket = (params, router) => {
     formData.append('setor', params.setor)
     formData.append('categoria', params.categoria)
     formData.append('mensagem', params.mensagem)
-    formData.append('status', params.status)
+    formData.append('aberto', 1)
 
 
     return dispatch => {

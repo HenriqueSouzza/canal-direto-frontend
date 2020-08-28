@@ -4,22 +4,24 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
+import { Link } from 'react-router-dom';
+
 import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { ACTION_RULES } from '../../../helpers/authorization';
-
 import { buscarMeusTickets } from '../actions'
+
+import moment from 'moment';
+
  
 
 class Index extends Component{
 
     componentDidMount(){
-        let userLogged = 'henrique.souza'
-        this.props.buscarMeusTickets(userLogged)
+        this.props.buscarMeusTickets('&where[aberto]=1')
     }
 
     render(){
@@ -33,8 +35,12 @@ class Index extends Component{
                 dataTicket.push({
                     ticket: row.id,
                     assunto: row.assunto,
-                    criado: row.created_at,
-                    status: row.status,
+                    setor: row.setor,
+                    categoria: row.categoria,
+                    criado: moment(row.created_at).calendar(),
+                    atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
+                    // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
+                    link: '/meus-tickets/abertos/' + row.id + '/visualizar'
                 })
             })
         }
@@ -51,15 +57,32 @@ class Index extends Component{
                 sortable: true,
             },
             {
+                name: 'Setor',
+                selector: 'setor',
+                sortable: true,
+            },
+            {
+                name: 'Categoria',
+                selector: 'categoria',
+                sortable: true,
+            },
+            {
                 name: 'Criado em',
                 selector: 'criado',
                 sortable: true,
             },
             {
-                name: 'Status',
-                selector: 'status',
+                name: 'Atualização',
+                selector: 'atualizacao',
                 sortable: true,
-            }
+            },
+            {
+                name: 'Detalhe',
+                button: true,
+                cell: row => <Link to={row.link} className={`nav-link text-info`}>
+                                <i className={`fa fa-eye`}></i>
+                            </Link>,
+            }   
         ];
         
         return(
@@ -77,7 +100,7 @@ class Index extends Component{
                                 columns={columns} 
                                 data={dataTicket} 
                                 router={this.props.history}
-                                actions={[ACTION_RULES.can_detail]}
+                                actions={null}
                                 loading={loading} 
                             />
                         </div>

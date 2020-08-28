@@ -12,8 +12,7 @@ import TicketsFechados from './fechados/index';
 
 import TicketsFechadosVisualizar from './fechados/visualizar';
 
-
-
+import PaginaNaoEncontrada from '../errosPagina/paginaNaoEncontrada';
 
 
 function Router(){
@@ -27,6 +26,8 @@ function Router(){
 
             <Route exact path='/meus-tickets/fechados' component={ props => <TicketsFechados {...props} />} />
             <Route exact path='/meus-tickets/fechados/:id/visualizar' component={ props => <TicketsFechadosVisualizar {...props} />} />
+
+            <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>
     )
     

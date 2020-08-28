@@ -46,7 +46,6 @@ class Novo extends Component{
 
     onSubmit = values => {
         values.arquivos = this.state.arquivo.file
-        values.status = 'aberto'
         
         this.props.salvarNovoTicket(values, this.props.history)
     }

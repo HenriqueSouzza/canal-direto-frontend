@@ -29,6 +29,7 @@ import { encaminharTicket, fecharTicket } from  './actions';
 import { salvarInteracao, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
 
 import moment from 'moment';
+
 import { USER_LOGGED } from '../../../config/const';
 
 
@@ -59,7 +60,7 @@ class Visualizar extends Component{
 
     onSubmitEncaminhar = (values) => {
 
-        values.mensagem = 'Ticket encaminhado'
+        values.mensagem = 'Ticket encaminhado pelo ' + USER_LOGGED.usuario
         values.encaminhar = 1
         this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
 

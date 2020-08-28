@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
+import { Link } from 'react-router-dom';
+
 import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
@@ -13,6 +15,7 @@ import ChatCard from '../../../components/chat/chatCard';
 import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
 
 import { USER_LOGGED } from '../../../config/const';
+
 
 
 class Visualizar extends Component{
@@ -60,7 +63,7 @@ class Visualizar extends Component{
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
-                        dataTicket.status = element.status
+                        dataTicket.arquivo = element.arquivo
                         dataTicket.created_at = element.created_at
                     }
                  })
@@ -72,7 +75,7 @@ class Visualizar extends Component{
                     dataTicket.setor = meusTickets.response.content.setor
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
-                    dataTicket.status = meusTickets.response.content.status
+                    dataTicket.arquivo = meusTickets.response.content.arquivo
                     dataTicket.created_at = meusTickets.response.content.created_at
                 }
             }
@@ -112,45 +115,48 @@ class Visualizar extends Component{
                 <MenuHeader title={`Detalhe do ticket`} history={this.props.location.pathname} />
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="content-fluid">
-                            <div className="card card-danger">
-                                <div className="card-header">
-                                    <h5 className="card-title">Informações</h5>
-                                </div>
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Autor:</label>
-                                            <div className="">{dataTicket.usuario_abertura}</div>
+                        <div className="card card-danger">
+                            <div className="card-header">
+                                <h3 className="card-title">Assunto: {dataTicket.assunto ? dataTicket.assunto : '-'}</h3>
+                            </div>
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <label>Mensagem:</label>
+                                        <div className="">
+                                            {dataTicket.mensagem ? dataTicket.mensagem : '-'}
                                         </div>
                                     </div>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Assunto:</label>
-                                            <div className="">{dataTicket.assunto}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label>Setor/Categoria:</label>
-                                            <div className="">{dataTicket.setor} - {dataTicket.categoria}</div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row justify-content-center text-center">
-                                        <div className="col-md-3">
-                                            <button type="button" className="btn btn-dark col-md-10" onClick={() => this.onVoltar()}>
-                                                <i className="fa fa-arrow-left"></i> Voltar
-                                            </button>
+                                    <div className="col-md-12">
+                                        <label>Anexo:</label>
+                                        <div className="">
+                                            {
+                                                dataTicket.length > 0 && dataTicket.arquivo.length > 0 ?
+                                                    dataTicket.arquivo.map((row, index) => (
+                                                        <span className={`mr-3 mt-2`} key={index}>
+                                                            <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>
+                                                                <i className="fa fa-paperclip"></i> Anexo {index + 1}
+                                                            </Link>
+                                                        </span>
+                                                    ))
+                                                :
+                                                    'Nenhum anexo'
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="card-footer">
+                                    <div className="col-md-12 text-center">
+                                        <button type="button" className="btn btn-dark col-md-3" onClick={() => this.onVoltar()}>
+                                            <i className="fa fa-arrow-left"></i> Voltar
+                                        </button>
+                                    </div>
+                            </div>
                         </div>
                     </div>
-
+                </div>
+                <div className="row">
                     <div className="col-md-12">
                         <ChatCard
                             dataComment={dataInteracao}
@@ -160,7 +166,6 @@ class Visualizar extends Component{
                             enableAnexo={true}
                         />
                     </div>
-
                 </div>
             </section>
         )
