@@ -10,8 +10,6 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { ACTION_RULES } from '../../../helpers/authorization';
-
 import { buscarMeusTickets } from '../actions';
 
 import moment from 'moment';

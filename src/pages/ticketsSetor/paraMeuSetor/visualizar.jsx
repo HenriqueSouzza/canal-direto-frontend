@@ -137,7 +137,7 @@ class Visualizar extends Component{
                             usuario_interacao: element.usuario_interacao,
                             mensagem: element.mensagem,
                             arquivo: element.arquivo,
-                            dt_criacao: element.dt_criacao,
+                            dt_criacao: moment(element.dt_criacao).calendar(),
                         })
                     }
                  })
@@ -148,7 +148,7 @@ class Visualizar extends Component{
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
                         mensagem: interacoesTickets.response.content.mensagem,
                         arquivo: interacoesTickets.response.content.arquivo,
-                        dt_criacao: interacoesTickets.response.content.dt_criacao
+                        dt_criacao: moment(interacoesTickets.response.content.dt_criacao).calendar()
                     })
                 }
             }

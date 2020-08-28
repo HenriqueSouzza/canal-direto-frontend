@@ -16,6 +16,8 @@ import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
 
 import { USER_LOGGED } from '../../../config/const';
 
+import moment from 'moment';
+
 
 class Visualizar extends Component{
 
@@ -89,7 +91,7 @@ class Visualizar extends Component{
                             usuario_interacao: element.usuario_interacao,
                             mensagem: element.encaminhar ? 'Em análise' : element.mensagem,
                             arquivo: element.arquivo,
-                            dt_criacao: element.dt_criacao,
+                            dt_criacao: moment(element.dt_criacao).calendar(),
                         })
                     }
                  })
@@ -100,7 +102,7 @@ class Visualizar extends Component{
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
                         mensagem: interacoesTickets.response.content.encaminhar ? 'Em análise' : interacoesTickets.response.content.mensagem,
                         arquivo: interacoesTickets.response.content.arquivo,
-                        dt_criacao: interacoesTickets.response.content.dt_criacao
+                        dt_criacao: moment(interacoesTickets.response.content.dt_criacao).calendar()
                     })
                 }
             }
