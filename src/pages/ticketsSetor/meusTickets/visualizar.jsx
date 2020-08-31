@@ -73,7 +73,8 @@ class Visualizar extends Component{
     onFecharTicket = () => {
         const values = {}
 
-        values.status = 'fechado'
+        values.fechar = 1
+        values.mensagem = 'Ticket fechado'
         values.dt_fechamento = moment().format()
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }

@@ -22,12 +22,10 @@ function InformacoesFuncionario(props){
             </div>
             <div className="card-body">
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-12">
                         <label>Solicitante:</label>
                         <div className="">{data.usuario_abertura ? data.usuario_abertura : '-'}</div>
                     </div>
-                </div>
-                <div className="row">  
                     <div className="col-md-12">
                         <label>Assunto:</label>
                         <div className="">{data.assunto ? data.assunto : '-'}</div>

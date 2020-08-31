@@ -48,11 +48,11 @@ export const encaminharTicket = (params, idTicket, router) => {
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarTicketsSetor = () => {
+export const buscarTicketsSetor = (params) => {
 
     const setorUser = 1
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[setor]=' + setorUser;
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[setor]=' + setorUser + params;
 
     const headers = { Authorization: ''}
 
@@ -84,6 +84,7 @@ export const buscarTicketsSetor = () => {
 export const fecharTicket = (params, idTicket, router) => {
 
     params.usuario_fechamento = USER_LOGGED.usuario
+    params.papel_usuario = USER_LOGGED.papelUsuario.id
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
@@ -98,7 +99,7 @@ export const fecharTicket = (params, idTicket, router) => {
 
             router.goBack()
             toastr.success('Sucesso', 'Ticket fechado com sucesso')
-            dispatch(buscarTicketsSetor())
+            dispatch(buscarTicketsSetor("&where[aberto]=1"))
             
         })
         .catch(error => {
