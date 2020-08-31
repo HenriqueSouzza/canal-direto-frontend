@@ -56,6 +56,12 @@ class Index extends Component{
 
         const { loading, meuSetor } = this.props.ticketsSetor
 
+        const dataStatusTicket = [
+            {id: 'aberto', name: 'Aberto'},
+            // {id: 'pendente', name: 'Pendente'},
+            {id: 'fechado', name: 'Fechado'},
+        ];
+
         const dataTicket = []
         
         if(meuSetor.response){
@@ -72,12 +78,6 @@ class Index extends Component{
                 })
             })
         }
-
-        const dataStatusTicket = [
-            {id: 'aberto', name: 'Aberto'},
-            // {id: 'pendente', name: 'Pendente'},
-            {id: 'fechado', name: 'Fechado'},
-        ];
 
         const columns = [
             {
@@ -123,7 +123,10 @@ class Index extends Component{
             <section className="content">
                 <MenuHeader title={`Tickets Para o Meu Setor`} history={this.props.location.pathname} />
                 <div className="content-fluid">
-                    <div className="card">
+                    <div className="card card-danger">
+                        <div className="card-header">
+                            <h3 className="card-title">Filtros</h3>
+                        </div>
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
