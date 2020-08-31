@@ -75,7 +75,7 @@ class Visualizar extends Component{
 
         values.fechar = 1
         values.mensagem = 'Ticket fechado'
-        values.dt_fechamento = moment().format()
+        values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }
 

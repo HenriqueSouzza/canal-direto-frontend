@@ -42,7 +42,7 @@ class Index extends Component{
         }
 
         if(values.dt_criacao){
-            $where += "&where[dt_criacao]=" + String(values.dt_criacao)
+            $where += "&whereDate[dt_criacao]=" + values.dt_criacao
         }
 
         this.props.buscarMeusTickets($where)

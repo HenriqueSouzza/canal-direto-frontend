@@ -40,8 +40,8 @@ class Index extends Component{
             $where += '&like=assunto,'+ values.assunto
         }
 
-        if(values.dt_criacao){
-            $where += "&where[dt_criacao]=" + String(values.dt_criacao)
+        if(values.dt_fechamento){
+            $where += "&whereDate[dt_fechamento]=" + values.dt_fechamento
         }
 
         this.props.buscarMeusTickets($where)
@@ -141,8 +141,8 @@ class Index extends Component{
                                                 <Field 
                                                     component={Input} 
                                                     type={`date`}
-                                                    name={`dt_criacao`} 
-                                                    label={`Data de Criação:`}
+                                                    name={`dt_fechamento`} 
+                                                    label={`Data de Fechamento:`}
                                                     icon={false}
                                                     />
                                             </div>
