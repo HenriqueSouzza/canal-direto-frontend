@@ -185,12 +185,19 @@ export const salvarInteracao = (params) => {
             formData.append('arquivo[]', row)
         })
     }
+
+    if(params.tipoResposta == 'privado'){
+        formData.append('privado', 1)
+    }else{
+        formData.append('publico', 1)
+    }
     
     formData.append('usuario_interacao', USER_LOGGED.usuario)
-    formData.append('acao', params.acao)
     formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
     formData.append('id_ticket', params.id_ticket)
     formData.append('mensagem', params.mensagem)
+    
+    
 
     return dispatch => {
 

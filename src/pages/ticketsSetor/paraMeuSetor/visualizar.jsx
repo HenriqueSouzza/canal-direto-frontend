@@ -302,6 +302,7 @@ class Visualizar extends Component{
                                     titleChat={`Interações`}
                                     addComment={this.onSubmit}
                                     enableComment={!dataTicket.fechado}
+                                    enableTypeReposta={true}
                                     enableAnexo={true}
                                 />
                             </div>

@@ -86,12 +86,12 @@ function ChatCard(props){
     }
 
     const dataPublic = [
-        {id: '1', name: 'Publico'},
-        {id: '2', name: 'Privado'}
+        {id: 'publico', name: 'Publico'},
+        {id: 'privado', name: 'Privado'}
     ]
 
     const initialValues = {
-        tipoResposta: '1'
+        tipoResposta: 'publico'
     }
 
     return(

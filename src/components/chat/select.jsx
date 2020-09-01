@@ -8,7 +8,6 @@ function Select(props){
 
     return(
         <select className={`form-control ${touched && error && "is-invalid"}`} disabled={disabled} {...props.input}>
-            <option value="">Selecione</option>
             {data.map(response => (
                 <option key={response.id} value={response.id}>{response.name}</option>
             ))}
