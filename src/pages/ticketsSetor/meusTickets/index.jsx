@@ -145,7 +145,7 @@ class Index extends Component{
                                                     type={`date`}
                                                     name={`dt_ini`} 
                                                     label={`Data inicial:`}
-                                                    icon={false}
+                                                    icon={``}
                                                     placeholder={`Digite o assunto do ticket`}
                                                     />
                                             </div>
@@ -155,7 +155,7 @@ class Index extends Component{
                                                     type={`date`}
                                                     name={`dt_fim`} 
                                                     label={`Data final:`}
-                                                    icon={false}
+                                                    icon={``}
                                                     placeholder={`Digite o assunto do ticket`}
                                                     />
                                             </div>

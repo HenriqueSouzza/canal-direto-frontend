@@ -144,7 +144,7 @@ class Index extends Component{
                                                     type={`date`}
                                                     name={`dt_ini`} 
                                                     label={`Data inicial:`}
-                                                    icon={false}
+                                                    icon={``}
                                                     placeholder={`Digite o assunto do ticket`}
                                                     // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                     />
@@ -155,7 +155,7 @@ class Index extends Component{
                                                     type={`date`}
                                                     name={`dt_fim`} 
                                                     label={`Data final:`}
-                                                    icon={false}
+                                                    icon={``}
                                                     placeholder={`Digite o assunto do ticket`}
                                                     // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                     />

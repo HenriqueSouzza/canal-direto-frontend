@@ -129,7 +129,7 @@ class Index extends Component{
                                                     type={`number`}
                                                     name={`ticket`} 
                                                     label={`Nº Ticket:`}
-                                                    icon={false}
+                                                    icon={``}
                                                     placeholder={`Número do Ticket`}
                                                     validate={FORM_RULES.number}
                                                     />
@@ -150,7 +150,7 @@ class Index extends Component{
                                                     type={`date`}
                                                     name={`dt_criacao`} 
                                                     label={`Data de Criação:`}
-                                                    icon={false}
+                                                    icon={``}
                                                     />
                                             </div>
                                         </div>
