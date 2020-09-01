@@ -112,6 +112,7 @@ function ChatCard(props){
                                         </div>
                                         <img className="direct-chat-img" src={imgUser} alt="iesb"/>
                                         <div className="direct-chat-text">
+                                            {row.privado ? 'Mensagem interna: ' : ''}
                                             {row.mensagem}
                                             <br/>
                                             <br/>
