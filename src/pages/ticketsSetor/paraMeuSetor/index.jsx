@@ -25,7 +25,7 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarTicketsSetor("&where[aberto]=1")
+        this.props.buscarTicketsSetor("&where[aberto]=1&where[usuario_atendente]=")
     }
 
     onSubmit = values => {
@@ -41,7 +41,7 @@ class Index extends Component{
                 break;
 
             case 'aberto':
-                $where += "&where[aberto]=1"
+                $where += "&where[aberto]=1&where[usuario_atendente]="
                 break;
         }
 
@@ -118,6 +118,10 @@ class Index extends Component{
                             </Link>
             }   
         ];
+
+        const initialValues = {
+            status: 'aberto'
+        }
         
         return(
             <section className="content">
@@ -130,6 +134,7 @@ class Index extends Component{
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
+                                initialValues={initialValues}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
                                         <div className="row justify-content-center">

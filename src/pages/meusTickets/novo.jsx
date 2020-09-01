@@ -129,7 +129,10 @@ class Novo extends Component{
                 <LoadingBody status={loading} />
                 <MenuHeader title={`Abrir um Novo Ticket`} history={this.props.location.pathname} />
                 <div className="content-fluid">
-                    <div className="card">
+                    <div className="card card-danger">
+                        <div className="card-header">
+                            <h3 className="card-title">Novo ticket</h3>
+                        </div>
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}

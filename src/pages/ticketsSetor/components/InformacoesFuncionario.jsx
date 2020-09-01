@@ -5,16 +5,20 @@ import { Link } from 'react-router-dom';
 
 function InformacoesFuncionario(props){
 
-    const { data } = props
+    const { data, onVoltar, onResponder, onFechar, loading } = props
 
     const onClickVoltar = () => {
-        props.onVoltar()
+        onVoltar()
+    }; 
+
+    const onClickResponder = () => {
+        onResponder()
     }; 
 
     const onClickFechar = () => {
-        props.onFechar()
+        onFechar()
     }; 
- 
+
     return(
         <div className="card card-danger">
             <div className="card-header">
@@ -59,20 +63,34 @@ function InformacoesFuncionario(props){
             </div>
             <div className="card-footer card-default text-center">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <button
                             className={`btn btn-dark col-md-6`}
                             onClick={() => onClickVoltar()}>
                                 <i className={`fa fa-arrow-left`}></i> Voltar
                         </button>
                     </div>
-                    <div className="col-md-6">
-                        <button
-                            className={`btn btn-success col-md-6`}
-                            onClick={() => onClickFechar()}>
-                                <i className={`fa fa-check`}></i> Fechar
-                        </button>
-                    </div>
+                    { onResponder ? 
+                        <div className="col-md-4">
+                            <button
+                                className={`btn btn-primary col-md-6`}
+                                onClick={() => onClickResponder()}
+                                disabled={loading}>
+                                    <i className={`fa fa-comment`}></i> Responder
+                            </button>
+                        </div>
+                    : ''}
+
+                    { onFechar ? 
+                        <div className="col-md-4">
+                            <button
+                                className={`btn btn-success col-md-6`}
+                                onClick={() => onClickFechar()}
+                                disabled={loading}>
+                                    <i className={`fa fa-check`}></i> Fechar
+                            </button>
+                        </div>
+                    : ''}
                 </div>
             </div>
         </div>  

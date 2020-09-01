@@ -24,7 +24,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { encaminharTicket, fecharTicket } from  './actions';
+import { encaminharTicket, fecharTicket, responderTicket } from  './actions';
 
 import { salvarInteracao, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
 
@@ -51,7 +51,6 @@ class Visualizar extends Component{
     onSubmit = values => {
 
         values.acao = 'responder'
-        values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
 
         this.props.salvarInteracao(values)
@@ -60,10 +59,17 @@ class Visualizar extends Component{
 
     onSubmitEncaminhar = (values) => {
 
-        values.mensagem = 'Ticket encaminhado pelo ' + USER_LOGGED.usuario
-        values.encaminhar = 1
+        values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario
         this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
 
+    }
+
+    onResponder = () => {
+        const values = {}
+
+        values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario 
+
+        this.props.responderTicket(values, this.props.match.params.id)
     }
 
     onVoltar = () => {
@@ -76,7 +82,7 @@ class Visualizar extends Component{
     onFecharTicket = () => {
         const values = {}
 
-        values.fechar = 1
+        values.fechado = 1
         values.mensagem = 'Ticket fechado'
         values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
@@ -105,6 +111,8 @@ class Visualizar extends Component{
                         dataTicket.assunto = element.assunto
                         dataTicket.usuario_abertura = element.usuario_abertura
                         dataTicket.papel_usuario = element.papel_usuario
+                        dataTicket.fechado = element.fechado
+                        dataTicket.usuario_atendente = element.usuario_atendente
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
@@ -118,6 +126,8 @@ class Visualizar extends Component{
                     dataTicket.assunto = meuSetor.response.content.assunto
                     dataTicket.usuario_abertura = meuSetor.response.content.usuario_abertura
                     dataTicket.papel_usuario = meuSetor.response.content.papel_usuario
+                    dataTicket.fechado = meuSetor.response.content.fechado
+                    dataTicket.usuario_atendente = meuSetor.response.content.usuario_atendente
                     dataTicket.setor = meuSetor.response.content.setor
                     dataTicket.categoria = meuSetor.response.content.categoria
                     dataTicket.mensagem = meuSetor.response.content.mensagem
@@ -206,8 +216,10 @@ class Visualizar extends Component{
                                 dataTicket.papel_usuario == 1 ? 
                                     <InformacoesFuncionario 
                                         data={dataTicket}
-                                        onFechar={this.onFecharTicket}
+                                        loading={loading}
                                         onVoltar={this.onVoltar}
+                                        onFechar={dataTicket.fechado ? false : this.onFecharTicket}
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
                                     <InformacoesAluno 
@@ -222,7 +234,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    { dataTicket.status != 'fechado' ?
+                    { !dataTicket.fechado ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -283,15 +295,17 @@ class Visualizar extends Component{
                         ''
                     }
 
-                    <div className="col-md-12">
-                        <ChatCard
-                            dataComment={dataInteracao}
-                            titleChat={`Interações`}
-                            addComment={this.onSubmit}
-                            enableComment={dataTicket.status != 'fechado'}
-                            enableAnexo={true}
-                        />
-                    </div>
+                    {   dataTicket.usuario_atendente == USER_LOGGED.usuario ?
+                            <div className="col-md-12">
+                                <ChatCard
+                                    dataComment={dataInteracao}
+                                    titleChat={`Interações`}
+                                    addComment={this.onSubmit}
+                                    enableComment={!dataTicket.fechado}
+                                    enableAnexo={true}
+                                />
+                            </div>
+                    :   ''}
                 </div>
             </section>
         )
@@ -308,7 +322,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, encaminharTicket, fecharTicket, responderTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

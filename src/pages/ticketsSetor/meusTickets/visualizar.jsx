@@ -48,7 +48,6 @@ class Visualizar extends Component{
 
     onSubmit = values => {
 
-        values.acao = 'responder'
         values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
 
@@ -58,8 +57,7 @@ class Visualizar extends Component{
 
     onSubmitEncaminhar = (values) => {
 
-        values.mensagem = 'Seu ticket foi encaminhado'
-        values.encaminhar = 1
+        values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario
         this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
 
     }
@@ -73,7 +71,7 @@ class Visualizar extends Component{
     onFecharTicket = () => {
         const values = {}
 
-        values.fechar = 1
+        values.fechado = 1
         values.mensagem = 'Ticket fechado'
         values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)

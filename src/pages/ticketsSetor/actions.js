@@ -12,7 +12,7 @@ import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
  */
 export const buscarMeusTickets = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario_atendente]=' + USER_LOGGED.usuario + params;
 
     const headers = { Authorization: ''}
 

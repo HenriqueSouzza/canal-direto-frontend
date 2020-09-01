@@ -172,7 +172,7 @@ export const salvarNovoTicket = (params, router) => {
 
             router.push('/meus-tickets/abertos')
             toastr.success('Sucesso', 'Ticket salvo com sucesso')
-            dispatch(buscarMeusTickets(USER_LOGGED.usuario))
+            dispatch(buscarMeusTickets('&where[aberto]=1'))
             
         })
         .catch(error => {

@@ -36,7 +36,6 @@ class Visualizar extends Component{
 
     onSubmit = (values) => {
 
-        values.acao = 'responder'
         values.papel_usuario = 1
         values.id_ticket = this.props.match.params.id
 

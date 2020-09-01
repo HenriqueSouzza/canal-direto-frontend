@@ -119,6 +119,10 @@ class Index extends Component{
                             </Link>,
             }   
         ];
+
+        const initialValues = {
+            status: 'aberto'
+        } 
         
         return(
             <section className="content">
@@ -131,6 +135,7 @@ class Index extends Component{
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
+                                initialValues={initialValues}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
                                         <div className="row justify-content-center">

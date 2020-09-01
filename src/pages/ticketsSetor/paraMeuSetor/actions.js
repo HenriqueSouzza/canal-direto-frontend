@@ -112,3 +112,39 @@ export const fecharTicket = (params, idTicket, router) => {
     }
 
 }
+
+/**
+ * 
+ * @param {*} params 
+ * @param {*} idTicket 
+ * @param {*} router 
+ */
+export const responderTicket = (params, idTicket) => {
+
+    params.usuario_atendente = USER_LOGGED.usuario
+    params.papel_usuario = USER_LOGGED.papelUsuario.id
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers: headers })
+        .then(response => {
+
+            dispatch(buscarTicketsSetor("&where[aberto]=1"))
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            toastr.error('Erro', 'Não foi possível habilitar para responder esse ticket')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
