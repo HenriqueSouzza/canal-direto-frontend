@@ -38,7 +38,6 @@ class Cadastrar extends Component{
         values.permite_abertura = (values.permite_abertura_in ? "S" : "N");
         values.permite_interacao = (values.permite_interacao_in ? "S" : "N");
         values.permite_n_tickets = (values.permite_n_tickets_in ? "S" : "N");
-        values.usuario = 'marcos.barroso';
         
         //console.log(values);
 
@@ -48,32 +47,27 @@ class Cadastrar extends Component{
 
     render(){
 
-        const initialValues = {
-            setor: this.props.match.params.id
-
-        }
-
-        const {dadosSetor} = this.props.categoria
+        const { dadosSetor, loading } = this.props.categoria
 
         let data = [];
         
         if (dadosSetor.response){
-            
-            //console.log(dadosSetor.response.content);
-            let dados = dadosSetor.response.content
-
-            dados.map(row => {
+            dadosSetor.response.content.map(row => {
                 if(row.id == this.props.match.params.id){
                     data.push({id: row.id, name:row.descricao})
                 }
             });
         } 
 
+        const initialValues = {
+            setor: this.props.match.params.id
+        }
+
 
         return(
                 <>
                     <section className="content">
-                        <LoadingBody status={false} />
+                        <LoadingBody status={loading} />
                         <MenuHeader title={`Cadastrar Categoria`} history={this.props.location.pathname} />
                             <div className="content-fluid">
                                 <div className="card">
@@ -81,7 +75,8 @@ class Cadastrar extends Component{
                                     <Form
                                         onSubmit={this.onSubmit}
                                         initialValues={initialValues}
-                                        render={({handleSubmit,submitSucceeded,pristine}) => (<form onSubmit={handleSubmit}>
+                                        render={({handleSubmit, pristine}) => (
+                                            <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-6">
                                                         <Field 
@@ -116,31 +111,31 @@ class Cadastrar extends Component{
                                                         />
                                                     </div>                                                   
                                                     <div className="col-md-6">
-                                                            <Field 
-                                                                component={Checkbox} 
-                                                                type={`checkbox`}
-                                                                name={`permite_abertura_in`} 
-                                                                label={`Permite Abertura`}
-                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                            />
+                                                        <Field 
+                                                            component={Checkbox} 
+                                                            type={`checkbox`}
+                                                            name={`permite_abertura_in`} 
+                                                            label={`Permite Abertura`}
+                                                            // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                        />
                                                     </div>  
                                                     <div className="col-md-6">
-                                                            <Field 
-                                                                component={Checkbox} 
-                                                                type={`checkbox`}
-                                                                name={`permite_interacao_in`} 
-                                                                label={`Permite Interação`}
-                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                            />
+                                                        <Field 
+                                                            component={Checkbox} 
+                                                            type={`checkbox`}
+                                                            name={`permite_interacao_in`} 
+                                                            label={`Permite Interação`}
+                                                            // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                        />
                                                     </div> 
                                                     <div className="col-md-6">
-                                                            <Field 
-                                                                component={Checkbox} 
-                                                                type={`checkbox`}
-                                                                name={`permite_n_tickets_in`} 
-                                                                label={`Permite Abrir com Chamado Aberto`}
-                                                                // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                            />
+                                                        <Field 
+                                                            component={Checkbox} 
+                                                            type={`checkbox`}
+                                                            name={`permite_n_tickets_in`} 
+                                                            label={`Permite Abrir com Chamado Aberto`}
+                                                            // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                        />
                                                     </div>                                                                                                                                                             
                                                 </div>
                                                 <div className="row justify-content-center">
@@ -153,7 +148,7 @@ class Cadastrar extends Component{
                                                             color={`btn-success`}
                                                             icon={`fa fa-sign-in`} 
                                                             description={`Cadastrar`}
-                                                            disabled={pristine}
+                                                            disabled={pristine || loading}
                                                         />
                                                     </div>
                                                     <div className="col-md-3">

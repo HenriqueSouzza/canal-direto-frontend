@@ -10,6 +10,8 @@ import Input from './input';
 
 import Upload from './upload';
 
+import Select from './select';
+
 import imgLogo  from '../../template/images/logo.png';
 
 import imgUser  from '../../template/images/perfil.png';
@@ -18,7 +20,7 @@ import imgUser  from '../../template/images/perfil.png';
 
 function ChatCard(props){
 
-    const {dataComment, titleChat, enableComment, addComment, enableAnexo} = props
+    const {dataComment, titleChat, enableComment, enableTypeReposta, addComment, enableAnexo} = props
 
     const [archivesSeleted, setArchivesSeleted] = useState({
                                                                 file: [],
@@ -81,6 +83,15 @@ function ChatCard(props){
             errorMessage: archivesSeleted.errorMessage
         })
 
+    }
+
+    const dataPublic = [
+        {id: '1', name: 'Publico'},
+        {id: '2', name: 'Privado'}
+    ]
+
+    const initialValues = {
+        tipoResposta: '1'
     }
 
     return(
@@ -161,6 +172,7 @@ function ChatCard(props){
                     <div className="card-footer">
                         <Form
                             onSubmit={onSubmit}
+                            initialValues={initialValues}
                             render={({handleSubmit, submitting, pristine}) => (
                                 <form onSubmit={handleSubmit}>
                                     {
@@ -176,35 +188,52 @@ function ChatCard(props){
                                         : 
                                             ""   
                                     }
-                                    <div className="input-group">
-                                        <Field 
-                                            component={Input}
-                                            name="mensagem" 
-                                            validate={composeValidators(FORM_RULES.required)}>
-                                        </Field>
-                                        <span className="input-group-append m-0">
-                                            {
-                                                enableAnexo ? 
-
-                                                    <Upload 
-                                                        name={`arquivo`}
-                                                        type={`file`}
-                                                        onChange={onChangeFile}
-                                                        multiple
+                                    <div className="row justify-content-center">
+                                        <div className="input-group">
+                                            <div className={!enableTypeReposta ? `col-md-9` : `col-md-6`}>
+                                                <Field 
+                                                    component={Input}
+                                                    name="mensagem" 
+                                                    validate={composeValidators(FORM_RULES.required)}
                                                     />
+                                            </div>
+                                            {
+                                                enableTypeReposta ?
 
-                                                : 
-                                                    ""
+                                                    <div className="col-md-3">
+                                                        <Field 
+                                                            component={Select}
+                                                            data={dataPublic}
+                                                            name="tipoResposta" 
+                                                            />
+                                                    </div>
+                                                    
+                                                : ''
                                             }
-                                        </span>
-                                        <span className="input-group-append mb-2">
-                                            <button
-                                                type={`submit`}
-                                                className={`btn btn-primary`}
-                                                disabled={submitting || pristine || archivesSeleted.errorMessage.find(row => row ? true : false)}>
-                                                <i className={`fa fa-paper-plane`}></i> Enviar 
-                                            </button>
-                                        </span>
+                                            <div className="col-md-3">
+                                                <span className="input-group-append m-0">
+                                                    {
+                                                        enableAnexo ? 
+
+                                                            <Upload 
+                                                                name={`arquivo`}
+                                                                type={`file`}
+                                                                onChange={onChangeFile}
+                                                                multiple
+                                                            />
+
+                                                        : 
+                                                            ""
+                                                    }
+                                                    <button
+                                                        type={`submit`}
+                                                        className={`form-control btn btn-primary`}
+                                                        disabled={submitting || pristine || archivesSeleted.errorMessage.find(row => row ? true : false)}>
+                                                        <i className={`fa fa-paper-plane`}></i> Enviar 
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                     {
                                        archivesSeleted.errorMessage.length > 0 ?

@@ -100,6 +100,7 @@ class Visualizar extends Component{
                         dataTicket.assunto = element.assunto
                         dataTicket.usuario_abertura = element.usuario_abertura
                         dataTicket.papel_usuario = element.papel_usuario
+                        dataTicket.fechado = element.fechado
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
@@ -113,6 +114,7 @@ class Visualizar extends Component{
                     dataTicket.assunto = meusTickets.response.content.assunto
                     dataTicket.usuario_abertura = meusTickets.response.content.usuario_abertura
                     dataTicket.papel_usuario = meusTickets.response.content.papel_usuario
+                    dataTicket.fechado = meusTickets.response.content.fechado
                     dataTicket.setor = meusTickets.response.content.setor
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
@@ -277,13 +279,14 @@ class Visualizar extends Component{
                     : 
                         ''
                     }
-                    
+
                     <div className="col-md-12">
                         <ChatCard
                             dataComment={dataInteracao}
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
-                            enableComment={dataTicket.status != 'fechado'}
+                            enableComment={!dataTicket.fechado}
+                            enableTypeReposta={true}
                             enableAnexo={true}
                         />
                     </div>
