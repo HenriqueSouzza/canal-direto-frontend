@@ -49,7 +49,7 @@ function ChatCard(props){
                     form.resetFieldState('mensagem'),
                     setArchivesSeleted({file: [], errorMessage: []})
                 ), 
-            1500
+            1000
         );
     }
 

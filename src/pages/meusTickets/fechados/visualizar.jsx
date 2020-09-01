@@ -88,7 +88,7 @@ class Visualizar extends Component{
                         dataInteracao.push({
                             solicitante: USER_LOGGED.usuario  == element.usuario_interacao ? 1 : 0,
                             usuario_interacao: element.usuario_interacao,
-                            mensagem: element.encaminhar ? 'Em análise' : element.mensagem,
+                            mensagem: element.mensagem,
                             arquivo: element.arquivo,
                             dt_criacao: moment(element.dt_criacao).calendar(),
                         })
@@ -99,7 +99,7 @@ class Visualizar extends Component{
                     dataInteracao.push({
                         solicitante: USER_LOGGED.usuario == interacoesTickets.response.content.usuario_interacao ? 1 : 0,
                         usuario_interacao: interacoesTickets.response.content.usuario_interacao,
-                        mensagem: interacoesTickets.response.content.encaminhar ? 'Em análise' : interacoesTickets.response.content.mensagem,
+                        mensagem: interacoesTickets.response.content.mensagem,
                         arquivo: interacoesTickets.response.content.arquivo,
                         dt_criacao: moment(interacoesTickets.response.content.dt_criacao).calendar()
                     })

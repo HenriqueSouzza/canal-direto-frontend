@@ -190,9 +190,16 @@ export const salvarInteracao = (params) => {
 
     params.usuario_interacao = USER_LOGGED.usuario
 
+    if(params.tipoResposta == 'privado'){
+        params.privado = 1
+    }else{
+        params.publico = 1
+    }
+
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
 
     const headers = { Authorization: ''}
+
 
     return dispatch => {
 
