@@ -95,7 +95,7 @@ function ChatCard(props){
     }
 
     return(
-        <div className="card card-danger direct-chat direct-chat-danger">
+        <div className="card card-danger direct-chat direct-chat-secondary">
             <div className="card-header">
                 <h3 className="card-title">{titleChat}</h3>
             </div>
