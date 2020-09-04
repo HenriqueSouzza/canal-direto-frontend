@@ -10,15 +10,30 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
+import { buscarFormularios } from '../formularios/actions';
+
 class Index extends Component{
+
+    componentDidMount(){
+        this.props.buscarFormularios()
+    }
 
     render(){
 
-        const loading = false
+        const { loading, formularios} = this.props.configuracaoTicket
 
-        const dataFormularios = [
-            {id: '1', nome: '', descricao: ''}
-        ]
+        const dataFormularios = []
+
+        if(formularios.response){
+            formularios.response.content.map(row => {
+                dataFormularios.push({
+                    id: row.id,
+                    nome: row.nome,
+                    descricao: row.descricao,
+                    link: '/configuracao-ticket/formularios/' + row.id + '/visualizar'
+                })
+            })
+        }
 
         const columns = [
             {
@@ -39,7 +54,7 @@ class Index extends Component{
             {
                 name: 'Detalhe',
                 button: true,
-                cell: row => <Link to={`/configuracao-ticket/formularios/${row.id}/visualizar`} className={`nav-link text-info`}>
+                cell: row => <Link to={row.link} className={`nav-link text-info`}>
                                 <i className={`fa fa-eye`}></i>
                             </Link>,
             }   
@@ -73,12 +88,12 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ })
+const mapStateToProps = state => ({ configuracaoTicket: state.configuracaoTicket })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

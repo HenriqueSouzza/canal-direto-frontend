@@ -7,6 +7,9 @@ import { reducer as toastrReducer } from 'react-redux-toastr'; //redux do compon
 //Auth
 import AuthReducer from './pages/auth/reducer';
 
+//Configuração Ticket
+import ConfiguracaoTicketReducer from './pages/configuracaoTicket/reducer';
+
 //Meus Ticket
 import MeusTicketsReducer from './pages/meusTickets/reducer';
 
@@ -23,6 +26,7 @@ const rootReducer = combineReducers({
     toastr: toastrReducer,
     dashboard: () => ({ test: 1500 }),
     auth: AuthReducer,
+    configuracaoTicket: ConfiguracaoTicketReducer,
     ticketsSetor: TicketsSetorReducer,
     meusTickets: MeusTicketsReducer,
     setor: SetorReducer,

@@ -7,18 +7,12 @@ import type from  './types';
 import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
 
 
-
-/*****************************************************************************/
-/***************************** MEUS TICKETS **********************************/
-/*****************************************************************************/
-
-
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarMeusTickets = (params) => {
+export const buscarFormularios = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + params;
+    const endPoint = BASE_API + 'api/canal-direto/formularios' + params;
 
     const headers = { Authorization: ''}
 

@@ -16,8 +16,8 @@ function Router(){
     return(
         <Switch>
             <Route exact path='/configuracao-ticket/formularios' component={ props => <Formularios {...props} />} />
-            <Route exact path='/configuracao-ticket/formularios/novo' component={ props => <FormulariosVisualizar {...props} />} />
-            <Route exact path='/configuracao-ticket/formularios/:id/visualizar' component={ props => <FormulariosNovo {...props} />} />
+            <Route exact path='/configuracao-ticket/formularios/novo' component={ props => <FormulariosNovo {...props} />} />
+            <Route exact path='/configuracao-ticket/formularios/:id/visualizar' component={ props => <FormulariosVisualizar {...props} />} />
 
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>
