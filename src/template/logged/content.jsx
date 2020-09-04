@@ -6,6 +6,8 @@ import Dashboard from '../../pages/dashboard/router';
 
 import PaginaNaoEncontrada from '../../pages/errosPagina/paginaNaoEncontrada';
  
+import ConfiguracaoTicket from '../../pages/configuracaoTicket/router';
+
 import MeusTickets from '../../pages/meusTickets/router';
 
 import TicketsSetor from '../../pages/ticketsSetor/router';
@@ -22,6 +24,7 @@ function Content(){
         <div className="content-wrapper">
             <Switch>
                 <Route exact path='/' component={Dashboard} />
+                <Route path='/configuracao-ticket' component={ConfiguracaoTicket} />
                 <Route path='/meus-tickets' component={MeusTickets} />
                 <Route path='/tickets-setor' component={TicketsSetor} />
                 <Route path='/setor' component={Setor} />
