@@ -24,7 +24,9 @@ function Menu(){
                     <MenuLink description={`Meus tickets`} path={`/tickets-setor/meus-tickets`} icon={`fa fa-address-book`} active={``} />
                 </MenuTreeView>
                 <MenuTreeView description={`Configuração Ticket`} path={`#`} icon={`fa fa-cogs`} >
+                    <MenuLink description={`Status Ticket`} path={`/configuracao-ticket/status-ticket`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Formulários`} path={`/configuracao-ticket/formularios`} icon={`fa fa-list-ul`} active={``} />
+                    <MenuLink description={`Campos Formulários`} path={`/configuracao-ticket/campos-formularios`} icon={`fa fa-list-ul`} active={``} />
                 </MenuTreeView>
                 {/* <MenuTreeView description={`Gerenciar tickets`} path={`#`} icon={`fa fa-clone`} >
                     <MenuLink description={`Do meu setor`} path={`/tickets/meus-tickets`} icon={`fa fa-unlock`} active={``} />
