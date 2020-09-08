@@ -6,17 +6,25 @@ import { bindActionCreators } from 'redux';
 
 import { Link } from 'react-router-dom';
 
+import { Form, Field } from 'react-final-form';
+
 import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
 
+import Input from '../../../components/form/input';
+
+import { FORM_RULES, composeValidators } from '../../../helpers/validations';
+
 import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
 
 import { USER_LOGGED } from '../../../config/const';
 
 import moment from 'moment';
+import Button from '../../../components/form/button';
+
 
 
 class Visualizar extends Component{
@@ -36,15 +44,14 @@ class Visualizar extends Component{
 
     onSubmit = (values) => {
 
-        values.papel_usuario = 1
-        values.id_ticket = this.props.match.params.id
-
-        this.props.salvarInteracao(values)
-
+        values.status = 2
+        values.usuario_fechamento = null
+        values.dt_fechamento = null
+        this.props.salvarInteracao(values, this.props.match.params.id, this.props.history)
     }
 
     onVoltar = () => {
-        this.props.history.goBack()
+        this.props.history.push('/meus-tickets/abertos')
     }
 
     render(){
@@ -63,6 +70,7 @@ class Visualizar extends Component{
                         dataTicket.setor = element.setor
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
+                        dataTicket.status = element.status
                         dataTicket.created_at = element.created_at
                     }
                  })
@@ -74,6 +82,7 @@ class Visualizar extends Component{
                     dataTicket.setor = meusTickets.response.content.setor
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
+                    dataTicket.status = meusTickets.response.content.status
                     dataTicket.created_at = meusTickets.response.content.created_at
                 }
             }
@@ -106,6 +115,8 @@ class Visualizar extends Component{
                 }
             }
         }
+
+        console.log(dataTicket)
 
         return (
             <section className="content">
@@ -145,21 +156,67 @@ class Visualizar extends Component{
                                 </div>
                             </div>
                             <div className="card-footer">
-                                    <div className="col-md-12 text-center">
-                                        <button type="button" className="btn btn-dark col-md-3" onClick={() => this.onVoltar()}>
+                                <div className="row justify-content-center">
+                                    <div className="col-md-6 text-center">
+                                        <button type="button" className="btn btn-dark col-md-6" onClick={() => this.onVoltar()}>
                                             <i className="fa fa-arrow-left"></i> Voltar
                                         </button>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                { dataTicket.status == 'Resolvido' || dataTicket.status == 'Cancelado' ?
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="card card-danger">
+                                <div className="card-header">
+                                    <h3 className="card-title">Deseja reabrir chamado ?</h3>
+                                </div>
+                                <div className="card-body">
+                                <Form
+                                        onSubmit={this.onSubmit}
+                                        render={({handleSubmit}) => (
+                                            <form onSubmit={handleSubmit}>
+                                                <div className="row justify-content-center">
+                                                    <div className="col-md-8">
+                                                        <Field 
+                                                            component={Input} 
+                                                            type={`text`}
+                                                            name={`mensagem`} 
+                                                            label={`Motivo reabertura:`}
+                                                            icon={`fa fa-comment`}
+                                                            placeholder={`Digite o motivo da reabertura`}
+                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            />
+                                                    </div>
+                                                    <div className="col-md-4 text-center">
+                                                        <label>&nbsp;</label>
+                                                        <Field
+                                                            component={Button}
+                                                            description={`Reabrir`}
+                                                            type={`submit`}
+                                                            icon={`fa fa-edit`}
+                                                            color={`btn-success`}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                    )}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                :
+                    ''
+                }
                 <div className="row">
                     <div className="col-md-12">
                         <ChatCard
                             dataComment={dataInteracao}
                             titleChat={`Interações`}
-                            addComment={this.onSubmit}
+                            addComment={false}
                             enableComment={false}
                             enableAnexo={false}
                         />

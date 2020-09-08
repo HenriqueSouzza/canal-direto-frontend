@@ -49,10 +49,8 @@ class Visualizar extends Component{
     }
 
     onSubmit = values => {
-
-        values.id_ticket = this.props.match.params.id
-        this.props.salvarInteracao(values)
-        
+        values.status = 3
+        this.props.salvarInteracao(values, this.props.match.params.id)
     }
 
     onSubmitEncaminhar = (values) => {

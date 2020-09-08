@@ -12,7 +12,7 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
 
-import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
+import { salvarInteracao, buscarInteracoesTicket, fecharTicket} from  '../actions';
 
 import { USER_LOGGED } from '../../../config/const';
 
@@ -44,7 +44,18 @@ class Visualizar extends Component{
     }
 
     onVoltar = () => {
-        this.props.history.goBack()
+        this.props.history.push('/meus-tickets/abertos')
+    }
+
+    onFechar = () => {
+        const values = {}
+
+        values.status = 5
+        values.publico = 1
+        values.mensagem = 'Ticket fechado pelo solicitante'
+        values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
+
+        this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }
 
     render(){
@@ -64,6 +75,7 @@ class Visualizar extends Component{
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
                         dataTicket.arquivo = element.arquivo
+                        dataTicket.status = element.status
                         dataTicket.created_at = element.created_at
                     }
                  })
@@ -76,6 +88,7 @@ class Visualizar extends Component{
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
                     dataTicket.arquivo = meusTickets.response.content.arquivo
+                    dataTicket.status = meusTickets.response.content.status
                     dataTicket.created_at = meusTickets.response.content.created_at
                 }
             }
@@ -147,11 +160,23 @@ class Visualizar extends Component{
                                 </div>
                             </div>
                             <div className="card-footer">
-                                    <div className="col-md-12 text-center">
-                                        <button type="button" className="btn btn-dark col-md-3" onClick={() => this.onVoltar()}>
+                                <div className="row justify-content-center">
+                                    <div className="col-md-6 text-center">
+                                        <button type="button" className="btn btn-dark col-md-6" onClick={() => this.onVoltar()}>
                                             <i className="fa fa-arrow-left"></i> Voltar
                                         </button>
                                     </div>
+                                    { dataTicket.status != 'Resolvido' || dataTicket.status != 'Cancelado' ? 
+                                        <div className="col-md-6">
+                                            <button
+                                                className={`btn btn-success col-md-6`}
+                                                onClick={() => this.onFechar()}
+                                                disabled={loading}>
+                                                    <i className={`fa fa-check`}></i> Fechar
+                                            </button>
+                                        </div>
+                                    : ''}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -182,7 +207,7 @@ const mapStateToProps = state => ({ meusTickets: state.meusTickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, buscarInteracoesTicket, fecharTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

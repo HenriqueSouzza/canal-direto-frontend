@@ -6,8 +6,6 @@ import type from  '../types';
 
 import { TOKEN, BASE_API, USER_LOGGED } from '../../../config/const';
 
-import { buscarMeusTickets } from '../actions';
-
 
 /**
  * 
@@ -51,7 +49,7 @@ export const encaminharTicket = (params, idTicket, router) => {
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarTicketsSetor = (params) => {
+export const buscarTicketsSetor = (params = '') => {
 
     const setorUser = 1
 
@@ -137,9 +135,8 @@ export const responderTicket = (params, idTicket, router) => {
 
         axios.put(endPoint, params, { headers: headers })
         .then(response => {
-
-            dispatch(buscarMeusTickets("&where[usuario_atendente]=" + params.usuario_atendente))
-            router.push('/tickets-setor/meus-tickets/'+ idTicket +'/visualizar')
+            
+            dispatch(buscarTicketsSetor())
             
         })
         .catch(error => {

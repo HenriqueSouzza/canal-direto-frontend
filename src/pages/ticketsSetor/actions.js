@@ -197,9 +197,9 @@ export const encaminharTicket = (params, idTicket, router) => {
 }
 
 
-export const salvarInteracao = (params) => {
+export const salvarInteracao = (params, idTicket) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket';
+    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
     const headers = { 
         Authorization: '',
@@ -225,7 +225,8 @@ export const salvarInteracao = (params) => {
     formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
     formData.append('id_ticket', params.id_ticket)
     formData.append('mensagem', params.mensagem)
-    
+    formData.append('status', params.status)
+    formData.append('_method', 'put')
     
 
     return dispatch => {
@@ -235,9 +236,11 @@ export const salvarInteracao = (params) => {
         axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
+            dispatch({type: type.LOAD, payload: true})
+
             toastr.success('Sucesso', 'Adicionado interação com sucesso')
-            dispatch(buscarInteracoesTicket(params.id_ticket))
-            
+            dispatch(buscarInteracoesTicket(idTicket))
+
         })
         .catch(error => {
 
