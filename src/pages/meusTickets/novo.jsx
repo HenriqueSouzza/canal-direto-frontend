@@ -22,8 +22,7 @@ import MenuHeader from '../../components/menu/menuHeader';
 
 import textArea from '../../components/form/textArea';
 
-import { buscarSetor, buscarCategoria, salvarNovoTicket } from './actions';
-
+import { buscarStatusTicket, buscarSetor, buscarCategoria, salvarNovoTicket } from './actions';
 
 
 
@@ -39,14 +38,25 @@ class Novo extends Component{
         }
     }
 
-    //função que ao criar o component ele busca os setor que o usuario logado tem acesso
+    //Função que ao criar o component ele busca os setor que o usuario logado tem acesso
     componentDidMount(){
         this.props.buscarSetor()
+        this.props.buscarStatusTicket()
     }
 
     onSubmit = values => {
+        const { statusTicket } = this.props.meusTickets
+
+        let status = ''
+        if(statusTicket.response){
+            if(statusTicket.response.content.length > 0){
+                status = statusTicket.response.content.find(element => element.nome == 'Em aberto')
+                values.status = status.id
+            }
+        }
+
         values.arquivos = this.state.arquivo.file
-        
+
         this.props.salvarNovoTicket(values, this.props.history)
     }
 
@@ -239,7 +249,7 @@ const mapStateToProps = state => ({ meusTickets: state.meusTickets })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarSetor, buscarCategoria, salvarNovoTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarStatusTicket, buscarSetor, buscarCategoria, salvarNovoTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);
