@@ -6,6 +6,9 @@ import type from  '../types';
 
 import { TOKEN, BASE_API, USER_LOGGED } from '../../../config/const';
 
+import { buscarMeusTickets } from '../actions';
+
+
 /**
  * 
  * @param {*} params 
@@ -119,7 +122,7 @@ export const fecharTicket = (params, idTicket, router) => {
  * @param {*} idTicket 
  * @param {*} router 
  */
-export const responderTicket = (params, idTicket) => {
+export const responderTicket = (params, idTicket, router) => {
 
     params.usuario_atendente = USER_LOGGED.usuario
     params.papel_usuario = USER_LOGGED.papelUsuario.id
@@ -135,7 +138,8 @@ export const responderTicket = (params, idTicket) => {
         axios.put(endPoint, params, { headers: headers })
         .then(response => {
 
-            dispatch(buscarTicketsSetor("&where[aberto]=1"))
+            dispatch(buscarMeusTickets("&where[usuario_atendente]=" + params.usuario_atendente))
+            router.push('/tickets-setor/meus-tickets/'+ idTicket +'/visualizar')
             
         })
         .catch(error => {

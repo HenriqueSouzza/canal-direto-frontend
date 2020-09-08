@@ -20,29 +20,22 @@ import Button from '../../../components/form/button';
 
 import { buscarTicketsSetor } from './actions';
 
+import { buscarStatusTicket } from '../actions';
+
 import moment from 'moment';
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarTicketsSetor("&where[aberto]=1&where[usuario_atendente]=")
+        this.props.buscarTicketsSetor("&where[status]=1")
+        this.props.buscarStatusTicket()
     }
 
     onSubmit = values => {
         let $where = ''
 
-        switch (values.status) {
-            case 'fechado':
-                $where += "&where[fechado]=1"
-                break;
-
-            case 'pendente':
-                $where += "&where[pendente]=1"
-                break;
-
-            case 'aberto':
-                $where += "&where[aberto]=1&where[usuario_atendente]="
-                break;
+        if(values.status){
+            $where += "&where[status]=" + values.status
         }
 
         if(values.dt_ini && values.dt_fim){
@@ -54,13 +47,18 @@ class Index extends Component{
 
     render(){
 
-        const { loading, meuSetor } = this.props.ticketsSetor
+        const { loading, meuSetor, statusTicket } = this.props.ticketsSetor
 
-        const dataStatusTicket = [
-            {id: 'aberto', name: 'Aberto'},
-            // {id: 'pendente', name: 'Pendente'},
-            {id: 'fechado', name: 'Fechado'},
-        ];
+        const dataStatusTicket = [];
+
+        if(statusTicket.response){
+            statusTicket.response.content.map(row => {
+                dataStatusTicket.push({
+                   id: row.id,
+                   name: row.nome 
+                })
+            })
+        }
 
         const dataTicket = []
         
@@ -120,7 +118,7 @@ class Index extends Component{
         ];
 
         const initialValues = {
-            status: 'aberto'
+            status: '1'
         }
         
         return(
@@ -214,7 +212,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor, buscarStatusTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

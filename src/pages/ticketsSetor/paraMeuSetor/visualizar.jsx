@@ -59,6 +59,7 @@ class Visualizar extends Component{
 
         values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario
         values.publico = 1
+        values.status = 1
         this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
 
     }
@@ -68,8 +69,9 @@ class Visualizar extends Component{
 
         values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario 
         values.publico = 1
+        values.status = 2
 
-        this.props.responderTicket(values, this.props.match.params.id)
+        this.props.responderTicket(values, this.props.match.params.id, this.props.history)
     }
 
     onVoltar = () => {
@@ -82,7 +84,7 @@ class Visualizar extends Component{
     onFecharTicket = () => {
         const values = {}
 
-        values.fechado = 1
+        values.status = 4
         values.publico = 1
         values.mensagem = 'Ticket fechado'
         values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')

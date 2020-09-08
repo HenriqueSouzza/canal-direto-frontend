@@ -36,6 +36,35 @@ export const buscarMeusTickets = (params) => {
 
 }
 
+/**
+ * @param {*} params 
+ */
+export const buscarStatusTicket = (params = '') => {
+
+    const endPoint = BASE_API + 'api/canal-direto/status-ticket' + params;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_STATUS_TICKET, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
 
 /**
  * Buscar o setor do usuário que está logado

@@ -29,7 +29,7 @@ class Index extends Component{
                 dataStatusTicket.push({
                     id: row.id,
                     nome: row.nome,
-                    descricao: row.descricao,
+                    // descricao: row.descricao,
                     link: '/configuracao-ticket/status-ticket/' + row.id + '/visualizar'
                 })
             })
@@ -46,11 +46,11 @@ class Index extends Component{
                 selector: 'nome',
                 sortable: true,
             },
-            {
-                name: 'Descrição',
-                selector: 'descricao',
-                sortable: true,
-            },
+            // {
+            //     name: 'Descrição',
+            //     selector: 'descricao',
+            //     sortable: true,
+            // },
             {
                 name: 'Detalhe',
                 button: true,
