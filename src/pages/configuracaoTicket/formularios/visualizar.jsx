@@ -41,7 +41,7 @@ class Visualizar extends Component{
         if(values.camposForm_temp.indexOf(false) >= 0){
             values.camposForm_temp.splice(values.camposForm_temp.indexOf(false), 1)
         }
-
+        
         values.id_campos = Object.keys(values.camposForm_temp)
         
         console.log(values.id_campos, values.camposForm_temp)
