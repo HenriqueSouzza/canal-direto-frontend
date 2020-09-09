@@ -221,7 +221,7 @@ class Visualizar extends Component{
                                         data={dataTicket}
                                         loading={loading}
                                         onVoltar={this.onVoltar}
-                                        onFechar={dataTicket.fechado ? false : this.onFecharTicket}
+                                        onFechar={dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado' ? this.onFecharTicket : false}
                                         onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
@@ -237,7 +237,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    { !dataTicket.fechado ?
+                    { dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado' ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -304,7 +304,7 @@ class Visualizar extends Component{
                                     dataComment={dataInteracao}
                                     titleChat={`Interações`}
                                     addComment={this.onSubmit}
-                                    enableComment={!dataTicket.fechado}
+                                    enableComment={dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado'}
                                     enableTypeReposta={true}
                                     enableAnexo={true}
                                 />
