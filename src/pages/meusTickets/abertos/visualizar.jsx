@@ -6,11 +6,19 @@ import { bindActionCreators } from 'redux';
 
 import { Link } from 'react-router-dom';
 
+import { Form, Field } from 'react-final-form';
+
 import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import ChatCard from '../../../components/chat/chatCard';
+
+import Input from '../../../components/form/input';
+
+import Button from '../../../components/form/button';
+
+import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import { salvarInteracao, buscarInteracoesTicket, fecharTicket} from  '../actions';
 
@@ -47,12 +55,11 @@ class Visualizar extends Component{
         this.props.history.push('/meus-tickets/abertos')
     }
 
-    onFechar = () => {
-        const values = {}
+    onFechar = values => {
 
         values.status = 5
         values.publico = 1
-        values.mensagem = 'Ticket fechado pelo solicitante'
+        values.mensagem = 'Ticket fechado pelo solicitante: ' + values.mensagem_temp
         values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
 
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
@@ -166,21 +173,55 @@ class Visualizar extends Component{
                                             <i className="fa fa-arrow-left"></i> Voltar
                                         </button>
                                     </div>
-                                    { dataTicket.status != 'Resolvido' || dataTicket.status != 'Cancelado' ? 
-                                        <div className="col-md-6">
-                                            <button
-                                                className={`btn btn-success col-md-6`}
-                                                onClick={() => this.onFechar()}
-                                                disabled={loading}>
-                                                    <i className={`fa fa-check`}></i> Fechar
-                                            </button>
-                                        </div>
-                                    : ''}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                { dataTicket.status != 'Resolvido' || dataTicket.status != 'Cancelado' ? 
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="card card-danger">
+                                <div className="card-header">
+                                    <h3 className="card-title">Deseja fechar o Ticket ?</h3>
+                                </div>
+                                <div className="card-body">
+                                <Form
+                                        onSubmit={this.onFechar}
+                                        render={({handleSubmit}) => (
+                                            <form onSubmit={handleSubmit}>
+                                                <div className="row justify-content-center">
+                                                    <div className="col-md-8">
+                                                        <Field 
+                                                            component={Input} 
+                                                            type={`text`}
+                                                            name={`mensagem_temp`} 
+                                                            label={`Motivo para fechar:`}
+                                                            icon={`fa fa-comment`}
+                                                            placeholder={`Digite o motivo para fechar`}
+                                                            validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                            />
+                                                    </div>
+                                                    <div className="col-md-4 text-center">
+                                                        <label>&nbsp;</label>
+                                                        <Field
+                                                            component={Button}
+                                                            description={`Fechar`}
+                                                            type={`submit`}
+                                                            icon={`fa fa-check`}
+                                                            color={`btn-success`}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                    )}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                :
+                    ''
+                }
                 <div className="row">
                     <div className="col-md-12">
                         <ChatCard

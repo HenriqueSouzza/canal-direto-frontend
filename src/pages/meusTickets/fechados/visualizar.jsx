@@ -16,6 +16,8 @@ import ChatCard from '../../../components/chat/chatCard';
 
 import Input from '../../../components/form/input';
 
+import Button from '../../../components/form/button';
+
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
@@ -23,7 +25,7 @@ import { salvarInteracao, buscarInteracoesTicket} from  '../actions';
 import { USER_LOGGED } from '../../../config/const';
 
 import moment from 'moment';
-import Button from '../../../components/form/button';
+
 
 
 
@@ -47,6 +49,7 @@ class Visualizar extends Component{
         values.status = 2
         values.usuario_fechamento = null
         values.dt_fechamento = null
+        values.mensagem = 'Ticket reaberto pelo solicitante: ' + values.mensagem_temp
         this.props.salvarInteracao(values, this.props.match.params.id, this.props.history)
     }
 
@@ -116,8 +119,6 @@ class Visualizar extends Component{
             }
         }
 
-        console.log(dataTicket)
-
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -184,7 +185,7 @@ class Visualizar extends Component{
                                                         <Field 
                                                             component={Input} 
                                                             type={`text`}
-                                                            name={`mensagem`} 
+                                                            name={`mensagem_temp`} 
                                                             label={`Motivo reabertura:`}
                                                             icon={`fa fa-comment`}
                                                             placeholder={`Digite o motivo da reabertura`}
