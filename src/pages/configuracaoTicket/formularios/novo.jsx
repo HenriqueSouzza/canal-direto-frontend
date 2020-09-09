@@ -20,6 +20,8 @@ import Checkbox from '../../../components/form/checkbox';
 
 import { buscarCamposFormularios } from '../camposFormularios/actions';
 
+import { novoFormulario } from './actions';
+
 class Novo extends Component{
 
     componentDidMount(){
@@ -27,8 +29,12 @@ class Novo extends Component{
     }
 
     onSubmit = values => {
-        values.camposForm = Object.keys(values.camposForm_temp)
-        console.log(values)
+        values.id_campos = Object.keys(values.camposForm_temp)
+        this.props.novoFormulario(values, this.props.history)
+    }
+
+    onVoltar = () => {
+        this.props.history.goBack()
     }
 
     render(){
@@ -98,6 +104,16 @@ class Novo extends Component{
                                                     <div className="col-md-5">
                                                         <Field 
                                                             component={Button} 
+                                                            type={`button`}
+                                                            color={`btn-dark`}
+                                                            onClick={() => this.onVoltar()}
+                                                            icon={`fa fa-arrow-left`}
+                                                            description={`Voltar`}
+                                                            />
+                                                    </div>
+                                                    <div className="col-md-5">
+                                                        <Field 
+                                                            component={Button} 
                                                             type={`submit`}
                                                             color={`btn-success`}
                                                             icon={`fa fa-save`}
@@ -127,7 +143,7 @@ const mapStateToProps = state => ({ configuracaoTicket: state.configuracaoTicket
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios, novoFormulario }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);

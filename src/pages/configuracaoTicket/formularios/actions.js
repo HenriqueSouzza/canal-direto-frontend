@@ -35,3 +35,65 @@ export const buscarFormularios = (params = '') => {
     }
 
 }
+
+/**
+ * 
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const novoFormulario = (params, router) => {
+
+    const endPoint = BASE_API + 'api/canal-direto/formularios';
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.post(endPoint, params, { headers: headers })
+        .then(response => {
+
+            toastr.success('Sucesso', 'Formulário criado com sucesso')
+            router.goBack()
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+}
+
+/**
+ * 
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const alterarFormulario = (params, idFormulario) => {
+
+    const endPoint = BASE_API + 'api/canal-direto/formularios/' + idFormulario;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers: headers })
+        .then(response => {
+
+            toastr.success('Sucesso', 'Formulário alterado com sucesso')
+            dispatch(buscarFormularios())
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+}
