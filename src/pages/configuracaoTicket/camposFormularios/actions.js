@@ -67,3 +67,34 @@ export const novoCampoForm = (params, router) => {
         })
     }
 }
+
+/**
+ * 
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const alterarCampoForm = (params, idFormulario) => {
+
+    const endPoint = BASE_API + 'api/canal-direto/campos/' + idFormulario;
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers: headers })
+        .then(response => {
+
+            toastr.success('Sucesso', 'Campo alterado com sucesso')
+            dispatch(buscarCamposFormularios())
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+}

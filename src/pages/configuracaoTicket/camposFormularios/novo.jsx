@@ -21,7 +21,6 @@ import Select from '../../../components/form/select';
 import Checkbox from '../../../components/form/checkbox';
 
 import { novoCampoForm } from './actions';
-import { data } from 'jquery';
 
 class Novo extends Component{
 
