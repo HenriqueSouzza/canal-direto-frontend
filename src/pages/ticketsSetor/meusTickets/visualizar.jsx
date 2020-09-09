@@ -104,6 +104,7 @@ class Visualizar extends Component{
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
                         dataTicket.arquivo = element.arquivo
+                        dataTicket.status = element.status
                         dataTicket.created_at = element.created_at
                     }
                  })
@@ -118,6 +119,7 @@ class Visualizar extends Component{
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
                     dataTicket.arquivo = meusTickets.response.content.arquivo
+                    dataTicket.status = meusTickets.response.content.status
                     dataTicket.created_at = meusTickets.response.content.created_at
                 }
             }
@@ -204,7 +206,7 @@ class Visualizar extends Component{
                                 dataTicket.papel_usuario == 1 ? 
                                     <InformacoesFuncionario 
                                         data={dataTicket}
-                                        onFechar={this.onFecharTicket}
+                                        onFechar={dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado' ? this.onFecharTicket : false}
                                         onVoltar={this.onVoltar}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
@@ -219,8 +221,7 @@ class Visualizar extends Component{
                             }
                         </div>
                     </div>
-                    
-                    { dataTicket.status != 'fechado' ?
+                    { dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado' ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -281,12 +282,13 @@ class Visualizar extends Component{
                         ''
                     }
 
+                    
                     <div className="col-md-12">
                         <ChatCard
                             dataComment={dataInteracao}
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
-                            enableComment={!dataTicket.fechado}
+                            enableComment={dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado'}
                             enableTypeReposta={true}
                             enableAnexo={true}
                         />

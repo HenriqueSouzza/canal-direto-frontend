@@ -62,10 +62,10 @@ function InformacoesFuncionario(props){
                 </div>
             </div>
             <div className="card-footer card-default text-center">
-                <div className="row">
+                <div className="row justify-content-center">
                     <div className="col-md-4">
                         <button
-                            className={`btn btn-dark col-md-6`}
+                            className={`btn btn-dark col-md-8`}
                             onClick={() => onClickVoltar()}>
                                 <i className={`fa fa-arrow-left`}></i> Voltar
                         </button>
@@ -73,7 +73,7 @@ function InformacoesFuncionario(props){
                     { onResponder ? 
                         <div className="col-md-4">
                             <button
-                                className={`btn btn-primary col-md-6`}
+                                className={`btn btn-primary col-md-8`}
                                 onClick={() => onClickResponder()}
                                 disabled={loading}>
                                     <i className={`fa fa-comment`}></i> Responder
@@ -84,7 +84,7 @@ function InformacoesFuncionario(props){
                     { onFechar ? 
                         <div className="col-md-4">
                             <button
-                                className={`btn btn-success col-md-6`}
+                                className={`btn btn-success col-md-8`}
                                 onClick={() => onClickFechar()}
                                 disabled={loading}>
                                     <i className={`fa fa-check`}></i> Fechar
