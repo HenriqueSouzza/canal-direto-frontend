@@ -18,17 +18,22 @@ import Button from '../../../components/form/button';
 
 import Checkbox from '../../../components/form/checkbox';
 
+import { buscarCamposFormularios } from '../camposFormularios/actions';
+
 class Novo extends Component{
 
+    componentDidMount(){
+        this.props.buscarCamposFormularios()
+    }
+
     onSubmit = values => {
+        values.camposForm = Object.keys(values.camposForm_temp)
         console.log(values)
     }
 
     render(){
 
-        const { loading } = this.props.configuracaoTicket
-
-        console.log();
+        const { loading, camposFormularios } = this.props.configuracaoTicket
 
         return(
             <section className="content">
@@ -70,34 +75,41 @@ class Novo extends Component{
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card card-danger">
-                                    <div className="card-header">
-                                        <h3 className="card-title">Informe os campos que terão no formulário</h3>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <Field 
-                                                    component={Checkbox} 
-                                                    name={`assunto`} 
-                                                    label={`Assunto:`}
-                                                    validate={composeValidators(FORM_RULES.required)}
-                                                    />
+                                {
+                                    camposFormularios.response ?
+                                        <div className="card card-danger">
+                                            <div className="card-header">
+                                                <h3 className="card-title">Informe os campos que terão no formulário</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <div className="row">
+                                                    {camposFormularios.response.content.map(row => (
+                                                        <div className="col-md-6">
+                                                            <Field 
+                                                                component={Checkbox} 
+                                                                type={`checkbox`}
+                                                                name={`camposForm_temp[${row.id}]`} 
+                                                                label={row.label}
+                                                                />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <div className="row justify-content-center">
+                                                    <div className="col-md-5">
+                                                        <Field 
+                                                            component={Button} 
+                                                            type={`submit`}
+                                                            color={`btn-success`}
+                                                            icon={`fa fa-save`}
+                                                            description={`Salvar`}
+                                                            />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-5">
-                                                <Field 
-                                                    component={Button} 
-                                                    type={`submit`}
-                                                    color={`btn-success`}
-                                                    icon={`fa fa-save`}
-                                                    description={`Salvar`}
-                                                    />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    :
+                                        ''
+                                }
                             </form>
                     )}/>
                 </div>
@@ -115,7 +127,7 @@ const mapStateToProps = state => ({ configuracaoTicket: state.configuracaoTicket
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);

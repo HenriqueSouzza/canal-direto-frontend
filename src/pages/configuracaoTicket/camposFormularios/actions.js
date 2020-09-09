@@ -35,3 +35,35 @@ export const buscarCamposFormularios = (params = '') => {
     }
 
 }
+
+/**
+ * 
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const novoCampoForm = (params, router) => {
+
+    const endPoint = BASE_API + 'api/canal-direto/campos';
+
+    const headers = { Authorization: ''}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.post(endPoint, params, { headers: headers })
+        .then(response => {
+
+            toastr.success('Sucesso', 'Status criado com sucesso')
+            dispatch(buscarCamposFormularios())
+            router.goBack()
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+}

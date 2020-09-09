@@ -10,12 +10,12 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { buscarStatusTicket } from '../statusTicket/actions';
+import { buscarCamposFormularios } from '../camposFormularios/actions';
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarStatusTicket()
+        this.props.buscarCamposFormularios()
     }
 
     render(){
@@ -28,7 +28,7 @@ class Index extends Component{
             camposFormularios.response.content.map(row => {
                 dataCamposFormularios.push({
                     id: row.id,
-                    nome: row.nome,
+                    nome: row.label,
                     descricao: row.descricao,
                     link: '/configuracao-ticket/campos-formularios/' + row.id + '/visualizar'
                 })
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({ configuracaoTicket: state.configuracaoTicket
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarStatusTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);
