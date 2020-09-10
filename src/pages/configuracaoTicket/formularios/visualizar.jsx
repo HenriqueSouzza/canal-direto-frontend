@@ -38,20 +38,17 @@ class Visualizar extends Component{
 
     onSubmit = values => {
 
-        if(values.camposForm_temp.indexOf(false) >= 0){
-            values.camposForm_temp.splice(values.camposForm_temp.indexOf(false), 1)
-        }
-        
-        values.id_campos = Object.keys(values.camposForm_temp)
-        
-        console.log(values.id_campos, values.camposForm_temp)
-        
-        // if(values.id_campos.indexOf(false)){
-        //     values.id_campos.splice(values.id_campos.indexOf(false), 1)
-        // }
+        const id_campos = []
 
-        // console.log(values.id_campos)
-        // this.props.alterarFormulario(values, this.props.match.params.id)
+        values.camposForm_temp.map( (row,index) => {
+            if(row){
+                id_campos.push(index)
+            }
+        })
+
+        values.id_campos = id_campos
+
+        this.props.alterarFormulario(values, this.props.match.params.id)
     }
 
     onVoltar = () => {
