@@ -37,7 +37,6 @@ class Visualizar extends Component{
         if(this.props.meusTickets.meusTickets.length <= 0){
             this.props.history.goBack()
         }
-
     }
 
     componentDidMount(){
@@ -45,8 +44,7 @@ class Visualizar extends Component{
     }
 
     onSubmit = (values) => {
-
-        values.status = 2
+        values.status = values.usuario_atendente ? 2 : 1
         values.usuario_fechamento = null
         values.dt_fechamento = null
         values.mensagem = 'Ticket reaberto pelo solicitante: ' + values.mensagem_temp
@@ -74,6 +72,7 @@ class Visualizar extends Component{
                         dataTicket.categoria = element.categoria
                         dataTicket.mensagem = element.mensagem
                         dataTicket.status = element.status
+                        dataTicket.usuario_atendente = element.usuario_atendente
                         dataTicket.created_at = element.created_at
                     }
                  })
@@ -86,6 +85,7 @@ class Visualizar extends Component{
                     dataTicket.categoria = meusTickets.response.content.categoria
                     dataTicket.mensagem = meusTickets.response.content.mensagem
                     dataTicket.status = meusTickets.response.content.status
+                    dataTicket.usuario_atendente = meusTickets.response.content.usuario_atendente
                     dataTicket.created_at = meusTickets.response.content.created_at
                 }
             }
@@ -118,6 +118,8 @@ class Visualizar extends Component{
                 }
             }
         }
+
+        const initialValues = { usuario_atendente: dataTicket.usuario_atendente }
 
         return (
             <section className="content">
@@ -178,10 +180,16 @@ class Visualizar extends Component{
                                 <div className="card-body">
                                 <Form
                                         onSubmit={this.onSubmit}
+                                        initialValues={initialValues}
                                         render={({handleSubmit}) => (
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row justify-content-center">
                                                     <div className="col-md-8">
+                                                        <Field 
+                                                            component={`Input`} 
+                                                            type={`hidden`}
+                                                            name={`usuario_atendente`} 
+                                                            />
                                                         <Field 
                                                             component={Input} 
                                                             type={`text`}

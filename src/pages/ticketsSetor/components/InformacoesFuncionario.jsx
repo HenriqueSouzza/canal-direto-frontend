@@ -80,17 +80,6 @@ function InformacoesFuncionario(props){
                             </button>
                         </div>
                     : ''}
-
-                    { onFechar ? 
-                        <div className="col-md-4">
-                            <button
-                                className={`btn btn-success col-md-8`}
-                                onClick={() => onClickFechar()}
-                                disabled={loading}>
-                                    <i className={`fa fa-check`}></i> Fechar
-                            </button>
-                        </div>
-                    : ''}
                 </div>
             </div>
         </div>  

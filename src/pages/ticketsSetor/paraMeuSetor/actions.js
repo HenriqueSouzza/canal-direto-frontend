@@ -51,9 +51,9 @@ export const encaminharTicket = (params, idTicket, router) => {
  */
 export const buscarTicketsSetor = (params = '') => {
 
-    const setorUser = 1
+    const setorUser = '1,2'
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[setor]=' + setorUser + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket?whereIn[setor]=' + setorUser + params;
 
     const headers = { Authorization: ''}
 

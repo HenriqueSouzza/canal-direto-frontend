@@ -8,6 +8,8 @@ import { Form, Field } from 'react-final-form';
 
 import  Select  from '../../../components/form/select';
 
+import  Input  from '../../../components/form/input';
+
 import  Button  from '../../../components/form/button';
 
 import { FORM_RULES } from '../../../helpers/validations';
@@ -206,7 +208,6 @@ class Visualizar extends Component{
                                 dataTicket.papel_usuario == 1 ? 
                                     <InformacoesFuncionario 
                                         data={dataTicket}
-                                        onFechar={dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado' ? this.onFecharTicket : false}
                                         onVoltar={this.onVoltar}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
@@ -221,6 +222,59 @@ class Visualizar extends Component{
                             }
                         </div>
                     </div>
+
+                    { dataTicket.status == 'Resolvido' || dataTicket.status == 'Cancelado' ?
+                        <div className="col-md-12">
+                            <div className="content-fluid">
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h5 className="card-title">Deseja fechar o chamado ?</h5>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div className="col-md-12">
+                                                    <Form
+                                                        onSubmit={this.onFecharTicket}
+                                                        render={({handleSubmit, submitSucceeded, pristine}) => (
+                                                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
+                                                                <div className="row">
+                                                                    <div className="col-md-6">
+                                                                        <Field 
+                                                                            component={Input} 
+                                                                            name={`setor`} 
+                                                                            data={dataSetor}
+                                                                            label={`Setor:`}
+                                                                            validate={''}
+                                                                        />
+
+                                                                    </div> 
+                                                                </div> 
+                                                                <div className="row justify-content-center">
+                                                                    <div className="col-md-4">
+                                                                        <Button
+                                                                            type={`submit`}
+                                                                            className={`col-md-10`}
+                                                                            color={`btn-success col-md-10`}
+                                                                            disabled={submitSucceeded || pristine}
+                                                                            icon={`fa fa-check`}
+                                                                            description={`Fechar`}
+                                                                            />
+                                                                    </div>
+                                                                </div>                                                 
+                                                            </form>
+                                                    )}/>                                                                          
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    : 
+                        ''
+                    }
+
                     { dataTicket.status != 'Resolvido' && dataTicket.status != 'Cancelado' ?
                         <div className="col-md-12">
                             <div className="content-fluid">

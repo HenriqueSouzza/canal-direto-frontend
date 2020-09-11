@@ -51,7 +51,7 @@ class Novo extends Component{
         const dataName = [
             { id: 'setor', name: 'Setor' },
             { id: 'categoria', name: 'Categoria' },
-            { id: 'assunto', name: 'assunto' },
+            { id: 'assunto', name: 'Assunto' },
             { id: 'mensagem', name: 'Mensagem' },
             { id: 'arquivo', name: 'Arquivo' },
         ]

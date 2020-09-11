@@ -12,9 +12,13 @@ function Input(props){
             <div className="input-group">
                 <input type={type} {...props.input} {...props} value={props.input.value} disabled={disabled} className={`form-control ${touched && error && "is-invalid"}`} placeholder={placeholder} />
                 <div className="input-group-append">
-                    <div className="input-group-text">
-                        <i className={icon}></i>
-                    </div>
+                    { icon ? 
+                        <div className="input-group-text">
+                            <i className={icon}></i>
+                        </div>
+                    : 
+                        ''
+                    }
                 </div>
                 <div className={`${touched && error && "invalid-feedback"}`}>
                     {touched && error && <span className="help-block">{error}</span>}
