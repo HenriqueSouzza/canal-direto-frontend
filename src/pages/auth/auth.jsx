@@ -28,8 +28,7 @@ import imgLogo  from '../../template/images/logo.png';
 class Auth extends Component {
 
     onSubmit = values => {
-        console.log(values)
-        // this.props.efetuarLogin(values, this.props.history)
+        this.props.efetuarLogin(values, this.props.history)
     }
 
     render() {
@@ -41,11 +40,11 @@ class Auth extends Component {
                     <LoadingBody status={loading} />
                     <div className="row login-body justify-content-center">
                         <div className="col-md-8 align-self-center">
-                            {/* <div className="logoMobile">
+                            <div className="logoMobile">
                                 <div className="text-center mb-4">
                                     <img src={imgLogo} style={{width: '50px'}} className="brand-image img-logo img-circle elevation-3" alt={`LogoImage`} />
                                 </div>
-                            </div> */}
+                            </div>
                             <h1>
                                 <p className="text-center">
                                     Acessar
@@ -81,7 +80,7 @@ class Auth extends Component {
                                             </div>
                                         </div>
                                         <div className="row justify-content-center">
-                                            <div className="col-md-10">
+                                            <div className="col-md-5">
                                                 <div className="form-group">
                                                     <Field 
                                                         component={Radio} 
@@ -89,6 +88,7 @@ class Auth extends Component {
                                                         name={`tipo`} 
                                                         label={`Aluno`}
                                                         value={`aluno`}
+                                                        validate={composeValidators(FORM_RULES.required)}
                                                         />
                                                     <Field 
                                                         component={Radio} 

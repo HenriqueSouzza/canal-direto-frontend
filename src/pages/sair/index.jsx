@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
+import { efetuarLogout } from '../auth/actions';
+
 
 class Sair extends Component{
 
     componentDidMount(){
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('user');
-        this.props.history.push('/');
-        this.props.history.go();
+        this.props.efetuarLogout(this.props.history)
     }
 
     render(){
@@ -23,7 +22,7 @@ class Sair extends Component{
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ efetuarLogout }, dispatch);
 
 
 export default connect(null, mapDispatchToProps )(Sair);
