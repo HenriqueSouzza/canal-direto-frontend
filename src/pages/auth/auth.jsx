@@ -12,7 +12,9 @@ import Button from '../../components/form/button';
 
 import LoadingBody from '../../components/loading/loadingBody';
 
-import { FORM_RULES, composeValidators, validateCpf } from '../../helpers/validations';
+import { FORM_RULES, composeValidators } from '../../helpers/validations';
+
+import Radio from '../../components/form/radio';
 
 import { efetuarLogin } from './actions';
 
@@ -22,14 +24,12 @@ import { Link } from 'react-router-dom';
 
 import imgLogo  from '../../template/images/logo.png';
 
+
 class Auth extends Component {
 
     onSubmit = values => {
-        this.props.efetuarLogin(values, this.props.history)
-    }
-
-    onCadastro = () => {
-        this.props.history.push('/cadastro')
+        console.log(values)
+        // this.props.efetuarLogin(values, this.props.history)
     }
 
     render() {
@@ -59,34 +59,56 @@ class Auth extends Component {
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
                                         <div className="row justify-content-center">
-                                            <div className="col-md-8">
+                                            <div className="col-md-10">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
-                                                    name={`cpf`} 
-                                                    label={`CPF:`}
+                                                    name={`login`} 
+                                                    label={`Login:`}
                                                     icon={`fa fa-user`}
-                                                    placeholder={`00000000000`}
-                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.max(11), FORM_RULES.number, validateCpf)}
+                                                    placeholder={`login`}
+                                                    validate={composeValidators(FORM_RULES.required)}
                                                     />
-                                            </div>
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-8">
                                                 <Field 
                                                     component={Input} 
                                                     type={`password`}
-                                                    name={`senha`} 
+                                                    name={`password`} 
                                                     label={`Senha:`}
                                                     icon={`fa fa-key`}
                                                     placeholder={`********`}
-                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.max(8))}
+                                                    validate={composeValidators(FORM_RULES.required)}
                                                     />
                                             </div>
                                         </div>
                                         <div className="row justify-content-center">
+                                            <div className="col-md-10">
+                                                <div className="form-group">
+                                                    <Field 
+                                                        component={Radio} 
+                                                        type={`radio`}
+                                                        name={`tipo`} 
+                                                        label={`Aluno`}
+                                                        value={`aluno`}
+                                                        />
+                                                    <Field 
+                                                        component={Radio} 
+                                                        type={`radio`}
+                                                        name={`tipo`} 
+                                                        label={`Docente`}
+                                                        value={`docente`}
+                                                        />
+                                                    <Field 
+                                                        component={Radio} 
+                                                        type={`radio`}
+                                                        name={`tipo`} 
+                                                        label={`Funcionário`}
+                                                        value={`funcionario`}
+                                                        />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row justify-content-center">
                                             <div className="col-md-8">
-                                                {/* <label>&nbsp;</label> */}
                                                 <Field
                                                     component={Button}
                                                     name={`sendAuth`}
@@ -97,24 +119,13 @@ class Auth extends Component {
                                                     />
                                             </div>
                                         </div>
-                                        <div className="row justify-content-center">
+                                        {/* <div className="row justify-content-center">
                                             <div className="col-md-8 text-center">
-                                                {/* <label>&nbsp;</label> */}
                                                 <Link to={`/esqueci-senha`}> 
                                                     Esqueci minha senha
                                                 </Link>
                                             </div>
-                                        </div>
-                                        <div className="row mt-3 justify-content-center">
-                                            <div className="col-md-8">
-                                                {/* <label>&nbsp;</label> */}
-                                                <button type={`button`} 
-                                                        className="btn btn-info col-md-12" 
-                                                        onClick={() => this.onCadastro()}>
-                                                    Quero me cadastrar
-                                                </button>
-                                            </div>
-                                        </div>
+                                        </div> */}
                                     </form>
                                 )}  
                             />
