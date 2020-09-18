@@ -201,7 +201,12 @@ class Novo extends Component{
                                                                 {this.state.arquivo.errorMessage.find(row => row ? row : false)}
                                                             </div>
                                                         :   
-                                                            ''
+                                                            <>
+                                                            <br/>
+                                                            <div className="text-danger">
+                                                                Favor enviar arquivos com as extensões JPEG, PNG, PDF, DOC, DOCX
+                                                            </div>
+                                                            </>
                                                     }
                                             </div>
                                         </div>
