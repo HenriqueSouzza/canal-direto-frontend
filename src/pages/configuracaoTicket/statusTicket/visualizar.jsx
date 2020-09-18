@@ -49,12 +49,14 @@ class Visualizar extends Component{
                     if(element.id == this.props.match.params.id){
                         initialValues.nome = element.nome
                         initialValues.descricao = element.descricao
+                        initialValues.ordem = element.ordem
                     }
                  })
             }else{
                 if(statusTicket.response.content.id  == this.props.match.params.id ){
                     initialValues.nome = statusTicket.response.content.nome
                     initialValues.descricao = statusTicket.response.content.descricao
+                    initialValues.ordem = statusTicket.response.content.ordem
                 }
             }
         }
@@ -93,6 +95,15 @@ class Visualizar extends Component{
                                                     icon={`fa fa-align-justify`}
                                                     placeholder={`Digite para o que será utilizado`}
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                    />
+                                                <Field 
+                                                    component={Input} 
+                                                    type={`number`}
+                                                    name={`ordem`} 
+                                                    label={`Ordem:`}
+                                                    icon={`fa fa-arrow-up`}
+                                                    placeholder={`Digite a ordem 1 ou 2 ou 3`}
+                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.number)}
                                                     />
                                             </div>
                                         </div>

@@ -53,6 +53,7 @@ export const novoStatusTicket = (params, router) => {
         .catch(error => {
 
             console.log(error.response)
+            toastr.error('Erro', 'Não foi possível criar esse status')
             dispatch({type: type.LOAD, payload: false})
 
         })
@@ -79,6 +80,7 @@ export const alterarStatusTicket = (params, id) => {
         .catch(error => {
 
             console.log(error.response)
+            toastr.error('Erro', 'Não foi possível alterar esse status')
             dispatch({type: type.LOAD, payload: false})
 
         })

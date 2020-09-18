@@ -27,7 +27,7 @@ class Index extends Component{
         if(statusTicket.response){
             statusTicket.response.content.map(row => {
                 dataStatusTicket.push({
-                    id: row.id,
+                    ordem: row.ordem,
                     nome: row.nome,
                     // descricao: row.descricao,
                     link: '/configuracao-ticket/status-ticket/' + row.id + '/visualizar'
@@ -37,8 +37,8 @@ class Index extends Component{
 
         const columns = [
             {
-                name: '#',
-                selector: 'id',
+                name: 'Ordem',
+                selector: 'ordem',
                 sortable: true,
             },
             {

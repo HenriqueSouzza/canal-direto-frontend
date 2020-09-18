@@ -170,7 +170,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
                 </div>
-                { dataTicket.status == 'Resolvido' || dataTicket.status == 'Cancelado' ?
+                { dataTicket.status.ordem == 4 || dataTicket.status.ordem == 5 ?
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-danger">

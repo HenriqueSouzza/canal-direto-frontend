@@ -67,6 +67,15 @@ class Novo extends Component{
                                                     placeholder={`Digite para o que será utilizado`}
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                     />
+                                                <Field 
+                                                    component={Input} 
+                                                    type={`number`}
+                                                    name={`ordem`} 
+                                                    label={`Ordem:`}
+                                                    icon={`fa fa-arrow-up`}
+                                                    placeholder={`Digite a ordem 1 ou 2 ou 3`}
+                                                    validate={composeValidators(FORM_RULES.required, FORM_RULES.number)}
+                                                    />
                                             </div>
                                         </div>
                                         <br/>
