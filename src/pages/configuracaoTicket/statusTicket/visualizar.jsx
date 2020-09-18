@@ -102,6 +102,7 @@ class Visualizar extends Component{
                                                     name={`ordem`} 
                                                     label={`Ordem:`}
                                                     icon={`fa fa-arrow-up`}
+                                                    disabled={true}
                                                     placeholder={`Digite a ordem 1 ou 2 ou 3`}
                                                     validate={composeValidators(FORM_RULES.required, FORM_RULES.number)}
                                                     />
