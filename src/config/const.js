@@ -10,7 +10,7 @@ export const BASE_API = (
 );
 
 export const USER_LOGGED = {
-    usuario: 'henrique.souza',
+    usuario: 'hnrique.souza',
     // usuario: 'marcos.barros',
     papelUsuario: {
                     id: '1',

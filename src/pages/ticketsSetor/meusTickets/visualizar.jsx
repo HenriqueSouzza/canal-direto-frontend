@@ -26,7 +26,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
+import { buscarMeusTickets, salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
 
 import moment from 'moment';
 
@@ -35,17 +35,18 @@ import { USER_LOGGED } from '../../../config/const';
 
 class Visualizar extends Component{
 
-    constructor(props){
-        super(props)
-
-        if(this.props.ticketsSetor.meusTickets.length <= 0){
-            this.props.history.goBack()
-        }
+    componentDidMount(){
+        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
+        this.props.buscarSetor()
+        // this.props.buscarInteracoesTicket(this.props.match.params.id)
     }
 
-    componentDidMount(){
-        this.props.buscarInteracoesTicket(this.props.match.params.id)
-        this.props.buscarSetor()
+    componentDidUpdate(){
+        if(!this.props.ticketsSetor.loading && this.props.ticketsSetor.meusTickets.response){
+            if(this.props.ticketsSetor.meusTickets.response.content.length < 1){
+                this.props.history.push('/tickets-setor/meus-tickets')
+            }
+        }
     }
 
     onSubmit = values => {
@@ -94,107 +95,61 @@ class Visualizar extends Component{
         const dataTicket = {}
 
         if(meusTickets.response){
-            if(Array.isArray(meusTickets.response.content)){
-                meusTickets.response.content.find(element => {
-                    if(element.id == this.props.match.params.id){
-                        dataTicket.id = element.id
-                        dataTicket.assunto = element.assunto
-                        dataTicket.usuario_abertura = element.usuario_abertura
-                        dataTicket.papel_usuario = element.papel_usuario
-                        dataTicket.fechado = element.fechado
-                        dataTicket.setor = element.setor
-                        dataTicket.categoria = element.categoria
-                        dataTicket.mensagem = element.mensagem
-                        dataTicket.arquivo = element.arquivo
-                        dataTicket.status = element.status
-                        dataTicket.created_at = element.created_at
-                    }
-                 })
-            }else{
-                if(meusTickets.response.content.id  == this.props.match.params.id ){
-                    dataTicket.id = meusTickets.response.content.id
-                    dataTicket.assunto = meusTickets.response.content.assunto
-                    dataTicket.usuario_abertura = meusTickets.response.content.usuario_abertura
-                    dataTicket.papel_usuario = meusTickets.response.content.papel_usuario
-                    dataTicket.fechado = meusTickets.response.content.fechado
-                    dataTicket.setor = meusTickets.response.content.setor
-                    dataTicket.categoria = meusTickets.response.content.categoria
-                    dataTicket.mensagem = meusTickets.response.content.mensagem
-                    dataTicket.arquivo = meusTickets.response.content.arquivo
-                    dataTicket.status = meusTickets.response.content.status
-                    dataTicket.created_at = meusTickets.response.content.created_at
+            meusTickets.response.content.find(element => {
+                if(element.id == this.props.match.params.id){
+                    dataTicket.id = element.id
+                    dataTicket.assunto = element.assunto
+                    dataTicket.usuario_abertura = element.usuario_abertura
+                    dataTicket.papel_usuario = element.papel_usuario
+                    dataTicket.setor = element.setor
+                    dataTicket.categoria = element.categoria
+                    dataTicket.mensagem = element.mensagem
+                    dataTicket.arquivo = element.arquivo
+                    dataTicket.status = element.status
+                    dataTicket.created_at = element.created_at
                 }
-            }
+            })
         }
 
         const dataInteracao = []
 
         if(interacoesTickets.response){
-            if(Array.isArray(interacoesTickets.response.content)){
-                interacoesTickets.response.content.find(element => {
-                    if(element.id_ticket == this.props.match.params.id){
-                        dataInteracao.push({
-                            solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0,
-                            usuario_interacao: element.usuario_interacao,
-                            mensagem: element.mensagem,
-                            arquivo: element.arquivo,
-                            dt_criacao: moment(element.dt_criacao).calendar(),
-                            privado: element.privado
-                        })
-                    }
-                 })
-            }else{
-                if(interacoesTickets.response.content.id_ticket  == this.props.match.params.id ){
+            interacoesTickets.response.content.find(element => {
+                if(element.id_ticket == this.props.match.params.id){
                     dataInteracao.push({
-                        solicitante: USER_LOGGED.usuario == interacoesTickets.response.content.usuario_interacao ? 1 : 0,
-                        usuario_interacao: interacoesTickets.response.content.usuario_interacao,
-                        mensagem: interacoesTickets.response.content.mensagem,
-                        arquivo: interacoesTickets.response.content.arquivo,
-                        dt_criacao: moment(interacoesTickets.response.content.dt_criacao).calendar(),
-                        privado: interacoesTickets.response.content.privado
+                        solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0,
+                        usuario_interacao: element.usuario_interacao,
+                        mensagem: element.mensagem,
+                        arquivo: element.arquivo,
+                        dt_criacao: moment(element.dt_criacao).calendar(),
+                        privado: element.privado
                     })
                 }
-            }
+            })
         }
 
         const dataSetor = []
 
         if(dadosSetor.response){
-            if(Array.isArray(dadosSetor.response.content)){
-                dadosSetor.response.content.map(row => {
-                    dataSetor.push({
-                        id: row.id,
-                        name: row.descricao,
-                    })
-                })
-            }else{
+            dadosSetor.response.content.map(row => {
                 dataSetor.push({
-                    id: dadosSetor.response.content.id,
-                    name: dadosSetor.response.content.descricao,
+                    id: row.id,
+                    name: row.descricao,
                 })
-            }
+            })
         }       
 
         const dataCategoria = []
  
         if(dadosCategoria.response){
-            if(Array.isArray(dadosCategoria.response.content)){
-                dadosCategoria.response.content.map(row => {
-                    if(row.descricao != dataTicket.categoria){
-                        dataCategoria.push({
-                            id: row.id,
-                            name: row.descricao,
-                        })
-                    }
-                })
-            }else{
-                if(dadosCategoria.response.content.descricao != dataTicket.categoria){
+            dadosCategoria.response.content.map(row => {
+                if(row.descricao != dataTicket.categoria){
                     dataCategoria.push({
-                        id: dadosCategoria.response.content.id,
-                        name: dadosCategoria.response.content.descricao,
+                        id: row.id,
+                        name: row.descricao,
                     })
                 }
-            }
+            })
         } 
 
         return (
@@ -223,7 +178,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    { dataTicket.status.ordem == 4 || dataTicket.status.ordem == 5 ?
+                    { dataTicket.status && (dataTicket.status.ordem == 4 || dataTicket.status.ordem == 5) ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -275,7 +230,7 @@ class Visualizar extends Component{
                         ''
                     }
 
-                    { dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
+                    { dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -342,7 +297,7 @@ class Visualizar extends Component{
                             dataComment={dataInteracao}
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
-                            enableComment={dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
+                            enableComment={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
                             enableTypeReposta={true}
                             enableAnexo={true}
                         />
@@ -363,7 +318,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets, salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

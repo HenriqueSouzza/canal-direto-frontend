@@ -24,7 +24,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { encaminharTicket, fecharTicket, responderTicket } from  './actions';
+import { buscarTicketsSetor, encaminharTicket, fecharTicket, responderTicket } from  './actions';
 
 import { salvarInteracao, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
 
@@ -35,17 +35,18 @@ import { USER_LOGGED } from '../../../config/const';
 
 class Visualizar extends Component{
 
-    constructor(props){
-        super(props)
-
-        if(this.props.ticketsSetor.meuSetor.length <= 0){
-            this.props.history.goBack()
-        }
+    componentDidMount(){
+        this.props.buscarTicketsSetor('&where[id]=' + this.props.match.params.id)
+        this.props.buscarSetor()
+        this.props.buscarInteracoesTicket(this.props.match.params.id)
     }
 
-    componentDidMount(){
-        this.props.buscarInteracoesTicket(this.props.match.params.id)
-        this.props.buscarSetor()
+    componentDidUpdate(){
+        if(!this.props.ticketsSetor.loading && this.props.ticketsSetor.meuSetor.response){
+            if(this.props.ticketsSetor.meuSetor.response.content.length < 1){
+                this.props.history.push('/tickets-setor/para-meu-setor')
+            }
+        }
     }
 
     onSubmit = values => {
@@ -105,107 +106,62 @@ class Visualizar extends Component{
         const dataTicket = {}
 
         if(meuSetor.response){
-            if(Array.isArray(meuSetor.response.content)){
-                meuSetor.response.content.find(element => {
-                    if(element.id == this.props.match.params.id){
-                        dataTicket.id = element.id
-                        dataTicket.assunto = element.assunto
-                        dataTicket.usuario_abertura = element.usuario_abertura
-                        dataTicket.papel_usuario = element.papel_usuario
-                        dataTicket.fechado = element.fechado
-                        dataTicket.usuario_atendente = element.usuario_atendente
-                        dataTicket.setor = element.setor
-                        dataTicket.categoria = element.categoria
-                        dataTicket.mensagem = element.mensagem
-                        dataTicket.arquivo = element.arquivo
-                        dataTicket.created_at = element.created_at
-                    }
-                 })
-            }else{
-                if(meuSetor.response.content.id  == this.props.match.params.id ){
-                    dataTicket.id = meuSetor.response.content.id
-                    dataTicket.assunto = meuSetor.response.content.assunto
-                    dataTicket.usuario_abertura = meuSetor.response.content.usuario_abertura
-                    dataTicket.papel_usuario = meuSetor.response.content.papel_usuario
-                    dataTicket.fechado = meuSetor.response.content.fechado
-                    dataTicket.usuario_atendente = meuSetor.response.content.usuario_atendente
-                    dataTicket.setor = meuSetor.response.content.setor
-                    dataTicket.categoria = meuSetor.response.content.categoria
-                    dataTicket.mensagem = meuSetor.response.content.mensagem
-                    dataTicket.arquivo = meuSetor.response.content.arquivo
-                    dataTicket.created_at = meuSetor.response.content.created_at
+            meuSetor.response.content.find(element => {
+                if(element.id == this.props.match.params.id){
+                    dataTicket.id = element.id
+                    dataTicket.assunto = element.assunto
+                    dataTicket.usuario_abertura = element.usuario_abertura
+                    dataTicket.papel_usuario = element.papel_usuario
+                    dataTicket.usuario_atendente = element.usuario_atendente
+                    dataTicket.setor = element.setor
+                    dataTicket.categoria = element.categoria
+                    dataTicket.mensagem = element.mensagem
+                    dataTicket.arquivo = element.arquivo
+                    dataTicket.status = element.status
+                    dataTicket.created_at = element.created_at
                 }
-            }
+            })
         }
 
         const dataInteracao = []
 
         if(interacoesTickets.response){
-            if(Array.isArray(interacoesTickets.response.content)){
-                interacoesTickets.response.content.find(element => {
-                    if(element.id_ticket == this.props.match.params.id){
-                        dataInteracao.push({
-                            solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0 ,
-                            usuario_interacao: element.usuario_interacao,
-                            mensagem: element.mensagem,
-                            arquivo: element.arquivo,
-                            dt_criacao: moment(element.dt_criacao).calendar(),
-                            privado: element.privado
-                        })
-                    }
-                 })
-            }else{
-                if(interacoesTickets.response.content.id_ticket  == this.props.match.params.id ){
+            interacoesTickets.response.content.find(element => {
+                if(element.id_ticket == this.props.match.params.id){
                     dataInteracao.push({
-                        solicitante: USER_LOGGED.usuario == interacoesTickets.response.content.usuario_interacao ? 1 : 0,
-                        usuario_interacao: interacoesTickets.response.content.usuario_interacao,
-                        mensagem: interacoesTickets.response.content.mensagem,
-                        arquivo: interacoesTickets.response.content.arquivo,
-                        dt_criacao: moment(interacoesTickets.response.content.dt_criacao).calendar(),
-                        privado: interacoesTickets.response.content.privado
+                        solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0 ,
+                        usuario_interacao: element.usuario_interacao,
+                        mensagem: element.mensagem,
+                        arquivo: element.arquivo,
+                        dt_criacao: moment(element.dt_criacao).calendar(),
+                        privado: element.privado
                     })
                 }
-            }
+            })
         }
 
         const dataSetor = []
 
         if(dadosSetor.response){
-            if(Array.isArray(dadosSetor.response.content)){
-                dadosSetor.response.content.map(row => {
-                    dataSetor.push({
-                        id: row.id,
-                        name: row.descricao,
-                    })
-                })
-            }else{
+            dadosSetor.response.content.map(row => {
                 dataSetor.push({
-                    id: dadosSetor.response.content.id,
-                    name: dadosSetor.response.content.descricao,
+                    id: row.id,
+                    name: row.descricao,
                 })
-            }
+            })
         }       
 
         const dataCategoria = []
  
         if(dadosCategoria.response){
-            if(Array.isArray(dadosCategoria.response.content)){
-                dadosCategoria.response.content.map(row => {
-                    if(row.descricao != dataTicket.categoria){
-                        dataCategoria.push({
-                            id: row.id,
-                            name: row.descricao,
-                        })
-                    }
-                })
-            }else{
-                if(dadosCategoria.response.content.descricao != dataTicket.categoria){
+            dadosCategoria.response.content.map(row => {
+                if(row.descricao != dataTicket.categoria){
                     dataCategoria.push({
-                        id: dadosCategoria.response.content.id,
-                        name: dadosCategoria.response.content.descricao,
+                        id: row.id,
+                        name: row.descricao,
                     })
                 }
-            }
+            })
         }
 
         return (
@@ -221,8 +177,8 @@ class Visualizar extends Component{
                                         data={dataTicket}
                                         loading={loading}
                                         onVoltar={this.onVoltar}
-                                        onFechar={dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ? this.onFecharTicket : false}
-                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
+                                        onFechar={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ? this.onFecharTicket : false}
+                                        onResponder={!dataTicket.usuario_atendente ? this.onResponder : false }
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
                                     <InformacoesAluno 
@@ -237,7 +193,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    { dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
+                    { dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -295,21 +251,22 @@ class Visualizar extends Component{
                             </div>
                         </div>    
                     : 
-                        ''
-                    }
+                        ''}
 
-                    {   dataTicket.usuario_atendente == USER_LOGGED.usuario ?
+                    {   
+                        dataTicket.usuario_atendente == USER_LOGGED.usuario ?
                             <div className="col-md-12">
                                 <ChatCard
                                     dataComment={dataInteracao}
                                     titleChat={`Interações`}
                                     addComment={this.onSubmit}
-                                    enableComment={dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
+                                    enableComment={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
                                     enableTypeReposta={true}
                                     enableAnexo={true}
                                 />
                             </div>
-                    :   ''}
+                    :   
+                        ''}
                 </div>
             </section>
         )
@@ -326,7 +283,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ salvarInteracao, encaminharTicket, fecharTicket, responderTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor, salvarInteracao, encaminharTicket, fecharTicket, responderTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

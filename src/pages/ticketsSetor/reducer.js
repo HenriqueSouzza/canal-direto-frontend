@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) => {
             
         //Caso para guardar os tickets do menu 'tickets do setor'
         case type.BUSCAR_TICKETS_SETOR:
-            return { ...state, meuSetor: action.payload.data || INITIAL_STATE.ticketsSetor, loading: false }   
+            return { ...state, meuSetor: action.payload.data || INITIAL_STATE.meuSetor, loading: false }   
 
         //
         case type.BUSCAR_MEU_SETOR:

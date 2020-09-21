@@ -20,7 +20,7 @@ export const encaminharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -42,7 +42,6 @@ export const encaminharTicket = (params, idTicket, router) => {
 
         })
     }
-
 }
 
 
@@ -55,7 +54,7 @@ export const buscarTicketsSetor = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket?whereIn[setor]=' + setorUser + params;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -89,7 +88,7 @@ export const fecharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -127,7 +126,7 @@ export const responderTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
