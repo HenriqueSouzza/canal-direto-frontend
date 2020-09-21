@@ -118,7 +118,7 @@ class Visualizar extends Component{
                     dataTicket.mensagem = element.mensagem
                     dataTicket.arquivo = element.arquivo
                     dataTicket.status = element.status
-                    dataTicket.created_at = element.created_at
+                    dataTicket.created_at = element.dt_criacao
                 }
             })
         }
@@ -178,7 +178,7 @@ class Visualizar extends Component{
                                         loading={loading}
                                         onVoltar={this.onVoltar}
                                         onFechar={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ? this.onFecharTicket : false}
-                                        onResponder={!dataTicket.usuario_atendente ? this.onResponder : false }
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
                                     <InformacoesAluno 

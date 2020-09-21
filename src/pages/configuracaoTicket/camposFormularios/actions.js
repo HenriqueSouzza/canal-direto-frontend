@@ -14,7 +14,7 @@ export const buscarCamposFormularios = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/campos' + params;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN }
 
     return dispatch => {
 
@@ -45,7 +45,7 @@ export const novoCampoForm = (params, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/campos';
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN }
 
     return dispatch => {
 
@@ -77,7 +77,7 @@ export const alterarCampoForm = (params, idFormulario) => {
 
     const endPoint = BASE_API + 'api/canal-direto/campos/' + idFormulario;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN }
 
     return dispatch => {
 

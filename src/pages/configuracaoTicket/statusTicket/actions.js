@@ -11,7 +11,7 @@ export const buscarStatusTicket = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/status-ticket' + params;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN }
 
     return dispatch => {
 
@@ -37,7 +37,7 @@ export const novoStatusTicket = (params, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/status-ticket';
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN }
 
     return dispatch => {
 
@@ -64,7 +64,7 @@ export const alterarStatusTicket = (params, id) => {
 
     const endPoint = BASE_API + 'api/canal-direto/status-ticket/' + id;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN }
 
     return dispatch => {
 

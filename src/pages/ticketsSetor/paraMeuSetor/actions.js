@@ -6,6 +6,8 @@ import type from  '../types';
 
 import { TOKEN, BASE_API, USER_LOGGED } from '../../../config/const';
 
+import { buscarInteracoesTicket } from '../actions';
+
 
 /**
  * 
@@ -135,7 +137,7 @@ export const responderTicket = (params, idTicket, router) => {
         axios.put(endPoint, params, { headers: headers })
         .then(response => {
             
-            dispatch(buscarTicketsSetor())
+            dispatch([buscarTicketsSetor('&where[id]=' + idTicket), buscarInteracoesTicket(idTicket)])
             
         })
         .catch(error => {

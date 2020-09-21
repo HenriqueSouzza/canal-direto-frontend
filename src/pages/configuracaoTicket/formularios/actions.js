@@ -14,7 +14,7 @@ export const buscarFormularios = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/formularios' + params;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -45,7 +45,7 @@ export const novoFormulario = (params, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/formularios';
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -76,7 +76,7 @@ export const alterarFormulario = (params, idFormulario) => {
 
     const endPoint = BASE_API + 'api/canal-direto/formularios/' + idFormulario;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 

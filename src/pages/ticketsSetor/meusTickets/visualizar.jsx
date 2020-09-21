@@ -38,7 +38,7 @@ class Visualizar extends Component{
     componentDidMount(){
         this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
         this.props.buscarSetor()
-        // this.props.buscarInteracoesTicket(this.props.match.params.id)
+        this.props.buscarInteracoesTicket(this.props.match.params.id)
     }
 
     componentDidUpdate(){
