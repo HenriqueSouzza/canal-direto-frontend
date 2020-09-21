@@ -171,7 +171,7 @@ class Recibo extends Component{
                         </div>
                         <div className="card-footer">
                             <div className="row justify-content-center">
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <Button
                                         type={`button`}
                                         description={`Visualizar tickets abertos`}
@@ -179,7 +179,7 @@ class Recibo extends Component{
                                         onClick={() => this.onVisualizarTicketAberto()}
                                     />
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <Button
                                         type={`button`}
                                         description={`Abrir novo ticket`}
