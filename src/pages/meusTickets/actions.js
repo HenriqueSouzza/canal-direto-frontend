@@ -20,7 +20,7 @@ export const buscarMeusTickets = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + params;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -48,7 +48,7 @@ export const buscarStatusTicket = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/status-ticket' + params;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -78,7 +78,7 @@ export const buscarSetor = () => {
 
     const endPoint = BASE_API + 'api/canal-direto/setor';
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -108,7 +108,7 @@ export const buscarCategoria = (idSetor) => {
 
     const endPoint = BASE_API + 'api/canal-direto/categoria?where[id_setor]=' + idSetor;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -139,7 +139,7 @@ export const buscarInteracoesTicket = (idTicket = '') => {
     
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
@@ -169,7 +169,7 @@ export const salvarNovoTicket = (params, router) => {
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 
     const headers = { 
-        Authorization: '',
+        Authorization: 'Bearer ' + TOKEN,
         'Content-Type': `multipart/form-data`
     }
 
@@ -190,7 +190,6 @@ export const salvarNovoTicket = (params, router) => {
     formData.append('mensagem', params.mensagem)
     formData.append('status', params.status)
 
-
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
@@ -198,7 +197,7 @@ export const salvarNovoTicket = (params, router) => {
         axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
-            router.push('/meus-tickets/abertos')
+            router.push('/meus-tickets/'+ response.data.response.content.id + '/recibo')
             toastr.success('Sucesso', 'Ticket salvo com sucesso')
             
         })
@@ -217,7 +216,7 @@ export const salvarInteracao = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     if(params.tipoResposta == 'privado'){
         params.privado = 1
@@ -265,7 +264,7 @@ export const fecharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: ''}
+    const headers = { Authorization: 'Bearer ' + TOKEN}
 
     return dispatch => {
 
