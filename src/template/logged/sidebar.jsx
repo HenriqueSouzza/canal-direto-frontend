@@ -12,8 +12,8 @@ import { USER_LOGGED } from '../../config/const';
  
 function Sidebar() {
     return (
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
-            <Link to={`#`} className="brand-link text-sm">
+        <aside className="main-sidebar sidebar-dark-light elevation-4">
+            <Link to={`#`} className="brand-link navbar-danger text-sm">
                 <img src={imgLogo} className="brand-image img-circle elevation-3" alt={`LogoImage`}/>
                 <span className="brand-text font-weight-light">Canal Direto</span>
             </Link>

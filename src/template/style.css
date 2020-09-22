@@ -49,3 +49,21 @@ table {
 .dz-progress{
 	display: none !important;
 }
+
+/*Customização no css do tema admin lte*/
+
+[class*=sidebar-dark-]{
+	background-color: #9e1724 !important;
+}
+
+[class*=sidebar-dark-] .sidebar a{
+	color: #fff !important;
+}
+
+[class*=sidebar-dark] .user-panel{
+	border-bottom: 1px solid #fff !important;
+}
+
+[class*=sidebar-dark] .brand-link{
+	border-bottom: '' !important;
+}
