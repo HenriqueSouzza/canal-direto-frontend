@@ -17,21 +17,19 @@ import axios from 'axios';
 class AuthOrApp extends Component{
     
     componentDidMount(){
-        const { dataLogged } = this.props.auth
-
-        if (dataLogged.access_token) {
-            this.props.validarLogin(dataLogged.access_token);
-        }
+        this.props.validarLogin();
     }
 
     render(){
 
         const { dataLogged, user } = this.props.auth
 
-        if (dataLogged.access_token && user.email) {
+        if(dataLogged.access_token){
+            axios.defaults.headers.common['Accept'] = 'application/json'
+            axios.defaults.headers.common['Authorization'] = `Bearer ${dataLogged.access_token}`
+        }
 
-            axios.defaults.headers.common['Accept'] = 'application/json';
-            axios.defaults.headers.common['Authorization'] = `Bearer ${dataLogged.access_token}`;
+        if (dataLogged.access_token && user.email) {
 
             return(
                 <div>
