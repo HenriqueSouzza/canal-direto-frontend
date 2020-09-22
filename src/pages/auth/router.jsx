@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Auth from './auth';
 
-import EsqueciSenha from './esqueciSenha';
+// import EsqueciSenha from './esqueciSenha';
 
 import PaginaNaoEncontrada from './paginaNaoEncontrada';
 

@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  '../types';
 
-import { TOKEN, BASE_API, USER_LOGGED } from '../../../config/const';
+import { BASE_API } from '../../../config/const';
 
 
 /**
@@ -14,7 +14,7 @@ export const buscarFormularios = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/formularios' + params;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -45,7 +45,7 @@ export const novoFormulario = (params, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/formularios';
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -76,7 +76,7 @@ export const alterarFormulario = (params, idFormulario) => {
 
     const endPoint = BASE_API + 'api/canal-direto/formularios/' + idFormulario;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 

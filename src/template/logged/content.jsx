@@ -16,8 +16,6 @@ import Setor from '../../pages/setor/router';
 
 import Categoria from '../../pages/setor/categoria/router';
 
-import Sair from '../../pages/sair/router';
-
 
 function Content(){
     return(
@@ -29,7 +27,6 @@ function Content(){
                 <Route path='/tickets-setor' component={TicketsSetor} />
                 <Route path='/setor' component={Setor} />
                 <Route path='/categoria' component={Categoria} />
-                <Route path='/sair' component={Sair} />
                 <Route path="*" component={PaginaNaoEncontrada}/>
             </Switch>
         </div>

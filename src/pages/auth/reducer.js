@@ -2,7 +2,8 @@ import type from './types';
 
 //Estado inicial da componente
 const INITIAL_STATE = {
-    list: [],
+    user: sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : {},
+    dataLogged: sessionStorage.getItem('dataLogged') ? JSON.parse(sessionStorage.getItem('dataLogged')) : {},
     loading: false
 }
 
@@ -10,20 +11,24 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
 
         //Caso para apresentar o load na tela quando for true
-        case type.LOAD:
+        case type.LOAD_AUTH:
             return { ...state, loading: action.payload }
 
         //Caso para Guardar token
         case type.GUARDAR_TOKEN:
-            sessionStorage.setItem('token', action.payload.data.response.content.access_token)
-            // sessionStorage.setItem('user', JSON.stringify(action.payload.data.pessoa))
-            return { ...state, list: action.payload.data || INITIAL_STATE.list, loading: false }        
-
+            sessionStorage.setItem('dataLogged', JSON.stringify(action.payload.data.response.content))
+            return { ...state, dataLogged: action.payload.data.response.content || INITIAL_STATE.dataLogged, loading: false }        
+            
         //Caso para Remove token
         case type.REMOVER_TOKEN:
-            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('dataLogged');
             sessionStorage.removeItem('user');
-            return { ...state, list: action.payload.data || INITIAL_STATE.list, loading: false }        
+            return { ...state, dataLogged: action.payload, loading: false }        
+                
+        //Caso para guardar os dados do usuario logado
+        case type.GUARDAR_DATA_LOGIN_USER:
+            sessionStorage.setItem('user', JSON.stringify(action.payload.data.response.content))
+            return { ...state, user: action.payload.data.response.content || INITIAL_STATE.user, loading: false }        
 
         default:
             return state;   

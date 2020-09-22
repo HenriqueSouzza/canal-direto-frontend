@@ -17,5 +17,3 @@ export const USER_LOGGED = {
                     papel: 'funcionario'
                 }
 }
-
-export const TOKEN = (sessionStorage.getItem('token'))

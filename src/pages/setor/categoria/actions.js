@@ -4,18 +4,16 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN, BASE_API, USER_LOGGED } from '../../../config/const';
-
+import { BASE_API, USER_LOGGED } from '../../../config/const';
 
 
 /**
  * método para buscar os dados do usuario
  */
-export const buscarDadosSetor = (params = null) => {
+export const buscarDadosSetor = () => {
 
-    const endPoint = BASE_API +'api/canal-direto/setor';
+    const endPoint = BASE_API + 'api/canal-direto/setor';
 
-    //const headers = { Authorization: TOKEN}
     const headers = {}
 
     return dispatch => {
@@ -30,10 +28,8 @@ export const buscarDadosSetor = (params = null) => {
         })
         .catch(error => {
 
+            console.log(error.response)
             dispatch({type: type.LOAD, payload: false})
-
-            //console.log(error.response)
-
 
         })
     }
@@ -52,7 +48,7 @@ export const cadastrarCategoria = (params, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/categoria';
 
-    const headers = { Authorization: TOKEN }
+    const headers = {}
 
     return dispatch => {
 
@@ -62,16 +58,14 @@ export const cadastrarCategoria = (params, router) => {
         .then(response => {
             
             toastr.success('Sucesso', 'Dados Cadastrados com sucesso !')
-
-            //dispatch(buscarDadosUsuario(user))
             dispatch({type: type.LOAD, payload: false})
             router.goBack()
             
         })
         .catch(error => {
 
-            //console.log(error.response)
-            // toastr.error('Erro', 'Houve um erro ao tentar alterar seus dados, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
+            console.log(error.response)
+            toastr.error('Erro', 'Erro ao tentar cadastrar categoria')
              dispatch({type: type.LOAD, payload: false})
 
         })
@@ -87,7 +81,7 @@ export const alterarCategoria = (params, idCategoria) => {
 
     const endPoint = BASE_API + 'api/canal-direto/categoria/'+idCategoria;
 
-    const headers = { Authorization: TOKEN }
+    const headers = {}
 
     return dispatch => {
 
@@ -97,7 +91,6 @@ export const alterarCategoria = (params, idCategoria) => {
         .then(response => {
             
             toastr.success('Sucesso', 'Dados Atualizados com sucesso !')
-
             //dispatch(buscarDadosUsuario(user))
             dispatch({type: type.LOAD, payload: false})
             
@@ -117,11 +110,10 @@ export const alterarCategoria = (params, idCategoria) => {
 /**
  * método para buscar os dados do usuario
  */
-export const buscarDadosCategoria = (idSetor= null ) => {
+export const buscarDadosCategoria = (idSetor = null ) => {
 
     const endPoint = BASE_API +'api/canal-direto/categoria?where[id_setor]='+ idSetor;
 
-    //const headers = { Authorization: TOKEN}
     const headers = {}
 
     return dispatch => {
@@ -151,7 +143,6 @@ export const buscarDadosCategoriaId = (idCategoria= null ) => {
 
     const endPoint = BASE_API +'api/canal-direto/categoria/'+idCategoria;
 
-    //const headers = { Authorization: TOKEN}
     const headers = {}
 
     return dispatch => {

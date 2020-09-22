@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  '../types';
 
-import { TOKEN, BASE_API, USER_LOGGED } from '../../../config/const';
+import { BASE_API, USER_LOGGED } from '../../../config/const';
 
 import { buscarInteracoesTicket } from '../actions';
 
@@ -22,7 +22,7 @@ export const encaminharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -56,7 +56,7 @@ export const buscarTicketsSetor = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket?whereIn[setor]=' + setorUser + params;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -90,7 +90,7 @@ export const fecharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -128,7 +128,7 @@ export const responderTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 

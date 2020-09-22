@@ -28,7 +28,7 @@ import imgLogo  from '../../template/images/logo.png';
 class Auth extends Component {
 
     onSubmit = values => {
-        this.props.efetuarLogin(values, this.props.history)
+        this.props.efetuarLogin(values)
     }
 
     render() {
@@ -66,6 +66,7 @@ class Auth extends Component {
                                                     label={`Login:`}
                                                     icon={`fa fa-user`}
                                                     placeholder={`login`}
+                                                    autoComplete={`username`}
                                                     validate={composeValidators(FORM_RULES.required)}
                                                     />
                                                 <Field 
@@ -75,6 +76,7 @@ class Auth extends Component {
                                                     label={`Senha:`}
                                                     icon={`fa fa-key`}
                                                     placeholder={`********`}
+                                                    autoComplete={`current-password`}
                                                     validate={composeValidators(FORM_RULES.required)}
                                                     />
                                             </div>

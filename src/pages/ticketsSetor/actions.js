@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
+import { BASE_API, USER_LOGGED } from '../../config/const';
 
 
 /**
@@ -14,7 +14,7 @@ export const buscarMeusTickets = (params) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario_atendente]=' + USER_LOGGED.usuario + params;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -43,7 +43,7 @@ export const buscarStatusTicket = (params = '') => {
 
     const endPoint = BASE_API + 'api/canal-direto/status-ticket' + params;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -73,7 +73,7 @@ export const buscarSetor = () => {
 
     const endPoint = BASE_API + 'api/canal-direto/setor';
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -103,7 +103,7 @@ export const buscarCategoria = (idSetor) => {
 
     const endPoint = BASE_API + 'api/canal-direto/categoria?where[id_setor]=' + idSetor;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -134,7 +134,7 @@ export const buscarInteracoesTicket = (idTicket = '') => {
     
     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -171,7 +171,7 @@ export const encaminharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 
@@ -202,7 +202,6 @@ export const salvarInteracao = (params, idTicket) => {
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
     const headers = { 
-        Authorization: 'Bearer ' + TOKEN,
         'Content-Type': `multipart/form-data`
     }
 
@@ -266,7 +265,7 @@ export const fecharTicket = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { Authorization: 'Bearer ' + TOKEN}
+    const headers = {}
 
     return dispatch => {
 

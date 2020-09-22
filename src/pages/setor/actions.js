@@ -4,9 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  './types';
 
-import { TOKEN, BASE_API, USER_LOGGED } from '../../config/const';
-
-
+import { BASE_API, USER_LOGGED } from '../../config/const';
 
 
 /**
@@ -20,7 +18,7 @@ export const cadastrarSetor = (params, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/setor';
 
-    const headers = { Authorization: TOKEN }
+    const headers = {}
 
     return dispatch => {
 
@@ -30,18 +28,17 @@ export const cadastrarSetor = (params, router) => {
         .then(response => {
             
             toastr.success('Sucesso', 'Dados Cadastrados com sucesso !')
-            let rota = '/setor/'+response.data.response.content.setor+'/editar'
 
             dispatch(buscarDadosSetor())
 
-            router.push(rota)
+            router.push('/setor/' + response.data.response.content.setor + '/editar')
             
         })
         .catch(error => {
 
-            //console.log(error.response)
-            // toastr.error('Erro', 'Houve um erro ao tentar alterar seus dados, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
-             dispatch({type: type.LOAD, payload: false})
+            console.log(error.response)
+            toastr.error('Erro', 'Erro ao tentar cadastrar novo setor')
+            dispatch({type: type.LOAD, payload: false})
 
         })
     }
@@ -51,11 +48,10 @@ export const cadastrarSetor = (params, router) => {
 /**
  * método para buscar os dados do usuario
  */
-export const buscarDadosSetor = (params=null) => {
+export const buscarDadosSetor = () => {
 
     const endPoint = BASE_API +'api/canal-direto/setor';
 
-    //const headers = { Authorization: TOKEN}
     const headers = {}
 
     return dispatch => {
@@ -70,10 +66,8 @@ export const buscarDadosSetor = (params=null) => {
         })
         .catch(error => {
 
+            console.log(error.response)
             dispatch({type: type.LOAD, payload: false})
-
-            //console.log(error.response)
-
 
         })
     }
@@ -90,7 +84,7 @@ export const alterarSetor = (params, id) => {
 
     const endPoint = BASE_API +'api/canal-direto/setor/' + id;
 
-    const headers = { Authorization: TOKEN }
+    const headers = {}
 
     return dispatch => {
 
@@ -100,49 +94,14 @@ export const alterarSetor = (params, id) => {
         .then(response => {
 
             toastr.success('Sucesso', 'Cadastro alterado com sucesso !')
-
             dispatch(buscarDadosSetor())
-            
-           //this.router.goBack()
-            
+
         })
         .catch(error => {
 
-            //console.log(error.response.data.error)
-            toastr.error('Erro', 'Houve um erro ao tentar alterar sua senha, tente novamente, caso erro persista, favor entrar em contato com a equipe UNIDOS')
+            toastr.error('Erro', 'Erro ao tentar alterar dados do setor')
             dispatch({type: type.ERROR, payload: false})
 
         })
     }
 }
-
-// /**
-//  * 
-//  */
-// export const buscarCongregacoes = () => {
-
-//     const endPoint = '/api/congregacao';
-
-//     return dispatch => {
-
-//         dispatch({type: type.LOAD, payload: true})
-        
-//         axios.get(endPoint)
-//         .then(response => {
-
-//             dispatch({type: type.BUSCAR_CONGREGACAO, payload: response})
-            
-//         })
-//         .catch(error => {
-
-//             if(error.response.data.error == 401){
-//                 toastr.error('Erro', 'Acesso negado')
-//             }else{
-//                 toastr.error('Erro', 'Ops ! Houve um erro para buscar as congregações diponíveis, tente novamente, caso persista o erro, entre em contato com a equipe UNIDOS.')
-//             }
-            
-//             dispatch({type: type.LOAD, payload: false})
-
-//         })
-//     }
-// }
