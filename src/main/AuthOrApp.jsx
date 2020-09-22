@@ -30,6 +30,7 @@ class AuthOrApp extends Component{
 
         if (dataLogged.access_token && user.email) {
 
+            axios.defaults.headers.common['Accept'] = 'application/json';
             axios.defaults.headers.common['Authorization'] = `Bearer ${dataLogged.access_token}`;
 
             return(
