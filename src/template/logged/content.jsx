@@ -16,6 +16,8 @@ import Setor from '../../pages/setor/router';
 
 import Categoria from '../../pages/setor/categoria/router';
 
+import PadroesAcessos from '../../pages/padroesAcessos/router';
+
 
 function Content(){
     return(
@@ -27,7 +29,8 @@ function Content(){
                 <Route path='/tickets-setor' component={TicketsSetor} />
                 <Route path='/setor' component={Setor} />
                 <Route path='/categoria' component={Categoria} />
-                <Route path="*" component={PaginaNaoEncontrada}/>
+                <Route path='/padroes-acessos' component={PadroesAcessos} />
+                <Route path='*' component={PaginaNaoEncontrada}/>
             </Switch>
         </div>
     )

@@ -91,7 +91,6 @@ export const validarLogin = () => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
             
-            toastr.success('Sucesso', 'Seja bem-vindo !')
             dispatch({type: type.GUARDAR_DATA_LOGIN_USER, payload: response})
 
         })

@@ -12,9 +12,9 @@ import imgPerfil  from '../images/perfil.png';
 
 import imgLogo  from '../images/logo.png';
 
-import { USER_LOGGED } from '../../config/const';
- 
 function Sidebar(props) {
+
+    const { user } = props.auth
 
     return (
         <aside className="main-sidebar sidebar-dark-light elevation-4">
@@ -28,7 +28,7 @@ function Sidebar(props) {
                         <img src={imgPerfil} className="img-circle elevation-2" alt={`UserImage`} />
                     </div>
                     <div className="info">
-                        <Link to={`#`} className="d-block">{ props.auth.user.email ? props.auth.user.email : 'Sem nome' }</Link>
+                        <Link to={`#`} className="d-block">{ user.email ? user.email : 'Sem nome' }</Link>
                     </div>
                 </div>
                 <Menu />
