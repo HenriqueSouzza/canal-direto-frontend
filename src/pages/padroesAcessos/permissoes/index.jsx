@@ -53,11 +53,11 @@ class Index extends Component{
 
         const { loading, permissoes } = this.props.padroesAcessos
         
-        const dataTicket = []
+        const dataPermissoes = []
         
         if(permissoes.response){
             permissoes.response.content.map(row => {
-                dataTicket.push({
+                dataPermissoes.push({
                     id: row.id,
                     permissao: row.permissao,
                     descricao: row.descricao,
@@ -98,7 +98,7 @@ class Index extends Component{
 
         return (
                 <section className="content">
-                    <MenuHeader title={`Meus Tickets Abertos`} history={this.props.location.pathname} />
+                    <MenuHeader title={`Permissões do sistema`} history={this.props.location.pathname} />
                     <div className="content-fluid">
                         <div className="card card-danger">
                             <div className="card-header">
@@ -177,7 +177,7 @@ class Index extends Component{
                                             description={false}
                                             checkbox={false} 
                                             columns={columns} 
-                                            data={dataTicket} 
+                                            data={dataPermissoes} 
                                             router={this.props.history}
                                             actions={null}
                                             loading={loading} 

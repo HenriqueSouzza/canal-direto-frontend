@@ -23,10 +23,9 @@ import { buscarPapeis } from './actions';
 import { buscarPermissoes } from '../permissoes/actions';
 
 
-class Visualizar extends Component{
+class Novo extends Component{
 
     componentDidMount(){
-        this.props.buscarPapeis('/' + this.props.match.params.id)
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
     }
 
@@ -34,20 +33,9 @@ class Visualizar extends Component{
         console.log(values)
     }
 
-    onVoltar = () => {
-        this.props.history.goBack()
-    }
-
     render(){
 
-        const { loading, papeis, permissoes } = this.props.padroesAcessos
-
-        const initialValues = {}
-
-        if(papeis.response){
-            initialValues.papel = papeis.response.content.papel
-            initialValues.descricao = papeis.response.content.descricao
-        }
+        const { loading, permissoes } = this.props.padroesAcessos
 
         let permissoesSelect = {}
 
@@ -58,11 +46,10 @@ class Visualizar extends Component{
         return( 
             <section className="content">
                 <LoadingBody status={loading} />
-                <MenuHeader title={`Detalhe do papel`} history={this.props.location.pathname} />
+                <MenuHeader title={`Novo papel`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <Form
                         onSubmit={this.onSubmit}
-                        initialValues={initialValues}
                         render={({handleSubmit}) => (
                             <form onSubmit={handleSubmit}>
                                 <div className="card card-danger">
@@ -155,4 +142,4 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);
+export default connect(mapStateToProps, mapDispatchToProps )(Novo);

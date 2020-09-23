@@ -4,7 +4,6 @@ import type from './types';
 const INITIAL_STATE = {
     papeis: {},
     permissoes: {},
-    permissoesPapeis: {},
     loading: false
 }
 
@@ -22,10 +21,6 @@ export default (state = INITIAL_STATE, action) => {
         //Caso para guardar as permissoes existentes
         case type.BUSCAR_PERMISSOES:
             return { ...state, permissoes: action.payload.data || INITIAL_STATE.permissoes, loading: false }   
-
-        //Caso para guardar as permissoes atreladas aos papeis
-        case type.BUSCAR_PERMISSOES_PAPEIS:
-            return { ...state, permissoesPapeis: action.payload.data || INITIAL_STATE.permissoesPapeis, loading: false }        
 
         default:
             return state;   
