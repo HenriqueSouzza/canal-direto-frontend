@@ -4,48 +4,29 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import MenuHeader from '../../components/menu/menuHeader';
+import MenuHeader from '../../../components/menu/menuHeader';
 
-import DataTable from '../../components/table/dataTable';
+import DataTable from '../../../components/table/dataTable';
 
-import { ACTION_RULES } from '../../helpers/authorization';
+import { ACTION_RULES } from '../../../helpers/authorization';
 
-import  { buscarDadosSetor } from './actions'
-
+import  { buscarSetor } from './actions';
 
 
 class Index extends Component{
 
     componentDidMount(){
-        //let userLogged = 'marcos.barroso'
-        this.props.buscarDadosSetor()
+        this.props.buscarSetor()
     }
 
     render(){
 
-        const {loading,dadosSetor} = this.props.setor
+        const { loading, setor } = this.props.padroesAcessos
         
-        const dataSetor = []
+        let dataSetor = {}
 
-        if(dadosSetor.response){
-            if(Array.isArray(dadosSetor.response.content)){
-                dadosSetor.response.content.map(row => {
-
-                    dataSetor.push({
-                        setor: row.id,
-                        descricao: row.descricao,
-                        ativo: row.ativo,
-                    })
-                })
-            }else{
-                    dataSetor.push({
-                        setor: dadosSetor.response.content.id,
-                        descricao: dadosSetor.response.content.descricao,
-                        ativo: dadosSetor.response.content.ativo,
-                    });
-
-            }
-
+        if(setor.response){
+            dataSetor = setor.response.content.map(row => ({ setor: row.id, descricao: row.descricao, ativo: row.ativo }))
         }
 
         const columns = [
@@ -65,8 +46,6 @@ class Index extends Component{
                 sortable: true,
             }
         ];        
-
-       
 
         return(
             <section className="content">
@@ -98,12 +77,12 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ setor: state.setor })
+const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarDadosSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarSetor }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

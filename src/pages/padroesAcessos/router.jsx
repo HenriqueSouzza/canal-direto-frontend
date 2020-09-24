@@ -12,6 +12,12 @@ import PapeisNovo from './papeis/novo';
 
 import Permissoes from './permissoes/index';
 
+import Setor from './setor';
+
+import SetorVisualizar from './setor/visualizar';
+
+import SetorNovo from './setor/novo';
+
 function Router(){
     
     return(
@@ -21,6 +27,10 @@ function Router(){
             <Route exact path='/padroes-acessos/papeis/novo' component={ props => <PapeisNovo {...props} />} />
 
             <Route exact path='/padroes-acessos/permissoes' component={ props => <Permissoes {...props} />} />
+
+            <Route exact path='/padroes-acessos/setor' component={ props => <Setor {...props} />} />
+            <Route exact path='/padroes-acessos/setor/:id/visualizar' component={ props => <SetorVisualizar {...props} />} />
+            <Route exact path='/padroes-acessos/setor/novo' component={ props => <SetorNovo {...props} />} />
 
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>

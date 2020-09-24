@@ -2,9 +2,40 @@ import axios from 'axios';
 
 import { toastr } from 'react-redux-toastr';
 
-import type from  './types';
+import type from  '../types';
 
-import { BASE_API, USER_LOGGED } from '../../config/const';
+import { BASE_API, USER_LOGGED } from '../../../config/const';
+
+
+/**
+ * método para buscar os setores
+ */
+export const buscarSetor = (params = '') => {
+
+    const endPoint = BASE_API + 'api/canal-direto/setor' + params;
+
+    const headers = {}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_SETOR, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
 
 
 /**
@@ -29,7 +60,7 @@ export const cadastrarSetor = (params, router) => {
             
             toastr.success('Sucesso', 'Dados Cadastrados com sucesso !')
 
-            dispatch(buscarDadosSetor())
+            dispatch(buscarSetor())
 
             router.push('/setor/' + response.data.response.content.setor + '/editar')
             
@@ -44,35 +75,6 @@ export const cadastrarSetor = (params, router) => {
     }
 }
 
-
-/**
- * método para buscar os dados do usuario
- */
-export const buscarDadosSetor = () => {
-
-    const endPoint = BASE_API +'api/canal-direto/setor';
-
-    const headers = {}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
-
-            dispatch({ type: type.BUSCAR_DADOS_SETOR, payload: response })
-            
-        })
-        .catch(error => {
-
-            console.log(error.response)
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
-}
 
 
 /**
@@ -94,7 +96,7 @@ export const alterarSetor = (params, id) => {
         .then(response => {
 
             toastr.success('Sucesso', 'Cadastro alterado com sucesso !')
-            dispatch(buscarDadosSetor())
+            dispatch(buscarSetor())
 
         })
         .catch(error => {

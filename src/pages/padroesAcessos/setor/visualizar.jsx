@@ -6,27 +6,27 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import MenuHeader from '../../components/menu/menuHeader';
+import MenuHeader from '../../../components/menu/menuHeader';
 
-import LoadingBody from '../../components/loading/loadingBody';
+import LoadingBody from '../../../components/loading/loadingBody';
 
-import Input from '../../components/form/input';
+import Input from '../../../components/form/input';
 
-import Checkbox from '../../components/form/checkbox';
+import Checkbox from '../../../components/form/checkbox';
 
-import Button from '../../components/form/button';
+import Button from '../../../components/form/button';
 
-import { FORM_RULES, composeValidators } from '../../helpers/validations';
+import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import  { alterarSetor } from './actions'
 
-import  { buscarDadosCategoria } from '../setor/categoria/actions'
+import  { buscarDadosCategoria } from '../../setor/categoria/actions'
 
-import DataTable from '../../components/table/dataTable';
+import DataTable from '../../../components/table/dataTable';
 
 import { Link } from 'react-router-dom';
 
-class Editar extends Component{
+class Visualizar extends Component{
 
     constructor(props) {
         super(props)
@@ -217,4 +217,4 @@ const mapStateToProps = state => ({ setor: state.setor, categoria: state.categor
 const mapDispatchToProps = dispatch => bindActionCreators({ alterarSetor , buscarDadosCategoria }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps )(Editar);
+export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);
