@@ -18,6 +18,10 @@ import SetorVisualizar from './setor/visualizar';
 
 import SetorNovo from './setor/novo';
 
+import CategoriaVisualizar from './categoria/visualizar';
+
+import CategoriaNovo from './categoria/novo';
+
 function Router(){
     
     return(
@@ -31,6 +35,9 @@ function Router(){
             <Route exact path='/padroes-acessos/setor' component={ props => <Setor {...props} />} />
             <Route exact path='/padroes-acessos/setor/:id/visualizar' component={ props => <SetorVisualizar {...props} />} />
             <Route exact path='/padroes-acessos/setor/novo' component={ props => <SetorNovo {...props} />} />
+
+            <Route exact path='/padroes-acessos/categoria/:id/visualizar' component={ props => <CategoriaVisualizar {...props} />} />
+            <Route exact path='/padroes-acessos/categoria/:id/novo' component={ props => <CategoriaNovo {...props} />} />
 
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>

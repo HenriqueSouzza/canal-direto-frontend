@@ -10,9 +10,9 @@ import { BASE_API } from '../../../config/const';
 /**
  * método para buscar os setores
  */
-export const buscarSetor = (params = '') => {
+export const buscarCategoria = (params = '') => {
 
-    const endPoint = BASE_API + 'api/canal-direto/setor' + params;
+    const endPoint = BASE_API + 'api/canal-direto/categoria' + params;
 
     const headers = {}
 
@@ -23,7 +23,7 @@ export const buscarSetor = (params = '') => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
 
-            dispatch({ type: type.BUSCAR_SETOR, payload: response })
+            dispatch({ type: type.BUSCAR_CATEGORIA, payload: response })
             
         })
         .catch(error => {
@@ -37,13 +37,13 @@ export const buscarSetor = (params = '') => {
 }
 
 /**
- * Método responsável para alterar senha
+ * Método responsável para cadastrar nova categoria
  * @param {*} params 
  * @param {*} router 
  */
-export const cadastrarSetor = (params, router) => {
+export const cadastrarCategoria = (params, router) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/setor';
+    const endPoint = BASE_API + 'api/canal-direto/categoria';
 
     const headers = {}
 
@@ -55,16 +55,13 @@ export const cadastrarSetor = (params, router) => {
         .then(response => {
             
             toastr.success('Sucesso', 'Dados Cadastrados com sucesso !')
-
-            dispatch(buscarSetor())
-
-            router.push('/setor/' + response.data.response.content.setor + '/editar')
+            router.push('/padroes-acessos/setor/' + params.setor + '/visualizar')
             
         })
         .catch(error => {
 
             console.log(error.response)
-            toastr.error('Erro', 'Erro ao tentar cadastrar novo setor')
+            toastr.error('Erro', 'Erro ao tentar adicionar nova categoria ao setor')
             dispatch({type: type.LOAD, payload: false})
 
         })
@@ -78,9 +75,9 @@ export const cadastrarSetor = (params, router) => {
  * @param {*} params 
  * @param {*} router 
  */
-export const alterarSetor = (params, idSetor) => {
+export const alterarCategoria = (params, idCategoria) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/setor/' + idSetor;
+    const endPoint = BASE_API + 'api/canal-direto/categoria/' + idCategoria;
 
     const headers = {}
 
@@ -91,8 +88,8 @@ export const alterarSetor = (params, idSetor) => {
         axios.put(endPoint, params, { headers : headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Cadastro alterado com sucesso !')
-            dispatch(buscarSetor('?where[id]=' + idSetor))
+            toastr.success('Sucesso', 'Categoria cadastrada com sucesso !')
+            dispatch(buscarCategoria('?where[id]=' + idCategoria))
 
         })
         .catch(error => {

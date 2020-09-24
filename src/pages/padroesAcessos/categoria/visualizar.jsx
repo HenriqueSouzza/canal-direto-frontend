@@ -20,83 +20,49 @@ import Button from '../../../components/form/button';
 
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
-import  { alterarSetor, buscarSetor } from './actions';
-
-import DataTable from '../../../components/table/dataTable';
+import { buscarCategoria, alterarCategoria } from './actions';
 
 
 class Visualizar extends Component{
 
     componentDidMount(){
-        this.props.buscarSetor('?where[id]=' + this.props.match.params.id)
+        this.props.buscarCategoria('?where[id]=' + this.props.match.params.id)
     }
 
     onSubmit = values => {
         const params = {}
         
-        params.ativo = values.ativos ? 1 : 0
-        params.descricao = values.descricao
-        
-        this.props.alterarSetor(params, this.props.match.params.id)
+        params.ativo = values.ativo ? 1 : 0
+        params.descricao = values.descricao 
+        params.permite_abertura_ticket = values.permite_abertura_ticket ? 1 : 0
+        params.permite_interacao = values.permite_interacao ? 1 : 0
+        params.permite_n_tickets_abertos = values.permite_n_tickets_abertos ? 1 : 0
+
+        this.props.alterarCategoria(params, this.props.match.params.id)
     }
 
     onVoltar = () => {
-        this.props.history.goBack()
-    }
-
-    onAdicionarCategoria = () => {
-        this.props.history.push('/padroes-acessos/categoria/' + this.props.match.params.id + '/novo')
+        this.props.history.goBack();
     }
 
     render(){
 
         const initialValues = {}
 
-        const { loading, setor } = this.props.padroesAcessos
+        const { loading, categoria } = this.props.padroesAcessos
 
-        let dataCategoria = []
-
-        if(setor.response){
-            initialValues.descricao = setor.response.content[0].descricao
-            initialValues.ativo = setor.response.content[0].ativo ? true : false
-            dataCategoria = setor.response.content[0].categoria.map( row => ({
-                categoria: row.id,
-                descricao: row.descricao,
-                ativo: row.ativo == '1' ? 'sim' : 'não',
-                link: '/padroes-acessos/categoria/' + row.id + '/visualizar' 
-            }))
+        if(categoria.response){
+            initialValues.descricao = categoria.response.content[0].descricao
+            initialValues.ativo = categoria.response.content[0].ativo ? true : false
+            initialValues.permite_abertura_ticket = categoria.response.content[0].permite_abertura_ticket ? true : false
+            initialValues.permite_interacao = categoria.response.content[0].permite_interacao ? true : false
+            initialValues.permite_n_tickets_abertos = categoria.response.content[0].permite_n_tickets_abertos ? true : false
         }
-        
-        
-        const columns = [
-            {
-                name: 'Categoria',
-                selector: 'categoria',
-                sortable: true,
-            },
-            {
-                name: 'Descrição',
-                selector: 'descricao',
-                sortable: true,
-            },            
-            {
-                name: 'Ativo',
-                selector: 'ativo',
-                sortable: true,
-            },
-            {
-                name: 'Detalhes',
-                button: true,
-                cell: row => <Link to={row.link} className={`nav-link text-info`}>
-                                <i className={`fa fa-eye`}></i>
-                            </Link>,
-            }          
-        ];    
         
         return(
                 <section className="content">
                     <LoadingBody status={loading} />
-                    <MenuHeader title={`Cadastrar Setor`} history={this.props.location.pathname} />
+                    <MenuHeader title={`Adicionar nova categoria`} history={this.props.location.pathname} />
                     <div className="content-fluid">
                         <Form
                             onSubmit={this.onSubmit}
@@ -108,8 +74,8 @@ class Visualizar extends Component{
                                             <h3 className="card-title">Dados do Setor</h3>
                                         </div>
                                         <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-md-8">
+                                            <div className="row justify-content-center">
+                                                <div className="col-md-10">
                                                     <Field 
                                                         component={Input} 
                                                         type={`text`}
@@ -117,16 +83,43 @@ class Visualizar extends Component{
                                                         label={`Nome do setor:`}
                                                         icon={`fa fa-id-badge`}
                                                         placeholder={`nome do setor`}
-                                                        validate={composeValidators(FORM_RULES.required)}
+                                                        validate={composeValidators(FORM_RULES.required, FORM_RULES.max(150))}
                                                         />
                                                 </div>                                                                                                      
-                                                <div className="col-md-4 text-center">
-                                                    <div className="">&nbsp;</div>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <div className="col-md-5">
                                                     <Field 
                                                         component={Checkbox} 
                                                         type={`checkbox`}
                                                         name={`ativo`} 
                                                         label={`Ativo`}
+                                                        />
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <Field 
+                                                        component={Checkbox} 
+                                                        type={`checkbox`}
+                                                        name={`permite_abertura_ticket`} 
+                                                        label={`permite abertura de tickets ?`}
+                                                        />
+                                                </div>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <div className="col-md-5">
+                                                    <Field 
+                                                        component={Checkbox} 
+                                                        type={`checkbox`}
+                                                        name={`permite_interacao`} 
+                                                        label={`permite interações ?`}
+                                                        />
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <Field 
+                                                        component={Checkbox} 
+                                                        type={`checkbox`}
+                                                        name={`permite_n_tickets_abertos`} 
+                                                        label={`permite vários tickets abertos ?`}
                                                         />
                                                 </div>
                                             </div>
@@ -154,35 +147,6 @@ class Visualizar extends Component{
                                             </div>  
                                         </div>
                                     </div>
-                                    <div className="card card-danger">
-                                        <div className="card-header">
-                                            <h3 className="card-title">Dados da Categoria</h3>
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="row justify-content-end">
-                                                <div className="col-md-4">
-                                                    <Button
-                                                        description={`Adicionar`}
-                                                        icon={`fa fa-plus`}
-                                                        color={`btn-success`}
-                                                        onClick={() => this.onAdicionarCategoria()}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <div className="col-md-12">
-                                                    <DataTable
-                                                        description={false}
-                                                        checkbox={false} 
-                                                        columns={columns} 
-                                                        data={dataCategoria} 
-                                                        router={this.props.history}
-                                                        loading={loading} 
-                                                    />
-                                                </div>                                                                                                      
-                                            </div>
-                                        </div>
-                                    </div>
                                 </form>
                             )}
                         />
@@ -200,7 +164,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarSetor, alterarSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ alterarCategoria, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

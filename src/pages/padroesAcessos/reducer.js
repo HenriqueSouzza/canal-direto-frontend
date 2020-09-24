@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     papeis: {},
     permissoes: {},
     setor: {},
+    categoria: {},
     loading: false
 }
 
@@ -26,6 +27,10 @@ export default (state = INITIAL_STATE, action) => {
         //Caso para guardar os setores existentes
         case type.BUSCAR_SETOR:
             return { ...state, setor: action.payload.data || INITIAL_STATE.setor, loading: false }   
+
+        //Caso para guardar os setores existentes
+        case type.BUSCAR_CATEGORIA:
+            return { ...state, categoria: action.payload.data || INITIAL_STATE.categoria, loading: false }   
 
         default:
             return state;   

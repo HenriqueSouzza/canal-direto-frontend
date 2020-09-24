@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 import { bindActionCreators } from 'redux';
 
 import MenuHeader from '../../../components/menu/menuHeader';
@@ -26,7 +28,12 @@ class Index extends Component{
         let dataSetor = {}
 
         if(setor.response){
-            dataSetor = setor.response.content.map(row => ({ setor: row.id, descricao: row.descricao, ativo: row.ativo }))
+            dataSetor = setor.response.content.map(row => ({
+                setor: row.id, 
+                descricao: row.descricao, 
+                ativo: row.ativo == '1' ? 'sim' : 'não',
+                link: '/padroes-acessos/setor/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [
@@ -44,7 +51,14 @@ class Index extends Component{
                 name: 'Ativo',
                 selector: 'ativo',
                 sortable: true,
-            }
+            },
+            {
+                name: 'Detalhe',
+                button: true,
+                cell: row => <Link to={row.link} className={`nav-link text-info`}>
+                                <i className={`fa fa-eye`}></i>
+                            </Link>,
+            } 
         ];        
 
         return(
@@ -60,7 +74,6 @@ class Index extends Component{
                                 data={dataSetor} 
                                 router={this.props.history}
                                 btnAdd={true} 
-                                actions={[ACTION_RULES.can_edit]}
                                 loading={loading} 
                             />
                         </div>
