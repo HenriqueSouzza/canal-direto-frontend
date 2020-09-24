@@ -162,7 +162,7 @@ class Index extends Component{
                         <div className="card card-danger">
                             <div className="card-body">
                                 <div className="row justify-content-end">
-                                    <div className="col-md-3">
+                                    <div className="col-md-4">
                                         <Button
                                             type={`button`}
                                             description={`Atualizar Permissões`}

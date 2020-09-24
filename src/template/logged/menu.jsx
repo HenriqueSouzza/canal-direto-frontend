@@ -37,7 +37,6 @@ function Menu(props){
                 <MenuTreeView description={`Padrões de acessos`} path={`#`} icon={`fa fa-cogs`} >
                     <MenuLink description={`Papéis`} path={`/padroes-acessos/papeis`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Permissões`} path={`/padroes-acessos/permissoes`} icon={`fa fa-list-ul`} active={``} />
-                    <MenuLink description={`Permissão / Papel`} path={`/padroes-acessos/permissoes-papeis`} icon={`fa fa-list-ul`} active={``} />
                 </MenuTreeView>
                 <MenuLink description={`Usuários`} path={``} icon={`fa fa-users`} active={``} />
                 <MenuLink description={`Setor`} path={`/setor`} icon={`fa fa-sitemap`} active={``} />

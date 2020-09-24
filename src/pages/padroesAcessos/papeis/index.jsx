@@ -15,7 +15,7 @@ import { buscarPapeis } from './actions';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarPapeis()
+        this.props.buscarPapeis('?order=id,desc')
     }
 
     render(){
@@ -25,16 +25,14 @@ class Index extends Component{
         const dataPapeis = []
 
         if(papeis.response){
-            if(Array.isArray(papeis.response.content)){
-                papeis.response.content.map(row => {
-                    dataPapeis.push({
-                        id: row.id,
-                        papel: row.papel,
-                        descricao: row.descricao,
-                        link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
-                    })
+            papeis.response.content.map(row => {
+                dataPapeis.push({
+                    id: row.id,
+                    papel: row.papel,
+                    descricao: row.descricao,
+                    link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
                 })
-            }
+            })
         }
 
         const columns = [

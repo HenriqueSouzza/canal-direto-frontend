@@ -18,7 +18,7 @@ import Button from '../../../components/form/button';
 
 import SelectMultiple from '../../../components/form/selectMultiple';
 
-import { buscarPapeis } from './actions';
+import { buscarPapeis, novoPapel } from './actions';
 
 import { buscarPermissoes } from '../permissoes/actions';
 
@@ -30,7 +30,16 @@ class Novo extends Component{
     }
 
     onSubmit = values => {
-        console.log(values)
+        const params = {}
+
+        params.papel = values.papel
+        params.descricao = values.descricao
+
+        if(values.permissoes){
+            params.permissao = values.permissoes.map( row => (row.value))
+        }
+
+        this.props.novoPapel(params, this.props.history)
     }
 
     render(){
@@ -92,7 +101,7 @@ class Novo extends Component{
                                             <div className="col-md-12">
                                                 <Field
                                                     component={SelectMultiple}
-                                                    name={`Permissoes`}
+                                                    name={`permissoes`}
                                                     options={permissoesSelect}
                                                     isMulti
                                                     closeMenu={false}
@@ -139,7 +148,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);
