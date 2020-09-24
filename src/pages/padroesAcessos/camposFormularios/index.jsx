@@ -2,54 +2,53 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
-
 import { bindActionCreators } from 'redux';
+
+import { Link } from 'react-router-dom';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { ACTION_RULES } from '../../../helpers/authorization';
-
-import  { buscarSetor } from './actions';
-
+import { buscarCamposFormularios } from './actions';
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarSetor()
+        this.props.buscarCamposFormularios()
     }
 
     render(){
 
-        const { loading, setor } = this.props.padroesAcessos
-        
-        let dataSetor = []
+        const { loading, camposFormularios} = this.props.padroesAcessos
 
-        if(setor.response){
-            dataSetor = setor.response.content.map(row => ({
-                setor: row.id, 
-                descricao: row.descricao, 
-                ativo: row.ativo == '1' ? 'sim' : 'não',
-                link: '/padroes-acessos/setor/' + row.id + '/visualizar'
-            }))
+        const dataCamposFormularios = []
+
+        if(camposFormularios.response){
+            camposFormularios.response.content.map(row => {
+                dataCamposFormularios.push({
+                    id: row.id,
+                    nome: row.label,
+                    descricao: row.descricao,
+                    link: '/padroes-acessos/campos-formularios/' + row.id + '/visualizar'
+                })
+            })
         }
 
         const columns = [
             {
-                name: 'Setor',
-                selector: 'setor',
+                name: '#',
+                selector: 'id',
+                sortable: true,
+            },
+            {
+                name: 'Nome Ticket',
+                selector: 'nome',
                 sortable: true,
             },
             {
                 name: 'Descrição',
                 selector: 'descricao',
-                sortable: true,
-            },            
-            {
-                name: 'Ativo',
-                selector: 'ativo',
                 sortable: true,
             },
             {
@@ -58,34 +57,33 @@ class Index extends Component{
                 cell: row => <Link to={row.link} className={`nav-link text-info`}>
                                 <i className={`fa fa-eye`}></i>
                             </Link>,
-            } 
-        ];        
+            }   
+        ];
 
         return(
             <section className="content">
-                <MenuHeader title={`Setores Cadastrados`} history={this.props.location.pathname} />
+                <MenuHeader title={`Campos de formulários`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
-                         <div className="card-body">
+                        <div className="card-body">
                             <DataTable
                                 description={false}
                                 checkbox={false} 
                                 columns={columns} 
-                                data={dataSetor} 
+                                data={dataCamposFormularios} 
                                 router={this.props.history}
-                                btnAdd={true} 
-                                loading={loading} 
+                                actions={null}
+                                loading={loading}
+                                btnAdd 
                             />
                         </div>
                     </div>
                 </div>
             </section>
         )
-
     }
 
 }
-
 
 /**
  * @param {*} state 
@@ -95,7 +93,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

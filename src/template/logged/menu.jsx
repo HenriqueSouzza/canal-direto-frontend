@@ -29,15 +29,13 @@ function Menu(props){
                     <MenuLink description={`Para meu setor`} path={`/tickets-setor/para-meu-setor`} icon={`fa fa-object-group`} active={``} />
                     <MenuLink description={`Meus tickets`} path={`/tickets-setor/meus-tickets`} icon={`fa fa-address-book`} active={``} />
                 </MenuTreeView>
-                <MenuTreeView description={`Configuração Ticket`} path={`#`} icon={`fa fa-cogs`} >
-                    <MenuLink description={`Status Ticket`} path={`/configuracao-ticket/status-ticket`} icon={`fa fa-list-ul`} active={``} />
-                    <MenuLink description={`Formulários`} path={`/configuracao-ticket/formularios`} icon={`fa fa-list-ul`} active={``} />
-                    <MenuLink description={`Campos Formulários`} path={`/configuracao-ticket/campos-formularios`} icon={`fa fa-list-ul`} active={``} />
-                </MenuTreeView>
                 <MenuTreeView description={`Padrões de acessos`} path={`#`} icon={`fa fa-cogs`} >
                     <MenuLink description={`Papéis`} path={`/padroes-acessos/papeis`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Permissões`} path={`/padroes-acessos/permissoes`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Setor`} path={`/padroes-acessos/setor`} icon={`fa fa-list-ul`} active={``} />
+                    <MenuLink description={`Status Ticket`} path={`/padroes-acessos/status-ticket`} icon={`fa fa-list-ul`} active={``} />
+                    <MenuLink description={`Formulários`} path={`/padroes-acessos/formularios`} icon={`fa fa-list-ul`} active={``} />
+                    <MenuLink description={`Campos Formulários`} path={`/padroes-acessos/campos-formularios`} icon={`fa fa-list-ul`} active={``} />
                 </MenuTreeView>
                 <MenuLink description={`Usuários`} path={``} icon={`fa fa-users`} active={``} />
                 <MenuLink description={`Setor`} path={`/setor`} icon={`fa fa-sitemap`} active={``} />

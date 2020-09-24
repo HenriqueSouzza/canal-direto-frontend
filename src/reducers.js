@@ -16,12 +16,6 @@ import MeusTicketsReducer from './pages/meusTickets/reducer';
 //TicketSetor
 import TicketsSetorReducer from './pages/ticketsSetor/reducer';
 
-//Setor
-import SetorReducer from './pages/setor/reducer';
-
-//Categoria
-import CategoriaReducer from './pages/setor/categoria/reducer';
-
 //PadroesAcessos
 import PadroesAcessosReducer from './pages/padroesAcessos/reducer';
 
@@ -32,8 +26,6 @@ const rootReducer = combineReducers({
     configuracaoTicket: ConfiguracaoTicketReducer,
     ticketsSetor: TicketsSetorReducer,
     meusTickets: MeusTicketsReducer,
-    setor: SetorReducer,
-    categoria: CategoriaReducer,
     padroesAcessos: PadroesAcessosReducer
 })
 

@@ -6,6 +6,9 @@ const INITIAL_STATE = {
     permissoes: {},
     setor: {},
     categoria: {},
+    formularios: [],
+    camposFormularios: [],
+    statusTicket: [],
     loading: false
 }
 
@@ -31,6 +34,18 @@ export default (state = INITIAL_STATE, action) => {
         //Caso para guardar os setores existentes
         case type.BUSCAR_CATEGORIA:
             return { ...state, categoria: action.payload.data || INITIAL_STATE.categoria, loading: false }   
+
+        //Caso para guardar os formularios existentes
+        case type.BUSCAR_FORMULARIOS:
+            return { ...state, formularios: action.payload.data || INITIAL_STATE.formularios, loading: false }        
+
+        //Caso para guardar os campos formularios existentes
+        case type.BUSCAR_CAMPOS_FORMULARIOS:
+            return { ...state, camposFormularios: action.payload.data || INITIAL_STATE.camposFormularios, loading: false }        
+
+        //Caso para guardar os status existentes
+        case type.BUSCAR_STATUS_TICKET:
+            return { ...state, statusTicket: action.payload.data || INITIAL_STATE.statusTicket, loading: false } 
 
         default:
             return state;   
