@@ -178,11 +178,15 @@ class Novo extends Component{
                                                         :   
                                                             <>
                                                             <br/>
-                                                            <div className="text-danger">
-                                                                Favor enviar arquivos com as extensões JPEG, PNG, PDF, DOC, DOCX
-                                                            </div>
+                                                                <div className="text-danger">
+                                                                    Favor enviar arquivos com as extensões JPEG, PNG, PDF, DOC, DOCX
+                                                                
+                                                                </div>
                                                             </>
                                                     }
+                                                    <div className="text-dark">
+                                                        <b>Tamanho máximo permitido 10mb</b>
+                                                    </div>
                                             </div>
                                         </div>
                                         <br/>
