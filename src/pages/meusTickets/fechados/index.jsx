@@ -18,7 +18,7 @@ import Input from '../../../components/form/input';
 
 import Button from '../../../components/form/button';
 
-import { buscarMeusTickets } from '../actions';
+import { buscarMeusTickets } from './actions';
 
 import moment from 'moment';
  
@@ -26,11 +26,11 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets('?whereIn[status]=4,5')
+        this.props.buscarMeusTickets()
     }
 
     onSubmit = values => {
-        let $where = '?whereIn[status]=4,5'
+        let $where = ''
 
         if(values.ticket) {
             $where += '&where[id]='+ values.ticket
@@ -51,20 +51,18 @@ class Index extends Component{
 
         const { loading, meusTickets } = this.props.meusTickets
         
-        const dataTicket = []
+        let dataTicket = []
         
         if(meusTickets.response){
-            meusTickets.response.content.map(row => {
-                dataTicket.push({
-                    ticket: row.id,
-                    assunto: row.assunto,
-                    setor: row.setor,
-                    categoria: row.categoria,
-                    fechado: moment(row.dt_fechamento).calendar(),
-                    // fechado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
-                    link: '/meus-tickets/fechados/' + row.id + '/visualizar'
-                })
-            })
+            dataTicket = meusTickets.response.content.map(row => ({
+                ticket: row.id,
+                assunto: row.assunto,
+                setor: row.setor,
+                categoria: row.categoria,
+                fechado: moment(row.dt_fechamento).calendar(),
+                // fechado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
+                link: '/meus-tickets/fechados/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [

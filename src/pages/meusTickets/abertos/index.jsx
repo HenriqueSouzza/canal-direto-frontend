@@ -18,20 +18,19 @@ import Input from '../../../components/form/input';
 
 import Button from '../../../components/form/button';
 
-import { buscarMeusTickets } from '../actions'
+import { buscarMeusTickets } from './actions'
 
 import moment from 'moment';
-
  
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets('?whereIn[status]=1,2,3')
+        this.props.buscarMeusTickets()
     }
 
     onSubmit = values => {
-        let $where = '?whereIn[status]=1,2,3'
+        let $where = ''
 
         if(values.ticket) {
             $where += '&where[id]='+ values.ticket
@@ -52,21 +51,19 @@ class Index extends Component{
 
         const { loading, meusTickets } = this.props.meusTickets
         
-        const dataTicket = []
+        let dataTicket = []
         
         if(meusTickets.response){
-            meusTickets.response.content.map(row => {
-                dataTicket.push({
-                    ticket: row.id,
-                    assunto: row.assunto,
-                    setor: row.setor,
-                    categoria: row.categoria,
-                    criado: moment(row.created_at).calendar(),
-                    atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
-                    // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
-                    link: '/meus-tickets/abertos/' + row.id + '/visualizar'
-                })
-            })
+            dataTicket = meusTickets.response.content.map(row => ({
+                ticket: row.id,
+                assunto: row.assunto,
+                setor: row.setor,
+                categoria: row.categoria,
+                criado: moment(row.created_at).calendar(),
+                atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
+                // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
+                link: '/meus-tickets/abertos/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [

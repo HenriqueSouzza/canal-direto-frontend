@@ -20,7 +20,7 @@ import Button from '../../../components/form/button';
 
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
-import { buscarMeusTickets, salvarInteracao, buscarInteracoesTicket } from  '../actions';
+import { buscarMeusTickets, salvarInteracao, buscarInteracoesTicket } from  './actions';
 
 import { USER_LOGGED } from '../../../config/const';
 
@@ -32,21 +32,24 @@ class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
-        this.props.buscarMeusTickets('?where[id]=' + this.props.match.params.id + '&whereIn[status]=4,5')
+        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
     }
 
     onSubmit = (values) => {
+        
         const { meusTickets } = this.props.meusTickets
-        values.usuario_atendente = meusTickets.response.content[0].usuario_atendente 
-        values.status = meusTickets.response.content[0].usuario_atendente ? 2 : 1
-        values.usuario_fechamento = null
-        values.dt_fechamento = null
-        values.mensagem = 'Ticket reaberto pelo solicitante: ' + values.mensagem_temp
-        this.props.salvarInteracao(values, this.props.match.params.id, this.props.history)
+
+        const params = {
+            status: meusTickets.response.content[0].usuario_atendente ? 2 : 1,
+            dt_fechamento: '',
+            mensagem: 'Ticket reaberto pelo solicitante: ' + values.mensagem,
+        }
+
+        this.props.salvarInteracao(params, this.props.match.params.id, this.props.history)
     }
 
     onVoltar = () => {
-        this.props.history.push('/meus-tickets/abertos')
+        this.props.history.goBack()
     }
 
     render(){
@@ -76,20 +79,16 @@ class Visualizar extends Component{
             dataTicket.created_at =  meusTickets.response.content[0].created_at
         }
 
-        const dataInteracao = []
+        let dataInteracao = []
 
         if(interacoesTickets.response){
-            interacoesTickets.response.content.find(element => {
-                if(element.id_ticket == this.props.match.params.id){
-                    dataInteracao.push({
-                        solicitante: USER_LOGGED.usuario  == element.usuario_interacao ? 1 : 0,
-                        usuario_interacao: element.usuario_interacao,
-                        mensagem: element.mensagem,
-                        arquivo: element.arquivo,
-                        dt_criacao: moment(element.dt_criacao).calendar(),
-                    })
-                }
-            })
+            dataInteracao = interacoesTickets.response.content.map(row => ({
+                solicitante: USER_LOGGED.usuario  == row.usuario_interacao ? 1 : 0,
+                usuario_interacao: row.usuario_interacao,
+                mensagem: row.mensagem,
+                arquivo: row.arquivo,
+                dt_criacao: moment(row.dt_criacao).calendar()
+            }))
         }
 
 
@@ -159,7 +158,7 @@ class Visualizar extends Component{
                                                         <Field 
                                                             component={Input} 
                                                             type={`text`}
-                                                            name={`mensagem_temp`} 
+                                                            name={`mensagem`} 
                                                             label={`Motivo reabertura:`}
                                                             icon={`fa fa-comment`}
                                                             placeholder={`Digite o motivo da reabertura`}

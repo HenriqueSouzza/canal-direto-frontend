@@ -20,7 +20,7 @@ import Button from '../../../components/form/button';
 
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
-import { buscarMeusTickets, salvarInteracao, buscarInteracoesTicket, fecharTicket} from  '../actions';
+import { buscarMeusTickets, salvarInteracao, buscarInteracoesTicket, fecharTicket } from  './actions';
 
 import { USER_LOGGED } from '../../../config/const';
 
@@ -33,7 +33,7 @@ class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
-        this.props.buscarMeusTickets('?where[id]=' + this.props.match.params.id + '&whereIn[status]=1,2,3')
+        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
     }
 
     onSubmit = (values) => {
