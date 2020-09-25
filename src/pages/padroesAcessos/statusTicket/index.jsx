@@ -30,7 +30,7 @@ class Index extends Component{
                     ordem: row.ordem,
                     nome: row.nome,
                     // descricao: row.descricao,
-                    link: '/configuracao-ticket/status-ticket/' + row.id + '/visualizar'
+                    link: '/padroes-acessos/status-ticket/' + row.id + '/visualizar'
                 })
             })
         }

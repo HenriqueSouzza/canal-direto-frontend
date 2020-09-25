@@ -26,6 +26,7 @@ class Visualizar extends Component{
     }
 
     onSubmit = values => {
+        delete values.ordem
         this.props.alterarStatusTicket(values, this.props.match.params.id)
     }
 
@@ -102,6 +103,15 @@ class Visualizar extends Component{
                                                     color={`btn-dark`}
                                                     icon={`fa fa-arrow-left`}
                                                     description={`Voltar`}
+                                                    />
+                                            </div>
+                                            <div className="col-md-3">
+                                                <Field 
+                                                    component={Button} 
+                                                    type={`submit`}
+                                                    color={`btn-success`}
+                                                    icon={`fa fa-save`}
+                                                    description={`Alterar`}
                                                     />
                                             </div>
                                         </div>
