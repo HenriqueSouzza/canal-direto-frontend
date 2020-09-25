@@ -6,7 +6,6 @@ const INITIAL_STATE = {
     dadosSetor: [],
     dadosCategoria: [],
     interacoesTickets: [],
-    ticketsSetor: [],
     statusTicket: [],
     loading: false
 }

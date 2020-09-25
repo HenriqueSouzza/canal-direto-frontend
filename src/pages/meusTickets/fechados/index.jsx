@@ -26,11 +26,11 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets('&whereIn[status]=4,5')
+        this.props.buscarMeusTickets('?whereIn[status]=4,5')
     }
 
     onSubmit = values => {
-        let $where = '&whereIn[status]=4,5'
+        let $where = '?whereIn[status]=4,5'
 
         if(values.ticket) {
             $where += '&where[id]='+ values.ticket

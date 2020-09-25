@@ -6,9 +6,9 @@ import TicketsAbertos from './abertos/index';
 
 import TicketsAbertosVisualizar from './abertos/visualizar';
 
-import NovoTicket from './novo';
+import NovoTicket from './novo/index';
 
-import ReciboTicket from './recibo';
+import NovoReciboTicket from './novo/recibo';
 
 import TicketsFechados from './fechados/index';
 
@@ -21,8 +21,8 @@ function Router(){
     
     return(
         <Switch>
-            <Route exact path='/meus-tickets/novo-ticket' component={ props => <NovoTicket {...props} />} />
-            <Route exact path='/meus-tickets/:id/recibo' component={ props => <ReciboTicket {...props} />} />
+            <Route exact path='/meus-tickets/novo' component={ props => <NovoTicket {...props} />} />
+            <Route exact path='/meus-tickets/novo/:id/recibo' component={ props => <NovoReciboTicket {...props} />} />
 
             <Route exact path='/meus-tickets/abertos' component={ props => <TicketsAbertos {...props} />} />
             <Route exact path='/meus-tickets/abertos/:id/visualizar' component={ props => <TicketsAbertosVisualizar {...props} />} />

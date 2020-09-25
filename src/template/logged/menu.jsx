@@ -21,7 +21,7 @@ function Menu(props){
             <ul className="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                 {/* <MenuLink description={`Dashboard`} path={`/`} icon={`fas fa-tachometer-alt`}  active={``} /> */}
                 <MenuTreeView description={`Meus ticket`} path={`#`} icon={`fa fa-address-card`} >
-                    <MenuLink description={`Novo Ticket`} path={`/meus-tickets/novo-ticket`} icon={`fa fa-edit`} active={``} />
+                    <MenuLink description={`Novo Ticket`} path={`/meus-tickets/novo`} icon={`fa fa-edit`} active={``} />
                     <MenuLink description={`Abertos`} path={`/meus-tickets/abertos`} icon={`fa fa-envelope-open`} active={``} />
                     <MenuLink description={`Fechados`} path={`/meus-tickets/fechados`} icon={`fa fa-envelope`} active={``} />
                 </MenuTreeView>

@@ -26,12 +26,14 @@ import { USER_LOGGED } from '../../../config/const';
 
 import moment from 'moment';
 
+import PaginaNaoEncontrada from '../../errosPagina/paginaNaoEncontrada';
+
 
 class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
-        this.props.buscarMeusTickets('?where[id]=' + this.props.match.params.id)
+        this.props.buscarMeusTickets('?where[id]=' + this.props.match.params.id + '&whereIn[status]=1,2,3')
     }
 
     onSubmit = (values) => {
@@ -59,6 +61,15 @@ class Visualizar extends Component{
         let dataTicket = {}
 
         if(meusTickets.response){
+
+            if(meusTickets.response.content.length < 1){
+                return (
+                    <section className="content">
+                        <PaginaNaoEncontrada />
+                    </section>
+                )
+            }
+
             dataTicket.id = meusTickets.response.content[0].id
             dataTicket.assunto = meusTickets.response.content[0].assunto
             dataTicket.usuario_abertura = meusTickets.response.content[0].usuario_abertura

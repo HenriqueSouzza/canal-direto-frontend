@@ -5,29 +5,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import Button from '../../components/form/button';
 
-import LoadingBody from '../../components/loading/loadingBody';
+import Button from '../../../components/form/button';
 
-import MenuHeader from '../../components/menu/menuHeader';
+import LoadingBody from '../../../components/loading/loadingBody';
 
-import { buscarMeusTickets } from './actions';
+import MenuHeader from '../../../components/menu/menuHeader';
 
+import { buscarMeusTickets } from '../actions';
+
+import PaginaNaoEncontrada from '../../errosPagina/paginaNaoEncontrada';
 
 
 class Recibo extends Component{
 
     //Função que ao criar o component ele busca os setor que o usuario logado tem acesso
     componentDidMount(){
-        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
-    }
-
-    componentDidUpdate(){
-        if(!this.props.meusTickets.loading){
-            if(this.props.meusTickets.meusTickets.response.content.length < 1){
-                this.props.history.push('/meus-tickets/abertos')
-            }
-        }
+        this.props.buscarMeusTickets('?where[id]=' + this.props.match.params.id)
     }
 
     onVisualizarTicketAberto = () => {
@@ -45,16 +39,23 @@ class Recibo extends Component{
         let dataTicket = {}
 
         if(meusTickets.response){
-            if(meusTickets.response.content.length > 0){
-                dataTicket = {
-                    solicitante: meusTickets.response.content[0].usuario_abertura,
-                    ticket: meusTickets.response.content[0].id,
-                    assunto: meusTickets.response.content[0].assunto,
-                    setor: meusTickets.response.content[0].setor,
-                    categoria: meusTickets.response.content[0].categoria,
-                    mensagem: meusTickets.response.content[0].mensagem,
-                    arquivo: meusTickets.response.content[0].arquivo,
-                }
+
+            if(meusTickets.response.content.length < 1){
+                return (
+                    <section className="content">
+                        <PaginaNaoEncontrada />
+                    </section>
+                )
+            }
+
+            dataTicket = {
+                solicitante: meusTickets.response.content[0].usuario_abertura,
+                ticket: meusTickets.response.content[0].id,
+                assunto: meusTickets.response.content[0].assunto,
+                setor: meusTickets.response.content[0].setor,
+                categoria: meusTickets.response.content[0].categoria,
+                mensagem: meusTickets.response.content[0].mensagem,
+                arquivo: meusTickets.response.content[0].arquivo,
             }
         }
 
