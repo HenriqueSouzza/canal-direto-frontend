@@ -24,9 +24,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { buscarTicketsSetor, encaminharTicket, fecharTicket, responderTicket } from  './actions';
-
-import { salvarInteracao, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
+import { buscarInteracoesTicket, buscarTicketsSetor, buscarSetor, buscarCategoria, salvarInteracao, encaminharTicket, fecharTicket, responderTicket } from  './actions';
 
 import moment from 'moment';
 
@@ -177,7 +175,7 @@ class Visualizar extends Component{
                                         data={dataTicket}
                                         loading={loading}
                                         onVoltar={this.onVoltar}
-                                        onFechar={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ? this.onFecharTicket : false}
+                                        onFechar={(dataTicket.status) && (dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5) ? this.onFecharTicket : false}
                                         onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 

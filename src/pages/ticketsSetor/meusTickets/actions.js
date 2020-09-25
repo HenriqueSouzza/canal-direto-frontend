@@ -2,9 +2,9 @@ import axios from 'axios';
 
 import { toastr } from 'react-redux-toastr';
 
-import type from  './types';
+import type from  '../types';
 
-import { BASE_API, USER_LOGGED } from '../../config/const';
+import { BASE_API, USER_LOGGED } from '../../../config/const';
 
 
 /**
@@ -65,13 +65,44 @@ export const buscarStatusTicket = (params = '') => {
 
 }
 
+/**
+ * 
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const buscarInteracoesTicket = (params = '') => {
+    
+    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket' + params;
+
+    const headers = {}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_INTERACOES_TICKETS, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
 
 /**
- * Buscar o setor do usuário que está logado
+ * 
+ * @param {*} params 
  */
-export const buscarSetor = () => {
+export const buscarSetor = (params = '') => {
 
-    const endPoint = BASE_API + 'api/canal-direto/setor';
+    const endPoint = BASE_API + 'api/canal-direto/setor' + params;
 
     const headers = {}
 
@@ -97,11 +128,12 @@ export const buscarSetor = () => {
 
 
 /**
- * Buscar usuário da categoria que está logado
+ * 
+ * @param {*} params 
  */
-export const buscarCategoria = (idSetor) => {
+export const buscarCategoria = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/categoria?where[id_setor]=' + idSetor;
+    const endPoint = BASE_API + 'api/canal-direto/categoria' + params;
 
     const headers = {}
 
@@ -124,38 +156,6 @@ export const buscarCategoria = (idSetor) => {
     }
 
 }
-
-/**
- * 
- * @param {*} params 
- * @param {*} router 
- */
-export const buscarInteracoesTicket = (idTicket = '') => {
-    
-    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
-
-    const headers = {}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
-
-            dispatch({ type: type.BUSCAR_INTERACOES_TICKETS, payload: response })
-            
-        })
-        .catch(error => {
-
-            console.log(error)
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
-}
-
 
 
 /**
@@ -196,7 +196,10 @@ export const encaminharTicket = (params, idTicket, router) => {
 
 }
 
-
+/**
+ * @param {*} params 
+ * @param {*} idTicket 
+ */
 export const salvarInteracao = (params, idTicket) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
@@ -238,7 +241,7 @@ export const salvarInteracao = (params, idTicket) => {
             dispatch({type: type.LOAD, payload: true})
 
             toastr.success('Sucesso', 'Adicionado interação com sucesso')
-            dispatch(buscarInteracoesTicket(idTicket))
+            dispatch(buscarInteracoesTicket('?where[id_ticket]=' + idTicket))
 
         })
         .catch(error => {
@@ -253,7 +256,6 @@ export const salvarInteracao = (params, idTicket) => {
 
 
 /**
- * 
  * @param {*} params 
  * @param {*} idTicket 
  * @param {*} router 
@@ -276,7 +278,7 @@ export const fecharTicket = (params, idTicket, router) => {
 
             router.goBack()
             toastr.success('Sucesso', 'Ticket fechado com sucesso')
-            dispatch(buscarMeusTickets(USER_LOGGED))
+            dispatch(buscarMeusTickets())
             
         })
         .catch(error => {

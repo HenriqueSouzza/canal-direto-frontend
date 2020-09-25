@@ -12,7 +12,7 @@ import  Input  from '../../../components/form/input';
 
 import  Button  from '../../../components/form/button';
 
-import { FORM_RULES } from '../../../helpers/validations';
+import { composeValidators, FORM_RULES } from '../../../helpers/validations';
 
 import LoadingBody from '../../../components/loading/loadingBody';
 
@@ -26,7 +26,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { buscarMeusTickets, salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  '../actions';
+import { buscarMeusTickets, salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  './actions';
 
 import moment from 'moment';
 
@@ -37,16 +37,8 @@ class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
+        this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
         this.props.buscarSetor()
-        this.props.buscarInteracoesTicket(this.props.match.params.id)
-    }
-
-    componentDidUpdate(){
-        if(!this.props.ticketsSetor.loading && this.props.ticketsSetor.meusTickets.response){
-            if(this.props.ticketsSetor.meusTickets.response.content.length < 1){
-                this.props.history.push('/tickets-setor/meus-tickets')
-            }
-        }
     }
 
     onSubmit = values => {
@@ -83,7 +75,7 @@ class Visualizar extends Component{
     onChangeForm = event => {
         
         if(event.target.name == 'setor' && event.target.value){
-            this.props.buscarCategoria(event.target.value)
+            this.props.buscarCategoria('?where[idSetor]=' + event.target.value)
         }
         
     }
@@ -92,62 +84,52 @@ class Visualizar extends Component{
 
         const { loading, meusTickets, dadosSetor, dadosCategoria, interacoesTickets } = this.props.ticketsSetor
 
-        const dataTicket = {}
+        let dataTicket = {}
 
         if(meusTickets.response){
-            meusTickets.response.content.find(element => {
-                if(element.id == this.props.match.params.id){
-                    dataTicket.id = element.id
-                    dataTicket.assunto = element.assunto
-                    dataTicket.usuario_abertura = element.usuario_abertura
-                    dataTicket.papel_usuario = element.papel_usuario
-                    dataTicket.setor = element.setor
-                    dataTicket.categoria = element.categoria
-                    dataTicket.mensagem = element.mensagem
-                    dataTicket.arquivo = element.arquivo
-                    dataTicket.status = element.status
-                    dataTicket.created_at = element.created_at
-                }
-            })
+            dataTicket.id = meusTickets.response.content[0].id
+            dataTicket.assunto = meusTickets.response.content[0].assunto
+            dataTicket.usuario_abertura = meusTickets.response.content[0].usuario_abertura
+            dataTicket.papel_usuario = meusTickets.response.content[0].papel_usuario
+            dataTicket.setor = meusTickets.response.content[0].setor
+            dataTicket.categoria = meusTickets.response.content[0].categoria
+            dataTicket.mensagem = meusTickets.response.content[0].mensagem
+            dataTicket.arquivo = meusTickets.response.content[0].arquivo
+            dataTicket.status = meusTickets.response.content[0].status
+            dataTicket.created_at = meusTickets.response.content[0].created_a
         }
 
-        const dataInteracao = []
+        let dataInteracao = []
 
         if(interacoesTickets.response){
-            interacoesTickets.response.content.find(element => {
-                if(element.id_ticket == this.props.match.params.id){
-                    dataInteracao.push({
-                        solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0,
-                        usuario_interacao: element.usuario_interacao,
-                        mensagem: element.mensagem,
-                        arquivo: element.arquivo,
-                        dt_criacao: moment(element.dt_criacao).calendar(),
-                        privado: element.privado
-                    })
-                }
-            })
+            dataInteracao = interacoesTickets.response.content.map(row => ({
+                solicitante: USER_LOGGED.usuario == row.usuario_interacao ? 1 : 0,
+                usuario_interacao: row.usuario_interacao,
+                mensagem: row.mensagem,
+                arquivo: row.arquivo,
+                dt_criacao: moment(row.dt_criacao).calendar(),
+                privado: row.privado
+            }))
         }
 
-        const dataSetor = []
+        let dataSetor = []
 
         if(dadosSetor.response){
-            dadosSetor.response.content.map(row => {
-                dataSetor.push({
-                    id: row.id,
-                    name: row.descricao,
-                })
-            })
+            dataSetor = dadosSetor.response.content.map(row => ({
+                id: row.id,
+                name: row.descricao
+            }))
         }       
 
-        const dataCategoria = []
+        let dataCategoria = []
  
         if(dadosCategoria.response){
-            dadosCategoria.response.content.map(row => {
+            dataCategoria = dadosCategoria.response.content.map(row => {
                 if(row.descricao != dataTicket.categoria){
-                    dataCategoria.push({
+                    return {
                         id: row.id,
                         name: row.descricao,
-                    })
+                    }
                 }
             })
         } 
@@ -178,7 +160,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    { dataTicket.status && (dataTicket.status.ordem == 4 || dataTicket.status.ordem == 5) ?
+                    { (dataTicket.status) && (dataTicket.status.ordem != 4 || dataTicket.status.ordem != 5) ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -194,23 +176,21 @@ class Visualizar extends Component{
                                                         render={({handleSubmit, submitSucceeded, pristine}) => (
                                                             <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
                                                                 <div className="row">
-                                                                    <div className="col-md-6">
+                                                                    <div className="col-md-8">
                                                                         <Field 
                                                                             component={Input} 
-                                                                            name={`setor`} 
-                                                                            data={dataSetor}
-                                                                            label={`Setor:`}
-                                                                            validate={''}
+                                                                            name={`mensagem`} 
+                                                                            type={`text`}
+                                                                            label={`Mensagem:`}
+                                                                            validate={composeValidators(FORM_RULES.required)}
                                                                         />
 
                                                                     </div> 
-                                                                </div> 
-                                                                <div className="row justify-content-center">
                                                                     <div className="col-md-4">
+                                                                        <div className="">&nbsp;</div>
                                                                         <Button
                                                                             type={`submit`}
-                                                                            className={`col-md-10`}
-                                                                            color={`btn-success col-md-10`}
+                                                                            color={`btn-success`}
                                                                             disabled={submitSucceeded || pristine}
                                                                             icon={`fa fa-check`}
                                                                             description={`Fechar`}
