@@ -29,7 +29,7 @@ class Recibo extends Component{
     }
 
     onAbrirTicket = () => {
-        this.props.history.push('/meus-tickets/novo-ticket')
+        this.props.history.push('/meus-tickets/novo')
     }
 
     render(){

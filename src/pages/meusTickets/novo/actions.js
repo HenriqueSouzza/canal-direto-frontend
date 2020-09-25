@@ -103,7 +103,7 @@ export const salvarNovoTicket = (params, router) => {
     const endPoint = BASE_API + 'api/canal-direto/ticket';
 
     const headers = { 
-        'Content-Type': `multipart/form-data`
+        'Content-Type': `multipart/form-data`,
     }
 
     //classe utilizada para enviar arquivos
@@ -130,7 +130,7 @@ export const salvarNovoTicket = (params, router) => {
         axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
-            router.push('/meus-tickets/'+ response.data.response.content.id + '/recibo')
+            router.push('/meus-tickets/novo/'+ response.data.response.content.id + '/recibo')
             toastr.success('Sucesso', 'Ticket salvo com sucesso')
             
         })
