@@ -16,7 +16,7 @@ import { BASE_API, USER_LOGGED } from '../../config/const';
  */
 export const buscarMeusTickets = (params = '') => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario]=' + USER_LOGGED.usuario + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket' + params;
 
     const headers = {}
 
@@ -133,9 +133,9 @@ export const buscarCategoria = (idSetor) => {
  * @param {*} params 
  * @param {*} router 
  */
-export const buscarInteracoesTicket = (idTicket = '') => {
+export const buscarInteracoesTicket = (params = '') => {
     
-    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
+    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket' + params;
 
     const headers = {}
 
@@ -209,32 +209,45 @@ export const salvarNovoTicket = (params, router) => {
 
 }
 
-export const salvarInteracao = (params, idTicket, router) => {
+export const salvarInteracao = (params, idTicket) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = {}
-
-    if(params.tipoResposta == 'privado'){
-        params.privado = 1
-    }else{
-        params.publico = 1
+    const headers = { 
+        'Content-Type': `multipart/form-data`
     }
 
-    params.usuario_interacao = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
+    //classe utilizada para enviar arquivos
+    const formData = new FormData();
+
+    if(params.tipoResposta == 'privado'){
+        formData.append('privado', 1)
+    }else{
+        formData.append('publico', 1)
+    }
+
+    if(params.arquivo.length > 0){
+        params.arquivo.map( (row) => {
+            formData.append('arquivo[]', row)
+        })
+    }
+
+    formData.append('usuario_interacao', USER_LOGGED.usuario)
+    formData.append('id_ticket', idTicket)
+    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('mensagem', params.mensagem)
+    formData.append('_method', 'put')
 
     return dispatch => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.put(endPoint, params, { headers: headers })
+        axios.post(endPoint, formData, { headers: headers })
         .then(response => {
 
             toastr.success('Sucesso', 'Interação adicionada com sucesso')
-            dispatch(buscarInteracoesTicket(idTicket))
-            dispatch(buscarMeusTickets())
-            router.push('/meus-tickets/abertos/' + idTicket + '/visualizar')
+            dispatch(buscarInteracoesTicket('?where[id_ticket]=' + idTicket))
+            dispatch(buscarMeusTickets('?where[id]=' + idTicket))
             
         })
         .catch(error => {
