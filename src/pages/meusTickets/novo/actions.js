@@ -8,6 +8,36 @@ import { BASE_API, USER_LOGGED } from '../../../config/const';
 
 
 /**
+ * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
+ */
+export const buscarMeusTickets = (params = '') => {
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket' + params;
+
+    const headers = {}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+
+            dispatch({ type: type.BUSCAR_MEUS_TICKETS, payload: response })
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+
+/**
  * Buscar o setor do usuário que está logado
  */
 export const buscarSetor = () => {

@@ -12,7 +12,7 @@ import LoadingBody from '../../../components/loading/loadingBody';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
-import { buscarMeusTickets } from '../actions';
+import { buscarMeusTickets } from './actions';
 
 import PaginaNaoEncontrada from '../../errosPagina/paginaNaoEncontrada';
 
