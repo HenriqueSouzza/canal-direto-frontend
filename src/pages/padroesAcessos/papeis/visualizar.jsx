@@ -35,6 +35,7 @@ class Visualizar extends Component{
 
         params.papel = values.papel
         params.descricao = values.descricao
+        params.sistema = 1
 
         if(values.permissoes){
             params.permissao = values.permissoes.map( row => (row.value))
@@ -128,7 +129,7 @@ class Visualizar extends Component{
                                     </div>
                                 </div>
                                 <div className="row justify-content-center">
-                                    <div className="col-md-5">
+                                    <div className="col-md-3">
                                         <Field 
                                             component={Button} 
                                             type={`button`}
@@ -138,7 +139,7 @@ class Visualizar extends Component{
                                             description={`Voltar`}
                                             />
                                     </div>
-                                    <div className="col-md-5">
+                                    <div className="col-md-3">
                                         <Field 
                                             component={Button} 
                                             type={`submit`}

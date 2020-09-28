@@ -34,6 +34,7 @@ class Novo extends Component{
 
         params.papel = values.papel
         params.descricao = values.descricao
+        params.sistema = 1
 
         if(values.permissoes){
             params.permissao = values.permissoes.map( row => (row.value))
