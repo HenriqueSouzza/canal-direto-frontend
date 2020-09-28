@@ -113,7 +113,7 @@ class Novo extends Component{
                                     </div>
                                 </div>
                                 <div className="row justify-content-center">
-                                    <div className="col-md-5">
+                                    <div className="col-md-3">
                                         <Field 
                                             component={Button} 
                                             type={`button`}
@@ -123,7 +123,7 @@ class Novo extends Component{
                                             description={`Voltar`}
                                             />
                                     </div>
-                                    <div className="col-md-5">
+                                    <div className="col-md-3">
                                         <Field 
                                             component={Button} 
                                             type={`submit`}
