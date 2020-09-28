@@ -18,15 +18,26 @@ import Button from '../../../components/form/button';
 
 import SelectMultiple from '../../../components/form/selectMultiple';
 
+import Select from '../../../components/form/select';
+
 import { buscarPapeis, novoPapel } from './actions';
 
 import { buscarPermissoes } from '../permissoes/actions';
+
+import { buscarSetor } from '../setor/actions';
+
+import { buscarCategoria } from '../categoria/actions';
 
 
 class Novo extends Component{
 
     componentDidMount(){
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
+        this.props.buscarSetor()
+    }
+
+    state = {
+        dataCategoria: []
     }
 
     onSubmit = values => {
@@ -40,17 +51,54 @@ class Novo extends Component{
             params.permissao = values.permissoes.map( row => (row.value))
         }
 
-        this.props.novoPapel(params, this.props.history)
+        console.log(values)
+        // this.props.novoPapel(params, this.props.history)
+    }
+
+    // redireciona para tela de setor
+    onSetor = () => {
+        this.props.history.push('novo/setor-papeis')
+    }
+
+    onChangeForm = (name, value) => {
+        let { setor } = this.props.padroesAcessos
+
+        let dataCategoria = {}
+
+        if(name == 'setores'){
+            this.props.buscarCategoria('?where[id_setor]=' + value)
+            
+            const setorTemp = setor.response.content.find(row => row.id == value )
+            dataCategoria = setorTemp.categoria.map(val => ({value: val.id, label: val.descricao}))
+        }
+
+        this.setState({dataCategoria: dataCategoria})
     }
 
     render(){
 
-        const { loading, permissoes } = this.props.padroesAcessos
+        const { loading, permissoes, setor, categoria } = this.props.padroesAcessos
+
+        let categoriaSelect = []
+
+        if(categoria.response){
+            categoriaSelect = categoria.response.content.map(row => ({value: row.id, label: row.descricao}))
+        }
+
+        let setorSelect = []
+
+        if(setor.response){
+            setorSelect = setor.response.content.map(row => ({ id: row.id, name: row.descricao }))
+        }
 
         let permissoesSelect = {}
 
         if(permissoes.response){
             permissoesSelect = permissoes.response.content.map(row => ({value: row.id, label: row.permissao}))
+        }
+
+        const initialValues = {
+            categoria: this.state.dataCategoria
         }
 
         return( 
@@ -60,8 +108,13 @@ class Novo extends Component{
                 <div className="content-fluid">
                     <Form
                         onSubmit={this.onSubmit}
+                        initialValues={initialValues}
                         render={({handleSubmit}) => (
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e.target.name, e.target.value)}>
+
+                                {/************************ PAPEIS ******************************
+                                ****************************************************************/}
+
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <h3 className="card-title">Dados do formulário</h3>
@@ -93,6 +146,44 @@ class Novo extends Component{
                                         </div>
                                     </div>
                                 </div>
+
+                                {/************************ SETORES E CATEGORIAS ************************
+                                ***********************************************************************/}
+
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Informe os setores e categorias</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-12">
+                                                <Field
+                                                    component={Select}
+                                                    name={`setores`}
+                                                    data={setorSelect}
+                                                    label={`Setor`}
+                                                    />
+                                            </div>
+                                            { categoriaSelect.length > 0 ? 
+                                                <div className="col-md-12">
+                                                    <Field
+                                                        component={SelectMultiple}
+                                                        label={`Categoria`}
+                                                        name={`categoria`}
+                                                        options={categoriaSelect}
+                                                        isMulti
+                                                        closeMenu={false}
+                                                        multiple
+                                                        />
+                                                </div>
+                                            : ''}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/************************ PERMISSOES **************************
+                                ****************************************************************/}
+
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <h3 className="card-title">Informe as permissões desse papel</h3>
@@ -112,6 +203,7 @@ class Novo extends Component{
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="row justify-content-center">
                                     <div className="col-md-3">
                                         <Field 
@@ -149,7 +241,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);

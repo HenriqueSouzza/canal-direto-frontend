@@ -24,8 +24,12 @@ class Novo extends Component{
 
     onSubmit = values => {
 
-        values.ativo = (values.ativos ? "S" : "N");
-        // this.props.cadastrarSetor(values, this.props.history)
+        const params = {}
+
+        params.ativo = values.ativo ? 1 : 0
+        params.descricao = values.descricao
+
+        this.props.cadastrarSetor(params, this.props.history)
 
     }
 

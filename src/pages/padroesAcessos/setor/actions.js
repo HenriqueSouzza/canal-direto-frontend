@@ -58,7 +58,7 @@ export const cadastrarSetor = (params, router) => {
 
             dispatch(buscarSetor())
 
-            router.push('/setor/' + response.data.response.content.setor + '/editar')
+            router.push('/padroes-acessos/setor/' + response.data.response.content.id + '/visualizar')
             
         })
         .catch(error => {

@@ -34,7 +34,6 @@ export const buscarPapeis = (params = '') => {
     }
 }
 
-
 /**
  * Método de para salvar um novo papel
  */

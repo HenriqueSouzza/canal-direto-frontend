@@ -96,7 +96,7 @@ class Visualizar extends Component{
         return(
                 <section className="content">
                     <LoadingBody status={loading} />
-                    <MenuHeader title={`Cadastrar Setor`} history={this.props.location.pathname} />
+                    <MenuHeader title={`Detalhe do Setor`} history={this.props.location.pathname} />
                     <div className="content-fluid">
                         <Form
                             onSubmit={this.onSubmit}

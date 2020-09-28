@@ -59,6 +59,7 @@ class Visualizar extends Component{
         if(papeis.response){
             initialValues.papel = papeis.response.content[0].papel
             initialValues.descricao = papeis.response.content[0].descricao
+            initialValues.sistema = papeis.response.content[0].sistemas.nome_sistema
             initialValues.permissoes = papeis.response.content[0].permissoes.map(row => ({value: row.id, label: row.permissao}))
         }
 
@@ -78,13 +79,17 @@ class Visualizar extends Component{
                         initialValues={initialValues}
                         render={({handleSubmit}) => (
                             <form onSubmit={handleSubmit}>
+
+                                {/************************ PAPEIS ************************
+                                **********************************************************/}
+
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <h3 className="card-title">Dados do formulário</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="row justify-content-center">
-                                            <div className="col-md-6">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
@@ -95,7 +100,7 @@ class Visualizar extends Component{
                                                     validate={composeValidators(FORM_RULES.required)}
                                                     />
                                             </div>
-                                            <div className="col-md-6">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
@@ -106,9 +111,24 @@ class Visualizar extends Component{
                                                     validate={composeValidators(FORM_RULES.required)}
                                                     />
                                             </div>
+                                            <div className="col-md-4">
+                                                <Field 
+                                                    component={Input} 
+                                                    type={`text`}
+                                                    name={`sistema`} 
+                                                    label={`Sistema:`}
+                                                    icon={`fa fa-align-justify`}
+                                                    disabled={true}
+                                                    placeholder={`Digite para o que será utilizado`}
+                                                    />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                {/************************ PERMISSOES ************************
+                                **********************************************************/}
+
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <h3 className="card-title">Informe as permissões desse papel</h3>
