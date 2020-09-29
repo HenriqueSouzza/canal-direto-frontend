@@ -22,6 +22,9 @@ import SetorReducer from './pages/setor/reducer';
 //Categoria
 import CategoriaReducer from './pages/setor/categoria/reducer';
 
+//Usuário
+import UsuariosReducer from './pages/usuarios/reducer';
+
 const rootReducer = combineReducers({
     toastr: toastrReducer,
     dashboard: () => ({ test: 1500 }),
@@ -31,6 +34,7 @@ const rootReducer = combineReducers({
     meusTickets: MeusTicketsReducer,
     setor: SetorReducer,
     categoria: CategoriaReducer,
+    usuarios: UsuariosReducer,
 })
 
 export default rootReducer; 
