@@ -6,6 +6,10 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
+import { FieldArray } from 'react-final-form-arrays';
+
+import arrayMutators from 'final-form-arrays'
+
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import MenuHeader from '../../../components/menu/menuHeader';
@@ -36,10 +40,6 @@ class Novo extends Component{
         this.props.buscarSetor()
     }
 
-    state = {
-        dataCategoria: []
-    }
-
     onSubmit = values => {
         const params = {}
 
@@ -60,19 +60,11 @@ class Novo extends Component{
         this.props.history.push('novo/setor-papeis')
     }
 
-    onChangeForm = (name, value) => {
-        let { setor } = this.props.padroesAcessos
-
-        let dataCategoria = {}
-
-        if(name == 'setores'){
-            this.props.buscarCategoria('?where[id_setor]=' + value)
-            
-            const setorTemp = setor.response.content.find(row => row.id == value )
-            dataCategoria = setorTemp.categoria.map(val => ({value: val.id, label: val.descricao}))
+    //
+    onChangeForm = event => {
+        if(event.target.name.indexOf("setorCategoria") != '-1'){
+            this.props.buscarCategoria('?where[id_setor]=' + event.target.value)
         }
-
-        this.setState({dataCategoria: dataCategoria})
     }
 
     render(){
@@ -82,7 +74,7 @@ class Novo extends Component{
         let categoriaSelect = []
 
         if(categoria.response){
-            categoriaSelect = categoria.response.content.map(row => ({value: row.id, label: row.descricao}))
+            categoriaSelect = categoria.response.content.map(row => ({ value: row.id, label: row.descricao }))
         }
 
         let setorSelect = []
@@ -97,10 +89,6 @@ class Novo extends Component{
             permissoesSelect = permissoes.response.content.map(row => ({value: row.id, label: row.permissao}))
         }
 
-        const initialValues = {
-            categoria: this.state.dataCategoria
-        }
-
         return( 
             <section className="content">
                 <LoadingBody status={loading} />
@@ -108,9 +96,15 @@ class Novo extends Component{
                 <div className="content-fluid">
                     <Form
                         onSubmit={this.onSubmit}
-                        initialValues={initialValues}
-                        render={({handleSubmit}) => (
-                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e.target.name, e.target.value)}>
+                        mutators={{ ...arrayMutators }}
+                        render={({
+                                    handleSubmit,
+                                    form: {
+                                        mutators: { push, pop }
+                                    },
+                                    values
+                                }) => (
+                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
 
                                 {/************************ PAPEIS ******************************
                                 ****************************************************************/}
@@ -157,27 +151,89 @@ class Novo extends Component{
                                     <div className="card-body">
                                         <div className="row justify-content-center">
                                             <div className="col-md-12">
-                                                <Field
-                                                    component={Select}
-                                                    name={`setores`}
-                                                    data={setorSelect}
-                                                    label={`Setor`}
+                                                <FieldArray name="setorCategoria">
+                                                    {({ fields }) =>
+                                                        fields.map((name, index) => (
+                                                        <div className="row justify-content-center border-bottom mb-2" key={name}>
+                                                            <div className="col-md-4">
+                                                                <Field
+                                                                    component={Select}
+                                                                    name={`${name}.setor`}
+                                                                    label={`Setor`}
+                                                                    data={setorSelect}
+                                                                    />
+                                                            </div>
+                                                            { categoriaSelect.length > 0 ? 
+                                                                <div className="col-md-6">
+                                                                    <Field
+                                                                        component={SelectMultiple}
+                                                                        name={`${name}.categoria`}
+                                                                        label={`Categoria`}
+                                                                        options={categoriaSelect}
+                                                                        isMulti
+                                                                        closeMenu={false}
+                                                                        multiple
+                                                                        />
+                                                                </div>
+                                                            : ''} 
+                                                            <div className="col-md-2">
+                                                                <label>&nbsp;</label>
+                                                                <Button 
+                                                                    type={`button`}
+                                                                    onClick={() => fields.remove(index)}
+                                                                    icon={`fa fa-trash`}
+                                                                    color={`btn-dark`}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        ))
+                                                    }
+                                                </FieldArray>
+                                            </div>
+                                        </div>
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-4">
+                                                <Button
+                                                    type={`button`}
+                                                    description={`Adicionar`}
+                                                    color={`btn-primary`}
+                                                    name={`btn-adicionar`}
+                                                    icon={`fa fa-plus`}
+                                                    onClick={() => push('setorCategoria', undefined)}
                                                     />
                                             </div>
-                                            { categoriaSelect.length > 0 ? 
-                                                <div className="col-md-12">
-                                                    <Field
-                                                        component={SelectMultiple}
-                                                        label={`Categoria`}
-                                                        name={`categoria`}
-                                                        options={categoriaSelect}
-                                                        isMulti
-                                                        closeMenu={false}
-                                                        multiple
-                                                        />
-                                                </div>
-                                            : ''}
                                         </div>
+                                        <div className="row justify-content-center">
+                                            {/* { values.setorCategoria ?
+                                                <>
+                                                    <div className="col-md-12">
+                                                        <Field
+                                                            component={Select}
+                                                            name={`setor`}
+                                                            data={setorSelect}
+                                                            label={`Setor`}
+                                                            />
+                                                    </div>
+                                                    { categoriaSelect.length > 0 ? 
+                                                        <div className="col-md-12">
+                                                            <Field
+                                                                component={SelectMultiple}
+                                                                label={`Categoria`}
+                                                                name={`categoria`}
+                                                                options={categoriaSelect}
+                                                                isMulti
+                                                                closeMenu={false}
+                                                                multiple
+                                                                />
+                                                        </div>
+                                                    : ''} 
+                                                </>
+                                            : '' } */}
+                                        </div>
+                                        {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+                                        {/* <div className="row justify-content-center">
+                                            <h3 className="card-title"><i className={`fa fa-info-circle`}></i> Clique para adicionar</h3>
+                                        </div> */}
                                     </div>
                                 </div>
 
@@ -209,6 +265,7 @@ class Novo extends Component{
                                         <Field 
                                             component={Button} 
                                             type={`button`}
+                                            name={`btn-voltar`}
                                             color={`btn-dark`}
                                             onClick={() => this.onVoltar()}
                                             icon={`fa fa-arrow-left`}
@@ -219,6 +276,7 @@ class Novo extends Component{
                                         <Field 
                                             component={Button} 
                                             type={`submit`}
+                                            name={`btn-salvar`}
                                             color={`btn-success`}
                                             icon={`fa fa-save`}
                                             description={`Salvar`}

@@ -86,18 +86,13 @@ class Novo extends Component{
         let dataSetor = []
 
         if(dadosSetor.response){
-            dataSetor = dadosSetor.response.content.map(row => ({ 
-                id: row.id, name: row.descricao 
-            }))
+            dataSetor = dadosSetor.response.content.map(row => ({ id: row.id, name: row.descricao }) )
         }
         
         let dataCategoria = []
 
         if(dadosCategoria.response){
-            dataCategoria = dadosCategoria.response.content.map(row => ({
-                id: row.id,
-                name: row.descricao,
-            }))
+            dataCategoria = dadosCategoria.response.content.map(row => ({ id: row.id, name: row.descricao }))
         }
 
         return (
