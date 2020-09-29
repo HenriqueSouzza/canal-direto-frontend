@@ -117,6 +117,7 @@ class Novo extends Component{
                                                     <Field
                                                         component={Button}
                                                         type={`button`} 
+                                                        name={`btn-button`}
                                                         color={`btn-dark`}
                                                         onClick={() => this.onVoltar()}
                                                         icon={`fa fa-arrow-left`} 
@@ -127,6 +128,7 @@ class Novo extends Component{
                                                     <Field
                                                         component={Button}
                                                         type={`submit`} 
+                                                        name={`btn-submit`}
                                                         color={`btn-success`}
                                                         icon={`fa fa-save`} 
                                                         description={`Adicionar`}

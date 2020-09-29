@@ -163,19 +163,17 @@ class Novo extends Component{
                                                                     data={setorSelect}
                                                                     />
                                                             </div>
-                                                            { categoriaSelect.length > 0 ? 
-                                                                <div className="col-md-6">
-                                                                    <Field
-                                                                        component={SelectMultiple}
-                                                                        name={`${name}.categoria`}
-                                                                        label={`Categoria`}
-                                                                        options={categoriaSelect}
-                                                                        isMulti
-                                                                        closeMenu={false}
-                                                                        multiple
-                                                                        />
-                                                                </div>
-                                                            : ''} 
+                                                            <div className="col-md-6">
+                                                                <Field
+                                                                    component={SelectMultiple}
+                                                                    name={`${name}.categoria`}
+                                                                    label={`Categoria`}
+                                                                    options={categoriaSelect}
+                                                                    isMulti
+                                                                    closeMenu={false}
+                                                                    multiple
+                                                                    />
+                                                            </div>
                                                             <div className="col-md-2">
                                                                 <label>&nbsp;</label>
                                                                 <Button 
@@ -203,37 +201,6 @@ class Novo extends Component{
                                                     />
                                             </div>
                                         </div>
-                                        <div className="row justify-content-center">
-                                            {/* { values.setorCategoria ?
-                                                <>
-                                                    <div className="col-md-12">
-                                                        <Field
-                                                            component={Select}
-                                                            name={`setor`}
-                                                            data={setorSelect}
-                                                            label={`Setor`}
-                                                            />
-                                                    </div>
-                                                    { categoriaSelect.length > 0 ? 
-                                                        <div className="col-md-12">
-                                                            <Field
-                                                                component={SelectMultiple}
-                                                                label={`Categoria`}
-                                                                name={`categoria`}
-                                                                options={categoriaSelect}
-                                                                isMulti
-                                                                closeMenu={false}
-                                                                multiple
-                                                                />
-                                                        </div>
-                                                    : ''} 
-                                                </>
-                                            : '' } */}
-                                        </div>
-                                        {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
-                                        {/* <div className="row justify-content-center">
-                                            <h3 className="card-title"><i className={`fa fa-info-circle`}></i> Clique para adicionar</h3>
-                                        </div> */}
                                     </div>
                                 </div>
 
@@ -243,6 +210,29 @@ class Novo extends Component{
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <h3 className="card-title">Informe as permissões desse papel</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-12">
+                                                <Field
+                                                    component={SelectMultiple}
+                                                    name={`permissoes`}
+                                                    options={permissoesSelect}
+                                                    isMulti
+                                                    closeMenu={false}
+                                                    multiple
+                                                    />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/************************ FORMULARIOS **************************
+                                ****************************************************************/}
+
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Informe os formulários desse papel</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="row justify-content-center">
