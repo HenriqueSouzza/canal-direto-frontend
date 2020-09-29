@@ -7,20 +7,14 @@ import { reducer as toastrReducer } from 'react-redux-toastr'; //redux do compon
 //Auth
 import AuthReducer from './pages/auth/reducer';
 
-//Configuração Ticket
-import ConfiguracaoTicketReducer from './pages/configuracaoTicket/reducer';
-
 //Meus Ticket
 import MeusTicketsReducer from './pages/meusTickets/reducer';
 
 //TicketSetor
 import TicketsSetorReducer from './pages/ticketsSetor/reducer';
 
-//Setor
-import SetorReducer from './pages/setor/reducer';
-
-//Categoria
-import CategoriaReducer from './pages/setor/categoria/reducer';
+//PadroesAcessos
+import PadroesAcessosReducer from './pages/padroesAcessos/reducer';
 
 //Usuário
 import UsuariosReducer from './pages/usuarios/reducer';
@@ -29,12 +23,10 @@ const rootReducer = combineReducers({
     toastr: toastrReducer,
     dashboard: () => ({ test: 1500 }),
     auth: AuthReducer,
-    configuracaoTicket: ConfiguracaoTicketReducer,
     ticketsSetor: TicketsSetorReducer,
     meusTickets: MeusTicketsReducer,
-    setor: SetorReducer,
-    categoria: CategoriaReducer,
     usuarios: UsuariosReducer,
+    padroesAcessos: PadroesAcessosReducer
 })
 
 export default rootReducer; 

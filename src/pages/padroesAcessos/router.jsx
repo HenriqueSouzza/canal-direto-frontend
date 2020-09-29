@@ -4,32 +4,57 @@ import { Route, Switch } from 'react-router-dom';
 
 import PaginaNaoEncontrada from '../errosPagina/paginaNaoEncontrada';
 
-import Papeis from './papeis/index';
-
-import PapeisVisualizar from './papeis/visualizar';
+import PapeisRouter from './papeis/router';
 
 import Permissoes from './permissoes/index';
 
-import PermissoesVisualizar from './permissoes/visualizar';
+import Setor from './setor';
+import SetorVisualizar from './setor/visualizar';
+import SetorNovo from './setor/novo';
 
-import PermissoesPapeis from './permissoesPapeis/index';
+import CategoriaVisualizar from './categoria/visualizar';
+import CategoriaNovo from './categoria/novo';
 
-import PermissoesPapeisVisualizar from './permissoesPapeis/visualizar';
+import Formularios from './formularios/index';
+import FormulariosNovo from './formularios/novo';
+import FormulariosVisualizar from './formularios/visualizar';
 
+import CamposFormularios from './camposFormularios/index';
+import CamposFormulariosNovo from './camposFormularios/novo';
+import CamposFormulariosVisualizar from './camposFormularios/visualizar';
+
+import StatusTicket from './statusTicket/index';
+import StatusTicketNovo from './statusTicket/novo';
+import StatusTicketVisualizar from './statusTicket/visualizar';
 
 function Router(){
     
     return(
         <Switch>
-            <Route exact path='/padroes-acessos/papeis' component={ props => <Papeis {...props} />} />
-            <Route exact path='/padroes-acessos/papeis/:id/visualizar' component={ props => <PapeisVisualizar {...props} />} />
+
+            <Route path='/padroes-acessos/papeis' component={ props => <PapeisRouter {...props} />} />
 
             <Route exact path='/padroes-acessos/permissoes' component={ props => <Permissoes {...props} />} />
-            <Route exact path='/padroes-acessos/permissoes/:id/visualizar' component={ props => <PermissoesVisualizar {...props} />} />
 
-            <Route exact path='/padroes-acessos/permissoes-papeis' component={ props => <PermissoesPapeis {...props} />} />
-            <Route exact path='/padroes-acessos/permissoes-papeis/:id/visualizar' component={ props => <PermissoesPapeisVisualizar {...props} />} />
-            
+            <Route exact path='/padroes-acessos/setor' component={ props => <Setor {...props} />} />
+            <Route exact path='/padroes-acessos/setor/:id/visualizar' component={ props => <SetorVisualizar {...props} />} />
+            <Route exact path='/padroes-acessos/setor/novo' component={ props => <SetorNovo {...props} />} />
+
+            <Route exact path='/padroes-acessos/categoria/:id/visualizar' component={ props => <CategoriaVisualizar {...props} />} />
+            <Route exact path='/padroes-acessos/categoria/:id/novo' component={ props => <CategoriaNovo {...props} />} />
+
+            <Route exact path='/padroes-acessos/formularios' component={ props => <Formularios {...props} />} />
+            <Route exact path='/padroes-acessos/formularios/novo' component={ props => <FormulariosNovo {...props} />} />
+            <Route exact path='/padroes-acessos/formularios/:id/visualizar' component={ props => <FormulariosVisualizar {...props} />} />
+
+            <Route exact path='/padroes-acessos/campos-formularios' component={ props => <CamposFormularios {...props} />} />
+            <Route exact path='/padroes-acessos/campos-formularios/novo' component={ props => <CamposFormulariosNovo {...props} />} />
+            <Route exact path='/padroes-acessos/campos-formularios/:id/visualizar' component={ props => <CamposFormulariosVisualizar {...props} />} />
+
+            <Route exact path='/padroes-acessos/status-ticket' component={ props => <StatusTicket {...props} />} />
+            <Route exact path='/padroes-acessos/status-ticket/novo' component={ props => <StatusTicketNovo {...props} />} />
+            <Route exact path='/padroes-acessos/status-ticket/:id/visualizar' component={ props => <StatusTicketVisualizar {...props} />} />
+
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>
     )

@@ -4,7 +4,11 @@ import type from './types';
 const INITIAL_STATE = {
     papeis: {},
     permissoes: {},
-    permissoesPapeis: {},
+    setor: {},
+    categoria: {},
+    formularios: [],
+    camposFormularios: [],
+    statusTicket: [],
     loading: false
 }
 
@@ -23,9 +27,25 @@ export default (state = INITIAL_STATE, action) => {
         case type.BUSCAR_PERMISSOES:
             return { ...state, permissoes: action.payload.data || INITIAL_STATE.permissoes, loading: false }   
 
-        //Caso para guardar as permissoes atreladas aos papeis
-        case type.BUSCAR_PERMISSOES_PAPEIS:
-            return { ...state, permissoesPapeis: action.payload.data || INITIAL_STATE.permissoesPapeis, loading: false }        
+        //Caso para guardar os setores existentes
+        case type.BUSCAR_SETOR:
+            return { ...state, setor: action.payload.data || INITIAL_STATE.setor, loading: false }   
+
+        //Caso para guardar os setores existentes
+        case type.BUSCAR_CATEGORIA:
+            return { ...state, categoria: action.payload.data || INITIAL_STATE.categoria, loading: false }   
+
+        //Caso para guardar os formularios existentes
+        case type.BUSCAR_FORMULARIOS:
+            return { ...state, formularios: action.payload.data || INITIAL_STATE.formularios, loading: false }        
+
+        //Caso para guardar os campos formularios existentes
+        case type.BUSCAR_CAMPOS_FORMULARIOS:
+            return { ...state, camposFormularios: action.payload.data || INITIAL_STATE.camposFormularios, loading: false }        
+
+        //Caso para guardar os status existentes
+        case type.BUSCAR_STATUS_TICKET:
+            return { ...state, statusTicket: action.payload.data || INITIAL_STATE.statusTicket, loading: false } 
 
         default:
             return state;   

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
+
+import { Link } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 
@@ -10,45 +10,46 @@ import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { buscarPapeis } from './actions';
+import { ACTION_RULES } from '../../../helpers/authorization';
+
+import  { buscarSetor } from './actions';
+
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarPapeis('?order=id,desc')
+        this.props.buscarSetor()
     }
 
     render(){
 
-        const { loading, papeis } = this.props.padroesAcessos
+        const { loading, setor } = this.props.padroesAcessos
+        
+        let dataSetor = []
 
-        const dataPapeis = []
-
-        if(papeis.response){
-            papeis.response.content.map(row => {
-                dataPapeis.push({
-                    id: row.id,
-                    papel: row.papel,
-                    descricao: row.descricao,
-                    link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
-                })
-            })
+        if(setor.response){
+            dataSetor = setor.response.content.map(row => ({
+                setor: row.id, 
+                descricao: row.descricao, 
+                ativo: row.ativo == '1' ? 'sim' : 'não',
+                link: '/padroes-acessos/setor/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [
             {
-                name: '#',
-                selector: 'id',
-                sortable: true,
-            },
-            {
-                name: 'Papel',
-                selector: 'papel',
+                name: 'Setor',
+                selector: 'setor',
                 sortable: true,
             },
             {
                 name: 'Descrição',
                 selector: 'descricao',
+                sortable: true,
+            },            
+            {
+                name: 'Ativo',
+                selector: 'ativo',
                 sortable: true,
             },
             {
@@ -57,33 +58,34 @@ class Index extends Component{
                 cell: row => <Link to={row.link} className={`nav-link text-info`}>
                                 <i className={`fa fa-eye`}></i>
                             </Link>,
-            }   
-        ];
-
+            } 
+        ];        
 
         return(
             <section className="content">
-                <MenuHeader title={`Papéis de usuários`} history={this.props.location.pathname} />
+                <MenuHeader title={`Setores Cadastrados`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
-                        <div className="card-body">
+                         <div className="card-body">
                             <DataTable
                                 description={false}
                                 checkbox={false} 
                                 columns={columns} 
-                                data={dataPapeis} 
+                                data={dataSetor} 
                                 router={this.props.history}
-                                actions={null}
-                                loading={loading}
-                                btnAdd 
+                                btnAdd={true} 
+                                loading={loading} 
                             />
                         </div>
                     </div>
                 </div>
             </section>
         )
+
     }
+
 }
+
 
 /**
  * @param {*} state 
@@ -93,7 +95,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarSetor }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

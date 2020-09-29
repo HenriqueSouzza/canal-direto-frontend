@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
+
+import { Link } from 'react-router-dom';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { buscarPapeis } from './actions';
+import { buscarCamposFormularios } from './actions';
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarPapeis('?order=id,desc')
+        this.props.buscarCamposFormularios()
     }
 
     render(){
 
-        const { loading, papeis } = this.props.padroesAcessos
+        const { loading, camposFormularios} = this.props.padroesAcessos
 
-        const dataPapeis = []
+        const dataCamposFormularios = []
 
-        if(papeis.response){
-            papeis.response.content.map(row => {
-                dataPapeis.push({
+        if(camposFormularios.response){
+            camposFormularios.response.content.map(row => {
+                dataCamposFormularios.push({
                     id: row.id,
-                    papel: row.papel,
+                    nome: row.label,
                     descricao: row.descricao,
-                    link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
+                    link: '/padroes-acessos/campos-formularios/' + row.id + '/visualizar'
                 })
             })
         }
@@ -42,8 +42,8 @@ class Index extends Component{
                 sortable: true,
             },
             {
-                name: 'Papel',
-                selector: 'papel',
+                name: 'Nome Ticket',
+                selector: 'nome',
                 sortable: true,
             },
             {
@@ -60,10 +60,9 @@ class Index extends Component{
             }   
         ];
 
-
         return(
             <section className="content">
-                <MenuHeader title={`Papéis de usuários`} history={this.props.location.pathname} />
+                <MenuHeader title={`Campos de formulários`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
                         <div className="card-body">
@@ -71,7 +70,7 @@ class Index extends Component{
                                 description={false}
                                 checkbox={false} 
                                 columns={columns} 
-                                data={dataPapeis} 
+                                data={dataCamposFormularios} 
                                 router={this.props.history}
                                 actions={null}
                                 loading={loading}
@@ -83,6 +82,7 @@ class Index extends Component{
             </section>
         )
     }
+
 }
 
 /**
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);

@@ -18,9 +18,7 @@ import Select from '../../../components/form/select';
 
 import Button from '../../../components/form/button';
 
-import { buscarTicketsSetor } from './actions';
-
-import { buscarStatusTicket } from '../actions';
+import { buscarTicketsSetor, buscarStatusTicket } from './actions';
 
 import moment from 'moment';
 
@@ -60,21 +58,19 @@ class Index extends Component{
             })
         }
 
-        const dataTicket = []
+        let dataTicket = []
         
         if(meuSetor.response){
-            meuSetor.response.content.map(row => {
-                dataTicket.push({
-                    ticket: row.id,
-                    assunto: row.assunto,
-                    setor: row.setor,
-                    categoria: row.categoria,
-                    criado: moment(row.created_at).calendar(),
-                    atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
-                    // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
-                    link: '/tickets-setor/para-meu-setor/' + row.id + '/visualizar'
-                })
-            })
+            dataTicket = meuSetor.response.content.map(row => ({
+                ticket: row.id,
+                assunto: row.assunto,
+                setor: row.setor,
+                categoria: row.categoria,
+                criado: moment(row.created_at).calendar(),
+                atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
+                // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
+                link: '/tickets-setor/para-meu-setor/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [

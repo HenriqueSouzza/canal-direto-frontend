@@ -6,14 +6,13 @@ import type from  '../types';
 
 import { BASE_API, USER_LOGGED } from '../../../config/const';
 
+
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarTicketsSetor = (params = '') => {
+export const buscarMeusTickets = (params) => {
 
-    const setorUser = '1,2'
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket?whereIn[setor]=' + setorUser + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario_atendente]=' + USER_LOGGED.usuario + params;
 
     const headers = {}
 
@@ -24,7 +23,7 @@ export const buscarTicketsSetor = (params = '') => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
 
-            dispatch({ type: type.BUSCAR_TICKETS_SETOR, payload: response })
+            dispatch({ type: type.BUSCAR_MEUS_TICKETS_SETOR, payload: response })
             
         })
         .catch(error => {
@@ -34,6 +33,7 @@ export const buscarTicketsSetor = (params = '') => {
 
         })
     }
+
 }
 
 /**
@@ -70,9 +70,9 @@ export const buscarStatusTicket = (params = '') => {
  * @param {*} params 
  * @param {*} router 
  */
-export const buscarInteracoesTicket = (idTicket = '') => {
+export const buscarInteracoesTicket = (params = '') => {
     
-    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
+    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket' + params;
 
     const headers = {}
 
@@ -157,8 +157,46 @@ export const buscarCategoria = (params) => {
 
 }
 
+
 /**
  * 
+ * @param {*} params 
+ * @param {*} idTicket 
+ * @param {*} router 
+ */
+export const encaminharTicket = (params, idTicket, router) => {
+
+    params.usuario_interacao = USER_LOGGED.usuario
+    params.papel_usuario = USER_LOGGED.papelUsuario.id
+
+    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+
+    const headers = {}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD, payload: true})
+
+        axios.put(endPoint, params, { headers: headers })
+        .then(response => {
+
+            router.goBack()
+            toastr.success('Sucesso', 'Ticket encaminhado com sucesso')
+            dispatch(buscarMeusTickets())
+            
+        })
+        .catch(error => {
+
+            console.log(error.response)
+            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
+            dispatch({type: type.LOAD, payload: false})
+
+        })
+    }
+
+}
+
+/**
  * @param {*} params 
  * @param {*} idTicket 
  */
@@ -203,7 +241,7 @@ export const salvarInteracao = (params, idTicket) => {
             dispatch({type: type.LOAD, payload: true})
 
             toastr.success('Sucesso', 'Adicionado interação com sucesso')
-            dispatch(buscarInteracoesTicket(idTicket))
+            dispatch(buscarInteracoesTicket('?where[id_ticket]=' + idTicket))
 
         })
         .catch(error => {
@@ -216,44 +254,8 @@ export const salvarInteracao = (params, idTicket) => {
     }
 }
 
-/**
- * @param {*} params 
- * @param {*} idTicket 
- * @param {*} router 
- */
-export const encaminharTicket = (params, idTicket, router) => {
-
-    params.usuario_interacao = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
-
-    const headers = {}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.put(endPoint, params, { headers: headers })
-        .then(response => {
-
-            router.goBack()
-            toastr.success('Sucesso', 'Ticket encaminhado com sucesso')
-            dispatch(buscarTicketsSetor())
-            
-        })
-        .catch(error => {
-
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-}
 
 /**
- * 
  * @param {*} params 
  * @param {*} idTicket 
  * @param {*} router 
@@ -276,49 +278,13 @@ export const fecharTicket = (params, idTicket, router) => {
 
             router.goBack()
             toastr.success('Sucesso', 'Ticket fechado com sucesso')
-            dispatch(buscarTicketsSetor("&where[aberto]=1"))
+            dispatch(buscarMeusTickets())
             
         })
         .catch(error => {
 
             console.log(error.response)
             toastr.error('Erro', 'Não foi possível finalizar seu tícket')
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
-}
-
-/**
- * 
- * @param {*} params 
- * @param {*} idTicket 
- * @param {*} router 
- */
-export const responderTicket = (params, idTicket, router) => {
-
-    params.usuario_atendente = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
-
-    const headers = {}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.put(endPoint, params, { headers: headers })
-        .then(response => {
-            
-            router.push('/tickets-setor/meus-tickets/'+ idTicket +'/visualizar');
-            
-        })
-        .catch(error => {
-
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível habilitar para responder esse ticket')
             dispatch({type: type.LOAD, payload: false})
 
         })

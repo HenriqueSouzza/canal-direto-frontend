@@ -1,56 +1,56 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
+
+import { Link } from 'react-router-dom';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
 import DataTable from '../../../components/table/dataTable';
 
-import { buscarPapeis } from './actions';
+import { buscarStatusTicket } from './actions';
 
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarPapeis('?order=id,desc')
+        this.props.buscarStatusTicket()
     }
 
     render(){
 
-        const { loading, papeis } = this.props.padroesAcessos
+        const { loading, statusTicket} = this.props.padroesAcessos
 
-        const dataPapeis = []
+        const dataStatusTicket = []
 
-        if(papeis.response){
-            papeis.response.content.map(row => {
-                dataPapeis.push({
-                    id: row.id,
-                    papel: row.papel,
-                    descricao: row.descricao,
-                    link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
+        if(statusTicket.response){
+            statusTicket.response.content.map(row => {
+                dataStatusTicket.push({
+                    ordem: row.ordem,
+                    nome: row.nome,
+                    // descricao: row.descricao,
+                    link: '/padroes-acessos/status-ticket/' + row.id + '/visualizar'
                 })
             })
         }
 
         const columns = [
             {
-                name: '#',
-                selector: 'id',
+                name: 'Ordem',
+                selector: 'ordem',
                 sortable: true,
             },
             {
-                name: 'Papel',
-                selector: 'papel',
+                name: 'Nome Ticket',
+                selector: 'nome',
                 sortable: true,
             },
-            {
-                name: 'Descrição',
-                selector: 'descricao',
-                sortable: true,
-            },
+            // {
+            //     name: 'Descrição',
+            //     selector: 'descricao',
+            //     sortable: true,
+            // },
             {
                 name: 'Detalhe',
                 button: true,
@@ -60,10 +60,9 @@ class Index extends Component{
             }   
         ];
 
-
         return(
             <section className="content">
-                <MenuHeader title={`Papéis de usuários`} history={this.props.location.pathname} />
+                <MenuHeader title={`Status de ticket`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
                         <div className="card-body">
@@ -71,7 +70,7 @@ class Index extends Component{
                                 description={false}
                                 checkbox={false} 
                                 columns={columns} 
-                                data={dataPapeis} 
+                                data={dataStatusTicket} 
                                 router={this.props.history}
                                 actions={null}
                                 loading={loading}
@@ -83,6 +82,7 @@ class Index extends Component{
             </section>
         )
     }
+
 }
 
 /**
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarStatusTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);
