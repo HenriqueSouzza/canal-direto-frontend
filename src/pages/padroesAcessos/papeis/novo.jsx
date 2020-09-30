@@ -8,7 +8,7 @@ import { Form, Field } from 'react-final-form';
 
 import { FieldArray } from 'react-final-form-arrays';
 
-import arrayMutators from 'final-form-arrays'
+import arrayMutators from 'final-form-arrays';
 
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
@@ -51,7 +51,15 @@ class Novo extends Component{
             params.permissao = values.permissoes.map( row => (row.value))
         }
 
-        console.log(values)
+        if(values.setorCategoria){
+            for(let i = 0; i < values.setorCategoria.length; i++){
+                if(values.setorCategoria[i] && values.setorCategoria[i].categoria){
+                    params.categoria = values.setorCategoria[i].categoria.map(row => row.value)
+                }
+            }
+        }
+
+        console.log(values.setorCategoria)
         // this.props.novoPapel(params, this.props.history)
     }
 
@@ -67,9 +75,13 @@ class Novo extends Component{
         }
     }
 
+    onVoltar = () => {
+        this.props.history.goBack()
+    }
+
     render(){
 
-        const { loading, permissoes, setor, categoria } = this.props.padroesAcessos
+        const { loading, permissoes, setor, categoria, formularios } = this.props.padroesAcessos
 
         let categoriaSelect = []
 
@@ -83,10 +95,16 @@ class Novo extends Component{
             setorSelect = setor.response.content.map(row => ({ id: row.id, name: row.descricao }))
         }
 
-        let permissoesSelect = {}
+        let permissoesSelect = []
 
         if(permissoes.response){
             permissoesSelect = permissoes.response.content.map(row => ({value: row.id, label: row.permissao}))
+        }
+        
+        let formulariosSelect = []
+        
+        if(formularios.response){
+            formulariosSelect = formularios.response.content.map(row => ({id: row.id, name: row.nome}))
         }
 
         return( 
@@ -102,7 +120,6 @@ class Novo extends Component{
                                     form: {
                                         mutators: { push, pop }
                                     },
-                                    values
                                 }) => (
                             <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
 
@@ -115,7 +132,7 @@ class Novo extends Component{
                                     </div>
                                     <div className="card-body">
                                         <div className="row justify-content-center">
-                                            <div className="col-md-6">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
@@ -126,7 +143,7 @@ class Novo extends Component{
                                                     validate={composeValidators(FORM_RULES.required)}
                                                     />
                                             </div>
-                                            <div className="col-md-6">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Input} 
                                                     type={`text`}
@@ -135,6 +152,14 @@ class Novo extends Component{
                                                     icon={`fa fa-align-justify`}
                                                     placeholder={`Digite para o que será utilizado`}
                                                     validate={composeValidators(FORM_RULES.required)}
+                                                    />
+                                            </div>
+                                            <div className="col-md-4">
+                                                <Field
+                                                    component={Select}
+                                                    name={`formulario`}
+                                                    label={`Formulário`}
+                                                    data={formulariosSelect}
                                                     />
                                             </div>
                                         </div>
@@ -163,7 +188,7 @@ class Novo extends Component{
                                                                     data={setorSelect}
                                                                     />
                                                             </div>
-                                                            <div className="col-md-6">
+                                                            <div className="col-md-7">
                                                                 <Field
                                                                     component={SelectMultiple}
                                                                     name={`${name}.categoria`}
@@ -174,7 +199,7 @@ class Novo extends Component{
                                                                     multiple
                                                                     />
                                                             </div>
-                                                            <div className="col-md-2">
+                                                            <div className="col-md-1">
                                                                 <label>&nbsp;</label>
                                                                 <Button 
                                                                     type={`button`}
@@ -190,7 +215,7 @@ class Novo extends Component{
                                             </div>
                                         </div>
                                         <div className="row justify-content-center">
-                                            <div className="col-md-4">
+                                            <div className="col-md-2">
                                                 <Button
                                                     type={`button`}
                                                     description={`Adicionar`}
@@ -199,6 +224,11 @@ class Novo extends Component{
                                                     icon={`fa fa-plus`}
                                                     onClick={() => push('setorCategoria', undefined)}
                                                     />
+                                            </div>
+                                            <div className="col-md-12 text-center">
+                                                <small className="text-danger"> 
+                                                    <b>* Só será enviado se o setor e a categoria estiver preenchido</b>
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -210,29 +240,6 @@ class Novo extends Component{
                                 <div className="card card-danger">
                                     <div className="card-header">
                                         <h3 className="card-title">Informe as permissões desse papel</h3>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-12">
-                                                <Field
-                                                    component={SelectMultiple}
-                                                    name={`permissoes`}
-                                                    options={permissoesSelect}
-                                                    isMulti
-                                                    closeMenu={false}
-                                                    multiple
-                                                    />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/************************ FORMULARIOS **************************
-                                ****************************************************************/}
-
-                                <div className="card card-danger">
-                                    <div className="card-header">
-                                        <h3 className="card-title">Informe os formulários desse papel</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="row justify-content-center">
