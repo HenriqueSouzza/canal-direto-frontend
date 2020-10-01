@@ -28,6 +28,8 @@ import { buscarPapeis, alterarPapel } from './actions';
 
 import { buscarPermissoes } from '../permissoes/actions';
 
+import { buscarCategoria } from '../categoria/actions';
+
 
 
 class Visualizar extends Component{
@@ -35,6 +37,7 @@ class Visualizar extends Component{
     componentDidMount(){
         this.props.buscarPapeis('?where[id]=' + this.props.match.params.id)
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
+        this.props.buscarCategoria()
     }
 
     onSubmit = values => {
@@ -51,7 +54,14 @@ class Visualizar extends Component{
             params.permissao = []
         }
 
-        this.props.alterarPapel(params, this.props.match.params.id)
+        params.categoria = []
+
+        if(values.categoria){
+            values.categoria.map( row => params.categoria.push(row.value))
+        }
+
+        console.log(params)
+        // this.props.alterarPapel(params, this.props.match.params.id)
     }
 
     onVoltar = () => {
@@ -63,26 +73,37 @@ class Visualizar extends Component{
         const { loading, papeis, permissoes, formularios, categoria, setor } = this.props.padroesAcessos
 
         const initialValues = {}
-
+        
         if(papeis.response){
             initialValues.papel = papeis.response.content[0].papel
             initialValues.descricao = papeis.response.content[0].descricao
             initialValues.sistema = papeis.response.content[0].sistemas.nome_sistema
             initialValues.formulario = papeis.response.content[0].formulario.id ? papeis.response.content[0].formulario.id : ''
             initialValues.permissoes = papeis.response.content[0].permissoes.map(row => ({value: row.id, label: row.permissao}))
-            initialValues.setorCategoria = [{setor: 1, categoria: [{value: 1, label: 'teste'}]}]
+
+            initialValues.categoria = []
+            papeis.response.content[0].setorCategoria.map(row => {
+                row.categoria.map( val => (initialValues.categoria.push({value: val.id, label: row.setor + ' - ' + val.descricao})))
+            })
         }
+
+
 
         let categoriaSelect = []
-
+        
         if(categoria.response){
-            categoriaSelect = categoria.response.content.map(row => ({ value: row.id, label: row.descricao }))
-        }
-
-        let setorSelect = []
-
-        if(setor.response){
-            setorSelect = setor.response.content.map(row => ({ id: row.id, name: row.descricao }))
+            categoriaSelect = categoria.response.content.map( row => ({ value: row.id, label: row.setor[0].descricao + ' - ' + row.descricao })) 
+            initialValues.categoria && initialValues.categoria.map(val => {
+                // categoriaSelect.find(row => row.value == val.value)
+                categoriaSelect.filter(row => row == val)
+                console.log(categoriaSelect)
+                // categoriaSelect.map(row => {
+                //     console.log(row.value)
+                //     if(val.value != row.value){
+                //         categoriaSelect.push(row)
+                //     }
+                // })
+            })
         }
 
         let permissoesSelect = {}
@@ -105,13 +126,7 @@ class Visualizar extends Component{
                     <Form
                         onSubmit={this.onSubmit}
                         initialValues={initialValues}
-                        mutators={{ ...arrayMutators }}
-                        render={({
-                                handleSubmit,
-                                form: {
-                                    mutators: { push, pop }
-                                },
-                            }) => (
+                        render={({ handleSubmit }) => (
                             <form onSubmit={handleSubmit}>
 
                                 {/************************ PAPEIS ************************
@@ -178,55 +193,18 @@ class Visualizar extends Component{
                                     <div className="card-body">
                                         <div className="row justify-content-center">
                                             <div className="col-md-12">
-                                                <FieldArray name="setorCategoria">
-                                                    {({ fields }) =>
-                                                        fields.map((name, index) => (
-                                                        <div className="row justify-content-center border-bottom mb-2" key={name}>
-                                                            <div className="col-md-4">
-                                                                <Field
-                                                                    component={Select}
-                                                                    name={`${name}.setor`}
-                                                                    label={`Setor`}
-                                                                    data={setorSelect}
-                                                                    />
-                                                            </div>
-                                                            <div className="col-md-7">
-                                                                <Field
-                                                                    component={SelectMultiple}
-                                                                    name={`${name}.categoria`}
-                                                                    label={`Categoria`}
-                                                                    options={categoriaSelect}
-                                                                    isMulti
-                                                                    closeMenu={false}
-                                                                    multiple
-                                                                    />
-                                                            </div>
-                                                            <div className="col-md-1">
-                                                                <label>&nbsp;</label>
-                                                                <Button 
-                                                                    type={`button`}
-                                                                    onClick={() => fields.remove(index)}
-                                                                    icon={`fa fa-trash`}
-                                                                    color={`btn-dark`}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        ))
-                                                    }
-                                                </FieldArray>
+                                                <Field
+                                                    component={SelectMultiple}
+                                                    name={`categoria`}
+                                                    label={`Categorias`}
+                                                    options={categoriaSelect}
+                                                    isMulti
+                                                    closeMenu={false}
+                                                    multiple
+                                                    />
                                             </div>
                                         </div>
                                         <div className="row justify-content-center">
-                                            <div className="col-md-2">
-                                                <Button
-                                                    type={`button`}
-                                                    description={`Adicionar`}
-                                                    color={`btn-primary`}
-                                                    name={`btn-adicionar`}
-                                                    icon={`fa fa-plus`}
-                                                    onClick={() => push('setorCategoria', undefined)}
-                                                    />
-                                            </div>
                                             <div className="col-md-12 text-center">
                                                 <small className="text-danger"> 
                                                     <b>* Só será enviado se o setor e a categoria estiver preenchido</b>
@@ -298,7 +276,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, alterarPapel }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, alterarPapel, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

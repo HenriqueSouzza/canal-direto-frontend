@@ -51,16 +51,17 @@ class Novo extends Component{
             params.permissao = values.permissoes.map( row => (row.value))
         }
 
+        params.categoria = []
+
         if(values.setorCategoria){
             for(let i = 0; i < values.setorCategoria.length; i++){
                 if(values.setorCategoria[i] && values.setorCategoria[i].categoria){
-                    params.categoria = values.setorCategoria[i].categoria.map(row => row.value)
+                    values.setorCategoria[i].categoria.map(row => params.categoria.push(row.value))
                 }
             }
         }
 
-        console.log(values.setorCategoria)
-        // this.props.novoPapel(params, this.props.history)
+        this.props.novoPapel(params, this.props.history)
     }
 
     // redireciona para tela de setor
@@ -70,7 +71,7 @@ class Novo extends Component{
 
     //
     onChangeForm = event => {
-        if(event.target.name.indexOf("setorCategoria") != '-1'){
+        if(event.target.name.indexOf("setorCategoria") >= 0){
             this.props.buscarCategoria('?where[id_setor]=' + event.target.value)
         }
     }
