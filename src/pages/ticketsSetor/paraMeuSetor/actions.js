@@ -258,44 +258,6 @@ export const encaminharTicket = (params, idTicket, router) => {
  * @param {*} idTicket 
  * @param {*} router 
  */
-export const fecharTicket = (params, idTicket, router) => {
-
-    params.usuario_fechamento = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
-
-    const headers = {}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.put(endPoint, params, { headers: headers })
-        .then(response => {
-
-            router.goBack()
-            toastr.success('Sucesso', 'Ticket fechado com sucesso')
-            dispatch(buscarTicketsSetor("&where[aberto]=1"))
-            
-        })
-        .catch(error => {
-
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
-}
-
-/**
- * 
- * @param {*} params 
- * @param {*} idTicket 
- * @param {*} router 
- */
 export const responderTicket = (params, idTicket, router) => {
 
     params.usuario_atendente = USER_LOGGED.usuario

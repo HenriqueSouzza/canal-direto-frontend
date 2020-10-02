@@ -95,8 +95,8 @@ class Visualizar extends Component{
             categoriaSelect = categoria.response.content.map( row => ({ value: row.id, label: row.setor[0].descricao + ' - ' + row.descricao })) 
             initialValues.categoria && initialValues.categoria.map(val => {
                 // categoriaSelect.find(row => row.value == val.value)
-                categoriaSelect.filter(row => row == val)
-                console.log(categoriaSelect)
+                // categoriaSelect.filter(row => row == val)
+                console.log(categoriaSelect, val)
                 // categoriaSelect.map(row => {
                 //     console.log(row.value)
                 //     if(val.value != row.value){

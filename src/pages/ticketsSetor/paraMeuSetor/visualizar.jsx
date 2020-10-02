@@ -24,7 +24,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { buscarInteracoesTicket, buscarTicketsSetor, buscarSetor, buscarCategoria, salvarInteracao, encaminharTicket, fecharTicket, responderTicket } from  './actions';
+import { buscarInteracoesTicket, buscarTicketsSetor, buscarSetor, buscarCategoria, salvarInteracao, encaminharTicket, responderTicket } from  './actions';
 
 import moment from 'moment';
 
@@ -73,19 +73,6 @@ class Visualizar extends Component{
 
     onVoltar = () => {
         this.props.history.goBack()
-    }
-
-    /**
-     * Ação para fechar ticket
-     */
-    onFecharTicket = () => {
-        const values = {}
-
-        values.status = 4
-        values.publico = 1
-        values.mensagem = 'Ticket fechado'
-        values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
-        this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
     }
 
     //
@@ -175,7 +162,6 @@ class Visualizar extends Component{
                                         data={dataTicket}
                                         loading={loading}
                                         onVoltar={this.onVoltar}
-                                        onFechar={(dataTicket.status) && (dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5) ? this.onFecharTicket : false}
                                         onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : dataTicket.papel_usuario == 2 ? 
@@ -281,7 +267,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor, salvarInteracao, encaminharTicket, fecharTicket, responderTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor, salvarInteracao, encaminharTicket, responderTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

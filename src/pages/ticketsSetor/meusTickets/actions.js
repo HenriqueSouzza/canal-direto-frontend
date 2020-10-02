@@ -200,7 +200,7 @@ export const encaminharTicket = (params, idTicket, router) => {
  * @param {*} params 
  * @param {*} idTicket 
  */
-export const salvarInteracao = (params, idTicket) => {
+export const salvarInteracao = (params, idTicket, router) => {
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
@@ -228,6 +228,7 @@ export const salvarInteracao = (params, idTicket) => {
     formData.append('id_ticket', params.id_ticket)
     formData.append('mensagem', params.mensagem)
     formData.append('status', params.status)
+    formData.append('dt_fechamento', params.dt_fechamento)
     formData.append('_method', 'put')
     
 
@@ -241,6 +242,11 @@ export const salvarInteracao = (params, idTicket) => {
             dispatch({type: type.LOAD, payload: true})
 
             toastr.success('Sucesso', 'Adicionado interação com sucesso')
+
+            if(params.status == 4 ){
+                router.go()
+            }
+
             dispatch(buscarInteracoesTicket('?where[id_ticket]=' + idTicket))
 
         })
@@ -252,42 +258,4 @@ export const salvarInteracao = (params, idTicket) => {
 
         })
     }
-}
-
-
-/**
- * @param {*} params 
- * @param {*} idTicket 
- * @param {*} router 
- */
-export const fecharTicket = (params, idTicket, router) => {
-
-    params.usuario_fechamento = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
-
-    const headers = {}
-
-    return dispatch => {
-
-        dispatch({type: type.LOAD, payload: true})
-
-        axios.put(endPoint, params, { headers: headers })
-        .then(response => {
-
-            router.goBack()
-            toastr.success('Sucesso', 'Ticket fechado com sucesso')
-            dispatch(buscarMeusTickets())
-            
-        })
-        .catch(error => {
-
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
-            dispatch({type: type.LOAD, payload: false})
-
-        })
-    }
-
 }

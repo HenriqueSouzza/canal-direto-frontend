@@ -12,6 +12,8 @@ import Upload from './upload';
 
 import Select from './select';
 
+import Checkbox from '../form/checkbox';
+
 import imgLogo  from '../../template/images/logo.png';
 
 import imgUser  from '../../template/images/perfil.png';
@@ -20,7 +22,7 @@ import imgUser  from '../../template/images/perfil.png';
 
 function ChatCard(props){
 
-    const {dataComment, titleChat, enableComment, enableTypeReposta, addComment, enableAnexo} = props
+    const {dataComment, titleChat, enableComment, enableTypeReposta, addComment, enableAnexo, enableCloseTicket} = props
 
     const [archivesSeleted, setArchivesSeleted] = useState({
                                                                 file: [],
@@ -191,13 +193,19 @@ function ChatCard(props){
                                     }
                                     <div className="row justify-content-center">
                                         <div className="input-group">
-                                            <div className={!enableTypeReposta ? `col-md-9` : `col-md-6`}>
+                                            <div className={enableTypeReposta && enableCloseTicket ? `col-md-12` : enableTypeReposta ? `col-md-6` : `col-md-9`}>
                                                 <Field 
                                                     component={Input}
                                                     name="mensagem" 
                                                     validate={composeValidators(FORM_RULES.required)}
                                                     />
                                             </div>
+                                            { enableTypeReposta && enableCloseTicket ? 
+                                                <>
+                                                    <br/>
+                                                    <br/>
+                                                </>
+                                            : '' }
                                             {
                                                 enableTypeReposta ?
 
@@ -206,6 +214,20 @@ function ChatCard(props){
                                                             component={Select}
                                                             data={dataPublic}
                                                             name="tipoResposta" 
+                                                            />
+                                                    </div>
+                                                    
+                                                : ''
+                                            }
+                                            {
+                                                enableCloseTicket ?
+
+                                                    <div className="col-md-2">
+                                                        <Field 
+                                                            component={Checkbox}
+                                                            type={`checkbox`}
+                                                            name={`fechar`}
+                                                            label={`Fechar`} 
                                                             />
                                                     </div>
                                                     

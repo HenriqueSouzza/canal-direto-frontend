@@ -26,7 +26,7 @@ import InformacoesFuncionario from '../components/InformacoesFuncionario';
 
 import InformacoesDocente from '../components/InformacoesDocente';
 
-import { buscarMeusTickets, salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  './actions';
+import { buscarMeusTickets, salvarInteracao, encaminharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria } from  './actions';
 
 import moment from 'moment';
 
@@ -42,8 +42,11 @@ class Visualizar extends Component{
     }
 
     onSubmit = values => {
-        values.status = 3
-        this.props.salvarInteracao(values, this.props.match.params.id)
+
+        values.status = values.fechar ? 4 : 3
+        values.dt_fechamento = values.fechar ? moment().format('YYYY-MM-DD H:mm:ss') : ''
+
+        this.props.salvarInteracao(values, this.props.match.params.id, this.props.history)
     }
 
     onSubmitEncaminhar = (values) => {
@@ -61,15 +64,15 @@ class Visualizar extends Component{
 
     
     // Ação para fechar ticket
-    onFecharTicket = () => {
-        const values = {}
+    // onFecharTicket = () => {
+    //     const values = {}
 
-        values.status = 4
-        values.publico = 1
-        values.mensagem = 'Ticket fechado'
-        values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
-        this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
-    }
+    //     values.status = 4
+    //     values.publico = 1
+    //     values.mensagem = 'Ticket fechado'
+    //     values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
+    //     this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
+    // }
 
     //
     onChangeForm = event => {
@@ -160,7 +163,7 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    { (dataTicket.status) && (dataTicket.status.ordem != 4 || dataTicket.status.ordem != 5) ?
+                    {/* { (dataTicket.status) && (dataTicket.status.ordem != 4 || dataTicket.status.ordem != 5) ?
                         <div className="col-md-12">
                             <div className="content-fluid">
                                 <div className="card card-danger">
@@ -208,7 +211,7 @@ class Visualizar extends Component{
                         </div>    
                     : 
                         ''
-                    }
+                    } */}
 
                     { dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
                         <div className="col-md-12">
@@ -278,8 +281,9 @@ class Visualizar extends Component{
                             titleChat={`Interações`}
                             addComment={this.onSubmit}
                             enableComment={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
-                            enableTypeReposta={true}
-                            enableAnexo={true}
+                            enableTypeReposta
+                            enableCloseTicket
+                            enableAnexo
                         />
                     </div>
                 </div>
@@ -298,7 +302,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets, salvarInteracao, encaminharTicket, fecharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarMeusTickets, salvarInteracao, encaminharTicket, buscarInteracoesTicket, buscarSetor, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

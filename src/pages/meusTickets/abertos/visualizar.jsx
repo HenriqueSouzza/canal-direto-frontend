@@ -170,6 +170,7 @@ class Visualizar extends Component{
                                                         <label>&nbsp;</label>
                                                         <Field
                                                             component={Button}
+                                                            name={`btn-button`}
                                                             description={`Fechar`}
                                                             type={`submit`}
                                                             icon={`fa fa-check`}

@@ -99,6 +99,7 @@ class Visualizar extends Component{
                                                 <Field 
                                                     component={Button} 
                                                     type={`button`}
+                                                    name={`btn-button`}
                                                     onClick={() => this.onVoltar()}
                                                     color={`btn-dark`}
                                                     icon={`fa fa-arrow-left`}
@@ -109,6 +110,7 @@ class Visualizar extends Component{
                                                 <Field 
                                                     component={Button} 
                                                     type={`submit`}
+                                                    name={`btn-submit`}
                                                     color={`btn-success`}
                                                     icon={`fa fa-save`}
                                                     description={`Alterar`}
