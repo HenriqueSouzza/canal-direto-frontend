@@ -29,6 +29,10 @@ class Visualizar extends Component{
     }
 
     onSubmit = values => {
+        values.obrigatorio = values.obrigatorio_temp ? 1 : 0
+        values.visivel = values.visivel_temp ? 1  : 0
+        values.editavel = values.editavel_temp ? 1  : 0
+        
         this.props.alterarCampoForm(values, this.props.match.params.id)
     }
 
@@ -76,8 +80,8 @@ class Visualizar extends Component{
                     delete dataTipo[index]
                 }
             })
-
         }
+
 
         return(
             <section className="content">
@@ -187,6 +191,7 @@ class Visualizar extends Component{
                                             <div className="col-md-4">
                                                 <Field 
                                                     component={Button} 
+                                                    name={`btn-button`}
                                                     type={`button`}
                                                     onClick={() => this.onVoltar()}
                                                     color={`btn-dark`}
@@ -197,6 +202,7 @@ class Visualizar extends Component{
                                             <div className="col-md-4">
                                                 <Field 
                                                     component={Button} 
+                                                    name={`btn-submit`}
                                                     type={`submit`}
                                                     color={`btn-success`}
                                                     icon={`fa fa-save`}
