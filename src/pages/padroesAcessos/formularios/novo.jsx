@@ -29,7 +29,9 @@ class Novo extends Component{
     }
 
     onSubmit = values => {
-        values.id_campos = Object.keys(values.camposForm_temp)
+        if(values.camposForm_temp){
+            values.id_campos = Object.keys(values.camposForm_temp)
+        }
         this.props.novoFormulario(values, this.props.history)
     }
 
@@ -88,6 +90,15 @@ class Novo extends Component{
                                                 <h3 className="card-title">Informe os campos que terão no formulário</h3>
                                             </div>
                                             <div className="card-body">
+                                                {camposFormularios.response.content.length < 1 ?
+                                                    <div className="row">
+                                                        <div className="col-md-12">
+                                                            <div className={`text-danger text-center`}>
+                                                                <b>* Não existe campos cadastrados para vincular a esse formulário</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                : ''}
                                                 <div className="row">
                                                     {camposFormularios.response.content.map((row,index) => (
                                                         <div className="col-md-6" key={index}>
@@ -100,32 +111,34 @@ class Novo extends Component{
                                                         </div>
                                                     ))}
                                                 </div>
-                                                <div className="row justify-content-center">
-                                                    <div className="col-md-5">
-                                                        <Field 
-                                                            component={Button} 
-                                                            type={`button`}
-                                                            color={`btn-dark`}
-                                                            onClick={() => this.onVoltar()}
-                                                            icon={`fa fa-arrow-left`}
-                                                            description={`Voltar`}
-                                                            />
-                                                    </div>
-                                                    <div className="col-md-5">
-                                                        <Field 
-                                                            component={Button} 
-                                                            type={`submit`}
-                                                            color={`btn-success`}
-                                                            icon={`fa fa-save`}
-                                                            description={`Salvar`}
-                                                            />
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     :
                                         ''
                                 }
+                                <div className="row justify-content-center">
+                                    <div className="col-md-5">
+                                        <Field 
+                                            component={Button} 
+                                            name={`btn-button`}
+                                            type={`button`}
+                                            color={`btn-dark`}
+                                            onClick={() => this.onVoltar()}
+                                            icon={`fa fa-arrow-left`}
+                                            description={`Voltar`}
+                                            />
+                                    </div>
+                                    <div className="col-md-5">
+                                        <Field 
+                                            component={Button} 
+                                            name={`btn-submit`}
+                                            type={`submit`}
+                                            color={`btn-success`}
+                                            icon={`fa fa-save`}
+                                            description={`Salvar`}
+                                            />
+                                    </div>
+                                </div>
                             </form>
                     )}/>
                 </div>

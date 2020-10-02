@@ -128,6 +128,7 @@ class Visualizar extends Component{
                                                     <div className="col-md-5">
                                                         <Field 
                                                             component={Button} 
+                                                            name={`btn-button`}
                                                             type={`button`}
                                                             color={`btn-dark`}
                                                             onClick={() => this.onVoltar()}
@@ -138,6 +139,7 @@ class Visualizar extends Component{
                                                     <div className="col-md-5">
                                                         <Field 
                                                             component={Button} 
+                                                            name={`btn-submit`}
                                                             type={`submit`}
                                                             color={`btn-success`}
                                                             icon={`fa fa-save`}
@@ -167,7 +169,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios, alterarFormulario }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarCamposFormularios, alterarFormulario, buscarFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

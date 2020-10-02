@@ -29,7 +29,7 @@ class Index extends Component{
                 id: row.id,
                 nome: row.nome,
                 descricao: row.descricao,
-                link: '/configuracao-ticket/formularios/' + row.id + '/visualizar'
+                link: '/padroes-acessos/formularios/' + row.id + '/visualizar'
             }))
         }
 

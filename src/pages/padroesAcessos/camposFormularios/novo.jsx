@@ -180,6 +180,7 @@ class Novo extends Component{
                                             <div className="col-md-4">
                                                 <Field 
                                                     component={Button} 
+                                                    name={`btn-button`}
                                                     type={`button`}
                                                     onClick={() => this.onVoltar()}
                                                     color={`btn-dark`}
@@ -190,6 +191,7 @@ class Novo extends Component{
                                             <div className="col-md-4">
                                                 <Field 
                                                     component={Button} 
+                                                    name={`btn-submit`}
                                                     type={`submit`}
                                                     color={`btn-success`}
                                                     icon={`fa fa-save`}
