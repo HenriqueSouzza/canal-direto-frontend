@@ -177,6 +177,16 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
+                    <div className="col-md-12">
+                        <ChatCard
+                            dataComment={dataInteracao}
+                            titleChat={`Interações`}
+                            addComment={this.onSubmit}
+                            enableTypeReposta={true}
+                            enableAnexo={true}
+                        />
+                    </div>
+
                     { dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
                         <div className="col-md-12">
                             <div className="content-fluid">
@@ -235,21 +245,6 @@ class Visualizar extends Component{
                             </div>
                         </div>    
                     : 
-                        ''}
-
-                    {   
-                        dataTicket.usuario_atendente == USER_LOGGED.usuario ?
-                            <div className="col-md-12">
-                                <ChatCard
-                                    dataComment={dataInteracao}
-                                    titleChat={`Interações`}
-                                    addComment={this.onSubmit}
-                                    enableComment={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
-                                    enableTypeReposta={true}
-                                    enableAnexo={true}
-                                />
-                            </div>
-                    :   
                         ''}
                 </div>
             </section>
