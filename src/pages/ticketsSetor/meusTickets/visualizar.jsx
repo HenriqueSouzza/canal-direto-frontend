@@ -163,55 +163,17 @@ class Visualizar extends Component{
                         </div>
                     </div>
 
-                    {/* { (dataTicket.status) && (dataTicket.status.ordem != 4 || dataTicket.status.ordem != 5) ?
-                        <div className="col-md-12">
-                            <div className="content-fluid">
-                                <div className="card card-danger">
-                                    <div className="card-header">
-                                        <h5 className="card-title">Deseja fechar o chamado ?</h5>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <div className="col-md-12">
-                                                    <Form
-                                                        onSubmit={this.onFecharTicket}
-                                                        render={({handleSubmit, submitSucceeded, pristine}) => (
-                                                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
-                                                                <div className="row">
-                                                                    <div className="col-md-8">
-                                                                        <Field 
-                                                                            component={Input} 
-                                                                            name={`mensagem`} 
-                                                                            type={`text`}
-                                                                            label={`Mensagem:`}
-                                                                            validate={composeValidators(FORM_RULES.required)}
-                                                                        />
-
-                                                                    </div> 
-                                                                    <div className="col-md-4">
-                                                                        <div className="">&nbsp;</div>
-                                                                        <Button
-                                                                            type={`submit`}
-                                                                            color={`btn-success`}
-                                                                            disabled={submitSucceeded || pristine}
-                                                                            icon={`fa fa-check`}
-                                                                            description={`Fechar`}
-                                                                            />
-                                                                    </div>
-                                                                </div>                                                 
-                                                            </form>
-                                                    )}/>                                                                          
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>    
-                    : 
-                        ''
-                    } */}
+                    <div className="col-md-12">
+                        <ChatCard
+                            dataComment={dataInteracao}
+                            titleChat={`Interações`}
+                            addComment={this.onSubmit}
+                            enableComment={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
+                            enableTypeReposta
+                            enableCloseTicket
+                            enableAnexo
+                        />
+                    </div>
 
                     { dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5 ?
                         <div className="col-md-12">
@@ -274,18 +236,6 @@ class Visualizar extends Component{
                         ''
                     }
 
-                    
-                    <div className="col-md-12">
-                        <ChatCard
-                            dataComment={dataInteracao}
-                            titleChat={`Interações`}
-                            addComment={this.onSubmit}
-                            enableComment={dataTicket.status && dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5}
-                            enableTypeReposta
-                            enableCloseTicket
-                            enableAnexo
-                        />
-                    </div>
                 </div>
             </section>
         )
