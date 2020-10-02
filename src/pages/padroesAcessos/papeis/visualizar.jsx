@@ -46,7 +46,10 @@ class Visualizar extends Component{
         params.papel = values.papel
         params.descricao = values.descricao
         params.sistema = 1
-        params.formulario = values.formulario
+
+        if(values.formulario){
+            params.formulario = values.formulario
+        }
 
         if(values.permissoes){
             params.permissao = values.permissoes.map( row => (row.value))
@@ -60,8 +63,8 @@ class Visualizar extends Component{
             values.categoria.map( row => params.categoria.push(row.value))
         }
 
-        console.log(params)
-        // this.props.alterarPapel(params, this.props.match.params.id)
+        // console.log(params)
+        this.props.alterarPapel(params, this.props.match.params.id)
     }
 
     onVoltar = () => {
@@ -70,7 +73,7 @@ class Visualizar extends Component{
 
     render(){
 
-        const { loading, papeis, permissoes, formularios, categoria, setor } = this.props.padroesAcessos
+        const { loading, papeis, permissoes, formularios, categoria } = this.props.padroesAcessos
 
         const initialValues = {}
         
@@ -82,28 +85,16 @@ class Visualizar extends Component{
             initialValues.permissoes = papeis.response.content[0].permissoes.map(row => ({value: row.id, label: row.permissao}))
 
             initialValues.categoria = []
+
             papeis.response.content[0].setorCategoria.map(row => {
-                row.categoria.map( val => (initialValues.categoria.push({value: val.id, label: row.setor + ' - ' + val.descricao})))
+                row.categoria.map( val => initialValues.categoria.push({ value: parseInt(val.id), label: row.setor + ' - ' + val.descricao }))
             })
         }
-
-
 
         let categoriaSelect = []
         
         if(categoria.response){
             categoriaSelect = categoria.response.content.map( row => ({ value: row.id, label: row.setor[0].descricao + ' - ' + row.descricao })) 
-            initialValues.categoria && initialValues.categoria.map(val => {
-                // categoriaSelect.find(row => row.value == val.value)
-                // categoriaSelect.filter(row => row == val)
-                console.log(categoriaSelect, val)
-                // categoriaSelect.map(row => {
-                //     console.log(row.value)
-                //     if(val.value != row.value){
-                //         categoriaSelect.push(row)
-                //     }
-                // })
-            })
         }
 
         let permissoesSelect = {}

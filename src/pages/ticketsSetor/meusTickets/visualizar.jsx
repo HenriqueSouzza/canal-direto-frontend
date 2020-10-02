@@ -62,23 +62,11 @@ class Visualizar extends Component{
         this.props.history.goBack()
     }
 
-    
-    // Ação para fechar ticket
-    // onFecharTicket = () => {
-    //     const values = {}
-
-    //     values.status = 4
-    //     values.publico = 1
-    //     values.mensagem = 'Ticket fechado'
-    //     values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
-    //     this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
-    // }
-
     //
     onChangeForm = event => {
         
         if(event.target.name == 'setor' && event.target.value){
-            this.props.buscarCategoria('?where[idSetor]=' + event.target.value)
+            this.props.buscarCategoria('?where[id_setor]=' + event.target.value)
         }
         
     }

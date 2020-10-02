@@ -79,7 +79,7 @@ class Visualizar extends Component{
     onChangeForm = event => {
         
         if(event.target.name == 'setor' && event.target.value){
-            this.props.buscarCategoria(event.target.value)
+            this.props.buscarCategoria('?where[id_setor]=' + event.target.value)
         }
         
     }
