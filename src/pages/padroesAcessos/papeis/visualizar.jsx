@@ -6,10 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import { FieldArray } from 'react-final-form-arrays';
-
-import arrayMutators from 'final-form-arrays';  
-
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import MenuHeader from '../../../components/menu/menuHeader';

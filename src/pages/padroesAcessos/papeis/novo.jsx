@@ -28,8 +28,6 @@ import { buscarPapeis, novoPapel } from './actions';
 
 import { buscarPermissoes } from '../permissoes/actions';
 
-import { buscarSetor } from '../setor/actions';
-
 import { buscarCategoria } from '../categoria/actions';
 
 
@@ -37,7 +35,7 @@ class Novo extends Component{
 
     componentDidMount(){
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
-        this.props.buscarSetor()
+        this.props.buscarCategoria()
     }
 
     onSubmit = values => {
@@ -53,27 +51,11 @@ class Novo extends Component{
 
         params.categoria = []
 
-        if(values.setorCategoria){
-            for(let i = 0; i < values.setorCategoria.length; i++){
-                if(values.setorCategoria[i] && values.setorCategoria[i].categoria){
-                    values.setorCategoria[i].categoria.map(row => params.categoria.push(row.value))
-                }
-            }
+        if(values.categoria){
+            values.categoria.map( row => params.categoria.push(row.value))
         }
 
         this.props.novoPapel(params, this.props.history)
-    }
-
-    // redireciona para tela de setor
-    onSetor = () => {
-        this.props.history.push('novo/setor-papeis')
-    }
-
-    //
-    onChangeForm = event => {
-        if(event.target.name.indexOf("setorCategoria") >= 0){
-            this.props.buscarCategoria('?where[id_setor]=' + event.target.value)
-        }
     }
 
     onVoltar = () => {
@@ -87,7 +69,7 @@ class Novo extends Component{
         let categoriaSelect = []
 
         if(categoria.response){
-            categoriaSelect = categoria.response.content.map(row => ({ value: row.id, label: row.descricao }))
+            categoriaSelect = categoria.response.content.map( row => ({ value: row.id, label: row.setor[0].descricao + ' - ' + row.descricao })) 
         }
 
         let setorSelect = []
@@ -115,14 +97,8 @@ class Novo extends Component{
                 <div className="content-fluid">
                     <Form
                         onSubmit={this.onSubmit}
-                        mutators={{ ...arrayMutators }}
-                        render={({
-                                    handleSubmit,
-                                    form: {
-                                        mutators: { push, pop }
-                                    },
-                                }) => (
-                            <form onSubmit={handleSubmit} onChange={(e) => this.onChangeForm(e)}>
+                        render={({ handleSubmit }) => (
+                            <form onSubmit={handleSubmit}>
 
                                 {/************************ PAPEIS ******************************
                                 ****************************************************************/}
@@ -167,7 +143,7 @@ class Novo extends Component{
                                     </div>
                                 </div>
 
-                                {/************************ SETORES E CATEGORIAS ************************
+                                {/***************************** CATEGORIA *****************************
                                 ***********************************************************************/}
 
                                 <div className="card card-danger">
@@ -177,59 +153,15 @@ class Novo extends Component{
                                     <div className="card-body">
                                         <div className="row justify-content-center">
                                             <div className="col-md-12">
-                                                <FieldArray name="setorCategoria">
-                                                    {({ fields }) =>
-                                                        fields.map((name, index) => (
-                                                        <div className="row justify-content-center border-bottom mb-2" key={name}>
-                                                            <div className="col-md-4">
-                                                                <Field
-                                                                    component={Select}
-                                                                    name={`${name}.setor`}
-                                                                    label={`Setor`}
-                                                                    data={setorSelect}
-                                                                    />
-                                                            </div>
-                                                            <div className="col-md-7">
-                                                                <Field
-                                                                    component={SelectMultiple}
-                                                                    name={`${name}.categoria`}
-                                                                    label={`Categoria`}
-                                                                    options={categoriaSelect}
-                                                                    isMulti
-                                                                    closeMenu={false}
-                                                                    multiple
-                                                                    />
-                                                            </div>
-                                                            <div className="col-md-1">
-                                                                <label>&nbsp;</label>
-                                                                <Button 
-                                                                    type={`button`}
-                                                                    onClick={() => fields.remove(index)}
-                                                                    icon={`fa fa-trash`}
-                                                                    color={`btn-dark`}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        ))
-                                                    }
-                                                </FieldArray>
-                                            </div>
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-2">
-                                                <Button
-                                                    type={`button`}
-                                                    description={`Adicionar`}
-                                                    color={`btn-primary`}
-                                                    name={`btn-adicionar`}
-                                                    icon={`fa fa-plus`}
-                                                    onClick={() => push('setorCategoria', undefined)}
+                                                <Field
+                                                    component={SelectMultiple}
+                                                    name={`categoria`}
+                                                    label={`Categorias`}
+                                                    options={categoriaSelect}
+                                                    isMulti
+                                                    closeMenu={false}
+                                                    multiple
                                                     />
-                                            </div>
-                                            <div className="col-md-12 text-center">
-                                                <small className="text-danger"> 
-                                                    <b>* Só será enviado se o setor e a categoria estiver preenchido</b>
-                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -297,7 +229,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel, buscarSetor, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);
