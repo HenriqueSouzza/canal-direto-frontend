@@ -63,7 +63,6 @@ class Visualizar extends Component{
             values.categoria.map( row => params.categoria.push(row.value))
         }
 
-        // console.log(params)
         this.props.alterarPapel(params, this.props.match.params.id)
     }
 
@@ -82,7 +81,7 @@ class Visualizar extends Component{
             initialValues.descricao = papeis.response.content[0].descricao
             initialValues.sistema = papeis.response.content[0].sistemas.nome_sistema
             initialValues.formulario = papeis.response.content[0].formulario.id ? papeis.response.content[0].formulario.id : ''
-            initialValues.permissoes = papeis.response.content[0].permissoes.map(row => ({value: row.id, label: row.permissao}))
+            initialValues.permissoes = papeis.response.content[0].permissoes.map(row => ({value: parseInt(row.id), label: row.permissao}))
 
             initialValues.categoria = []
 
