@@ -6,10 +6,12 @@ const INITIAL_STATE = {
     permissoes: {},
     setor: {},
     categoria: {},
-    formularios: [],
-    camposFormularios: [],
-    statusTicket: [],
-    usuarios: [],
+    formularios: {},
+    camposFormularios: {},
+    statusTicket: {},
+    usuarios: {},
+    menus: {},
+    submenu: {},
     loading: false
 }
 
@@ -51,6 +53,14 @@ export default (state = INITIAL_STATE, action) => {
         //Caso para guardar os usuarios existentes
         case type.BUSCAR_USUARIOS:
             return { ...state, usuarios: action.payload.data || INITIAL_STATE.usuarios, loading: false } 
+
+        //Caso para guardar os usuarios existentes
+        case type.BUSCAR_MENUS:
+            return { ...state, menus: action.payload.data || INITIAL_STATE.menus, loading: false } 
+
+        //Caso para guardar os usuarios existentes
+        case type.BUSCAR_SUB_MENU:
+            return { ...state, submenu: action.payload.data || INITIAL_STATE.submenu, loading: false } 
 
         default:
             return state;   

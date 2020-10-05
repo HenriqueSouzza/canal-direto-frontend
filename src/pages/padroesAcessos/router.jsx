@@ -32,6 +32,13 @@ import StatusTicketVisualizar from './statusTicket/visualizar';
 import Usuarios from './usuarios/index';
 import UsuariosVisualizar from './usuarios/visualizar';
 
+import Menu from './menus/index';
+import MenuNovo from './menus/novo';
+import MenuVisualizar from './menus/visualizar';
+
+import SubMenuNovo from './submenu/novo';
+import SubMenuVisualizar from './submenu/visualizar';
+
 function Router(){
     
     return(
@@ -64,6 +71,13 @@ function Router(){
 
             <Route exact path='/padroes-acessos/usuarios' component={ props => <Usuarios {...props} />} />
             <Route exact path='/padroes-acessos/usuarios/:id/visualizar' component={ props => <UsuariosVisualizar {...props} />} />
+
+            <Route exact path='/padroes-acessos/menus' component={ props => <Menu {...props} />} />
+            <Route exact path='/padroes-acessos/menus/novo' component={ props => <MenuNovo {...props} />} />
+            <Route exact path='/padroes-acessos/menus/:id/visualizar' component={ props => <MenuVisualizar {...props} />} />
+
+            <Route exact path='/padroes-acessos/submenu/:id/novo' component={ props => <SubMenuNovo {...props} />} />
+            <Route exact path='/padroes-acessos/submenu/:id/visualizar' component={ props => <SubMenuVisualizar {...props} />} />
 
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>

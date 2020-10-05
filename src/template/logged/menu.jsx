@@ -37,6 +37,7 @@ function Menu(props){
                     <MenuLink description={`Status Ticket`} path={`/padroes-acessos/status-ticket`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Formulários`} path={`/padroes-acessos/formularios`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Campos Formulários`} path={`/padroes-acessos/campos-formularios`} icon={`fa fa-list-ul`} active={``} />
+                    <MenuLink description={`Menu`} path={`/padroes-acessos/menus`} icon={`fa fa-list-ul`} active={``} />
                 </MenuTreeView>
                 <MenuLink onClick={() => onLogout()} description={`Sair`} path={``} icon={`fa fa-sign-out-alt`} active={``} />
             </ul>
