@@ -18,6 +18,9 @@ import DataTable from '../../../components/table/dataTable';
 
 import { buscarUsuarios } from './actions';
 
+import moment from 'moment';
+
+
 class Index extends Component{
 
     componentDidMount(){
@@ -50,6 +53,7 @@ class Index extends Component{
                     id: row.id,
                     name: row.name,
                     email: row.email,
+                    created_at: moment(row.created_at).calendar(),
                     link: '/padroes-acessos/usuarios/' + row.id + '/visualizar'
                 })
             })
@@ -69,6 +73,11 @@ class Index extends Component{
             {
                 name: 'E-mail',
                 selector: 'email',
+                sortable: true,
+            },
+            {
+                name: 'Criado em',
+                selector: 'created_at',
                 sortable: true,
             },
             {

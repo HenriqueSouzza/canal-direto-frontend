@@ -34,10 +34,12 @@ class Visualizar extends Component{
     }
 
     onSubmit = values => {
+        const { usuarios } = this.props.padroesAcessos
+
         let params = {}
 
-        params.name = values.name
-        params.email = values.email
+        params.name = usuarios.response.content[0].name
+        params.email = usuarios.response.content[0].email
 
         if(values.permissoes){
             params.permissao = values.permissoes.map( row => (row.value))
@@ -46,9 +48,9 @@ class Visualizar extends Component{
         }
 
         if(values.papeis){
-            params.papeis = values.papeis.map( row => (row.value))
+            params.papel = values.papeis.map( row => (row.value))
         }else{
-            params.papeis = []
+            params.papel = []
         }
 
         this.props.alterarUsuario(params, this.props.match.params.id)
@@ -67,6 +69,7 @@ class Visualizar extends Component{
         if(usuarios.response){
             initialValues.name = usuarios.response.content[0].name
             initialValues.email = usuarios.response.content[0].email
+            initialValues.papeis = usuarios.response.content[0].papeis.map(row => ({value: parseInt(row.id), label: row.papel}))
         }
 
         let permissoesSelect = {}
