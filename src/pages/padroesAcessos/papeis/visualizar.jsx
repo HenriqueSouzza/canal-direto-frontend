@@ -26,6 +26,10 @@ import { buscarPermissoes } from '../permissoes/actions';
 
 import { buscarCategoria } from '../categoria/actions';
 
+import { buscarSubMenu } from '../submenu/actions';
+
+import { buscarFormularios } from '../formularios/actions';
+
 
 
 class Visualizar extends Component{
@@ -34,6 +38,8 @@ class Visualizar extends Component{
         this.props.buscarPapeis('?where[id]=' + this.props.match.params.id)
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
         this.props.buscarCategoria()
+        this.props.buscarFormularios()
+        this.props.buscarSubMenu()
     }
 
     onSubmit = values => {
@@ -47,16 +53,21 @@ class Visualizar extends Component{
             params.formulario = values.formulario
         }
 
-        if(values.permissoes){
-            params.permissao = values.permissoes.map( row => (row.value))
-        }else{
-            params.permissao = []
+        if(values.submenu){
+            params.submenu = values.submenu.map( row => (row.value))
         }
 
-        params.categoria = []
+        if(values.permissoes){
+            params.permissao = values.permissoes.map( row => (row.value))
+        }
+        // }else{
+        //     params.permissao = []
+        // }
+
+        // params.categoria = []
 
         if(values.categoria){
-            values.categoria.map( row => params.categoria.push(row.value))
+            params.categoria = values.categoria.map( row => (row.value))
         }
 
         this.props.alterarPapel(params, this.props.match.params.id)
@@ -68,7 +79,7 @@ class Visualizar extends Component{
 
     render(){
 
-        const { loading, papeis, permissoes, formularios, categoria } = this.props.padroesAcessos
+        const { loading, papeis, permissoes, formularios, categoria, submenu } = this.props.padroesAcessos
 
         const initialValues = {}
         
@@ -84,6 +95,19 @@ class Visualizar extends Component{
             papeis.response.content[0].setorCategoria.map(row => {
                 row.categoria.map( val => initialValues.categoria.push({ value: parseInt(val.id), label: row.setor + ' - ' + val.descricao }))
             })
+
+            initialValues.submenu = []
+
+            papeis.response.content[0].menus.map(row => {
+                row.submenus.map( val => initialValues.submenu.push({ value: parseInt(val.id), label: row.nome + ' - ' + val.nome }))
+            })
+        }
+
+        
+        let subMenuSelect = []
+        
+        if(submenu.response){
+            subMenuSelect = submenu.response.content.map( row => ({ value: row.id, label: row.menu[0].nome + ' - ' + row.nome })) 
         }
 
         let categoriaSelect = []
@@ -163,6 +187,30 @@ class Visualizar extends Component{
                                                     name={`formulario`}
                                                     label={`Formulário`}
                                                     data={formulariosSelect}
+                                                    />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/***************************** MENUS *****************************
+                                ***********************************************************************/}
+
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Informe os Menus</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-12">
+                                                <Field
+                                                    component={SelectMultiple}
+                                                    name={`submenu`}
+                                                    label={`Menus`}
+                                                    options={subMenuSelect}
+                                                    isMulti
+                                                    closeMenu={false}
+                                                    multiple
                                                     />
                                             </div>
                                         </div>
@@ -262,7 +310,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, alterarPapel, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, alterarPapel, buscarCategoria, buscarSubMenu, buscarFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

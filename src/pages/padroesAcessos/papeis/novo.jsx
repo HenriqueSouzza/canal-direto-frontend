@@ -30,12 +30,18 @@ import { buscarPermissoes } from '../permissoes/actions';
 
 import { buscarCategoria } from '../categoria/actions';
 
+import { buscarSubMenu } from '../submenu/actions';
+
+import { buscarFormularios } from '../formularios/actions';
+
 
 class Novo extends Component{
 
     componentDidMount(){
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
         this.props.buscarCategoria()
+        this.props.buscarSubMenu()
+        this.props.buscarFormularios()
     }
 
     onSubmit = values => {
@@ -44,15 +50,18 @@ class Novo extends Component{
         params.papel = values.papel
         params.descricao = values.descricao
         params.sistema = 1
+        params.formulario = values.formulario
 
         if(values.permissoes){
             params.permissao = values.permissoes.map( row => (row.value))
         }
 
-        params.categoria = []
+        if(values.submenu){
+            params.submenu = values.submenu.map( row => (row.value))
+        }
 
         if(values.categoria){
-            values.categoria.map( row => params.categoria.push(row.value))
+            params.categoria = values.categoria.map( row => (row.value))
         }
 
         this.props.novoPapel(params, this.props.history)
@@ -64,7 +73,13 @@ class Novo extends Component{
 
     render(){
 
-        const { loading, permissoes, setor, categoria, formularios } = this.props.padroesAcessos
+        const { loading, permissoes, setor, categoria, formularios, submenu } = this.props.padroesAcessos
+
+        let subMenuSelect = []
+
+        if(submenu.response){
+            subMenuSelect = submenu.response.content.map( row => ({ value: row.id, label: row.menu[0].nome + ' - ' + row.nome })) 
+        }
 
         let categoriaSelect = []
 
@@ -137,6 +152,30 @@ class Novo extends Component{
                                                     name={`formulario`}
                                                     label={`Formulário`}
                                                     data={formulariosSelect}
+                                                    />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/***************************** MENUS *****************************
+                                ***********************************************************************/}
+
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Informe os Menus</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-12">
+                                                <Field
+                                                    component={SelectMultiple}
+                                                    name={`submenu`}
+                                                    label={`Menus`}
+                                                    options={subMenuSelect}
+                                                    isMulti
+                                                    closeMenu={false}
+                                                    multiple
                                                     />
                                             </div>
                                         </div>
@@ -229,7 +268,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel, buscarCategoria }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarPapeis, buscarPermissoes, novoPapel, buscarCategoria, buscarSubMenu, buscarFormularios }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Novo);
