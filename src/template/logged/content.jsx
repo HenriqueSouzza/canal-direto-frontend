@@ -12,6 +12,8 @@ import TicketsSetor from '../../pages/ticketsSetor/router';
 
 import PadroesAcessos from '../../pages/padroesAcessos/router';
 
+import Usuario from '../../pages/usuarios/router';
+
 
 function Content(){
     return(
@@ -21,6 +23,7 @@ function Content(){
                 <Route path='/meus-tickets' component={MeusTickets} />
                 <Route path='/tickets-setor' component={TicketsSetor} />
                 <Route path='/padroes-acessos' component={PadroesAcessos} />
+                <Route path='/usuario' component={Usuario} />
                 <Route path='*' component={PaginaNaoEncontrada}/>
             </Switch>
         </div>
