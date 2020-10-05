@@ -30,21 +30,21 @@ class Index extends Component{
     }
 
     onSubmit = values => {
-        let $where = ''
+        let where = ''
 
         if(values.ticket) {
-            $where += '&where[id]='+ values.ticket
+            where += '&where[id]='+ values.ticket
         }
 
         if(values.assunto) {
-            $where += '&like=assunto,'+ values.assunto
+            where += '&like=assunto,'+ values.assunto
         }
 
         if(values.dt_criacao){
-            $where += "&whereDate[dt_criacao]=" + values.dt_criacao
+            where += "&whereDate[dt_criacao]=" + values.dt_criacao
         }
 
-        this.props.buscarMeusTickets($where)
+        this.props.buscarMeusTickets(where)
     }
 
     render(){

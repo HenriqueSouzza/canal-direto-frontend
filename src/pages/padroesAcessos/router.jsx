@@ -4,7 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 
 import PaginaNaoEncontrada from '../errosPagina/paginaNaoEncontrada';
 
-import PapeisRouter from './papeis/router';
+import Papeis from './papeis/index';
+import PapeisVisualizar from './papeis/visualizar';
+import PapeisNovo from './papeis/novo';
 
 import Permissoes from './permissoes/index';
 
@@ -27,12 +29,17 @@ import StatusTicket from './statusTicket/index';
 import StatusTicketNovo from './statusTicket/novo';
 import StatusTicketVisualizar from './statusTicket/visualizar';
 
+import Usuarios from './usuarios/index';
+import UsuariosVisualizar from './usuarios/visualizar';
+
 function Router(){
     
     return(
         <Switch>
 
-            <Route path='/padroes-acessos/papeis' component={ props => <PapeisRouter {...props} />} />
+            <Route exact path='/padroes-acessos/papeis' component={ props => <Papeis {...props} />} />
+            <Route exact path='/padroes-acessos/papeis/:id/visualizar' component={ props => <PapeisVisualizar {...props} />} />
+            <Route exact path='/padroes-acessos/papeis/novo' component={ props => <PapeisNovo {...props} />} />
 
             <Route exact path='/padroes-acessos/permissoes' component={ props => <Permissoes {...props} />} />
 
@@ -54,6 +61,9 @@ function Router(){
             <Route exact path='/padroes-acessos/status-ticket' component={ props => <StatusTicket {...props} />} />
             <Route exact path='/padroes-acessos/status-ticket/novo' component={ props => <StatusTicketNovo {...props} />} />
             <Route exact path='/padroes-acessos/status-ticket/:id/visualizar' component={ props => <StatusTicketVisualizar {...props} />} />
+
+            <Route exact path='/padroes-acessos/usuarios' component={ props => <Usuarios {...props} />} />
+            <Route exact path='/padroes-acessos/usuarios/:id/visualizar' component={ props => <UsuariosVisualizar {...props} />} />
 
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>

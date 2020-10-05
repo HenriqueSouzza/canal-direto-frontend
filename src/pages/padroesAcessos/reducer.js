@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     formularios: [],
     camposFormularios: [],
     statusTicket: [],
+    usuarios: [],
     loading: false
 }
 
@@ -46,6 +47,10 @@ export default (state = INITIAL_STATE, action) => {
         //Caso para guardar os status existentes
         case type.BUSCAR_STATUS_TICKET:
             return { ...state, statusTicket: action.payload.data || INITIAL_STATE.statusTicket, loading: false } 
+
+        //Caso para guardar os usuarios existentes
+        case type.BUSCAR_USUARIOS:
+            return { ...state, usuarios: action.payload.data || INITIAL_STATE.usuarios, loading: false } 
 
         default:
             return state;   

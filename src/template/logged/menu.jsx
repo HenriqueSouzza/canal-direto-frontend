@@ -30,6 +30,7 @@ function Menu(props){
                     <MenuLink description={`Meus tickets`} path={`/tickets-setor/meus-tickets`} icon={`fa fa-address-book`} active={``} />
                 </MenuTreeView>
                 <MenuTreeView description={`Padrões de acessos`} path={`#`} icon={`fa fa-cogs`} >
+                    <MenuLink description={`Usuários`} path={`/padroes-acessos/usuarios`} icon={`fa fa-users`} active={``} />
                     <MenuLink description={`Papéis`} path={`/padroes-acessos/papeis`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Permissões`} path={`/padroes-acessos/permissoes`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Setor`} path={`/padroes-acessos/setor`} icon={`fa fa-sitemap`} active={``} />
@@ -37,8 +38,6 @@ function Menu(props){
                     <MenuLink description={`Formulários`} path={`/padroes-acessos/formularios`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Campos Formulários`} path={`/padroes-acessos/campos-formularios`} icon={`fa fa-list-ul`} active={``} />
                 </MenuTreeView>
-                <MenuLink description={`Usuários`} path={`/usuario`} icon={`fa fa-users`} active={``} />
-                <MenuLink description={`Setor`} path={`/setor`} icon={`fa fa-sitemap`} active={``} />
                 <MenuLink onClick={() => onLogout()} description={`Sair`} path={``} icon={`fa fa-sign-out-alt`} active={``} />
             </ul>
         </nav>

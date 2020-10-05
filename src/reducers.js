@@ -16,8 +16,6 @@ import TicketsSetorReducer from './pages/ticketsSetor/reducer';
 //PadroesAcessos
 import PadroesAcessosReducer from './pages/padroesAcessos/reducer';
 
-//Usuário
-import UsuariosReducer from './pages/usuarios/reducer';
 
 const rootReducer = combineReducers({
     toastr: toastrReducer,
@@ -25,7 +23,6 @@ const rootReducer = combineReducers({
     auth: AuthReducer,
     ticketsSetor: TicketsSetorReducer,
     meusTickets: MeusTicketsReducer,
-    usuarios: UsuariosReducer,
     padroesAcessos: PadroesAcessosReducer
 })
 
