@@ -60,6 +60,7 @@ export const buscarPapelUsuario = (params) => {
         axios.get(endPoint, { headers: headers })
         .then(response => {
             
+            toastr.success('Bem-vindo', 'Agora você assumiu o papel de ' + response.data.response.content[0].papel)
             dispatch({type: type.GUARDAR_PAPEL_USUARIO, payload: response})
 
         })

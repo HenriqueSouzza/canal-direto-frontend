@@ -18,7 +18,7 @@ function Header(props) {
 
     const onChange = value => {
         if(value){
-            props.buscarPapelUsuario('?where[id]='+value)
+            props.buscarPapelUsuario('?where[id]=' + value)
         }
     }
 

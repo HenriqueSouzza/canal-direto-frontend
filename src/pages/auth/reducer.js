@@ -24,6 +24,7 @@ export default (state = INITIAL_STATE, action) => {
         case type.REMOVER_TOKEN:
             sessionStorage.removeItem('dataLogged');
             sessionStorage.removeItem('user');
+            sessionStorage.removeItem('papel');
             return { ...state, dataLogged: action.payload, loading: false }        
                 
         //Caso para guardar os dados do usuario logado
