@@ -99,8 +99,19 @@ class Novo extends Component{
                                                         placeholder={`icone`}
                                                         validate={composeValidators(FORM_RULES.max(20))}
                                                         />
-                                                </div>                                                                                                      
-                                                <div className="col-md-4">
+                                                </div>         
+                                                <div className="col-md-2">
+                                                    <Field 
+                                                        component={Input} 
+                                                        type={`number`}
+                                                        name={`ordem`} 
+                                                        label={`Ordem:`}
+                                                        icon={``}
+                                                        placeholder={`Ordem`}
+                                                        validate={composeValidators(FORM_RULES.number)}
+                                                        />
+                                                </div>                                                                                             
+                                                <div className="col-md-2 text-right">
                                                     <label>&nbsp;</label>
                                                     <div>
                                                         <Field 

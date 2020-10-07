@@ -75,9 +75,9 @@ export const novoMenu = (params, router) => {
  * @param {*} params 
  * @param {*} router 
  */
-export const alterarSetor = (params, idSetor) => {
+export const alterarMenu = (params, idMenu) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/setor/' + idSetor;
+    const endPoint = BASE_API + 'api/canal-direto/menus/' + idMenu;
 
     const headers = {}
 
@@ -88,13 +88,13 @@ export const alterarSetor = (params, idSetor) => {
         axios.put(endPoint, params, { headers : headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Cadastro alterado com sucesso !')
-            dispatch(buscarMenus('?where[id]=' + idSetor))
+            toastr.success('Sucesso', 'Alterado com sucesso !')
+            dispatch(buscarMenus('?where[id]=' + idMenu))
 
         })
         .catch(error => {
 
-            toastr.error('Erro', 'Erro ao tentar alterar dados do setor')
+            toastr.error('Erro', 'Erro ao tentar alterar os dados do menu')
             dispatch({type: type.LOAD, payload: false})
 
         })

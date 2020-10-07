@@ -57,7 +57,7 @@ class Novo extends Component{
                                         </div>
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-md-4">
+                                                <div className="col-md-3">
                                                     <Field 
                                                         component={Input} 
                                                         type={`text`}
@@ -79,7 +79,7 @@ class Novo extends Component{
                                                         validate={composeValidators(FORM_RULES.required)}
                                                         />
                                                 </div>                                                                                                      
-                                                <div className="col-md-4">
+                                                <div className="col-md-3">
                                                     <Field 
                                                         component={Input} 
                                                         type={`text`}
@@ -88,6 +88,17 @@ class Novo extends Component{
                                                         icon={``}
                                                         placeholder={`icone`}
                                                         validate={composeValidators(FORM_RULES.max(20))}
+                                                        />
+                                                </div>                                                                                                      
+                                                <div className="col-md-2">
+                                                    <Field 
+                                                        component={Input} 
+                                                        type={`number`}
+                                                        name={`ordem`} 
+                                                        label={`Ordem:`}
+                                                        icon={``}
+                                                        placeholder={`Ordem`}
+                                                        validate={composeValidators(FORM_RULES.number)}
                                                         />
                                                 </div>                                                                                                      
                                             </div>

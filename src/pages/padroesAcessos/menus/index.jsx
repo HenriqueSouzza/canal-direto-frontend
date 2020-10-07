@@ -16,7 +16,7 @@ import  { buscarMenus } from './actions';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMenus()
+        this.props.buscarMenus('?order=ordem,asc')
     }
 
     render(){
@@ -27,7 +27,7 @@ class Index extends Component{
 
         if(menus.response){
             dataMenus = menus.response.content.map(row => ({
-                menu: row.id, 
+                ordem: row.ordem, 
                 nome: row.nome, 
                 link: row.link,
                 link: '/padroes-acessos/menus/' + row.id + '/visualizar'
@@ -37,7 +37,7 @@ class Index extends Component{
         const columns = [
             {
                 name: '#',
-                selector: 'menu',
+                selector: 'ordem',
                 sortable: true,
             },
             {

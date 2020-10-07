@@ -20,7 +20,7 @@ import Button from '../../../components/form/button';
 
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
-import  { alterarSetor, buscarMenus } from './actions';
+import  { alterarMenu, buscarMenus } from './actions';
 
 import DataTable from '../../../components/table/dataTable';
 
@@ -28,11 +28,11 @@ import DataTable from '../../../components/table/dataTable';
 class Visualizar extends Component{
 
     componentDidMount(){
-        this.props.buscarMenus('?where[id]=' + this.props.match.params.id)
+        this.props.buscarMenus('?where[id]=' + this.props.match.params.id + '&order=ordem,asc')
     }
 
     onSubmit = values => {
-        this.props.alterarSetor(values, this.props.match.params.id)
+        this.props.alterarMenu(values, this.props.match.params.id)
     }
 
     onVoltar = () => {
@@ -56,7 +56,7 @@ class Visualizar extends Component{
             initialValues.link = menus.response.content[0].link
             initialValues.icon = menus.response.content[0].icon
             dataSubMenu = menus.response.content[0].submenu.map( row => ({
-                submenu: row.id,
+                ordem: row.ordem,
                 nome: row.nome,
                 link: row.link,
                 icon: row.icon,
@@ -69,7 +69,7 @@ class Visualizar extends Component{
         const columns = [
             {
                 name: '#',
-                selector: 'submenu',
+                selector: 'ordem',
                 sortable: true,
             },
             {
@@ -221,7 +221,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarMenus, alterarSetor }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarMenus, alterarMenu }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

@@ -49,6 +49,7 @@ class Visualizar extends Component{
             initialValues.nome = submenu.response.content[0].nome
             initialValues.link = submenu.response.content[0].link
             initialValues.icon = submenu.response.content[0].icon
+            initialValues.ordem = submenu.response.content[0].ordem
             initialValues.ativo = parseInt(submenu.response.content[0].ativo)
         }
         
@@ -103,8 +104,19 @@ class Visualizar extends Component{
                                                         placeholder={`icone`}
                                                         validate={composeValidators(FORM_RULES.max(20))}
                                                         />
-                                                </div>                                                                                                      
-                                                <div className="col-md-4">
+                                                </div>         
+                                                <div className="col-md-2">
+                                                    <Field 
+                                                        component={Input} 
+                                                        type={`number`}
+                                                        name={`ordem`} 
+                                                        label={`Ordem:`}
+                                                        icon={``}
+                                                        placeholder={`Ordem`}
+                                                        validate={composeValidators(FORM_RULES.number)}
+                                                        />
+                                                </div>                                                                                             
+                                                <div className="col-md-2">
                                                     <label>&nbsp;</label>
                                                     <div>
                                                         <Field 
