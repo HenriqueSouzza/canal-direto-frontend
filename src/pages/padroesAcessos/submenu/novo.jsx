@@ -30,6 +30,7 @@ class Novo extends Component{
         params.ativo = values.ativo
         params.link = values.link
         params.icon = values.icon
+        params.ordem = values.ordem
 
         this.props.novoSubMenu(params, this.props.history, this.props.match.params.id)
     }

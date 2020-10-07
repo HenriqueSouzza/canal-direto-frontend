@@ -74,7 +74,7 @@ export const alterarStatusTicket = (params, id) => {
         .then(response => {
 
             toastr.success('Sucesso', 'Status alterado com sucesso')
-            dispatch(buscarStatusTicket())
+            dispatch(buscarStatusTicket('?where[id]=' + id))
             
         })
         .catch(error => {

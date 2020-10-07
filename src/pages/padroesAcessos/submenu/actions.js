@@ -61,7 +61,7 @@ export const novoSubMenu = (params, router, idMenu) => {
         .catch(error => {
 
             console.log(error.response)
-            toastr.error('Erro', 'Erro ao tentar cadastrar novo submnu')
+            toastr.error('Erro', 'Erro ao tentar cadastrar novo submenu')
             dispatch({type: type.LOAD, payload: false})
 
         })

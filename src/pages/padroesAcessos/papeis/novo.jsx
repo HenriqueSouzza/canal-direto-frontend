@@ -219,6 +219,7 @@ class Novo extends Component{
                                                 <Field
                                                     component={SelectMultiple}
                                                     name={`permissoes`}
+                                                    label={`Permissões`}
                                                     options={permissoesSelect}
                                                     isMulti
                                                     closeMenu={false}

@@ -41,6 +41,39 @@ export const efetuarLogin = (params) => {
     }
 }
 
+
+/**
+ * Método responsável para efeutar login
+ * @param {*} params 
+ * @param {*} router 
+ */
+export const buscarPapelUsuario = (params) => {
+
+    const endPoint = BASE_API + 'api/papeis' + params;
+
+    const headers = {}
+
+    return dispatch => {
+
+        dispatch({type: type.LOAD_AUTH, payload: true})
+        
+        axios.get(endPoint, { headers: headers })
+        .then(response => {
+            
+            dispatch({type: type.GUARDAR_PAPEL_USUARIO, payload: response})
+
+        })
+        .catch(error => {
+
+            console.log(error)
+            toastr.error('Erro', 'Erro ao buscar esse papel.')
+            dispatch({type: type.LOAD_AUTH, payload: false})
+
+        })
+    }
+}
+
+
 /**
  * Método responsável para efeutar login
  * @param {*} params 

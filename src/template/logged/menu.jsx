@@ -16,7 +16,13 @@ function Menu(props){
         props.efetuarLogout()
     }
 
-    const menu = props.auth.user.papeis.length > 0 ? props.auth.user.papeis[0].menus : []
+    let menu = []
+
+    if(props.auth.papel.length > 0 && props.auth.papel[0].menus.length > 0){
+        menu = props.auth.papel[0].menus
+    }else if(props.auth.user.papeis.length > 0){
+        menu = props.auth.user.papeis[0].menus
+    }
 
     return(
         <nav className="mt-2">
@@ -24,18 +30,18 @@ function Menu(props){
                 <MenuLink description={`Dashboard`} path={`/`} icon={`fas fa-tachometer-alt`}  active={``} />
                 {
                     menu.length > 0 ?  
-                        menu.map( row => (
-                            <MenuTreeView description={row.nome} path={row.link} icon={row.icon}>
-                                {
-                                    row.submenus.length > 0 ? 
-                                        row.submenus.map(val => (
-                                            parseInt(val.ativo) ? 
-                                                <MenuLink description={val.nome} path={val.link_submenu} icon={val.icon} active={``} />
-                                            : ''
-                                        ))
-                                    :   
-                                        '' 
-                                }
+                        menu.map( (row,index) => (
+                            <MenuTreeView key={index} description={row.nome} path={row.link} icon={row.icon}>
+                                    {
+                                        row.submenus.length > 0 ? 
+                                            row.submenus.map((val,i) => (
+                                                parseInt(val.ativo) ? 
+                                                    <MenuLink key={i} description={val.nome} path={val.link_submenu} icon={val.icon} active={``} />
+                                                : ''
+                                            ))
+                                        :   
+                                            '' 
+                                    }
                             </MenuTreeView>        
                         ))                
                     :

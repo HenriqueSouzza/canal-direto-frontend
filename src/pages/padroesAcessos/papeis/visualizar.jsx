@@ -60,12 +60,7 @@ class Visualizar extends Component{
         if(values.permissoes){
             params.permissao = values.permissoes.map( row => (row.value))
         }
-        // }else{
-        //     params.permissao = []
-        // }
-
-        // params.categoria = []
-
+        
         if(values.categoria){
             params.categoria = values.categoria.map( row => (row.value))
         }
@@ -261,6 +256,7 @@ class Visualizar extends Component{
                                                 <Field
                                                     component={SelectMultiple}
                                                     name={`permissoes`}
+                                                    label={`Permissões`}
                                                     options={permissoesSelect}
                                                     isMulti
                                                     closeMenu={false}
