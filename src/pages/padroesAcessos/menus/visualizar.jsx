@@ -55,6 +55,7 @@ class Visualizar extends Component{
             initialValues.nome = menus.response.content[0].nome
             initialValues.link = menus.response.content[0].link
             initialValues.icon = menus.response.content[0].icon
+            initialValues.ordem = menus.response.content[0].ordem
             dataSubMenu = menus.response.content[0].submenu.map( row => ({
                 ordem: row.ordem,
                 nome: row.nome,
@@ -117,7 +118,7 @@ class Visualizar extends Component{
                                         </div>
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-md-4">
+                                                <div className="col-md-3">
                                                     <Field 
                                                         component={Input} 
                                                         type={`text`}
@@ -138,8 +139,8 @@ class Visualizar extends Component{
                                                         placeholder={`link`}
                                                         validate={composeValidators(FORM_RULES.required)}
                                                         />
-                                                </div>                                                                                                      
-                                                <div className="col-md-4">
+                                                </div> 
+                                                <div className="col-md-3">
                                                     <Field 
                                                         component={Input} 
                                                         type={`text`}
@@ -149,7 +150,18 @@ class Visualizar extends Component{
                                                         placeholder={`icone`}
                                                         validate={composeValidators(FORM_RULES.max(20))}
                                                         />
-                                                </div>  
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <Field 
+                                                        component={Input} 
+                                                        type={`number`}
+                                                        name={`ordem`} 
+                                                        label={`Ordem:`}
+                                                        icon={``}
+                                                        placeholder={`Ordem`}
+                                                        validate={composeValidators(FORM_RULES.number)}
+                                                        />
+                                                </div>                                                                                                       
                                             </div>
                                             <div className="row justify-content-center">
                                                 <div className="col-md-3">
