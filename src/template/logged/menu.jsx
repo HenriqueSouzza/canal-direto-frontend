@@ -10,6 +10,8 @@ import MenuTreeView from '../../components/menu/menuTreeView';
 
 import { efetuarLogout } from '../../pages/auth/actions';
 
+import LoadingBody from '../../components/loading/loadingBody';
+
 function Menu(props){
 
     const onLogout = () => {
@@ -24,8 +26,11 @@ function Menu(props){
         menu = props.auth.user.papeis[0].menus
     }
 
+    console.log(props.auth.user)
+
     return(
         <nav className="mt-2">
+            <LoadingBody status={props.auth.loading} />
             <ul className="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                 <MenuLink description={`Dashboard`} path={`/`} icon={`fas fa-tachometer-alt`}  active={``} />
                 {
