@@ -25,7 +25,7 @@ function Header(props) {
     let data = (props.auth.user.papeis.length > 0 ? props.auth.user.papeis.map(row => ({id: row.id, name: row.papel}) ) : [])
 
     const initialValues = {
-        papeis: 1
+        papeis: props.auth.papel.length > 0 ? props.auth.papel[0].id : props.auth.user.papeis.length > 0 ? props.auth.user.papeis[0].id : ''
     }
     
     return (
@@ -37,30 +37,33 @@ function Header(props) {
                     </Link>
                 </li>
             </ul>
-            <div className="form-inline ml-auto">
-                <span className="mr-3 mt-1">Assumir papel:</span>
-                <Form
-                    onSubmit={onSubmit}
-                    initialValues={initialValues}
-                    render={({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit} onChange={(e) => onChange(e.target.value)}>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="input-group input-group-sm">
-                                        <Field name="papeis">
-                                        {props => (
-                                            <select className={`form-control form-control-navbar`} {...props.input}>
-                                                <option value="">Selecione</option>
-                                                {data.map(row => ( <option key={row.id} value={row.id}>{row.name}</option> ))}
-                                            </select>
-                                        )}
-                                        </Field>
+            {
+                props.auth.user.papeis.length > 1 ? 
+                    <div className="form-inline ml-auto">
+                        <span className="mr-3 mt-1">Assumir papel:</span>
+                        <Form
+                            onSubmit={onSubmit}
+                            initialValues={initialValues}
+                            render={({ handleSubmit }) => (
+                                <form onSubmit={handleSubmit} onChange={(e) => onChange(e.target.value)}>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="input-group input-group-sm">
+                                                <Field name="papeis">
+                                                {props => (
+                                                    <select className={`form-control form-control-navbar`} {...props.input}>
+                                                        <option value="">Selecione</option>
+                                                        {data.map(row => ( <option key={row.id} value={row.id}>{row.name}</option> ))}
+                                                    </select>
+                                                )}
+                                                </Field>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </form>
-                    )}/>
-            </div>
+                                </form>
+                            )}/>
+                    </div>
+            : ''}
         </nav>
     )
 }
