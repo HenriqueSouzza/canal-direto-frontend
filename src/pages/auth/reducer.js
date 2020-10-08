@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
             sessionStorage.removeItem('dataLogged');
             sessionStorage.removeItem('user');
             sessionStorage.removeItem('papel');
-            return { ...state, dataLogged: action.payload, loading: false }        
+            return { ...state, dataLogged: [], user: [], papel: [], loading: false }        
                 
         //Caso para guardar os dados do usuario logado
         case type.GUARDAR_DATA_LOGIN_USER:

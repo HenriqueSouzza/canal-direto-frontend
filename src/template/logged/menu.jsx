@@ -26,8 +26,6 @@ function Menu(props){
         menu = props.auth.user.papeis[0].menus
     }
 
-    console.log(props.auth.user)
-
     return(
         <nav className="mt-2">
             <LoadingBody status={props.auth.loading} />
