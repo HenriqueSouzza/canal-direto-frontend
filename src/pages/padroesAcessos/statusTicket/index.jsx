@@ -22,17 +22,15 @@ class Index extends Component{
 
         const { loading, statusTicket} = this.props.padroesAcessos
 
-        const dataStatusTicket = []
+        let dataStatusTicket = []
 
         if(statusTicket.response){
-            statusTicket.response.content.map(row => {
-                dataStatusTicket.push({
-                    ordem: row.ordem,
-                    nome: row.nome,
-                    // descricao: row.descricao,
-                    link: '/padroes-acessos/status-ticket/' + row.id + '/visualizar'
-                })
-            })
+            dataStatusTicket = statusTicket.response.content.map(row => ({
+                ordem: row.ordem,
+                nome: row.nome,
+                // descricao: row.descricao,
+                link: '/padroes-acessos/status-ticket/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [

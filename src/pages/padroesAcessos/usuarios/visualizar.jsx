@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import { FORM_RULES, composeValidators } from '../../../helpers/validations';
-
 import Input from '../../../components/form/input';
 
 import Button from '../../../components/form/button';

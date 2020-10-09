@@ -212,9 +212,7 @@ export const salvarInteracao = (params, idTicket, router) => {
     const formData = new FormData();
 
     if(params.arquivo.length > 0){
-        params.arquivo.map( (row) => {
-            formData.append('arquivo[]', row)
-        })
+        params.arquivo.map( (row) => formData.append('arquivo[]', row))
     }
 
     if(params.tipoResposta == 'privado'){

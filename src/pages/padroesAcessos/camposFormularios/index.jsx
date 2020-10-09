@@ -22,17 +22,15 @@ class Index extends Component{
 
         const { loading, camposFormularios} = this.props.padroesAcessos
 
-        const dataCamposFormularios = []
+        let dataCamposFormularios = []
 
         if(camposFormularios.response){
-            camposFormularios.response.content.map(row => {
-                dataCamposFormularios.push({
-                    id: row.id,
-                    nome: row.label,
-                    descricao: row.descricao,
-                    link: '/padroes-acessos/campos-formularios/' + row.id + '/visualizar'
-                })
-            })
+            dataCamposFormularios = camposFormularios.response.content.map(row => ({
+                id: row.id,
+                nome: row.label,
+                descricao: row.descricao,
+                link: '/padroes-acessos/campos-formularios/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [

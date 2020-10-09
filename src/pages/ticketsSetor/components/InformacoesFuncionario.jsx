@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function InformacoesFuncionario(props){
 
-    const { data, onVoltar, onResponder, onFechar, loading } = props
+    const { data, onVoltar, onResponder, loading } = props
 
     const onClickVoltar = () => {
         onVoltar()
@@ -13,10 +13,6 @@ function InformacoesFuncionario(props){
 
     const onClickResponder = () => {
         onResponder()
-    }; 
-
-    const onClickFechar = () => {
-        onFechar()
     }; 
 
     return(

@@ -8,11 +8,9 @@ import { Form, Field } from 'react-final-form';
 
 import  Select  from '../../../components/form/select';
 
-import  Input  from '../../../components/form/input';
-
 import  Button  from '../../../components/form/button';
 
-import { composeValidators, FORM_RULES } from '../../../helpers/validations';
+import { FORM_RULES } from '../../../helpers/validations';
 
 import LoadingBody from '../../../components/loading/loadingBody';
 

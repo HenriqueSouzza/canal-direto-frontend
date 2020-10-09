@@ -91,26 +91,23 @@ class Visualizar extends Component{
         const dataTicket = {}
 
         if(meuSetor.response){
-            meuSetor.response.content.find(element => {
-                if(element.id == this.props.match.params.id){
-                    dataTicket.id = element.id
-                    dataTicket.assunto = element.assunto
-                    dataTicket.usuario_abertura = element.usuario_abertura
-                    dataTicket.papel_usuario = element.papel_usuario
-                    dataTicket.usuario_atendente = element.usuario_atendente
-                    dataTicket.setor = element.setor
-                    dataTicket.categoria = element.categoria
-                    dataTicket.mensagem = element.mensagem
-                    dataTicket.arquivo = element.arquivo
-                    dataTicket.status = element.status
-                    dataTicket.created_at = element.dt_criacao
-                }
-            })
+            dataTicket.id = meuSetor.response.content[0].id
+            dataTicket.assunto = meuSetor.response.content[0].assunto
+            dataTicket.usuario_abertura = meuSetor.response.content[0].usuario_abertura
+            dataTicket.papel_usuario = meuSetor.response.content[0].papel_usuario
+            dataTicket.usuario_atendente = meuSetor.response.content[0].usuario_atendente
+            dataTicket.setor = meuSetor.response.content[0].setor
+            dataTicket.categoria = meuSetor.response.content[0].categoria
+            dataTicket.mensagem = meuSetor.response.content[0].mensagem
+            dataTicket.arquivo = meuSetor.response.content[0].arquivo
+            dataTicket.status = meuSetor.response.content[0].status
+            dataTicket.created_at = meuSetor.response.content[0].dt_criacao
         }
 
         const dataInteracao = []
 
         if(interacoesTickets.response){
+            console.log(interacoesTickets.response)
             interacoesTickets.response.content.find(element => {
                 if(element.id_ticket == this.props.match.params.id){
                     dataInteracao.push({
@@ -125,15 +122,13 @@ class Visualizar extends Component{
             })
         }
 
-        const dataSetor = []
+        let dataSetor = []
 
         if(dadosSetor.response){
-            dadosSetor.response.content.map(row => {
-                dataSetor.push({
-                    id: row.id,
-                    name: row.descricao,
-                })
-            })
+            dataSetor = dadosSetor.response.content.map(row => ({
+                id: row.id,
+                name: row.descricao,
+            }))
         }       
 
         const dataCategoria = []

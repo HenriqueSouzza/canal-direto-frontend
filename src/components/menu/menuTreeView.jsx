@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function menuTreeView(props){
 
-    const { description, path, icon, active, children  } = props  
+    const { description, path, icon, children } = props  
 
     return(
         <li className="nav-item has-treeview">

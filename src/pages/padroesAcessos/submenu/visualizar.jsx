@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import { Link } from 'react-router-dom';
-
 import { Form, Field } from 'react-final-form';
 
 import MenuHeader from '../../../components/menu/menuHeader';
@@ -21,8 +19,6 @@ import Button from '../../../components/form/button';
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import  { alteraSubMenu, buscarSubMenu, novoSubMenu } from './actions';
-
-import DataTable from '../../../components/table/dataTable';
 
 
 class Visualizar extends Component{

@@ -30,9 +30,7 @@ export const efetuarLogin = (params) => {
         .catch(error => {
 
             if(error.response.status == 401){
-                toastr.error('Erro', error.response.data.response.content.error)
-            }else{
-                toastr.error('Erro', 'Ops ! você não tem cadastrado no sistema.')
+                toastr.error('Erro', error.response.data.response.content.messages)
             }
 
             dispatch({type: type.LOAD_AUTH, payload: false})

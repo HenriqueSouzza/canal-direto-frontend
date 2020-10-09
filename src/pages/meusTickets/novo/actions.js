@@ -110,9 +110,7 @@ export const salvarNovoTicket = (params, router) => {
     const formData = new FormData();
 
     if(params.arquivos.length > 0){
-        params.arquivos.map( (row) => {
-            formData.append('arquivo[]', row)
-        })
+        params.arquivos.map( (row) => formData.append('arquivo[]', row))
     }
 
     formData.append('usuario', USER_LOGGED.usuario)

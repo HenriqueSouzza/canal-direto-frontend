@@ -75,11 +75,7 @@ class Visualizar extends Component{
             initialValues.visivel_temp = camposFormularios.response.content[0].visivel
             initialValues.editavel_temp = camposFormularios.response.content[0].editavel
 
-            dataTipo.map( (row, index) => {
-                if(camposFormularios.response.content[0].type == row.id){
-                    delete dataTipo[index]
-                }
-            })
+            dataTipo.map( (row, index) => camposFormularios.response.content[0].type == row.id ? delete dataTipo[index] : row )
         }
 
 

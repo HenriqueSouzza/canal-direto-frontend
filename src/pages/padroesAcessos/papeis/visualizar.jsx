@@ -87,15 +87,15 @@ class Visualizar extends Component{
 
             initialValues.categoria = []
 
-            papeis.response.content[0].setorCategoria.map(row => {
+            papeis.response.content[0].setorCategoria.map(row => 
                 row.categoria.map( val => initialValues.categoria.push({ value: parseInt(val.id), label: row.setor + ' - ' + val.descricao }))
-            })
+            )
 
             initialValues.submenu = []
 
-            papeis.response.content[0].menus.map(row => {
+            papeis.response.content[0].menus.map(row => 
                 row.submenus.map( val => initialValues.submenu.push({ value: parseInt(val.id), label: row.nome + ' - ' + val.nome }))
-            })
+            )
         }
 
         

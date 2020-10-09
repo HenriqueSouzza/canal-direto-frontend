@@ -6,10 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import { Form, Field } from 'react-final-form';
 
-import { FieldArray } from 'react-final-form-arrays';
-
-import arrayMutators from 'final-form-arrays';
-
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import MenuHeader from '../../../components/menu/menuHeader';
@@ -53,15 +49,15 @@ class Novo extends Component{
         params.formulario = values.formulario
 
         if(values.permissoes){
-            params.permissao = values.permissoes.map( row => (row.value))
+            params.permissao = values.permissoes.map( row => row.value)
         }
 
         if(values.submenu){
-            params.submenu = values.submenu.map( row => (row.value))
+            params.submenu = values.submenu.map( row => row.value)
         }
 
         if(values.categoria){
-            params.categoria = values.categoria.map( row => (row.value))
+            params.categoria = values.categoria.map( row => row.value)
         }
 
         this.props.novoPapel(params, this.props.history)
@@ -73,7 +69,7 @@ class Novo extends Component{
 
     render(){
 
-        const { loading, permissoes, setor, categoria, formularios, submenu } = this.props.padroesAcessos
+        const { loading, permissoes, categoria, formularios, submenu } = this.props.padroesAcessos
 
         let subMenuSelect = []
 
@@ -85,12 +81,6 @@ class Novo extends Component{
 
         if(categoria.response){
             categoriaSelect = categoria.response.content.map( row => ({ value: row.id, label: row.setor[0].descricao + ' - ' + row.descricao })) 
-        }
-
-        let setorSelect = []
-
-        if(setor.response){
-            setorSelect = setor.response.content.map(row => ({ id: row.id, name: row.descricao }))
         }
 
         let permissoesSelect = []

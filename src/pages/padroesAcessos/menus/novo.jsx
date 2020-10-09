@@ -12,8 +12,6 @@ import LoadingBody from '../../../components/loading/loadingBody';
 
 import Input from '../../../components/form/input';
 
-import Checkbox from '../../../components/form/checkbox';
-
 import Button from '../../../components/form/button';
 
 import { FORM_RULES, composeValidators } from '../../../helpers/validations';

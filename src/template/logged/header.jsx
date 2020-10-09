@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 
-import Select from '../../components/form/select';
 import { buscarPapelUsuario } from '../../pages/auth/actions';
 
 

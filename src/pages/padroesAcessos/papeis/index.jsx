@@ -22,17 +22,15 @@ class Index extends Component{
 
         const { loading, papeis } = this.props.padroesAcessos
 
-        const dataPapeis = []
+        let dataPapeis = []
 
         if(papeis.response){
-            papeis.response.content.map(row => {
-                dataPapeis.push({
-                    id: row.id,
-                    papel: row.papel,
-                    descricao: row.descricao,
-                    link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
-                })
-            })
+            dataPapeis = papeis.response.content.map(row => ({
+                id: row.id,
+                papel: row.papel,
+                descricao: row.descricao,
+                link: '/padroes-acessos/papeis/' + row.id + '/visualizar'
+            }))
         }
 
         const columns = [

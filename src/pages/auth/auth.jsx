@@ -20,8 +20,6 @@ import { efetuarLogin } from './actions';
 
 import './style.css';
 
-import { Link } from 'react-router-dom';
-
 import imgLogo  from '../../template/images/logo.png';
 
 
@@ -89,7 +87,7 @@ class Auth extends Component {
                                                         type={`radio`}
                                                         name={`tipo`} 
                                                         label={`Aluno`}
-                                                        value={`aluno`}
+                                                        value={`1`}
                                                         validate={composeValidators(FORM_RULES.required)}
                                                         />
                                                     <Field 
@@ -97,14 +95,14 @@ class Auth extends Component {
                                                         type={`radio`}
                                                         name={`tipo`} 
                                                         label={`Docente`}
-                                                        value={`docente`}
+                                                        value={`2`}
                                                         />
                                                     <Field 
                                                         component={Radio} 
                                                         type={`radio`}
                                                         name={`tipo`} 
                                                         label={`Funcionário`}
-                                                        value={`funcionario`}
+                                                        value={`3`}
                                                         />
                                                 </div>
                                             </div>
