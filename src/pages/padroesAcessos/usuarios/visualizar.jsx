@@ -67,7 +67,7 @@ class Visualizar extends Component{
         if(usuarios.response){
             initialValues.name = usuarios.response.content[0].name
             initialValues.email = usuarios.response.content[0].email
-            initialValues.papeis = usuarios.response.content[0].papeis.map(row => ({value: parseInt(row.id), label: row.papel}))
+            initialValues.papeis = usuarios.response.content[0].papeis.map(row => ({value: parseInt(row.ID), label: row.papel}))
             initialValues.permissoes = usuarios.response.content[0].permissoes.map(row => ({value: parseInt(row.id), label: row.permissao}))
         }
 

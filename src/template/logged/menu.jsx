@@ -54,12 +54,12 @@ function Menu(props){
                     <MenuLink description={`Novo Ticket`} path={`/meus-tickets/novo`} icon={`fa fa-edit`} active={``} />
                     <MenuLink description={`Abertos`} path={`/meus-tickets/abertos`} icon={`fa fa-envelope-open`} active={``} />
                     <MenuLink description={`Fechados`} path={`/meus-tickets/fechados`} icon={`fa fa-envelope`} active={``} />
-                </MenuTreeView>
-                <MenuTreeView description={`Tickets meu setor`} path={`#`} icon={`fa fa-building`} >
+                </MenuTreeView> */}
+                {/* <MenuTreeView description={`Tickets meu setor`} path={`#`} icon={`fa fa-building`} >
                     <MenuLink description={`Para meu setor`} path={`/tickets-setor/para-meu-setor`} icon={`fa fa-object-group`} active={``} />
                     <MenuLink description={`Meus tickets`} path={`/tickets-setor/meus-tickets`} icon={`fa fa-address-book`} active={``} />
-                </MenuTreeView>
-                <MenuTreeView description={`Padrões de acessos`} path={`#`} icon={`fa fa-cogs`} >
+                </MenuTreeView> */}
+                {/* <MenuTreeView description={`Padrões de acessos`} path={`#`} icon={`fa fa-cogs`} >
                     <MenuLink description={`Usuários`} path={`/padroes-acessos/usuarios`} icon={`fa fa-users`} active={``} />
                     <MenuLink description={`Papéis`} path={`/padroes-acessos/papeis`} icon={`fa fa-list-ul`} active={``} />
                     <MenuLink description={`Permissões`} path={`/padroes-acessos/permissoes`} icon={`fa fa-list-ul`} active={``} />
