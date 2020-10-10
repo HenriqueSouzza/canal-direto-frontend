@@ -107,7 +107,6 @@ class Visualizar extends Component{
         const dataInteracao = []
 
         if(interacoesTickets.response){
-            console.log(interacoesTickets.response)
             interacoesTickets.response.content.find(element => {
                 if(element.id_ticket == this.props.match.params.id){
                     dataInteracao.push({

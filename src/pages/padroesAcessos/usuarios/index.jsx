@@ -91,7 +91,7 @@ class Index extends Component{
 
         return(
             <section className="content">
-                <MenuHeader title={`Status de ticket`} history={this.props.location.pathname} />
+                <MenuHeader title={`Usuarios do sistema`} history={this.props.location.pathname} />
                 <div className="content-fluid">
                     <div className="card card-danger">
                         <div className="card-header">

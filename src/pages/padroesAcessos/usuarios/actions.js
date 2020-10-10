@@ -47,7 +47,7 @@ export const alterarUsuario = (params, id) => {
         axios.put(endPoint, params, { headers: headers })
         .then(response => {
 
-            toastr.success('Sucesso', 'Status alterado com sucesso')
+            toastr.success('Sucesso', 'Dados de acessos do usuário alterado com sucesso')
             dispatch(buscarUsuarios('?where[id]=' + id))
             
         })
