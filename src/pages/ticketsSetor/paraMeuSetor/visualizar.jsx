@@ -143,6 +143,8 @@ class Visualizar extends Component{
             })
         }
 
+        console.log(dataTicket.usuario_abertura)
+
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -151,18 +153,18 @@ class Visualizar extends Component{
                     <div className="col-md-12">
                         <div className="content-fluid">
                             {
-                                dataTicket.papel_usuario == 1 ? 
+                                dataTicket.usuario_abertura && dataTicket.usuario_abertura[0].papel == 'funcionário' ? 
                                     <InformacoesFuncionario 
                                         data={dataTicket}
                                         loading={loading}
                                         onVoltar={this.onVoltar}
                                         onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
-                                : dataTicket.papel_usuario == 2 ? 
+                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura[0].papel == 'aluno' ? 
                                     <InformacoesAluno 
                                         data={dataTicket}
                                     />
-                                : dataTicket.papel_usuario == 3 ? 
+                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura[0].papel == 'docente' ? 
                                     <InformacoesDocente 
                                         data={dataTicket}
                                     />

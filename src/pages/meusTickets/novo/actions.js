@@ -113,8 +113,8 @@ export const salvarNovoTicket = (params, router) => {
         params.arquivos.map( (row) => formData.append('arquivo[]', row))
     }
 
-    formData.append('usuario', USER_LOGGED.usuario)
-    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('usuario', USER_LOGGED.email)
+    formData.append('papel_usuario', USER_LOGGED.papelPrincipal[0].id)
     formData.append('assunto', params.assunto)
     formData.append('setor', params.setor)
     formData.append('categoria', params.categoria)

@@ -24,7 +24,7 @@ function InformacoesFuncionario(props){
                 <div className="row">
                     <div className="col-md-12">
                         <label>Solicitante:</label>
-                        <div className="">{data.usuario_abertura ? data.usuario_abertura : '-'}</div>
+                        {/* <div className="">{data.usuario_abertura ? data.usuario_abertura : '-'}</div> */}
                     </div>
                     <div className="col-md-12">
                         <label>Assunto:</label>

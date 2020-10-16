@@ -9,11 +9,4 @@ export const BASE_API = (
         'http://sistemas-academicos-api.desenv.br/'
 );
 
-export const USER_LOGGED = {
-    usuario: 'hnrique.souza',
-    // usuario: 'marcos.barros',
-    papelUsuario: {
-                    id: '1',
-                    papel: 'funcionario'
-                }
-}
+export const USER_LOGGED = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : []

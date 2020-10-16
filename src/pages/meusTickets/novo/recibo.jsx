@@ -49,7 +49,7 @@ class Recibo extends Component{
             }
 
             dataTicket = {
-                solicitante: meusTickets.response.content[0].usuario_abertura,
+                solicitante: meusTickets.response.content[0].usuario_abertura[0].nome,
                 ticket: meusTickets.response.content[0].id,
                 assunto: meusTickets.response.content[0].assunto,
                 setor: meusTickets.response.content[0].setor,
