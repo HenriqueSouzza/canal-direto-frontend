@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  '../types';
 
-import { BASE_API, USER_LOGGED } from '../../../config/const';
+import { BASE_API } from '../../../config/const';
 
 
 /**
@@ -113,8 +113,8 @@ export const salvarNovoTicket = (params, router) => {
         params.arquivos.map( (row) => formData.append('arquivo[]', row))
     }
 
-    formData.append('usuario', USER_LOGGED.email)
-    formData.append('papel_usuario', USER_LOGGED.papelPrincipal[0].id)
+    formData.append('usuario', params.usuario)
+    formData.append('papel_usuario', params.papel_usuario)
     formData.append('assunto', params.assunto)
     formData.append('setor', params.setor)
     formData.append('categoria', params.categoria)

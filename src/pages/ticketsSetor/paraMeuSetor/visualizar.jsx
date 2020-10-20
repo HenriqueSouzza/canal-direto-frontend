@@ -93,7 +93,7 @@ class Visualizar extends Component{
         if(meuSetor.response){
             dataTicket.id = meuSetor.response.content[0].id
             dataTicket.assunto = meuSetor.response.content[0].assunto
-            dataTicket.usuario_abertura = meuSetor.response.content[0].usuario_abertura
+            dataTicket.usuario_abertura = meuSetor.response.content[0].usuario_abertura.length > 0 ? meuSetor.response.content[0].usuario_abertura[0] : []
             dataTicket.papel_usuario = meuSetor.response.content[0].papel_usuario
             dataTicket.usuario_atendente = meuSetor.response.content[0].usuario_atendente
             dataTicket.setor = meuSetor.response.content[0].setor
@@ -143,8 +143,6 @@ class Visualizar extends Component{
             })
         }
 
-        console.log(dataTicket.usuario_abertura)
-
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -153,20 +151,26 @@ class Visualizar extends Component{
                     <div className="col-md-12">
                         <div className="content-fluid">
                             {
-                                dataTicket.usuario_abertura && dataTicket.usuario_abertura[0].papel == 'funcionário' ? 
+                                dataTicket.usuario_abertura && dataTicket.usuario_abertura.papel == 'funcionário' ? 
                                     <InformacoesFuncionario 
                                         data={dataTicket}
                                         loading={loading}
                                         onVoltar={this.onVoltar}
                                         onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
-                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura[0].papel == 'aluno' ? 
+                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura.papel == 'aluno' ? 
                                     <InformacoesAluno 
                                         data={dataTicket}
+                                        loading={loading}
+                                        onVoltar={this.onVoltar}
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
-                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura[0].papel == 'docente' ? 
+                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura.papel == 'docente' ? 
                                     <InformacoesDocente 
                                         data={dataTicket}
+                                        loading={loading}
+                                        onVoltar={this.onVoltar}
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : ''
                             }

@@ -57,7 +57,9 @@ class Recibo extends Component{
                 mensagem: meusTickets.response.content[0].mensagem,
                 arquivo: meusTickets.response.content[0].arquivo,
             }
+
         }
+
 
         return (
             <section className="content">

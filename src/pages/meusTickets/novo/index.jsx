@@ -42,6 +42,8 @@ class Novo extends Component{
     onSubmit = values => {
         values.status = 1
         values.arquivos = this.state.arquivo.file
+        values.usuario = this.props.auth.user.email
+        values.papel_usuario = this.props.auth.user.papelPrincipal[0].id
         this.props.salvarNovoTicket(values, this.props.history)
     }
 
@@ -214,7 +216,7 @@ class Novo extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ meusTickets: state.meusTickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets, auth: state.auth })
 
 /**
  * @param {*} dispatch 
