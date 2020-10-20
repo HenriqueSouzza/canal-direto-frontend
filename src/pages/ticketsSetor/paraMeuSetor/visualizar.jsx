@@ -49,14 +49,18 @@ class Visualizar extends Component{
 
     onSubmit = values => {
         values.status = 3
+        values.usuario = this.props.auth.user.email
+        values.papel_usuario = this.props.auth.user.papelPrincipal[0].id
         this.props.salvarInteracao(values, this.props.match.params.id)
     }
 
     onSubmitEncaminhar = (values) => {
 
-        values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario
+        values.mensagem = 'Ticket designado para ' + this.props.auth.user.name
         values.publico = 1
         values.status = 1
+        values.usuario_interacao = this.props.auth.user.email
+        values.papel_usuario = this.props.auth.user.papelPrincipal[0].id
         this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
 
     }
@@ -64,9 +68,11 @@ class Visualizar extends Component{
     onResponder = () => {
         const values = {}
 
-        values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario 
+        values.mensagem = 'Ticket designado para ' + this.props.auth.user.name
         values.publico = 1
         values.status = 2
+        values.usuario_atendente = this.props.auth.user.email
+        values.papel_usuario = this.props.auth.user.papelPrincipal[0].id
 
         this.props.responderTicket(values, this.props.match.params.id, this.props.history)
     }
@@ -257,7 +263,7 @@ class Visualizar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
+const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor, auth: state.auth })
 
 /**
  * @param {*} dispatch 

@@ -12,7 +12,7 @@ import { BASE_API, USER_LOGGED } from '../../../config/const';
  */
 export const buscarMeusTickets = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket?where[usuario_atendente]=' + USER_LOGGED.usuario + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket' + params;
 
     const headers = {}
 
@@ -166,9 +166,6 @@ export const buscarCategoria = (params) => {
  */
 export const encaminharTicket = (params, idTicket, router) => {
 
-    params.usuario_interacao = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
     const headers = {}
@@ -182,7 +179,7 @@ export const encaminharTicket = (params, idTicket, router) => {
 
             router.goBack()
             toastr.success('Sucesso', 'Ticket encaminhado com sucesso')
-            dispatch(buscarMeusTickets())
+            dispatch(buscarMeusTickets('?where[usuario_atendente]=' + params.usuario_interacao))
             
         })
         .catch(error => {
@@ -221,8 +218,8 @@ export const salvarInteracao = (params, idTicket, router) => {
         formData.append('publico', 1)
     }
     
-    formData.append('usuario_interacao', USER_LOGGED.usuario)
-    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('usuario_interacao', params.usuario)
+    formData.append('papel_usuario', params.papel_usuario)
     formData.append('id_ticket', params.id_ticket)
     formData.append('mensagem', params.mensagem)
     formData.append('status', params.status)

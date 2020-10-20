@@ -47,7 +47,7 @@ class Visualizar extends Component{
     onFechar = values => {
 
         values.status = 5
-        values.publico = 1
+        values.publico = '1'
         values.mensagem = 'Ticket fechado pelo solicitante: ' + values.mensagem_temp
         values.usuario_fechamento = this.props.auth.user.email
         values.papel_usuario =  this.props.auth.user.papelPrincipal[0].id

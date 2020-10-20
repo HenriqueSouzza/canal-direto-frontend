@@ -26,7 +26,7 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets("&where[status]=2")
+        this.props.buscarMeusTickets('?where[usuario_atendente]=' + this.props.auth.user.email + "&where[status]=2")
         this.props.buscarStatusTicket()
     }
 
@@ -204,7 +204,7 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
+const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor, auth: state.auth })
 
 /**
  * @param {*} dispatch 

@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  '../types';
 
-import { BASE_API, USER_LOGGED } from '../../../config/const';
+import { BASE_API } from '../../../config/const';
 
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
@@ -183,8 +183,8 @@ export const salvarInteracao = (params, idTicket) => {
         formData.append('publico', 1)
     }
     
-    formData.append('usuario_interacao', USER_LOGGED.usuario)
-    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('usuario_interacao', params.usuario)
+    formData.append('papel_usuario', params.papel_usuario)
     formData.append('id_ticket', params.id_ticket)
     formData.append('mensagem', params.mensagem)
     formData.append('status', params.status)
@@ -221,9 +221,6 @@ export const salvarInteracao = (params, idTicket) => {
  */
 export const encaminharTicket = (params, idTicket, router) => {
 
-    params.usuario_interacao = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
-
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
     const headers = {}
@@ -257,9 +254,6 @@ export const encaminharTicket = (params, idTicket, router) => {
  * @param {*} router 
  */
 export const responderTicket = (params, idTicket, router) => {
-
-    params.usuario_atendente = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 

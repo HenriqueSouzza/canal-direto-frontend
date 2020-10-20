@@ -28,13 +28,11 @@ import { buscarMeusTickets, salvarInteracao, encaminharTicket, buscarInteracoesT
 
 import moment from 'moment';
 
-import { USER_LOGGED } from '../../../config/const';
-
 
 class Visualizar extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
+        this.props.buscarMeusTickets('?where[usuario_atendente]=' + this.props.auth.user.email + '&where[id]=' + this.props.match.params.id)
         this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
         this.props.buscarSetor()
     }
@@ -43,15 +41,18 @@ class Visualizar extends Component{
 
         values.status = values.fechar ? 4 : 3
         values.dt_fechamento = values.fechar ? moment().format('YYYY-MM-DD H:mm:ss') : ''
-
+        values.usuario = this.props.auth.user.email
+        values.papel_usuario = this.props.auth.user.papelPrincipal[0].id
         this.props.salvarInteracao(values, this.props.match.params.id, this.props.history)
     }
 
     onSubmitEncaminhar = (values) => {
 
-        values.mensagem = 'Ticket designado para ' + USER_LOGGED.usuario
+        values.mensagem = 'Ticket designado para ' + this.props.auth.user.name
         values.publico = 1
         values.status = 1
+        values.usuario_interacao = this.props.auth.user.email
+        values.papel_usuario = this.props.auth.user.papelPrincipal[0].id
         this.props.encaminharTicket(values, this.props.match.params.id, this.props.history)
 
     }
@@ -78,7 +79,7 @@ class Visualizar extends Component{
         if(meusTickets.response){
             dataTicket.id = meusTickets.response.content[0].id
             dataTicket.assunto = meusTickets.response.content[0].assunto
-            dataTicket.usuario_abertura = meusTickets.response.content[0].usuario_abertura
+            dataTicket.usuario_abertura = meusTickets.response.content[0].usuario_abertura.length > 0 ? meusTickets.response.content[0].usuario_abertura[0] : []
             dataTicket.papel_usuario = meusTickets.response.content[0].papel_usuario
             dataTicket.setor = meusTickets.response.content[0].setor
             dataTicket.categoria = meusTickets.response.content[0].categoria
@@ -88,11 +89,13 @@ class Visualizar extends Component{
             dataTicket.created_at = meusTickets.response.content[0].created_a
         }
 
+        console.log(dataTicket)
+
         let dataInteracao = []
 
         if(interacoesTickets.response){
             dataInteracao = interacoesTickets.response.content.map(row => ({
-                solicitante: USER_LOGGED.usuario == row.usuario_interacao ? 1 : 0,
+                solicitante: this.props.auth.user.email == row.usuario_interacao ? 1 : 0,
                 usuario_interacao: row.usuario_interacao,
                 mensagem: row.mensagem,
                 arquivo: row.arquivo,
@@ -130,19 +133,27 @@ class Visualizar extends Component{
                 <div className="row">
                     <div className="col-md-12">
                         <div className="content-fluid">
-                            {
-                                dataTicket.papel_usuario == 1 ? 
+                        {
+                                dataTicket.usuario_abertura && dataTicket.usuario_abertura.papel == 'funcionário' ? 
                                     <InformacoesFuncionario 
                                         data={dataTicket}
+                                        loading={loading}
                                         onVoltar={this.onVoltar}
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
-                                : dataTicket.papel_usuario == 2 ? 
+                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura.papel == 'aluno' ? 
                                     <InformacoesAluno 
                                         data={dataTicket}
+                                        loading={loading}
+                                        onVoltar={this.onVoltar}
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
-                                : dataTicket.papel_usuario == 3 ? 
+                                : dataTicket.usuario_abertura && dataTicket.usuario_abertura.papel == 'docente' ? 
                                     <InformacoesDocente 
                                         data={dataTicket}
+                                        loading={loading}
+                                        onVoltar={this.onVoltar}
+                                        onResponder={dataTicket.usuario_atendente ? false : this.onResponder}
                                     />
                                 : ''
                             }
@@ -233,7 +244,7 @@ class Visualizar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
+const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor, auth: state.auth })
 
 /**
  * @param {*} dispatch 
