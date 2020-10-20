@@ -26,7 +26,7 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets()
+        this.props.buscarMeusTickets('&where[usuario]='+ this.props.auth.user.email)
     }
 
     onSubmit = values => {
@@ -187,7 +187,7 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ meusTickets: state.meusTickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets, auth: state.auth })
 
 /**
  * @param {*} dispatch 

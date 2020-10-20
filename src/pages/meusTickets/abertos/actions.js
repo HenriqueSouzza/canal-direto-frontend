@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  '../types';
 
-import { BASE_API, USER_LOGGED } from '../../../config/const';
+import { BASE_API } from '../../../config/const';
 
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
@@ -95,9 +95,9 @@ export const salvarInteracao = (params, idTicket) => {
         })
     }
 
-    formData.append('usuario_interacao', USER_LOGGED.usuario)
+    formData.append('usuario_interacao', params.usuario)
     formData.append('id_ticket', idTicket)
-    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('papel_usuario', params.papel_usuario)
     formData.append('mensagem', params.mensagem)
     formData.append('_method', 'put')
 
@@ -132,9 +132,6 @@ export const salvarInteracao = (params, idTicket) => {
  * @param {*} router 
  */
 export const fecharTicket = (params, idTicket, router) => {
-
-    params.usuario_fechamento = USER_LOGGED.usuario
-    params.papel_usuario = USER_LOGGED.papelUsuario.id
 
     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 

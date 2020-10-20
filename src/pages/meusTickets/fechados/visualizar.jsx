@@ -22,8 +22,6 @@ import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import { buscarMeusTickets, salvarInteracao, buscarInteracoesTicket } from  './actions';
 
-import { USER_LOGGED } from '../../../config/const';
-
 import moment from 'moment';
 
 import PaginaNaoEncontrada from '../../errosPagina/paginaNaoEncontrada';
@@ -32,7 +30,7 @@ class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
-        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
+        this.props.buscarMeusTickets('&where[usuario]='+ this.props.auth.user.email + '&where[id]=' + this.props.match.params.id)
     }
 
     onSubmit = (values) => {
@@ -43,6 +41,8 @@ class Visualizar extends Component{
             status: meusTickets.response.content[0].usuario_atendente ? 2 : 1,
             dt_fechamento: '',
             mensagem: 'Ticket reaberto pelo solicitante: ' + values.mensagem,
+            usuario: this.props.auth.user.email,
+            papel_usuario: this.props.auth.user.papelPrincipal[0].id
         }
 
         this.props.salvarInteracao(params, this.props.match.params.id, this.props.history)
@@ -83,7 +83,7 @@ class Visualizar extends Component{
 
         if(interacoesTickets.response){
             dataInteracao = interacoesTickets.response.content.map(row => ({
-                solicitante: USER_LOGGED.usuario  == row.usuario_interacao ? 1 : 0,
+                solicitante: this.props.auth.user.email  == row.usuario_interacao ? 1 : 0,
                 usuario_interacao: row.usuario_interacao,
                 mensagem: row.mensagem,
                 arquivo: row.arquivo,
@@ -207,7 +207,7 @@ class Visualizar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ meusTickets: state.meusTickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets, auth: state.auth })
 
 /**
  * @param {*} dispatch 

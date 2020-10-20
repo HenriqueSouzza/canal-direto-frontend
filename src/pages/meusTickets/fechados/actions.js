@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import type from  '../types';
 
-import { BASE_API, USER_LOGGED } from '../../../config/const';
+import { BASE_API } from '../../../config/const';
 
 
 /**
@@ -91,9 +91,9 @@ export const salvarInteracao = (params, idTicket, router) => {
 
     formData.append('status', params.status)
     formData.append('dt_fechamento', params.dt_fechamento)
-    formData.append('usuario_interacao', USER_LOGGED.usuario)
+    formData.append('usuario_interacao', params.usuario)
     formData.append('id_ticket', idTicket)
-    formData.append('papel_usuario', USER_LOGGED.papelUsuario.id)
+    formData.append('papel_usuario', params.papel_usuario)
     formData.append('mensagem', params.mensagem)
     formData.append('_method', 'put')
 

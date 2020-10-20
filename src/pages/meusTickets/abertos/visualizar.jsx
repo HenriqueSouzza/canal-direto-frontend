@@ -22,8 +22,6 @@ import { FORM_RULES, composeValidators } from '../../../helpers/validations';
 
 import { buscarMeusTickets, salvarInteracao, buscarInteracoesTicket, fecharTicket } from  './actions';
 
-import { USER_LOGGED } from '../../../config/const';
-
 import moment from 'moment';
 
 import PaginaNaoEncontrada from '../../errosPagina/paginaNaoEncontrada';
@@ -33,10 +31,12 @@ class Visualizar extends Component{
 
     componentDidMount(){
         this.props.buscarInteracoesTicket('?where[id_ticket]=' + this.props.match.params.id)
-        this.props.buscarMeusTickets('&where[id]=' + this.props.match.params.id)
+        this.props.buscarMeusTickets('&where[usuario]='+ this.props.auth.user.email +'&where[id]=' + this.props.match.params.id)
     }
 
     onSubmit = (values) => {
+        values.usuario = this.props.auth.user.email
+        values.papel_usuario =  this.props.auth.user.papelPrincipal[0].id
         this.props.salvarInteracao(values, this.props.match.params.id)
     }
 
@@ -49,6 +49,8 @@ class Visualizar extends Component{
         values.status = 5
         values.publico = 1
         values.mensagem = 'Ticket fechado pelo solicitante: ' + values.mensagem_temp
+        values.usuario_fechamento = this.props.auth.user.email
+        values.papel_usuario =  this.props.auth.user.papelPrincipal[0].id
         values.dt_fechamento = moment().format('YYYY-MM-DD H:mm:ss')
 
         this.props.fecharTicket(values, this.props.match.params.id, this.props.history)
@@ -85,7 +87,7 @@ class Visualizar extends Component{
 
         if(interacoesTickets.response){
             dataInteracao = interacoesTickets.response.content.map(row => ({
-                solicitante: USER_LOGGED.usuario == row.usuario_interacao ? 1 : 0,
+                solicitante: this.props.auth.user.email == row.usuario_interacao ? 1 : 0,
                 usuario_interacao: row.usuario_interacao,
                 mensagem: row.mensagem,
                 arquivo: row.arquivo,
@@ -208,7 +210,7 @@ class Visualizar extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ meusTickets: state.meusTickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets, auth: state.auth })
 
 /**
  * @param {*} dispatch 

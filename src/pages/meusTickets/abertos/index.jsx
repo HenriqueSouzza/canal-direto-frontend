@@ -18,7 +18,7 @@ import Input from '../../../components/form/input';
 
 import Button from '../../../components/form/button';
 
-import { buscarMeusTickets } from './actions'
+import { buscarMeusTickets } from './actions';
 
 import moment from 'moment';
  
@@ -26,7 +26,7 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets()
+        this.props.buscarMeusTickets('&where[usuario]='+ this.props.auth.user.email)
     }
 
     onSubmit = values => {
@@ -193,7 +193,7 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ meusTickets: state.meusTickets })
+const mapStateToProps = state => ({ meusTickets: state.meusTickets, auth: state.auth })
 
 /**
  * @param {*} dispatch 
