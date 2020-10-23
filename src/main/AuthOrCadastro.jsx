@@ -11,7 +11,7 @@ import './style.css';
 function AuthOrCadastro() {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <div className="container-fluid bg-danger">
         <div className="row login-body">
           <Sidebar />

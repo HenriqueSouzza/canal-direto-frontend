@@ -1,10 +1,10 @@
 
 export const BASE_API = (
     process.env.NODE_ENV === 'production' ? 
-        'http://sistemas-academicos-api.desenv.br/'
+        'http://desenv-apl.iesb.br/sistemas-academicos-api/'
     :
-    process.env.NODE_ENV === 'homologation' ?
-        'http://sistemas-academicos-api.desenv.br/'
+    process.env.NODE_ENV === 'development' ?
+        'http://sistemas-academicos.desenv.br/sistemas-academicos-api/public/'
     :
-        'http://sistemas-academicos-api.desenv.br/'
+        'http://sistemas-academicos.desenv.br/sistemas-academicos-api/public/'
 );
