@@ -28,8 +28,6 @@ import { buscarInteracoesTicket, buscarTicketsSetor, buscarSetor, buscarCategori
 
 import moment from 'moment';
 
-import { USER_LOGGED } from '../../../config/const';
-
 
 class Visualizar extends Component{
 
@@ -116,7 +114,7 @@ class Visualizar extends Component{
             interacoesTickets.response.content.find(element => {
                 if(element.id_ticket == this.props.match.params.id){
                     dataInteracao.push({
-                        solicitante: USER_LOGGED.usuario == element.usuario_interacao ? 1 : 0 ,
+                        solicitante: this.props.auth.user.email == element.usuario_interacao ? 1 : 0 ,
                         usuario_interacao: element.usuario_interacao,
                         mensagem: element.mensagem,
                         arquivo: element.arquivo,
