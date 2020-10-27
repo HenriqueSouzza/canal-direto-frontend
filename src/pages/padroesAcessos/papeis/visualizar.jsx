@@ -82,7 +82,7 @@ class Visualizar extends Component{
             initialValues.papel = papeis.response.content[0].papel
             initialValues.descricao = papeis.response.content[0].descricao
             initialValues.sistema = papeis.response.content[0].sistemas.nome_sistema
-            initialValues.formulario = papeis.response.content[0].formulario.id ? papeis.response.content[0].formulario.id : ''
+            initialValues.formulario = papeis.response.content[0].formulario && papeis.response.content[0].formulario.id ? papeis.response.content[0].formulario.id : ''
             initialValues.permissoes = papeis.response.content[0].permissoes.map(row => ({value: parseInt(row.id), label: row.permissao}))
 
             initialValues.categoria = []
