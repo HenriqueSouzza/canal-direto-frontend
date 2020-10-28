@@ -31,17 +31,17 @@ class Index extends Component{
     }
 
     onSubmit = values => {
-        let $where = ''
+        let where = '?where[usuario_atendente]=' + this.props.auth.user.email
 
         if(values.status){
-            $where += "&where[status]=" + values.status
+            where += "&where[status]=" + values.status
         }
 
         if(values.dt_ini && values.dt_fim){
-            $where += "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim)
+            where += "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim)
         }
 
-        this.props.buscarMeusTickets($where)
+        this.props.buscarMeusTickets(where)
     }
 
     render(){
