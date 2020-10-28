@@ -65,9 +65,9 @@ function InformacoesAluno(props){
                                 data.arquivo && data.arquivo.length > 0 ?
                                     data.arquivo.map((row, index) => (
                                         <span className={`mr-3 mt-2`} key={index}>
-                                            <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>
+                                            <a href={row} target="_blank" className={`btn btn-default`} download>
                                                 <i className="fa fa-paperclip"></i> Anexo {index + 1}
-                                            </Link>
+                                            </a>
                                         </span>
                                     ))
                                 :
