@@ -30,8 +30,9 @@ class Novo extends Component{
     state = {
         arquivo: {
             file: [],
-            errorMessage: []
-        }
+            errorMessage: [],
+        },
+        dataCategoria: []
     }
 
     //Função que ao criar o component ele busca os setor que o usuario logado tem acesso
@@ -49,7 +50,12 @@ class Novo extends Component{
 
     onChange = event => {
         if(event.target.name == 'setor' && event.target.value){
-            this.props.buscarCategoria(event.target.value)
+            const data = this.props.auth.user.papelPrincipal[0].setorCategoria.find(row => row.id_setor == event.target.value)
+
+            if(data.categoria.length > 0){
+                const result = data.categoria.map(row => ({ id: row.id, name: row.descricao }))
+                this.setState({dataCategoria: result})
+            }
         }
     }
 
@@ -83,18 +89,20 @@ class Novo extends Component{
 
     render(){
 
-        const { loading, dadosSetor, dadosCategoria } = this.props.meusTickets
+        const { loading, dadosSetor } = this.props.meusTickets
+
+        const dataUser = this.props.auth.user
+
+        let { dataCategoria } = this.state
 
         let dataSetor = []
 
         if(dadosSetor.response){
-            dataSetor = dadosSetor.response.content.map(row => ({ id: row.id, name: row.descricao }) )
-        }
-        
-        let dataCategoria = []
-
-        if(dadosCategoria.response){
-            dataCategoria = dadosCategoria.response.content.map(row => ({ id: row.id, name: row.descricao }))
+            if(dataUser.papelPrincipal.length > 0){
+                if(dataUser.papelPrincipal[0].setorCategoria.length > 0){
+                    dataSetor = dataUser.papelPrincipal[0].setorCategoria.map(row => ({ id: row.id_setor, name: row.setor }) )
+                }
+            }
         }
 
         return (
