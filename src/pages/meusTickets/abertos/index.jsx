@@ -59,9 +59,9 @@ class Index extends Component{
                 assunto: row.assunto,
                 setor: row.setor,
                 categoria: row.categoria,
-                criado: moment(row.created_at).calendar(),
-                atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.created_at).calendar(),
-                // criado: moment(row.created_at).format('DD-MM-YYYY H:mm'),
+                criado: moment(row.dt_criacao).calendar(),
+                atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
+                // criado: moment(row.dt_criacao).format('DD-MM-YYYY H:mm'),
                 link: '/meus-tickets/abertos/' + row.id + '/visualizar'
             }))
         }
