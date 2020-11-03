@@ -78,7 +78,7 @@ class Index extends Component{
                 assunto: row.assunto,
                 setor: row.setor,
                 categoria: row.categoria,
-                status: row.status.nome,
+                status: row.status.ordem,
                 criado: moment(row.dt_criacao).calendar(),
                 atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
                 // criado: moment(row.dt_criacao).format('DD-MM-YYYY H:mm'),
@@ -129,8 +129,6 @@ class Index extends Component{
         const initialValues = {
             status: '1'
         }
-
-        console.log(dataTicket)
 
         return(
             <section className="content">
@@ -195,7 +193,24 @@ class Index extends Component{
                     </div>
                     <div className="card card-danger">
                         <div className="card-body">
-                            {dataTicket.length > 0 ? <strong>Tickets {dataTicket[0].status}</strong> : ''}
+                            <div className="row">
+                                <div className="col-md">
+                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 1 ? `text-primary` : ``}>Abertos</h5>
+                                </div>
+                                <div className="col-md">
+                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 2 ? `text-primary` : ``}>Andamento</h5>
+                                </div>
+                                <div className="col-md">
+                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 3 ? `text-primary` : ``}>Pendente</h5>
+                                </div>
+                                <div className="col-md">
+                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 4 ? `text-primary` : ``}>Resolvido</h5>
+                                </div>
+                                <div className="col-md">
+                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 5 ? `text-primary` : ``}>Cancelado</h5>
+                                </div>
+                            </div>
+
                             <DataTable
                                 description={false}
                                 checkbox={false} 
