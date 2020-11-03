@@ -41,17 +41,18 @@ class Index extends Component{
     }
 
     onSubmit = values => {
-        let $where = ''
+        let where = ''
 
         if(values.status){
-            $where += "&where[status]=" + values.status
+            where += "?where[status]=" + values.status
         }
 
         if(values.dt_ini && values.dt_fim){
-            $where += "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim)
+            where += values.status ? "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
+                                    : "?whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
         }
 
-        this.props.buscarTicketsSetor($where)
+        this.props.buscarTicketsSetor(where)
     }
 
     render(){
@@ -77,6 +78,7 @@ class Index extends Component{
                 assunto: row.assunto,
                 setor: row.setor,
                 categoria: row.categoria,
+                status: row.status.nome,
                 criado: moment(row.dt_criacao).calendar(),
                 atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
                 // criado: moment(row.dt_criacao).format('DD-MM-YYYY H:mm'),
@@ -127,7 +129,9 @@ class Index extends Component{
         const initialValues = {
             status: '1'
         }
-        
+
+        console.log(dataTicket)
+
         return(
             <section className="content">
                 <MenuHeader title={`Tickets Para o Meu Setor`} history={this.props.location.pathname} />
@@ -191,6 +195,7 @@ class Index extends Component{
                     </div>
                     <div className="card card-danger">
                         <div className="card-body">
+                            {dataTicket.length > 0 ? <strong>Tickets {dataTicket[0].status}</strong> : ''}
                             <DataTable
                                 description={false}
                                 checkbox={false} 
