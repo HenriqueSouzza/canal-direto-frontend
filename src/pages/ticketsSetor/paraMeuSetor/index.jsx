@@ -77,6 +77,16 @@ class Index extends Component{
                 ticket: row.id,
                 assunto: row.assunto,
                 setor: row.setor,
+                indicador: row.dt_interacao ? 
+                                moment(row.dt_interacao).calendar() <= moment().subtract(1, "days").calendar() ? 'text-success'
+                                : moment(row.dt_interacao).calendar() == moment().subtract(2, "days").calendar() ? 'bg-yellow'
+                                : moment(row.dt_interacao).calendar() == moment().subtract(3, "days").calendar() ? 'text-warning'
+                                : moment(row.dt_interacao).calendar() <= moment().subtract(4, "days").calendar() ? 'text-danger' : ''
+                            :
+                                moment(row.dt_criacao).calendar() <= moment().subtract(1, "days").calendar() ? 'text-success'
+                                : moment(row.dt_criacao).calendar() == moment().subtract(2, "days").calendar() ? 'bg-yellow'
+                                : moment(row.dt_criacao).calendar() == moment().subtract(3, "days").calendar() ? 'text-warning'
+                                : moment(row.dt_criacao).calendar() <= moment().subtract(4, "days").calendar() ? 'text-danger' : '',
                 categoria: row.categoria,
                 status: row.status.ordem,
                 criado: moment(row.dt_criacao).calendar(),
@@ -87,6 +97,13 @@ class Index extends Component{
         }
 
         const columns = [
+            {
+                name: 'Indicador',
+                button: true,
+                cell: row => <div className={`nav-link ${row.indicador}`}>
+                                <i className={`fa fa-circle`}></i>
+                            </div>
+            }, 
             {
                 name: 'Ticket',
                 selector: 'ticket',
