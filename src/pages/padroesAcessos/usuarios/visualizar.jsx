@@ -22,6 +22,8 @@ import { buscarPermissoes } from '../permissoes/actions';
 
 import { buscarPapeis } from '../papeis/actions';
 
+import { buscarCategoria } from '../categoria/actions';
+
 
 class Visualizar extends Component{
 
@@ -29,6 +31,7 @@ class Visualizar extends Component{
         this.props.buscarUsuarios('?where[id]=' + this.props.match.params.id)
         this.props.buscarPermissoes('?where[prefix]=api/canal-direto')
         this.props.buscarPapeis('?where[sistema]=1')
+        this.props.buscarCategoria()
     }
 
     onSubmit = values => {
@@ -51,6 +54,12 @@ class Visualizar extends Component{
             params.papel = []
         }
 
+        if(values.categoriaAtendimento){
+            params.categoriaAtendimento = values.categoriaAtendimento.map( row => (row.value))
+        }else{
+            params.categoriaAtendimento = []
+        }
+
         this.props.alterarUsuario(params, this.props.match.params.id)
     }
 
@@ -60,7 +69,7 @@ class Visualizar extends Component{
 
     render(){
 
-        const { loading, usuarios, permissoes, papeis } = this.props.padroesAcessos
+        const { loading, usuarios, permissoes, papeis, categoria } = this.props.padroesAcessos
 
         const initialValues = {}
 
@@ -69,6 +78,7 @@ class Visualizar extends Component{
             initialValues.email = usuarios.response.content[0].email
             initialValues.papeis = usuarios.response.content[0].papeis.map(row => ({value: parseInt(row.ID), label: row.papel}))
             initialValues.permissoes = usuarios.response.content[0].permissoes.map(row => ({value: parseInt(row.id), label: row.permissao}))
+            initialValues.categoriaAtendimento = usuarios.response.content[0].categoriaAtendimento.map(row => ({ value: parseInt(row.id), label: row.setor + ' - ' + row.descricao }))
         }
 
         let permissoesSelect = {}
@@ -81,6 +91,12 @@ class Visualizar extends Component{
         
         if(papeis.response){
             papeisSelect = papeis.response.content.map(row => ({value: row.id, label: row.papel}))
+        }
+
+        let categoriaAtendimentoSelect = {}
+
+        if(categoria.response){
+            categoriaAtendimentoSelect = categoria.response.content.map( row => ({ value: row.id, label: row.setor[0].descricao + ' - ' + row.descricao })) 
         }
 
         return(
@@ -165,6 +181,26 @@ class Visualizar extends Component{
                                     </div>
                                 </div>
 
+                                <div className="card card-danger">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Informe as categorias que o usuário fará atendimento</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-12">
+                                                <Field
+                                                    component={SelectMultiple}
+                                                    name={`categoriaAtendimento`}
+                                                    options={categoriaAtendimentoSelect}
+                                                    isMulti
+                                                    closeMenu={false}
+                                                    multiple
+                                                    />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="row justify-content-center">
                                     <div className="col-md-3">
                                         <Field 
@@ -205,7 +241,7 @@ const mapStateToProps = state => ({ padroesAcessos: state.padroesAcessos })
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ alterarUsuario, buscarUsuarios, buscarPermissoes, buscarPapeis }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ alterarUsuario, buscarUsuarios, buscarPermissoes, buscarPapeis, buscarCategoria }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Visualizar);

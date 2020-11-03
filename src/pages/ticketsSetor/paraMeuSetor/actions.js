@@ -11,9 +11,7 @@ import { BASE_API } from '../../../config/const';
  */
 export const buscarTicketsSetor = (params = '') => {
 
-    const setorUser = '1,2'
-
-    const endPoint = BASE_API + 'api/canal-direto/ticket?whereIn[setor]=' + setorUser + params;
+    const endPoint = BASE_API + 'api/canal-direto/ticket' + params;
 
     const headers = {}
 

@@ -25,8 +25,19 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarTicketsSetor("&where[status]=1")
         this.props.buscarStatusTicket()
+
+        let setor = []
+        
+        this.props.auth.user.categoriaAtendente.map(row => setor.push(row.setor.map(val => val.id)))
+
+        let whereIn = "?where[status]=1"
+
+        if(setor.length > 0){
+            whereIn += '&whereIn[setor]=' + setor.toString()
+        }
+
+        this.props.buscarTicketsSetor(whereIn)
     }
 
     onSubmit = values => {
@@ -203,7 +214,7 @@ class Index extends Component{
 /**
  * @param {*} state 
  */
-const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor })
+const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor, auth: state.auth})
 
 /**
  * @param {*} dispatch 
