@@ -68,16 +68,16 @@ class Index extends Component{
                 ticket: row.id,
                 assunto: row.assunto,
                 setor: row.setor,
-                indicador: row.dt_interacao ? 
-                                moment(row.dt_interacao).calendar() <= moment().subtract(1, "days").calendar() ? 'text-success'
-                                : moment(row.dt_interacao).calendar() == moment().subtract(2, "days").calendar() ? 'bg-yellow'
-                                : moment(row.dt_interacao).calendar() == moment().subtract(3, "days").calendar() ? 'text-warning'
-                                : moment(row.dt_interacao).calendar() <= moment().subtract(4, "days").calendar() ? 'text-danger' : ''
+                indicador:  row.dt_interacao ? 
+                               moment().subtract(4, "days") >= moment(row.dt_interacao) ? 'text-danger'
+                               : moment().subtract(3, "days") >= moment(row.dt_interacao) ? 'text-warning'
+                               : moment().subtract(2, "days") >= moment(row.dt_interacao) ? 'text-yellow'
+                               : 'text-success'
                             :
-                                moment(row.dt_criacao).calendar() <= moment().subtract(1, "days").calendar() ? 'text-success'
-                                : moment(row.dt_criacao).calendar() == moment().subtract(2, "days").calendar() ? 'bg-yellow'
-                                : moment(row.dt_criacao).calendar() == moment().subtract(3, "days").calendar() ? 'text-warning'
-                                : moment(row.dt_criacao).calendar() <= moment().subtract(4, "days").calendar() ? 'text-danger' : '',
+                               moment().subtract(4, "days") >= moment(row.dt_criacao) ? 'text-danger'
+                               : moment().subtract(3, "days") >= moment(row.dt_criacao) ? 'text-warning'
+                               : moment().subtract(2, "days") >= moment(row.dt_criacao) ? 'text-yellow'
+                               : 'text-success',
                 categoria: row.categoria,
                 criado: moment(row.dt_criacao).calendar(),
                 atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
