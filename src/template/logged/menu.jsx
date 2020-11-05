@@ -30,7 +30,7 @@ function Menu(props){
         <nav className="mt-2">
             <LoadingBody status={props.auth.loading} />
             <ul className="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-                <MenuLink description={`Dashboard`} path={`/`} icon={`fas fa-tachometer-alt`}  active={``} />
+                {/* <MenuLink description={`Dashboard`} path={`/`} icon={`fas fa-tachometer-alt`}  active={``} /> */}
                 {
                     menu.length > 0 ?  
                         menu.map( (row,index) => (
