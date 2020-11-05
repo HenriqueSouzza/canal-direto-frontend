@@ -213,8 +213,8 @@ class Index extends Component{
                         <div className="card-body">
                             <div className="row">
                                 {dataTicket.length > 0 ? 
-                                    dataTicket[0].quantidadeTicket.map(row => (
-                                        <div className="col-md">
+                                    dataTicket[0].quantidadeTicket.map((row,index) => (
+                                        <div className="col-md" key={index}>
                                             <h5 className={parseInt(dataTicket[0].status) == row.ordem ? `text-primary` : ``}>
                                                 ({row.quantidade}) {row.nome}
                                             </h5>
