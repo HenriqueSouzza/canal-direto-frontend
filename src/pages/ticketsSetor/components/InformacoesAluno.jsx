@@ -46,19 +46,19 @@ function InformacoesAluno(props){
                         <div className="">{data.usuario_abertura.sit_aluno ? data.usuario_abertura.sit_aluno : '-'}</div>
                     </div>
                     <br/>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Assunto:</label>
                         <div className="">{data.assunto ? data.assunto : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Setor/Categoria:</label>
                         <div className="">{data.setor} - {data.categoria}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-8">
                         <label>Mensagem:</label>
                         <div className="">{data.setor} - {data.categoria}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Anexos:</label>
                         <div className="">
                             {

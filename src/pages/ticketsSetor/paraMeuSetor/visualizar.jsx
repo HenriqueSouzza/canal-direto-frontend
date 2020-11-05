@@ -32,17 +32,9 @@ import moment from 'moment';
 class Visualizar extends Component{
 
     componentDidMount(){
-        this.props.buscarTicketsSetor('&where[id]=' + this.props.match.params.id)
+        this.props.buscarTicketsSetor('?where[id]=' + this.props.match.params.id)
         this.props.buscarSetor()
         this.props.buscarInteracoesTicket(this.props.match.params.id)
-    }
-
-    componentDidUpdate(){
-        if(!this.props.ticketsSetor.loading && this.props.ticketsSetor.meuSetor.response){
-            if(this.props.ticketsSetor.meuSetor.response.content.length < 1){
-                this.props.history.push('/tickets-setor/para-meu-setor')
-            }
-        }
     }
 
     onSubmit = values => {
@@ -93,8 +85,8 @@ class Visualizar extends Component{
         const { loading, meuSetor, dadosSetor, dadosCategoria, interacoesTickets } = this.props.ticketsSetor
 
         const dataTicket = {}
-
-        if(meuSetor.response){
+        
+        if(meuSetor.response && meuSetor.response.content.length > 0){
             dataTicket.id = meuSetor.response.content[0].id
             dataTicket.assunto = meuSetor.response.content[0].assunto
             dataTicket.usuario_abertura = meuSetor.response.content[0].usuario_abertura.length > 0 ? meuSetor.response.content[0].usuario_abertura[0] : []

@@ -76,7 +76,7 @@ class Visualizar extends Component{
 
         let dataTicket = {}
 
-        if(meusTickets.response){
+        if(meusTickets.response && meusTickets.response.content.length > 0){
             dataTicket.id = meusTickets.response.content[0].id
             dataTicket.assunto = meusTickets.response.content[0].assunto
             dataTicket.usuario_abertura = meusTickets.response.content[0].usuario_abertura.length > 0 ? meusTickets.response.content[0].usuario_abertura[0] : []
@@ -88,8 +88,6 @@ class Visualizar extends Component{
             dataTicket.status = meusTickets.response.content[0].status
             dataTicket.created_at = meusTickets.response.content[0].created_a
         }
-
-        console.log(dataTicket)
 
         let dataInteracao = []
 

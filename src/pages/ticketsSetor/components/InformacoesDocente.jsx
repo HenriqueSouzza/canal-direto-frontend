@@ -32,19 +32,19 @@ function InformacoesDocente(props){
                         <label>E-mail:</label>
                         <div className="">{data.usuario_abertura.e_mail ? data.usuario_abertura.e_mail : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Assunto:</label>
                         <div className="">{data.assunto ? data.assunto : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Setor/Categoria:</label>
                         <div className="">{data.setor} - {data.categoria}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-8">
                         <label>Mensagem:</label>
                         <div className="">{data.setor} - {data.categoria}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Anexos:</label>
                         <div className="">
                             {

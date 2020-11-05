@@ -22,35 +22,35 @@ function InformacoesFuncionario(props){
             </div>
             <div className="card-body">
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Solicitante:</label>
                         <div className="">{data.usuario_abertura.nome ? data.usuario_abertura.nome : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Setor:</label>
                         <div className="">{data.usuario_abertura.setor ? data.usuario_abertura.setor : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Unidade Física:</label>
                         <div className="">{data.usuario_abertura.filial ? data.usuario_abertura.filial : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Email:</label>
                         <div className="">{data.usuario_abertura.email ? data.usuario_abertura.email : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Assunto:</label>
                         <div className="">{data.assunto ? data.assunto : '-'}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Setor/Categoria:</label>
                         <div className="">{data.setor} - {data.categoria}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-8">
                         <label>Mensagem:</label>
                         <div className="">{data.mensagem}</div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                         <label>Anexos:</label>
                         <div className="">
                             {
