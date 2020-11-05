@@ -78,14 +78,14 @@ class Index extends Component{
                 assunto: row.assunto,
                 setor: row.setor,
                 indicador:  row.dt_interacao ? 
-                                moment().subtract(4, "days") >= moment(row.dt_interacao) ? 'text-danger'
-                                : moment().subtract(3, "days") >= moment(row.dt_interacao) ? 'text-warning'
-                                : moment().subtract(2, "days") >= moment(row.dt_interacao) ? 'text-yellow'
+                                moment().subtract(3, "days") >= moment(row.dt_interacao) ? 'text-danger'
+                                : moment().subtract(2, "days") >= moment(row.dt_interacao) ? 'text-warning'
+                                : moment().subtract(1, "days") >= moment(row.dt_interacao) ? 'text-yellow'
                                 : 'text-success'
                             :
-                                moment().subtract(4, "days") >= moment(row.dt_criacao) ? 'text-danger'
-                                : moment().subtract(3, "days") >= moment(row.dt_criacao) ? 'text-warning'
-                                : moment().subtract(2, "days") >= moment(row.dt_criacao) ? 'text-yellow'
+                                moment().subtract(3, "days") >= moment(row.dt_criacao) ? 'text-danger'
+                                : moment().subtract(2, "days") >= moment(row.dt_criacao) ? 'text-warning'
+                                : moment().subtract(1, "days") >= moment(row.dt_criacao) ? 'text-yellow'
                                 : 'text-success',
                 categoria: row.categoria,
                 status: row.status.ordem,
