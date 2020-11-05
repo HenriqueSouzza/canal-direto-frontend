@@ -79,10 +79,12 @@ class Index extends Component{
                                : moment().subtract(1, "days") >= moment(row.dt_criacao) ? 'text-yellow'
                                : 'text-success',
                 categoria: row.categoria,
+                status: row.status.ordem,
                 criado: moment(row.dt_criacao).calendar(),
                 atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
                 // criado: moment(row.dt_criacao).format('DD-MM-YYYY H:mm'),
-                link: '/tickets-setor/meus-tickets/' + row.id + '/visualizar'
+                link: '/tickets-setor/meus-tickets/' + row.id + '/visualizar',
+                quantidadeTicketUsuario: row.quantidade_ticket_usuario
             }))
         }
 
@@ -198,6 +200,21 @@ class Index extends Component{
                     </div>
                     <div className="card card-danger">
                         <div className="card-body">
+                            <div className="row">
+                                {dataTicket.length > 0 ? 
+                                    dataTicket[0].quantidadeTicketUsuario.map(row => (
+                                        <div className="col-md">
+                                            <h5 className={parseInt(dataTicket[0].status) == row.ordem ? `text-primary` : ``}>
+                                                ({row.quantidade.map(val => {
+                                                    if(this.props.auth.user.email == val.usuario){
+                                                        return (val.count)
+                                                    }
+                                                })}) {row.nome}
+                                            </h5>
+                                        </div>
+                                    ))
+                                : ''}
+                            </div>
                             <DataTable
                                 description={false}
                                 checkbox={false} 
