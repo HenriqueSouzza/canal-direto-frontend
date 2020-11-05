@@ -92,7 +92,8 @@ class Index extends Component{
                 criado: moment(row.dt_criacao).calendar(),
                 atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
                 // criado: moment(row.dt_criacao).format('DD-MM-YYYY H:mm'),
-                link: '/tickets-setor/para-meu-setor/' + row.id + '/visualizar'
+                link: '/tickets-setor/para-meu-setor/' + row.id + '/visualizar',
+                quantidadeTicket: row.quantidade_ticket
             }))
         }
 
@@ -211,21 +212,15 @@ class Index extends Component{
                     <div className="card card-danger">
                         <div className="card-body">
                             <div className="row">
-                                <div className="col-md">
-                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 1 ? `text-primary` : ``}>Abertos</h5>
-                                </div>
-                                <div className="col-md">
-                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 2 ? `text-primary` : ``}>Andamento</h5>
-                                </div>
-                                <div className="col-md">
-                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 3 ? `text-primary` : ``}>Pendente</h5>
-                                </div>
-                                <div className="col-md">
-                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 4 ? `text-primary` : ``}>Resolvido</h5>
-                                </div>
-                                <div className="col-md">
-                                    <h5 className={dataTicket.length > 0 && dataTicket[0].status == 5 ? `text-primary` : ``}>Cancelado</h5>
-                                </div>
+                                {dataTicket.length > 0 ? 
+                                    dataTicket[0].quantidadeTicket.map(row => (
+                                        <div className="col-md">
+                                            <h5 className={parseInt(dataTicket[0].status) == row.ordem ? `text-primary` : ``}>
+                                                ({row.quantidade}) {row.nome}
+                                            </h5>
+                                        </div>
+                                    ))
+                                : ''}
                             </div>
 
                             <DataTable
