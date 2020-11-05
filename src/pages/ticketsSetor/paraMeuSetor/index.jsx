@@ -25,8 +25,6 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarStatusTicket()
-
         let setor = []
         
         this.props.auth.user.categoriaAtendente.map(row => setor.push(row.setor.map(val => val.id)))
@@ -38,6 +36,8 @@ class Index extends Component{
         }
 
         this.props.buscarTicketsSetor(whereIn)
+        this.props.buscarStatusTicket()
+
     }
 
     onSubmit = values => {
@@ -212,6 +212,25 @@ class Index extends Component{
                     <div className="card card-danger">
                         <div className="card-body">
                             <div className="row">
+                                {/* {dataStatusTicket.length > 0 ?
+                                    dataStatusTicket.map((row,index) => (
+                                        <div className="col-md" key={index}>
+                                            {dataTicket.length > 0 ? 
+                                                dataTicket[0].quantidadeTicket.map(val => (
+                                                    val.ordem == row.id ?
+                                                        <h5 className={parseInt(dataTicket[0].status) == row.id ? `text-primary` : ``}>
+                                                            ({val.quantidade}) {val.nome}
+                                                        </h5>
+                                                    : ''
+                                                ))
+                                            : 
+                                                <h5>
+                                                    (0) &nbsp; {row.name}
+                                                </h5>
+                                            }
+                                        </div>
+                                    ))
+                                : ''} */}
                                 {dataTicket.length > 0 ? 
                                     dataTicket[0].quantidadeTicket.map((row,index) => (
                                         <div className="col-md" key={index}>
@@ -230,7 +249,7 @@ class Index extends Component{
                                 data={dataTicket} 
                                 router={this.props.history}
                                 actions={null}
-                                loading={loading} 
+                                loading={loading || !meuSetor.response} 
                             />
                         </div>
                     </div>

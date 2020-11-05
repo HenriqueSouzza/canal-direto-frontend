@@ -201,6 +201,26 @@ class Index extends Component{
                     <div className="card card-danger">
                         <div className="card-body">
                             <div className="row">
+                                {/* {dataStatusTicket.length > 0 ?
+                                    dataStatusTicket.map((row,index) => (
+                                        <div className="col-md" key={index}>
+                                            {dataTicket.length > 0 ? 
+                                                dataTicket[0].quantidadeTicketUsuario.map(val => (
+                                                    val.ordem == row.id ?
+                                                        <h5 className={parseInt(dataTicket[0].status) == row.id ? `text-primary` : ``}>
+                                                            ({val.quantidade.map(qtd => qtd.usuario == this.props.auth.user.email ? qtd.count : 0 )}) 
+                                                            &nbsp; {val.nome}
+                                                        </h5>
+                                                    : ''
+                                                ))
+                                            : 
+                                                <h5>
+                                                    (0) &nbsp; {row.name}
+                                                </h5>
+                                            }
+                                        </div>
+                                    ))
+                                : ''} */}
                                 {dataTicket.length > 0 ? 
                                     dataTicket[0].quantidadeTicketUsuario.map((row,index) => (
                                         <div className="col-md" key={index}>
@@ -222,7 +242,7 @@ class Index extends Component{
                                 data={dataTicket} 
                                 router={this.props.history}
                                 actions={null}
-                                loading={loading} 
+                                loading={loading || !meusTickets.response} 
                             />
                         </div>
                     </div>
