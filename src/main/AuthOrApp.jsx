@@ -39,7 +39,7 @@ class AuthOrApp extends Component{
             )
             
         }else{
-
+            
             return(
                 <div>
                     <AuthOrCadastro />

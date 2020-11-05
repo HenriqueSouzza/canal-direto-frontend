@@ -20,6 +20,7 @@ function Content(){
         <div className="content-wrapper">
             <Switch>
                 <Route exact path='/' component={MeusTicketsPaginaInicial} />
+                <Route exact path='/' component={MeusTicketsPaginaInicial} />
                 <Route path='/meus-tickets' component={MeusTickets} />
                 <Route path='/tickets-setor' component={TicketsSetor} />
                 <Route path='/padroes-acessos' component={PadroesAcessos} />
