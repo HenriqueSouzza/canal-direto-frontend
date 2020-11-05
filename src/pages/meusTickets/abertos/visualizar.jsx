@@ -103,17 +103,17 @@ class Visualizar extends Component{
                     <div className="col-md-12">
                         <div className="card card-danger">
                             <div className="card-header">
-                                <h3 className="card-title">Assunto: {dataTicket.assunto ? dataTicket.assunto : '-'}</h3>
+                                <h3 className="card-title">Dados da solicitação</h3>
                             </div>
                             <div className="card-body">
                                 <div className="row">
-                                    <div className="col-md-12">
-                                        <label>Mensagem:</label>
+                                    <div className="col-md-4">
+                                        <label>Assunto:</label>
                                         <div className="">
-                                            {dataTicket.mensagem ? dataTicket.mensagem : '-'}
+                                            {dataTicket.assunto ? dataTicket.assunto : '-'}
                                         </div>
                                     </div>
-                                    <div className="col-md-12">
+                                    <div className="col-md-4">
                                         <label>Anexo:</label>
                                         <div className="">
                                             {
@@ -130,6 +130,12 @@ class Visualizar extends Component{
                                             }
                                         </div>
                                     </div>
+                                    <div className="col-md-4">
+                                        <label>Mensagem:</label>
+                                        <div className="">
+                                            {dataTicket.mensagem ? dataTicket.mensagem : '-'}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="card-footer">
@@ -144,6 +150,19 @@ class Visualizar extends Component{
                         </div>
                     </div>
                 </div>
+                
+                <div className="row">
+                    <div className="col-md-12">
+                        <ChatCard
+                            dataComment={dataInteracao}
+                            titleChat={`Interações`}
+                            addComment={this.onSubmit}
+                            enableComment={(dataTicket.status) && (dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5)}
+                            enableAnexo={true}
+                        />
+                    </div>
+                </div>
+
                 { (dataTicket.status) && (dataTicket.status.ordem != 4 || dataTicket.status.ordem != 5) ? 
                     <div className="row">
                         <div className="col-md-12">
@@ -189,17 +208,6 @@ class Visualizar extends Component{
                 :
                     ''
                 }
-                <div className="row">
-                    <div className="col-md-12">
-                        <ChatCard
-                            dataComment={dataInteracao}
-                            titleChat={`Interações`}
-                            addComment={this.onSubmit}
-                            enableComment={(dataTicket.status) && (dataTicket.status.ordem != 4 && dataTicket.status.ordem != 5)}
-                            enableAnexo={true}
-                        />
-                    </div>
-                </div>
             </section>
         )
 
