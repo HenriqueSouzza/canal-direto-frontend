@@ -98,7 +98,7 @@ class Visualizar extends Component{
                                                         label={`Ícone:`}
                                                         icon={``}
                                                         placeholder={`icone`}
-                                                        validate={composeValidators(FORM_RULES.max(20))}
+                                                        validate={composeValidators(FORM_RULES.max(50))}
                                                         />
                                                 </div>         
                                                 <div className="col-md-2">
