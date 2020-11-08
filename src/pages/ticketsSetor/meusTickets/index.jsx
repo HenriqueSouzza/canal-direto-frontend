@@ -18,6 +18,8 @@ import Select from '../../../components/form/select';
 
 import Button from '../../../components/form/button';
 
+import { composeValidators, FORM_RULES } from '../../../helpers/validations';
+
 import { buscarMeusTickets, buscarStatusTicket } from './actions';
 
 import moment from 'moment';
@@ -36,9 +38,17 @@ class Index extends Component{
         if(values.status){
             where += "&where[status]=" + values.status
         }
+        
+        if(values.ticket){
+            where += "&where[id]=" + values.ticket
+        }
+
+        if(values.assunto){
+            where += "&like=assunto," + values.assunto
+        }
 
         if(values.dt_ini && values.dt_fim){
-            where += "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim)
+            where += "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
         }
 
         this.props.buscarMeusTickets(where)
@@ -156,8 +166,30 @@ class Index extends Component{
                                 initialValues={initialValues}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-4">
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <Field 
+                                                    component={Input} 
+                                                    type={`number`}
+                                                    name={`ticket`} 
+                                                    label={`Nº Ticket:`}
+                                                    icon={``}
+                                                    placeholder={`Digite o assunto do ticket`}
+                                                    validate={composeValidators(FORM_RULES.number)}
+                                                    />
+                                            </div>
+                                            <div className="col-md-3">
+                                                <Field 
+                                                    component={Input} 
+                                                    type={`text`}
+                                                    name={`assunto`} 
+                                                    label={`Assunto:`}
+                                                    icon={``}
+                                                    placeholder={`Digite o assunto do ticket`}
+                                                    // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
+                                                    />
+                                            </div>
+                                            <div className="col-md-3">
                                                 <Field 
                                                     component={Input} 
                                                     type={`date`}
@@ -167,7 +199,7 @@ class Index extends Component{
                                                     placeholder={`Digite o assunto do ticket`}
                                                     />
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-md-3">
                                                 <Field 
                                                     component={Input} 
                                                     type={`date`}
@@ -177,7 +209,9 @@ class Index extends Component{
                                                     placeholder={`Digite o assunto do ticket`}
                                                     />
                                             </div>
-                                            <div className="col-md-4">
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-3">
                                                 <Field 
                                                     component={Select} 
                                                     name={`status`} 
@@ -185,14 +219,15 @@ class Index extends Component{
                                                     label={`Status:`}
                                                     />
                                             </div>
-                                            <div className="col-md-4 text-center">
+                                            <div className="col-md-3 offset-6">
+                                                <label>&nbsp;</label>
                                                 <Field 
                                                     component={Button} 
                                                     type={`submit`}
                                                     name={`sendFilter`}
                                                     color={`btn-success`} 
                                                     description={`Filtrar`}
-                                                    icon={`fa fa-filter`}
+                                                    icon={`fa fa-search`}
                                                     disabled={loading}
                                                     />
                                             </div>

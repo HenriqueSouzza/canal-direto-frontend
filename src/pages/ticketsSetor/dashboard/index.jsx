@@ -18,12 +18,9 @@ import Select from '../../../components/form/select';
 
 import Button from '../../../components/form/button';
 
-import { composeValidators, FORM_RULES } from '../../../helpers/validations';
-
 import { buscarTicketsSetor, buscarStatusTicket } from './actions';
 
 import moment from 'moment';
-
 
 class Index extends Component{
 
@@ -49,29 +46,10 @@ class Index extends Component{
         if(values.status){
             where += "?where[status]=" + values.status
         }
-        
-        if(values.ticket){
-            if(values.status){
-                where += "&where[id]=" + values.ticket
-            }else{
-                where += "?where[id]=" + values.ticket
-            }
-        }
-
-        if(values.assunto){
-            if(values.status || values.ticket){
-                where += "&like=assunto," + values.assunto
-            }else{
-                where += "?like=assunto," + values.assunto
-            }
-        }
 
         if(values.dt_ini && values.dt_fim){
-            if(values.status || values.ticket || values.assunto){
-                where += "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
-            }else{
-                where += "?whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim)
-            }
+            where += values.status ? "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
+                                    : "?whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
         }
 
         this.props.buscarTicketsSetor(where)
@@ -187,54 +165,30 @@ class Index extends Component{
                                 initialValues={initialValues}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
-                                        <div className="row">
-                                            <div className="col-md-3">
-                                                <Field 
-                                                    component={Input} 
-                                                    type={`number`}
-                                                    name={`ticket`} 
-                                                    label={`Nº Ticket:`}
-                                                    icon={``}
-                                                    placeholder={`Digite o assunto do ticket`}
-                                                    validate={composeValidators(FORM_RULES.number)}
-                                                    />
-                                            </div>
-                                            <div className="col-md-3">
-                                                <Field 
-                                                    component={Input} 
-                                                    type={`text`}
-                                                    name={`assunto`} 
-                                                    label={`Assunto:`}
-                                                    icon={``}
-                                                    placeholder={`Digite o assunto do ticket`}
-                                                    // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                    />
-                                            </div>
-                                            <div className="col-md-3">
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Input} 
                                                     type={`date`}
                                                     name={`dt_ini`} 
                                                     label={`Data inicial:`}
                                                     icon={``}
-                                                    placeholder={``}
+                                                    placeholder={`Digite o assunto do ticket`}
                                                     // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                     />
                                             </div>
-                                            <div className="col-md-3">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Input} 
                                                     type={`date`}
                                                     name={`dt_fim`} 
                                                     label={`Data final:`}
                                                     icon={``}
-                                                    placeholder={``}
+                                                    placeholder={`Digite o assunto do ticket`}
                                                     // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
                                                     />
                                             </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-3">
+                                            <div className="col-md-4">
                                                 <Field 
                                                     component={Select} 
                                                     name={`status`} 
@@ -242,15 +196,14 @@ class Index extends Component{
                                                     label={`Status:`}
                                                     />
                                             </div>
-                                            <div className="col-md-3 offset-6">
-                                                <label>&nbsp;</label>
+                                            <div className="col-md-4 text-center">
                                                 <Field 
                                                     component={Button} 
                                                     type={`submit`}
                                                     name={`sendFilter`}
                                                     color={`btn-success`} 
                                                     description={`Filtrar`}
-                                                    icon={`fa fa-search`}
+                                                    icon={`fa fa-filter`}
                                                     disabled={loading}
                                                     />
                                             </div>

@@ -12,6 +12,8 @@ import MeusTickets from './meusTickets/index';
 
 import MeusTicketsVisualizar from './meusTickets/visualizar';
 
+import Dashboard from './dashboard/index';
+
 
 function Router(){
     
@@ -23,6 +25,8 @@ function Router(){
             <Route exact path='/tickets-setor/meus-tickets' component={ props => <MeusTickets {...props} />} />
             <Route exact path='/tickets-setor/meus-tickets/:id/visualizar' component={ props => <MeusTicketsVisualizar {...props} />} />
             
+            <Route exact path='/tickets-setor/dashboard' component={ props => <Dashboard {...props} />} />
+
             <Route path="*" component={PaginaNaoEncontrada}/>
         </Switch>
     )
