@@ -57,7 +57,7 @@ class Visualizar extends Component{
             dataSubMenu = menus.response.content[0].submenu.map( row => ({
                 ordem: row.ordem,
                 nome: row.nome,
-                link: row.link,
+                url_link: row.link,
                 icon: row.icon,
                 ativo: row.ativo == '1' ? 'sim' : 'não',
                 link: '/padroes-acessos/submenu/' + row.id + '/visualizar' 
@@ -78,7 +78,7 @@ class Visualizar extends Component{
             },            
             {
                 name: 'Link',
-                selector: 'link',
+                selector: 'url_link',
                 sortable: true,
             },            
             {
