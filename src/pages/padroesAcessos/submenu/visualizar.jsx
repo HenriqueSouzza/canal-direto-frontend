@@ -143,7 +143,7 @@ class Visualizar extends Component{
                                                         type={`submit`} 
                                                         color={`btn-success`}
                                                         icon={`fa fa-sign-in`} 
-                                                        description={`Cadastrar`}
+                                                        description={`Alterar`}
                                                         disabled={pristine}
                                                         />
                                                 </div>                                                    
