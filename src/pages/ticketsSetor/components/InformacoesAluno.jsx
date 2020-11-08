@@ -23,44 +23,44 @@ function InformacoesAluno(props){
                 <div className="row">
                     <div className="col-md-4">
                         <label>Aluno / Solicitante:</label>
-                        <div className="">{data.usuario_abertura.aluno ? data.usuario_abertura.aluno + ' - ' + data.usuario_abertura.nome : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.aluno ? data.usuario_abertura.aluno + ' - ' + data.usuario_abertura.nome : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Curso:</label>
-                        <div className="">{data.usuario_abertura.curso ? data.usuario_abertura.curso + ' - ' + data.usuario_abertura.nome_curso : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.curso ? data.usuario_abertura.curso + ' - ' + data.usuario_abertura.nome_curso : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Semestre:</label>
-                        <div className="">{data.usuario_abertura.serie ? data.usuario_abertura.serie : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.serie ? data.usuario_abertura.serie : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Turno:</label>
-                        <div className="">{data.usuario_abertura.turno ? data.usuario_abertura.turno : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.turno ? data.usuario_abertura.turno : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Tipo:</label>
-                        <div className="">{data.usuario_abertura.tipo ? data.usuario_abertura.tipo + ' - ' + data.usuario_abertura.tipo_descricao : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.tipo ? data.usuario_abertura.tipo + ' - ' + data.usuario_abertura.tipo_descricao : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Situação:</label>
-                        <div className="">{data.usuario_abertura.sit_aluno ? data.usuario_abertura.sit_aluno : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.sit_aluno ? data.usuario_abertura.sit_aluno : '-'}</span>
                     </div>
                     <br/>
                     <div className="col-md-4">
                         <label>Assunto:</label>
-                        <div className="">{data.assunto ? data.assunto : '-'}</div>
+                        <span className="ml-2">{data.assunto ? data.assunto : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Setor/Categoria:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <span className="ml-2">{data.setor} - {data.categoria}</span>
                     </div>
                     <div className="col-md-8">
                         <label>Mensagem:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <span className="ml-2">{data.setor} - {data.categoria}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Anexos:</label>
-                        <div className="">
+                        <span className="ml-2">
                             {
                                 data.arquivo && data.arquivo.length > 0 ?
                                     data.arquivo.map((row, index) => (
@@ -73,7 +73,7 @@ function InformacoesAluno(props){
                                 :
                                     'Nenhum anexo'
                             }
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>

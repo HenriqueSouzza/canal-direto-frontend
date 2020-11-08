@@ -23,30 +23,28 @@ function InformacoesDocente(props){
             <div className="card-body">
                 <div className="row">
                     <div className="col-md-4">
-                        <div className="">
-                            <label>Solicitante:</label>
-                            <div className="">{data.usuario_abertura.num_func ? data.usuario_abertura.num_func + ' - ' + data.usuario_abertura.nome : '-'}</div>
-                        </div>
+                        <label>Solicitante:</label>
+                        <span className="ml-2">{data.usuario_abertura.num_func ? data.usuario_abertura.num_func + ' - ' + data.usuario_abertura.nome : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>E-mail:</label>
-                        <div className="">{data.usuario_abertura.e_mail ? data.usuario_abertura.e_mail : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.e_mail ? data.usuario_abertura.e_mail : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Assunto:</label>
-                        <div className="">{data.assunto ? data.assunto : '-'}</div>
+                        <span className="ml-2">{data.assunto ? data.assunto : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Setor/Categoria:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <span className="ml-2">{data.setor} - {data.categoria}</span>
                     </div>
                     <div className="col-md-8">
                         <label>Mensagem:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <span className="ml-2">{data.setor} - {data.categoria}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Anexos:</label>
-                        <div className="">
+                        <span className="ml-2">
                             {
                                 data.arquivo && data.arquivo.length > 0 ?
                                     data.arquivo.map((row, index) => (
@@ -59,7 +57,7 @@ function InformacoesDocente(props){
                                 :
                                     'Nenhum anexo'
                             }
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>

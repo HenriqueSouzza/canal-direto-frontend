@@ -24,35 +24,35 @@ function InformacoesFuncionario(props){
                 <div className="row">
                     <div className="col-md-4">
                         <label>Solicitante:</label>
-                        <div className="">{data.usuario_abertura.nome ? data.usuario_abertura.nome : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.nome ? data.usuario_abertura.nome : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Setor:</label>
-                        <div className="">{data.usuario_abertura.setor ? data.usuario_abertura.setor : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.setor ? data.usuario_abertura.setor : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Unidade Física:</label>
-                        <div className="">{data.usuario_abertura.filial ? data.usuario_abertura.filial : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.filial ? data.usuario_abertura.filial : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Email:</label>
-                        <div className="">{data.usuario_abertura.email ? data.usuario_abertura.email : '-'}</div>
+                        <span className="ml-2">{data.usuario_abertura.email ? data.usuario_abertura.email : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Assunto:</label>
-                        <div className="">{data.assunto ? data.assunto : '-'}</div>
+                        <span className="ml-2">{data.assunto ? data.assunto : '-'}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Setor/Categoria:</label>
-                        <div className="">{data.setor} - {data.categoria}</div>
+                        <span className="ml-2">{data.setor} - {data.categoria}</span>
                     </div>
                     <div className="col-md-8">
                         <label>Mensagem:</label>
-                        <div className="">{data.mensagem}</div>
+                        <span className="ml-2">{data.mensagem}</span>
                     </div>
                     <div className="col-md-4">
                         <label>Anexos:</label>
-                        <div className="">
+                        <span className="ml-2">
                             {
                                 data.arquivo && data.arquivo.length > 0 ?
                                     data.arquivo.map((row, index) => (
@@ -65,7 +65,7 @@ function InformacoesFuncionario(props){
                                 :
                                     'Nenhum anexo'
                             }
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>
