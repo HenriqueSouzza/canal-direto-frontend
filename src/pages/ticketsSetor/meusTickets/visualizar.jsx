@@ -89,7 +89,7 @@ class Visualizar extends Component{
             dataTicket.arquivo = meusTickets.response.content[0].arquivo
             dataTicket.status = meusTickets.response.content[0].status
             dataTicket.created_at = meusTickets.response.content[0].created_at
-            initialValueCategoryAtt = meusTickets.response.content[0].categoria_atendimento
+            initialValueCategoryAtt = meusTickets.response.content[0].categoria_atendimento ? meusTickets.response.content[0].categoria_atendimento : ''
         }
 
         let dataInteracao = []

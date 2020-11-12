@@ -244,7 +244,7 @@ function ChatCard(props){
                                                 : ''
                                             }
                                             {
-                                                enableCategory ?
+                                                enableCategory != undefined ?
 
                                                     <div className="col-md-3">
                                                         <Field 
