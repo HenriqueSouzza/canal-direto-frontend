@@ -102,7 +102,8 @@ function ChatCard(props){
     ]
 
     const initialValues = {
-        tipoResposta: 'publico'
+        tipoResposta: 'publico',
+        categoryAtt: enableCategory ? enableCategory : ''
     }
 
     return(

@@ -224,6 +224,7 @@ export const salvarInteracao = (params, idTicket, router) => {
     formData.append('mensagem', params.mensagem)
     formData.append('status', params.status)
     formData.append('dt_fechamento', params.dt_fechamento)
+    formData.append('categoria_atendimento', params.categoryAtt)
     formData.append('_method', 'put')
     
 
@@ -242,7 +243,7 @@ export const salvarInteracao = (params, idTicket, router) => {
                 router.go()
             }
 
-            dispatch(buscarInteracoesTicket('?where[id_ticket]=' + idTicket))
+            dispatch([buscarInteracoesTicket('?where[id_ticket]=' + idTicket), buscarMeusTickets('?where[usuario_atendente]=' + params.usuario + '&where[id]=' + idTicket)])
 
         })
         .catch(error => {

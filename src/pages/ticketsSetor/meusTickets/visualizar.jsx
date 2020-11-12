@@ -76,6 +76,8 @@ class Visualizar extends Component{
 
         let dataTicket = {}
 
+        let initialValueCategoryAtt = '' 
+
         if(meusTickets.response && meusTickets.response.content.length > 0){
             dataTicket.id = meusTickets.response.content[0].id
             dataTicket.assunto = meusTickets.response.content[0].assunto
@@ -86,7 +88,8 @@ class Visualizar extends Component{
             dataTicket.mensagem = meusTickets.response.content[0].mensagem
             dataTicket.arquivo = meusTickets.response.content[0].arquivo
             dataTicket.status = meusTickets.response.content[0].status
-            dataTicket.created_at = meusTickets.response.content[0].created_a
+            dataTicket.created_at = meusTickets.response.content[0].created_at
+            initialValueCategoryAtt = meusTickets.response.content[0].categoria_atendimento
         }
 
         let dataInteracao = []
@@ -175,7 +178,7 @@ class Visualizar extends Component{
                             enableTypeReposta
                             enableCloseTicket
                             enableAnexo
-                            enableCategory
+                            enableCategory={initialValueCategoryAtt}
                             dataCategoryAtt={dataCategoryAtt}
                         />
                     </div>
