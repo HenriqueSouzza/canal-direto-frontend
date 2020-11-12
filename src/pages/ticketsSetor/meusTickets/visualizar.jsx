@@ -124,6 +124,14 @@ class Visualizar extends Component{
             })
         } 
 
+        let dataCategoryAtt = [
+            {id: '', name: 'Selecione'},
+            {id: 'suporte', name: 'Suporte'},
+            {id: 'incidente', name: 'Incidente'},
+            {id: 'melhoria', name: 'Melhoria'},
+            {id: 'nova funcionalidade', name: 'Nova funcionalidade'}
+        ];
+
         return (
             <section className="content">
                 <LoadingBody status={loading} />
@@ -167,6 +175,8 @@ class Visualizar extends Component{
                             enableTypeReposta
                             enableCloseTicket
                             enableAnexo
+                            enableCategory
+                            dataCategoryAtt={dataCategoryAtt}
                         />
                     </div>
 

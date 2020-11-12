@@ -22,7 +22,16 @@ import imgUser  from '../../template/images/perfil.png';
 
 function ChatCard(props){
 
-    const {dataComment, titleChat, enableComment, enableTypeReposta, addComment, enableAnexo, enableCloseTicket} = props
+    const { dataComment, 
+            titleChat, 
+            enableComment, 
+            enableTypeReposta, 
+            enableCategory, 
+            dataCategoryAtt,
+            addComment,
+            enableAnexo, 
+            enableCloseTicket
+        } = props
 
     const [archivesSeleted, setArchivesSeleted] = useState({
                                                                 file: [],
@@ -233,28 +242,42 @@ function ChatCard(props){
                                                     
                                                 : ''
                                             }
-                                            <div className="col-md-3">
-                                                <span className="input-group-append m-0">
-                                                    {
-                                                        enableAnexo ? 
+                                            {
+                                                enableCategory ?
 
-                                                            <Upload 
-                                                                name={`arquivo`}
-                                                                type={`file`}
-                                                                onChange={onChangeFile}
-                                                                multiple
+                                                    <div className="col-md-3">
+                                                        <Field 
+                                                            component={Select}
+                                                            data={dataCategoryAtt ? dataCategoryAtt : []}
+                                                            name="categoryAtt" 
                                                             />
+                                                    </div>
+                                                    
+                                                : ''
+                                            }
+                                            {
+                                                enableAnexo ? 
 
-                                                        : 
-                                                            ""
-                                                    }
+                                                    <div className="col-md-1">
+                                                        <Upload 
+                                                            name={`arquivo`}
+                                                            type={`file`}
+                                                            onChange={onChangeFile}
+                                                            multiple
+                                                        />
+                                                    </div>
+
+                                                : ''
+                                            }
+                                            <div className="col-md-3">
+                                                {/* <span className="input-group-append m-0"> */}
                                                     <button
                                                         type={`submit`}
                                                         className={`form-control btn btn-primary`}
                                                         disabled={submitting || pristine || archivesSeleted.errorMessage.find(row => row ? true : false)}>
                                                         <i className={`fa fa-paper-plane`}></i> Enviar 
                                                     </button>
-                                                </span>
+                                                {/* </span> */}
                                             </div>
                                         </div>
                                     </div>
