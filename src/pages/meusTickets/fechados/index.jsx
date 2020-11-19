@@ -26,7 +26,7 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        this.props.buscarMeusTickets('&where[usuario]='+ this.props.auth.user.email)
+        this.props.buscarMeusTickets('&where[usuario]='+ this.props.auth.user.email + '&order=dt_fechamento,desc')
     }
 
     onSubmit = values => {
