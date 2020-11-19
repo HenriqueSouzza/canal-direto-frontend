@@ -9,9 +9,9 @@ import { BASE_API } from '../../../config/const';
 /**
  * Método para os buscar os tickets no menu "meu ticket" do usuário que está logado
  */
-export const buscarTicketsSetor = (params = '') => {
+export const buscarDashboard = (params = {}) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket' + params;
+    const endPoint = BASE_API + 'api/canal-direto/dashboard';
 
     const headers = {}
 
@@ -19,10 +19,10 @@ export const buscarTicketsSetor = (params = '') => {
 
         dispatch({type: type.LOAD, payload: true})
 
-        axios.get(endPoint, { headers: headers })
+        axios.post(endPoint, params, { headers: headers })
         .then(response => {
 
-            dispatch({ type: type.BUSCAR_TICKETS_SETOR, payload: response })
+            dispatch({ type: type.BUSCAR_DASHBOARD, payload: response })
             
         })
         .catch(error => {
@@ -63,217 +63,217 @@ export const buscarStatusTicket = (params = '') => {
 
 }
 
-/**
- * 
- * @param {*} params 
- * @param {*} router 
- */
-export const buscarInteracoesTicket = (idTicket = '') => {
+// /**
+//  * 
+//  * @param {*} params 
+//  * @param {*} router 
+//  */
+// export const buscarInteracoesTicket = (idTicket = '') => {
     
-    const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
+//     const endPoint = BASE_API + 'api/canal-direto/interacao-ticket?where[id_ticket]=' + idTicket;
 
-    const headers = {}
+//     const headers = {}
 
-    return dispatch => {
+//     return dispatch => {
 
-        dispatch({type: type.LOAD, payload: true})
+//         dispatch({type: type.LOAD, payload: true})
 
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
+//         axios.get(endPoint, { headers: headers })
+//         .then(response => {
 
-            dispatch({ type: type.BUSCAR_INTERACOES_TICKETS, payload: response })
+//             dispatch({ type: type.BUSCAR_INTERACOES_TICKETS, payload: response })
             
-        })
-        .catch(error => {
+//         })
+//         .catch(error => {
 
-            console.log(error)
-            dispatch({type: type.LOAD, payload: false})
+//             console.log(error)
+//             dispatch({type: type.LOAD, payload: false})
 
-        })
-    }
+//         })
+//     }
 
-}
+// }
 
-/**
- * 
- * @param {*} params 
- */
-export const buscarSetor = (params = '') => {
+// /**
+//  * 
+//  * @param {*} params 
+//  */
+// export const buscarSetor = (params = '') => {
 
-    const endPoint = BASE_API + 'api/canal-direto/setor' + params;
+//     const endPoint = BASE_API + 'api/canal-direto/setor' + params;
 
-    const headers = {}
+//     const headers = {}
 
-    return dispatch => {
+//     return dispatch => {
 
-        dispatch({type: type.LOAD, payload: true})
+//         dispatch({type: type.LOAD, payload: true})
 
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
+//         axios.get(endPoint, { headers: headers })
+//         .then(response => {
 
-            dispatch({ type: type.BUSCAR_MEU_SETOR, payload: response })
+//             dispatch({ type: type.BUSCAR_MEU_SETOR, payload: response })
             
-        })
-        .catch(error => {
+//         })
+//         .catch(error => {
 
-            console.log(error)
-            dispatch({type: type.LOAD, payload: false})
+//             console.log(error)
+//             dispatch({type: type.LOAD, payload: false})
 
-        })
-    }
+//         })
+//     }
 
-}
+// }
 
 
-/**
- * 
- * @param {*} params 
- */
-export const buscarCategoria = (params) => {
+// /**
+//  * 
+//  * @param {*} params 
+//  */
+// export const buscarCategoria = (params) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/categoria' + params;
+//     const endPoint = BASE_API + 'api/canal-direto/categoria' + params;
 
-    const headers = {}
+//     const headers = {}
 
-    return dispatch => {
+//     return dispatch => {
 
-        dispatch({type: type.LOAD, payload: true})
+//         dispatch({type: type.LOAD, payload: true})
 
-        axios.get(endPoint, { headers: headers })
-        .then(response => {
+//         axios.get(endPoint, { headers: headers })
+//         .then(response => {
 
-            dispatch({ type: type.BUSCAR_MINHAS_CATEGORIAS, payload: response })
+//             dispatch({ type: type.BUSCAR_MINHAS_CATEGORIAS, payload: response })
             
-        })
-        .catch(error => {
+//         })
+//         .catch(error => {
 
-            console.log(error)
-            dispatch({type: type.LOAD, payload: false})
+//             console.log(error)
+//             dispatch({type: type.LOAD, payload: false})
 
-        })
-    }
+//         })
+//     }
 
-}
+// }
 
-/**
- * 
- * @param {*} params 
- * @param {*} idTicket 
- */
-export const salvarInteracao = (params, idTicket) => {
+// /**
+//  * 
+//  * @param {*} params 
+//  * @param {*} idTicket 
+//  */
+// export const salvarInteracao = (params, idTicket) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+//     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = { 
-        'Content-Type': `multipart/form-data`
-    }
+//     const headers = { 
+//         'Content-Type': `multipart/form-data`
+//     }
 
-    //classe utilizada para enviar arquivos
-    const formData = new FormData();
+//     //classe utilizada para enviar arquivos
+//     const formData = new FormData();
 
-    if(params.arquivo.length > 0){
-        params.arquivo.map( (row) => formData.append('arquivo[]', row))
-    }
+//     if(params.arquivo.length > 0){
+//         params.arquivo.map( (row) => formData.append('arquivo[]', row))
+//     }
 
-    if(params.tipoResposta == 'privado'){
-        formData.append('privado', 1)
-    }else{
-        formData.append('publico', 1)
-    }
+//     if(params.tipoResposta == 'privado'){
+//         formData.append('privado', 1)
+//     }else{
+//         formData.append('publico', 1)
+//     }
     
-    formData.append('usuario_interacao', params.usuario)
-    formData.append('papel_usuario', params.papel_usuario)
-    formData.append('id_ticket', params.id_ticket)
-    formData.append('mensagem', params.mensagem)
-    formData.append('status', params.status)
-    formData.append('_method', 'put')
+//     formData.append('usuario_interacao', params.usuario)
+//     formData.append('papel_usuario', params.papel_usuario)
+//     formData.append('id_ticket', params.id_ticket)
+//     formData.append('mensagem', params.mensagem)
+//     formData.append('status', params.status)
+//     formData.append('_method', 'put')
     
 
-    return dispatch => {
+//     return dispatch => {
 
-        dispatch({type: type.LOAD, payload: true})
+//         dispatch({type: type.LOAD, payload: true})
 
-        axios.post(endPoint, formData, { headers: headers })
-        .then(response => {
+//         axios.post(endPoint, formData, { headers: headers })
+//         .then(response => {
 
-            dispatch({type: type.LOAD, payload: true})
+//             dispatch({type: type.LOAD, payload: true})
 
-            toastr.success('Sucesso', 'Adicionado interação com sucesso')
-            dispatch(buscarInteracoesTicket(idTicket))
+//             toastr.success('Sucesso', 'Adicionado interação com sucesso')
+//             dispatch(buscarInteracoesTicket(idTicket))
 
-        })
-        .catch(error => {
+//         })
+//         .catch(error => {
 
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível inserir sua interação')
-            dispatch({type: type.LOAD, payload: false})
+//             console.log(error.response)
+//             toastr.error('Erro', 'Não foi possível inserir sua interação')
+//             dispatch({type: type.LOAD, payload: false})
 
-        })
-    }
-}
+//         })
+//     }
+// }
 
-/**
- * @param {*} params 
- * @param {*} idTicket 
- * @param {*} router 
- */
-export const encaminharTicket = (params, idTicket, router) => {
+// /**
+//  * @param {*} params 
+//  * @param {*} idTicket 
+//  * @param {*} router 
+//  */
+// export const encaminharTicket = (params, idTicket, router) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+//     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = {}
+//     const headers = {}
 
-    return dispatch => {
+//     return dispatch => {
 
-        dispatch({type: type.LOAD, payload: true})
+//         dispatch({type: type.LOAD, payload: true})
 
-        axios.put(endPoint, params, { headers: headers })
-        .then(response => {
+//         axios.put(endPoint, params, { headers: headers })
+//         .then(response => {
 
-            router.goBack()
-            toastr.success('Sucesso', 'Ticket encaminhado com sucesso')
-            dispatch(buscarTicketsSetor())
+//             router.goBack()
+//             toastr.success('Sucesso', 'Ticket encaminhado com sucesso')
+//             dispatch(buscarTicketsSetor())
             
-        })
-        .catch(error => {
+//         })
+//         .catch(error => {
 
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível finalizar seu tícket')
-            dispatch({type: type.LOAD, payload: false})
+//             console.log(error.response)
+//             toastr.error('Erro', 'Não foi possível finalizar seu tícket')
+//             dispatch({type: type.LOAD, payload: false})
 
-        })
-    }
-}
+//         })
+//     }
+// }
 
-/**
- * 
- * @param {*} params 
- * @param {*} idTicket 
- * @param {*} router 
- */
-export const responderTicket = (params, idTicket, router) => {
+// /**
+//  * 
+//  * @param {*} params 
+//  * @param {*} idTicket 
+//  * @param {*} router 
+//  */
+// export const responderTicket = (params, idTicket, router) => {
 
-    const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
+//     const endPoint = BASE_API + 'api/canal-direto/ticket/' + idTicket;
 
-    const headers = {}
+//     const headers = {}
 
-    return dispatch => {
+//     return dispatch => {
 
-        dispatch({type: type.LOAD, payload: true})
+//         dispatch({type: type.LOAD, payload: true})
 
-        axios.put(endPoint, params, { headers: headers })
-        .then(response => {
+//         axios.put(endPoint, params, { headers: headers })
+//         .then(response => {
             
-            router.push('/tickets-setor/meus-tickets/'+ idTicket +'/visualizar');
+//             router.push('/tickets-setor/meus-tickets/'+ idTicket +'/visualizar');
             
-        })
-        .catch(error => {
+//         })
+//         .catch(error => {
 
-            console.log(error.response)
-            toastr.error('Erro', 'Não foi possível habilitar para responder esse ticket')
-            dispatch({type: type.LOAD, payload: false})
+//             console.log(error.response)
+//             toastr.error('Erro', 'Não foi possível habilitar para responder esse ticket')
+//             dispatch({type: type.LOAD, payload: false})
 
-        })
-    }
+//         })
+//     }
 
-}
+// }

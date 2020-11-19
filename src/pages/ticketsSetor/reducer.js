@@ -3,6 +3,7 @@ import type from './types';
 //Estado inicial da componente
 const INITIAL_STATE = {
     meusTickets: [],
+    dashboard: [],
     dadosSetor: [],
     dadosCategoria: [],
     interacoesTickets: [],
@@ -41,6 +42,10 @@ export default (state = INITIAL_STATE, action) => {
         //
         case type.BUSCAR_STATUS_TICKET:
             return { ...state, statusTicket: action.payload.data || INITIAL_STATE.statusTicket, loading: false }
+
+        //
+        case type.BUSCAR_DASHBOARD:
+            return { ...state, dashboard: action.payload.data || INITIAL_STATE.dashboard, loading: false }
 
         default:
             return state;   

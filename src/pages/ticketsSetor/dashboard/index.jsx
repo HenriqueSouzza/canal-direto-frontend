@@ -4,151 +4,256 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import { Link } from 'react-router-dom';
-
 import { Form, Field } from 'react-final-form';
 
 import MenuHeader from '../../../components/menu/menuHeader';
 
-import DataTable from '../../../components/table/dataTable';
-
-import Input from '../../../components/form/input';
+import { FORM_RULES } from '../../../helpers/validations';
 
 import Select from '../../../components/form/select';
 
 import Button from '../../../components/form/button';
 
-import { buscarTicketsSetor, buscarStatusTicket } from './actions';
+import { buscarDashboard, buscarStatusTicket } from './actions';
+
+import { Bar, Pie } from 'react-chartjs-2';
 
 import moment from 'moment';
+
 
 class Index extends Component{
 
     componentDidMount(){
-        let setor = []
-        
-        this.props.auth.user.categoriaAtendente.map(row => setor.push(row.setor.map(val => val.id)))
-
-        let whereIn = "?where[status]=1"
-
-        if(setor.length > 0){
-            whereIn += '&whereIn[setor]=' + setor.toString()
-        }
-
-        this.props.buscarTicketsSetor(whereIn)
+        // this.props.buscarDashboard()
         this.props.buscarStatusTicket()
-
     }
 
     onSubmit = values => {
-        let where = ''
 
-        if(values.status){
-            where += "?where[status]=" + values.status
-        }
+        this.props.buscarDashboard(values)
 
-        if(values.dt_ini && values.dt_fim){
-            where += values.status ? "&whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
-                                    : "?whereBetween[dt_criacao]=" + String(values.dt_ini) + ',' + String(values.dt_fim) 
-        }
-
-        this.props.buscarTicketsSetor(where)
     }
 
     render(){
 
-        const { loading, meuSetor, statusTicket } = this.props.ticketsSetor
+        const { loading, dashboard, statusTicket } = this.props.ticketsSetor
 
-        const dataStatusTicket = [];
+        const { user } = this.props.auth
 
-        if(statusTicket.response){
-            statusTicket.response.content.map(row => {
-                dataStatusTicket.push({
-                   id: row.id,
-                   name: row.nome 
-                })
-            })
+        let dataSelectSetorAtendimento = []
+
+        if(user.categoriaAtendente && user.categoriaAtendente.length > 0){
+            user.categoriaAtendente.map(row => dataSelectSetorAtendimento = row.setor.map(val => ({id: val.id, name: val.descricao})))
         }
 
-        let dataTicket = []
+        let dataSelectAno = [
+            {id:2022, name:2022},
+            {id:2021, name:2021},
+            {id:2020, name:2020},
+            {id:2019, name:2019},
+            {id:2018, name:2018},
+            {id:2017, name:2017},
+            {id:2016, name:2016},
+            {id:2015, name:2015},
+            {id:2014, name:2014},
+            {id:2013, name:2013},
+            {id:2012, name:2012},
+            {id:2011, name:2011},
+            {id:2010, name:2010},
+        ]
+
+        let dataSelectMes = [
+            {id:1, name:1},
+            {id:2, name:2},
+            {id:3, name:3},
+            {id:4, name:4},
+            {id:5, name:5},
+            {id:6, name:6},
+            {id:7, name:7},
+            {id:8, name:8},
+            {id:9, name:9},
+            {id:10, name:10},
+            {id:11, name:11},
+            {id:12, name:12}
+        ]
+
+        let dataSelectDia = [
+            {id:1, name:1},
+            {id:2, name:2},
+            {id:3, name:3},
+            {id:4, name:4},
+            {id:5, name:5},
+            {id:6, name:6},
+            {id:7, name:7},
+            {id:8, name:8},
+            {id:9, name:9},
+            {id:10, name:10},
+            {id:11, name:11},
+            {id:12, name:12},
+            {id:13, name:13},
+            {id:14, name:14},
+            {id:15, name:15},
+            {id:16, name:16},
+            {id:17, name:17},
+            {id:18, name:18},
+            {id:19, name:19},
+            {id:20, name:20},
+            {id:21, name:21},
+            {id:22, name:22},
+            {id:23, name:23},
+            {id:24, name:24},
+            {id:25, name:25},
+            {id:26, name:26},
+            {id:27, name:27},
+            {id:28, name:28},
+            {id:29, name:29},
+            {id:30, name:30},
+            {id:31, name:31},
+        ]
+
+        let dataAbertosFechadosAnoMes = {}
+
+        if(dashboard.response){
+
+            let data = {} 
+
+            data.backgroundColor = []
+
+            if(dashboard.response.content.TicketAbertoFechadoMesAno){
+                data.anoMes = dashboard.response.content.TicketAbertoFechadoMesAno.map(row => row.ano + '/' + row.mes)
+                data.aberto = dashboard.response.content.TicketAbertoFechadoMesAno.map(row => row.aberto)
+                data.fechado = dashboard.response.content.TicketAbertoFechadoMesAno.map(row => row.fechado)
+
+                let aberto = []
+                let fechado = []
+                for(let i = 1; i <= data.anoMes.length; i++){
+                    aberto.push('rgba(255, 99, 132, 1)')
+                    fechado.push('rgba(255, 99, 0, 1)')
+                }
+
+                data.backgroundColor.aberto = aberto
+                data.backgroundColor.fechado = fechado
+            }
+
+            dataAbertosFechadosAnoMes = {
+                labels: data.anoMes,
+                datasets: [
+                    {
+                        label: `abertos`,
+                        data: data.aberto,
+                        backgroundColor: data.backgroundColor.aberto
+                    },
+                    {
+                        label: `fechados`,
+                        data: data.fechado,
+                        backgroundColor: data.backgroundColor.fechado
+                    },
+                ]
+            }
+        }
+
+        /********************* GRÁFICOS *******************/
+
+        const dataIndicador = {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '',
+                data: [4, 8, 16, 32, 64, 128],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 159, 64, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+
         
-        if(meuSetor.response){
-            dataTicket = meuSetor.response.content.map(row => ({
-                ticket: row.id,
-                assunto: row.assunto,
-                setor: row.setor,
-                indicador:  row.status.ordem == 4 || row.status.ordem == 5 ? 
-                                'text-success'
-                            : 
-                                row.dt_interacao ? 
-                                    moment().subtract(3, "days") >= moment(row.dt_interacao) ? 'text-danger'
-                                    : moment().subtract(2, "days") >= moment(row.dt_interacao) ? 'text-orange'
-                                    : moment().subtract(1, "days") >= moment(row.dt_interacao) ? 'text-yellow'
-                                    : 'text-success'
-                                :
-                                    moment().subtract(3, "days") >= moment(row.dt_criacao) ? 'text-danger'
-                                    : moment().subtract(2, "days") >= moment(row.dt_criacao) ? 'text-orange'
-                                    : moment().subtract(1, "days") >= moment(row.dt_criacao) ? 'text-yellow'
-                                    : 'text-success',
-                categoria: row.categoria,
-                status: row.status.ordem,
-                criado: moment(row.dt_criacao).calendar(),
-                atualizacao: row.dt_interacao ? moment(row.dt_interacao).calendar() : moment(row.dt_criacao).calendar(),
-                // criado: moment(row.dt_criacao).format('DD-MM-YYYY H:mm'),
-                link: '/tickets-setor/para-meu-setor/' + row.id + '/visualizar',
-                quantidadeTicket: row.quantidade_ticket
-            }))
+
+        const dataPolo = {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Chamados Abertos/Fechados por Ano / Mês',
+                data: [4, 8, 16, 32, 64, 128],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 159, 64, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
         }
 
-        const columns = [
-            {
-                name: 'Indicador',
-                button: true,
-                cell: row => <div className={`nav-link ${row.indicador}`}>
-                                <i className={`fa fa-circle`}></i>
-                            </div>
-            }, 
-            {
-                name: 'Ticket',
-                selector: 'ticket',
-                sortable: true,
-            },
-            {
-                name: 'Assunto',
-                selector: 'assunto',
-                sortable: true,
-            },
-            {
-                name: 'Setor',
-                selector: 'setor',
-                sortable: true,
-            },
-            {
-                name: 'Categoria',
-                selector: 'categoria',
-                sortable: true,
-            },
-            {
-                name: 'Criado em',
-                selector: 'criado',
-                sortable: true,
-            },
-            {
-                name: 'Atualização',
-                selector: 'atualizacao',
-                sortable: true,
-            },
-            {
-                name: 'Detalhe',
-                button: true,
-                cell: row => <Link to={row.link} className={`nav-link text-info`}>
-                                <i className={`fa fa-eye`}></i>
-                            </Link>
-            }   
-        ];
+        const dataCategoria = {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Chamados Abertos/Fechados por Ano / Mês',
+                data: [4, 8, 16, 32, 64, 128],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 159, 64, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
 
-        const initialValues = {
-            status: '1'
+        const dataUsuario = {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '',
+                data: [4, 8, 16, 32, 64, 128],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 159, 64, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
         }
 
         return(
@@ -162,41 +267,43 @@ class Index extends Component{
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
-                                initialValues={initialValues}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
                                         <div className="row justify-content-center">
-                                            <div className="col-md-4">
-                                                <Field 
-                                                    component={Input} 
-                                                    type={`date`}
-                                                    name={`dt_ini`} 
-                                                    label={`Data inicial:`}
-                                                    icon={``}
-                                                    placeholder={`Digite o assunto do ticket`}
-                                                    // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                    />
-                                            </div>
-                                            <div className="col-md-4">
-                                                <Field 
-                                                    component={Input} 
-                                                    type={`date`}
-                                                    name={`dt_fim`} 
-                                                    label={`Data final:`}
-                                                    icon={``}
-                                                    placeholder={`Digite o assunto do ticket`}
-                                                    // validate={composeValidators(FORM_RULES.required, FORM_RULES.min(5))}
-                                                    />
-                                            </div>
-                                            <div className="col-md-4">
+                                            <div className="col-md-2">
                                                 <Field 
                                                     component={Select} 
-                                                    name={`status`} 
-                                                    data={dataStatusTicket}
-                                                    label={`Status:`}
+                                                    name={`ano`} 
+                                                    data={dataSelectAno}
+                                                    label={`Ano:`}
+                                                    validate={FORM_RULES.required}
                                                     />
                                             </div>
-                                            <div className="col-md-4 text-center">
+                                            <div className="col-md-2">
+                                                <Field 
+                                                    component={Select} 
+                                                    name={`mes`} 
+                                                    data={dataSelectMes}
+                                                    label={`Mes:`}
+                                                    />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <Field 
+                                                    component={Select} 
+                                                    name={`dia`} 
+                                                    data={dataSelectDia}
+                                                    label={`Dia:`}
+                                                    />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Field 
+                                                    component={Select} 
+                                                    name={`setor`} 
+                                                    data={dataSelectSetorAtendimento}
+                                                    label={`Setor:`}
+                                                    />
+                                            </div>
+                                            <div className="col-md-3 text-center">
                                                 <Field 
                                                     component={Button} 
                                                     type={`submit`}
@@ -212,48 +319,66 @@ class Index extends Component{
                                 )}/>
                         </div>
                     </div>
-                    <div className="card card-danger">
-                        <div className="card-body">
-                            <div className="row">
-                                {/* {dataStatusTicket.length > 0 ?
-                                    dataStatusTicket.map((row,index) => (
-                                        <div className="col-md" key={index}>
-                                            {dataTicket.length > 0 ? 
-                                                dataTicket[0].quantidadeTicket.map(val => (
-                                                    val.ordem == row.id ?
-                                                        <h5 className={parseInt(dataTicket[0].status) == row.id ? `text-primary` : ``}>
-                                                            ({val.quantidade}) {val.nome}
-                                                        </h5>
-                                                    : ''
-                                                ))
-                                            : 
-                                                <h5>
-                                                    (0) &nbsp; {row.name}
-                                                </h5>
-                                            }
-                                        </div>
-                                    ))
-                                : ''} */}
-                                {dataTicket.length > 0 ? 
-                                    dataTicket[0].quantidadeTicket.map((row,index) => (
-                                        <div className="col-md" key={index}>
-                                            <h5 className={parseInt(dataTicket[0].status) == row.ordem ? `text-primary` : ``}>
-                                                ({row.quantidade}) {row.nome}
-                                            </h5>
-                                        </div>
-                                    ))
-                                : ''}
-                            </div>
 
-                            <DataTable
-                                description={false}
-                                checkbox={false} 
-                                columns={columns} 
-                                data={dataTicket} 
-                                router={this.props.history}
-                                actions={null}
-                                loading={loading || !meuSetor.response} 
-                            />
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="card card-primary">
+                                <div className="card-header">
+                                    <h3 className="card-title">Chamados por indicador</h3>
+                                </div>
+                                <div className="card-body">
+                                    <Pie 
+                                        data={dataIndicador} 
+                                        />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="card card-primary">
+                                <div className="card-header">
+                                    <h3 className="card-title">Chamados Abertos/Fechados por Ano / Mês</h3>
+                                </div>
+                                <div className="card-body">
+                                    <Bar data={dataAbertosFechadosAnoMes} />
+                                    {/* <Line data={data} /> */}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="card card-primary">
+                                <div className="card-header">
+                                    <h3 className="card-title">Chamados por Polo</h3>
+                                </div>
+                                <div className="card-body">
+                                    <Pie 
+                                        data={dataPolo} 
+                                        />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="card card-primary">
+                                <div className="card-header">
+                                    <h3 className="card-title">Chamados por Categoria</h3>
+                                </div>
+                                <div className="card-body">
+                                    <Pie 
+                                        data={dataCategoria} 
+                                        />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="card card-primary">
+                                <div className="card-header">
+                                    <h3 className="card-title">Chamados por Usuário</h3>
+                                </div>
+                                <div className="card-body">
+                                    <Pie 
+                                        data={dataUsuario} 
+                                        />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -273,7 +398,7 @@ const mapStateToProps = state => ({ ticketsSetor: state.ticketsSetor, auth: stat
 /**
  * @param {*} dispatch 
  */
-const mapDispatchToProps = dispatch => bindActionCreators({ buscarTicketsSetor, buscarStatusTicket }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ buscarDashboard, buscarStatusTicket }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps )(Index);
