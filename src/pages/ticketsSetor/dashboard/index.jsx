@@ -18,6 +18,8 @@ import { buscarDashboard, buscarStatusTicket } from './actions';
 
 import { Bar, Pie } from 'react-chartjs-2';
 
+import { Chart } from "react-google-charts";
+
 import moment from 'moment';
 
 
@@ -111,159 +113,41 @@ class Index extends Component{
             {id:31, name:31},
         ]
 
-        let dataAbertosFechadosAnoMes = {}
-        let dataIndicador = {}
-        let dataPolo = {}
-        let dataCategoria = {}
-        let dataUsuario = {}
+        let dataIndicador = []
+        let dataAbertosFechadosAnoMes = []
+        let dataPolo = []
+        let dataCategoria = []
+        let dataUsuario = []
 
         if(dashboard.response){
-
-            let data = {} 
-
-            data.backgroundColor = []
-
-            if(dashboard.response.content.TicketAbertoFechadoMesAno){
-                data.anoMes = dashboard.response.content.TicketAbertoFechadoMesAno.map(row => row.ano + '/' + row.mes)
-                data.aberto = dashboard.response.content.TicketAbertoFechadoMesAno.map(row => row.aberto)
-                data.fechado = dashboard.response.content.TicketAbertoFechadoMesAno.map(row => row.fechado)
-
-                let aberto = []
-                let fechado = []
-                for(let i = 1; i <= data.anoMes.length; i++){
-                    aberto.push('rgba(255, 99, 132, 1)')
-                    fechado.push('rgba(255, 99, 0, 1)')
-                }
-
-                data.backgroundColor.aberto = aberto
-                data.backgroundColor.fechado = fechado
-            }
-
-            dataAbertosFechadosAnoMes = {
-                labels: data.anoMes,
-                datasets: [
-                    {
-                        label: `abertos`,
-                        data: data.aberto,
-                        backgroundColor: data.backgroundColor.aberto
-                    },
-                    {
-                        label: `fechados`,
-                        data: data.fechado,
-                        backgroundColor: data.backgroundColor.fechado
-                    },
-                ]
-            }
-        
+            
             /********************* INDICADOR *******************/
 
-            data = {} 
+            dataIndicador =[]
 
-            dataIndicador = {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '',
-                    data: [4, 8, 16, 32, 64, 128],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+            /********************* TICKETS ABERTO FECHADO MES ANO *******************/
+
+            if(dashboard.response.content.TicketAbertoFechadoMesAno){
+                dataAbertosFechadosAnoMes.push(['Ano/Mes', 'Abertos', 'Fechados'])
+                dashboard.response.content.TicketAbertoFechadoMesAno.map(row => dataAbertosFechadosAnoMes.push([row.ano + '/' + row.mes, row.aberto, row.fechado]))
             }
 
             /**************************  POLO *************************** */
 
-            data = {}
-
-            dataPolo = {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: 'Chamados Abertos/Fechados por Ano / Mês',
-                    data: [4, 8, 16, 32, 64, 128],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
+            dataPolo =[]
 
             /*********************** CATEGORIA ********************** */
 
-            data = {}
-
-            data.backgroundColor = []
-
             if(dashboard.response.content.ticketCategoria){
-                data.categoria = dashboard.response.content.ticketCategoria.map(row => row.categoria)
-                data.quantidade = dashboard.response.content.ticketCategoria.map(row => row.quantidade)
-
-                data.categoria = ['ti', 'si']
-                data.quantidade = [10, 20]
-
-                for(let i = 1; i <= data.categoria.length; i++){
-                    data.backgroundColor.push('rgba(255, 99, 105, 0.' + (i*2) +')')
-                }
+                dataCategoria.push(['Categoria', 'Quantidade'])
+                dashboard.response.content.ticketCategoria.map(row => dataCategoria.push([row.categoria, row.quantidade]))
             }
-
-            dataCategoria = {
-                labels: data.categoria,
-                datasets: [{
-                    label: '',
-                    data: data.quantidade,
-                    backgroundColor: data.backgroundColor,
-                }]
-            }
-
+            
             /************************ USUARIO *************************/
-            dataUsuario = {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '',
-                    data: [4, 8, 16, 32, 64, 128],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+            
+            if(dashboard.response.content.ticketFechadosUsuario){
+                dataUsuario.push(['Usuario', 'Quantidade Ticket por Fechado'])
+                dashboard.response.content.ticketFechadosUsuario.map(row => dataUsuario.push([row.usuario, row.quantidade]))
             }
         }
 
@@ -309,7 +193,7 @@ class Index extends Component{
                                             <div className="col-md-6">
                                                 <Field 
                                                     component={Select} 
-                                                    name={`setor`} 
+                                                    name={`id_setor`} 
                                                     data={dataSelectSetorAtendimento}
                                                     label={`Setor:`}
                                                     />
@@ -332,30 +216,33 @@ class Index extends Component{
                     </div>
 
                     <div className="row">
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                             <div className="card card-primary">
                                 <div className="card-header">
                                     <h3 className="card-title">Chamados por indicador</h3>
                                 </div>
                                 <div className="card-body">
-                                    <Pie 
-                                        data={dataIndicador} 
+                                </div>
+                            </div>
+                        </div> */}
+                        {dataAbertosFechadosAnoMes.length > 0 ? 
+                            <div className="col-md-6">
+                                <div className="card card-primary">
+                                    <div className="card-body">
+                                        <Chart
+                                            chartType="Bar"
+                                            data={dataAbertosFechadosAnoMes}
+                                            options={{
+                                            chart: {
+                                                title: 'Chamados Abertos/Fechados por Ano / Mês',
+                                            },
+                                            }}
                                         />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="card card-primary">
-                                <div className="card-header">
-                                    <h3 className="card-title">Chamados Abertos/Fechados por Ano / Mês</h3>
-                                </div>
-                                <div className="card-body">
-                                    <Bar data={dataAbertosFechadosAnoMes} />
-                                    {/* <Line data={data} /> */}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
+                        : ''}
+                        {/* <div className="col-md-6">
                             <div className="card card-primary">
                                 <div className="card-header">
                                     <h3 className="card-title">Chamados por Polo</h3>
@@ -366,31 +253,39 @@ class Index extends Component{
                                         />
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="card card-primary">
-                                <div className="card-header">
-                                    <h3 className="card-title">Chamados por Categoria</h3>
-                                </div>
-                                <div className="card-body">
-                                    <Pie 
-                                        data={dataCategoria} 
-                                        />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="card card-primary">
-                                <div className="card-header">
-                                    <h3 className="card-title">Chamados por Usuário</h3>
-                                </div>
-                                <div className="card-body">
-                                    <Pie 
-                                        data={dataUsuario} 
-                                        />
+                        </div> */}
+                        {dataCategoria.length > 0 ? 
+                            <div className="col-md-6">
+                                <div className="card card-primary">
+                                    <div className="card-body">
+                                        <Chart
+                                            chartType="PieChart"
+                                            data={dataCategoria}
+                                            options={{
+                                                title: 'Chamados por categoria',
+                                                is3D: true,
+                                            }}
+                                            />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        : ''}
+                        {dataUsuario.length > 0 ? 
+                            <div className="col-md-6">
+                                <div className="card card-primary">
+                                    <div className="card-body">
+                                        <Chart
+                                            chartType="PieChart"
+                                            data={dataUsuario}
+                                            options={{
+                                                title: 'Tickets Fechados por Usuário',
+                                                is3D: true,
+                                            }}
+                                            />
+                                    </div>
+                                </div>
+                            </div>
+                        : ''}
                     </div>
                 </div>
             </section>
