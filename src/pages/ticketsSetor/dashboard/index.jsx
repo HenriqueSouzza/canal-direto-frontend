@@ -26,7 +26,8 @@ import moment from 'moment';
 class Index extends Component{
 
     componentDidMount(){
-        // this.props.buscarDashboard()
+        const params = { ano: 2020 } 
+        this.props.buscarDashboard(params)
         this.props.buscarStatusTicket()
     }
 
@@ -162,6 +163,7 @@ class Index extends Component{
                         <div className="card-body">
                             <Form
                                 onSubmit={this.onSubmit}
+                                initialValues={{ano: 2020}}
                                 render={({handleSubmit}) => (
                                     <form onSubmit={handleSubmit}>
                                         <div className="row justify-content-center">
