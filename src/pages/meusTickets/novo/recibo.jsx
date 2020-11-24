@@ -66,107 +66,80 @@ class Recibo extends Component{
                 <LoadingBody status={loading} />
                 <MenuHeader title={``} history={this.props.location.pathname} />
                 <div className="content-fluid">
-                    <div className="card card-danger">
+                    <div className="card card-info">
                         <div className="card-header">
-                            {/* <div className="text-center">
-                                <h4 className="">Comprovante</h4>
-                            </div> */}
+                            <div className="text-center">
+                                <h5><b>Comprovante</b></h5>
+                            </div>
                         </div>
-                        <div className="card-body">
+                        <div className="card-body text-center">
+                            <div className="col-md-12 mt-2">
+                                Olá <b>{dataTicket.solicitante ? dataTicket.solicitante : ''}</b>
+                                <br/>
+                                Recebemos seu ticket nº <b>{dataTicket.ticket ? dataTicket.ticket : ''}</b> no nosso <b>Canal Direto</b>
+                            </div>
+                            <br/>
+                            <div className="col-md-12 text-success border border-success">
+                                <div className="col-md-12 mt-2">
+                                    <i className="fa fa-check-circle" style={{color: 'green', fontSize: '30px'}}></i>
+                                </div>
+                                <b>Recebemos seu ticket</b>
+                                <br/>
+                                Aguarde seu atendimento que em breve retornaremos
+                            </div>
+                            <br/>
                             <div className="row justify-content-center">
-                                <div className="col-md-6 border border-primary text-center">
-                                    <div className="col-md-12 p-1 bg-info">
-                                        <h5>Comprovante</h5>
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <label>Nº Ticket:</label> 
+                                        <div>{dataTicket.ticket ? dataTicket.ticket : ''}</div>
                                     </div>
-                                    <div className="col-md-12 mt-2">
-                                        Olá <b>{dataTicket.solicitante ? dataTicket.solicitante : ''}</b>
-                                        <br/>
-                                        Recebemos seu ticket nº <b>{dataTicket.ticket ? dataTicket.ticket : ''}</b> no nosso <b>Canal Direto</b>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <label>Assunto:</label> 
+                                        <div>{dataTicket.assunto ? dataTicket.assunto : ''}</div>
                                     </div>
-                                    <br/>
-                                    <div className="col-md-12 text-success border border-success">
-                                        <div className="col-md-12 mt-2">
-                                            <i className="fa fa-check-circle" style={{color: 'green', fontSize: '30px'}}></i>
-                                        </div>
-                                        <b>Recebemos seu ticket</b>
-                                        <br/>
-                                        Aguarde seu atendimento que em breve retornaremos
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <label>Setor:</label> 
+                                        <div>{dataTicket.setor ? dataTicket.setor : ''}</div>
                                     </div>
-                                    <br/>
-                                    <div className="col-md-12 text-center bg-info">
-                                        <b>Detalhes do ticket</b>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <label>Categoria:</label>
+                                        <div>{dataTicket.categoria ? dataTicket.categoria : ''}</div>
                                     </div>
-                                    <div className="row justify-content-center">
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                <b>Nº Ticket:</b>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                {dataTicket.ticket ? dataTicket.ticket : ''}
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                <b>Assunto:</b>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                {dataTicket.assunto ? dataTicket.assunto : ''}
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                <b>Setor:</b>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                {dataTicket.setor ? dataTicket.setor : ''}
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                <b>Categoria:</b>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                {dataTicket.categoria ? dataTicket.categoria : ''}
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                <b>Mensagem:</b>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                {dataTicket.mensagem ? dataTicket.mensagem : ''}
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                <b>Anexos:</b>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="">
-                                                {
-                                                    dataTicket.arquivo && dataTicket.arquivo.length > 0 ?
-                                                        dataTicket.arquivo.map((row, index) => (
-                                                            <span className={`mr-3 mt-2`} key={index}>
-                                                                <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>
-                                                                    <i className="fa fa-paperclip"></i> Anexo {index + 1}
-                                                                </Link>
-                                                            </span>
-                                                        ))
-                                                    :
-                                                        'Nenhum anexo'
-                                                }
-                                            </div>
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <label>Mensagem:</label>
+                                        <div>{dataTicket.mensagem ? dataTicket.mensagem : ''}</div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div className="col-md-4">
+                                    <div className="">
+                                        <label>Anexos:</label>
+                                        <div className="">
+                                            {
+                                                dataTicket.arquivo && dataTicket.arquivo.length > 0 ?
+                                                    dataTicket.arquivo.map((row, index) => (
+                                                        <span className={`mr-3 mt-2`} key={index}>
+                                                            <Link to={{pathname: row}} target="_blank" className={`btn btn-default`} download>
+                                                                <i className="fa fa-paperclip"></i> Anexo {index + 1}
+                                                            </Link>
+                                                        </span>
+                                                    ))
+                                                :
+                                                    'Nenhum anexo'
+                                            }
                                         </div>
                                     </div>
                                 </div>
